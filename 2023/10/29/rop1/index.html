@@ -15,7 +15,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://hackmd.io/_uploads/ByWE-tiMa.png">
 <meta property="article:published_time" content="2023-10-29T21:10:04.000Z">
-<meta property="article:modified_time" content="2023-10-29T11:22:53.999Z">
+<meta property="article:modified_time" content="2023-10-29T15:18:24.931Z">
 <meta property="article:author" content="William Lin">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="ROP">
@@ -168,7 +168,7 @@
 
   <div class="content e-content" itemprop="articleBody">
     <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>I had posted a note of pwn for beginners(<a href="https://wha13.github.io/2023/10/12/pwn-note/">link here</a>), and recently I’ve learned more about ROP, so here is this post~  </p>
-<h2 id="ROP"><a href="#ROP" class="headerlink" title="ROP"></a>ROP</h2><h3 id="What-is-ROP"><a href="#What-is-ROP" class="headerlink" title="What is ROP?"></a>What is ROP?</h3><p>ROP(Return Oriented Program) is an attack method extended from BOF(Buffer Overflow), in ROP, the key point is to cover return address and lead it to Program Fragments you want.<br>Basically, a fragment end with <code>ret</code> is mostly used.  </p>
+<h2 id="ROP"><a href="#ROP" class="headerlink" title="ROP"></a>ROP</h2><h3 id="What-is-ROP"><a href="#What-is-ROP" class="headerlink" title="What is ROP?"></a>What is ROP?</h3><p>ROP(Return Oriented Program) is an attack method extended from BOF(Buffer Overflow), in ROP, the key point is to cover return address and lead it to Program Fragments you want(can be repeated many times if you have many usable fragments).<br>Basically, a fragment end with <code>ret</code> is mostly used.  </p>
 <h3 id="x86-64-ROP"><a href="#x86-64-ROP" class="headerlink" title="x86_64 ROP"></a>x86_64 ROP</h3><p>In x86_64, size of an address is 8 bytes(p64 in pwntool), so registers used frequently are rax, rdi, rsi, rdx ……<br>To connect the ROP Chain, it’s important to make sure every register called in the function, and find the corresponding fregment in the program. Is easy to find fregment with tools such as <code>ROPgadget</code>  and <code>pwntool</code>.<br><strong>ROPgadget:</strong>  </p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ROPgadget --binary=binary_file | grep &quot;mov dword .* ret&quot; | less</span><br></pre></td></tr></table></figure>
 <p>In this command, I want to find a gadget start with mov_dword and end with ret.<br>but is much more easier to find a register fragment with pwntool.<br><strong>pwntool</strong></p>

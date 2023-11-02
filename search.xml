@@ -80,15 +80,15 @@
             
             <tag> Classical cipher </tag>
             
-            <tag> pwn </tag>
-            
-            <tag> GOT Hijacking </tag>
-            
             <tag> WAN </tag>
             
             <tag> SunShine CTF </tag>
             
             <tag> Forensics </tag>
+            
+            <tag> pwn </tag>
+            
+            <tag> GOT Hijacking </tag>
             
             <tag> Scripting </tag>
             
@@ -117,11 +117,11 @@
             
             <tag> pwn </tag>
             
+            <tag> GOT Hijacking </tag>
+            
             <tag> ret2code </tag>
             
             <tag> ret2lib </tag>
-            
-            <tag> GOT Hijacking </tag>
             
             <tag> format string </tag>
             

@@ -272,13 +272,13 @@
             
             <tag> Cryptography </tag>
             
+            <tag> Wiener&#39;s Attack </tag>
+            
             <tag> picoCTF </tag>
             
             <tag> Pollard p-1 </tag>
             
             <tag> Smooth Prime </tag>
-            
-            <tag> Wiener&#39;s Attack </tag>
             
         </tags>
       
@@ -305,8 +305,6 @@
             
             <tag> Cryptography </tag>
             
-            <tag> Wiener&#39;s Attack </tag>
-            
             <tag> Known High Bits Of p </tag>
             
             <tag> LLL </tag>
@@ -314,6 +312,8 @@
             <tag> Linux </tag>
             
             <tag> LoTuX CTF </tag>
+            
+            <tag> Wiener&#39;s Attack </tag>
             
             <tag> john </tag>
             

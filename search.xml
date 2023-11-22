@@ -4,7 +4,7 @@
   
     
     <entry>
-      <title>dogcat lab Writeup on TryHackMe</title>
+      <title>dogcat CTF Writeup on TryHackMe</title>
       <link href="/2023/11/21/dogcatlab/"/>
       <url>/2023/11/21/dogcatlab/</url>
       
@@ -16,11 +16,11 @@
             
             <tag> CTF </tag>
             
-            <tag> LFI </tag>
-            
             <tag> Pentesting </tag>
             
             <tag> TryHackMe </tag>
+            
+            <tag> LFI </tag>
             
             <tag> Container </tag>
             

@@ -4,6 +4,27 @@
   
     
     <entry>
+      <title>金盾獎 2023 心得文</title>
+      <link href="/2023/11/25/csc2023/"/>
+      <url>/2023/11/25/csc2023/</url>
+      
+        <content type="html"><![CDATA[<p>Team Name:RestOrPwn<br>Rank:2  </p><h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>這次能在這場比賽拿第二真的好開心，也感謝我的隊友Grasping631和同學ccwt一起陪我玩 &gt;&lt;  </p><h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><p>本來有點懶得寫orz，不過今天早上看到學弟yoni問我會不會有wp，心情沉澱一下之後還是決定來寫啦~~~<br>開賽前本來想說這次拿個潛力獎可以去特選就很棒ㄌ&gt;&lt;，結果開賽一直到兩小時後我們進去打情境題的時候就只有我戳出的一題目CVE任意檔案讀取漏洞，就感覺有點涼&#x3D; &#x3D; (我甚至沒把另一個標示簡單的SQL Injection登入繞過解出來，超笨)<br>結果今年情境題我們是抽到一個門禁系統，你要在三十分鐘內成功複製貼在桌上的卡片資訊，結果我們在等待時間查的資訊意外的有幫助，最後各種混亂下互相配合成功破譯並複製內容，這時候就有點小小的被振奮到，也決定回去好好看看其他題目。<br>下午回來看了一下題目，發現逆向工程或者惡意封包分析的藍隊東東我根本就沒頭緒，我目光就鎖定在一個標示難的國小網站，簡單RECON一下之後發現一個隱藏的登入頁面，就在我沒頭緒的時候在旁邊玩得ccwt意外的發現帳號就是主頁上的公號，我就突然想到主頁pdf也有一個叫陳先生的人的公號，所以我就嘗試拿他的分機號碼當密碼登入就進到下一個頁面ㄌorz。之後就是各種IDOR和彩虹表攻擊就過ㄌ，然後我跑出去裝水意外看到score board發現我們第四名……<br>看完之後其實心有稍微放下來，就跑去看了 Grasping631 已經開好解答的題目，意外發現flag就base64編碼後放在解答最後就直接送ㄌ(O)，然後最後的時間就是我把ssh題目的程式碼讀完後逆一下解出+我們三個試著通靈出另一個開解答題目的flag。(然後這時候就關板ㄌQQ)  </p><h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>整場比賽的題目蠻有趣的，很貼近現實世界(跟一般的ctf競賽不一樣)，比較有趣的就是賽後出題者講到水熊蟲病毒封包的時候火藥味很濃XD，但我不會forensics聽的其實也不是很懂就是w。  </p><p>回想起來好像真的不會後悔在高一下決定放棄競數以及高二的時候沒上能競，算是高中打比賽第一次有種努力值得的感覺吧，也給國中的自己一個交代ㄌ(應該啦…雖然國中有學資安但沒想過高中要比賽就是XDD  </p><p>最後，再一次感謝我的隊友，以及在我情緒低潮時陪伴我的老師、學長、朋友和同學們，開導了我並讓我嘗試國中完全沒想過要走的路，並在這途中不斷扶持我，在日常中陪我各種耍笨，散心，真的很開心 &lt;3。  </p><p>這場比賽表現很好，也更深刻發現自己還有好多要學 &gt;&lt; 繼續努力owobbbb  </p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> CTF </tag>
+            
+            <tag> RestOrPwn </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>The Marketplace CTF Writeup on TryHackMe</title>
       <link href="/2023/11/22/marketplacectf/"/>
       <url>/2023/11/22/marketplacectf/</url>

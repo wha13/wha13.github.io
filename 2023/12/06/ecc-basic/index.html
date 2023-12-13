@@ -6,18 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="Before all橢圓曲線好ㄟ &gt;&lt; b隨筆記一下，一樣是從CryptoHack學來ㄉ未完成，會慢慢補齊全。   Note基本知識：通常ECC丟出來的曲線都是：    E: Y^2 &#x3D; X^3 + aX + b   4a^3 + 27b^2 ≠ 0  在F_p下曲線點加法定律：   1234(a) P + O &#x3D; O + P &#x3D; P(b) P + (−P) &#x3D; O(c) (">
+    <meta name="description" content="Before all橢圓曲線好ㄟ &gt;&lt; b隨筆記一下，一樣是從CryptoHack學來ㄉ未完成，會慢慢補齊全。   Note基本知識：通常ECC丟出來的曲線都是：    E: Y^2 &#x3D; X^3 + aX + b   4a^3 + 27b^2 ≠ 0  在F_p下曲線點加法定律：簡單來說就是取兩點連線後交取縣的第三點之對稱點。   1234(a) P + O &#x3D; O + P">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ECC 隨筆">
 <meta property="og:url" content="http://wha13.github.io/2023/12/06/ecc-basic/index.html">
 <meta property="og:site_name" content="Whale120&#39;s Blog">
-<meta property="og:description" content="Before all橢圓曲線好ㄟ &gt;&lt; b隨筆記一下，一樣是從CryptoHack學來ㄉ未完成，會慢慢補齊全。   Note基本知識：通常ECC丟出來的曲線都是：    E: Y^2 &#x3D; X^3 + aX + b   4a^3 + 27b^2 ≠ 0  在F_p下曲線點加法定律：   1234(a) P + O &#x3D; O + P &#x3D; P(b) P + (−P) &#x3D; O(c) (">
+<meta property="og:description" content="Before all橢圓曲線好ㄟ &gt;&lt; b隨筆記一下，一樣是從CryptoHack學來ㄉ未完成，會慢慢補齊全。   Note基本知識：通常ECC丟出來的曲線都是：    E: Y^2 &#x3D; X^3 + aX + b   4a^3 + 27b^2 ≠ 0  在F_p下曲線點加法定律：簡單來說就是取兩點連線後交取縣的第三點之對稱點。   1234(a) P + O &#x3D; O + P">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://hackmd.io/_uploads/Sym8PbCST.png">
 <meta property="og:image" content="https://hackmd.io/_uploads/ByPQIIQIT.png">
 <meta property="og:image" content="https://hackmd.io/_uploads/B1BpmHB8p.png">
 <meta property="article:published_time" content="2023-12-07T00:10:04.000Z">
-<meta property="article:modified_time" content="2023-12-12T14:52:49.398Z">
+<meta property="article:modified_time" content="2023-12-13T01:03:32.338Z">
 <meta property="article:author" content="William Lin">
 <meta property="article:tag" content="Cryptography">
 <meta property="article:tag" content="Note">
@@ -175,7 +175,7 @@
 <li>E: Y^2 &#x3D; X^3 + aX + b  </li>
 <li>4a^3 + 27b^2 ≠ 0</li>
 </ul>
-<p>在F_p下曲線點加法定律：  </p>
+<p>在F_p下曲線點加法定律：<br>簡單來說就是取兩點連線後交取縣的第三點之對稱點。  </p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(a) P + O = O + P = P</span><br><span class="line">(b) P + (−P) = O</span><br><span class="line">(c) (P + Q) + R = P + (Q + R)</span><br><span class="line">(d) P + Q = Q + P</span><br></pre></td></tr></table></figure>
 <p>加法算法owo：  </p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(a) If P = O, then P + Q = Q.</span><br><span class="line">(b) Otherwise, if Q = O, then P + Q = P.</span><br><span class="line">(c) Otherwise, write P = (x1, y1) and Q = (x2, y2).</span><br><span class="line">(d) If x1 = x2 and y1 = −y2, then P + Q = O.</span><br><span class="line">(e) Otherwise:</span><br><span class="line">  (e1) if P ≠ Q: λ = (y2 - y1) / (x2 - x1)</span><br><span class="line">  (e2) if P = Q: λ = (3x12 + a) / 2y1</span><br><span class="line">(f) x3 = λ2 − x1 − x2,     y3 = λ(x1 −x3) − y1</span><br><span class="line">(g) P + Q = (x3, y3)</span><br></pre></td></tr></table></figure>

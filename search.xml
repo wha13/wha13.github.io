@@ -64,9 +64,9 @@
       
         <tags>
             
-            <tag> Note </tag>
-            
             <tag> Cryptography </tag>
+            
+            <tag> Note </tag>
             
             <tag> sagemath </tag>
             
@@ -89,9 +89,9 @@
       
         <tags>
             
-            <tag> Note </tag>
-            
             <tag> Cryptography </tag>
+            
+            <tag> Note </tag>
             
             <tag> sagemath </tag>
             
@@ -200,11 +200,11 @@
             
             <tag> CTF </tag>
             
+            <tag> SQL Injection </tag>
+            
             <tag> Pentesting </tag>
             
             <tag> TryHackMe </tag>
-            
-            <tag> SQL Injection </tag>
             
             <tag> XSS </tag>
             
@@ -258,17 +258,17 @@
             
             <tag> Web Security </tag>
             
-            <tag> Cryptography </tag>
+            <tag> WAN </tag>
             
             <tag> SQL Injection </tag>
             
             <tag> pwn </tag>
             
-            <tag> WAN </tag>
-            
             <tag> vtable </tag>
             
             <tag> Signature </tag>
+            
+            <tag> Cryptography </tag>
             
         </tags>
       
@@ -401,19 +401,19 @@
             
             <tag> Web Security </tag>
             
+            <tag> WAN </tag>
+            
+            <tag> pwn </tag>
+            
             <tag> Cryptography </tag>
             
             <tag> Classical cipher </tag>
             
-            <tag> pwn </tag>
-            
-            <tag> GOT Hijacking </tag>
-            
-            <tag> WAN </tag>
-            
             <tag> SunShine CTF </tag>
             
             <tag> Forensics </tag>
+            
+            <tag> GOT Hijacking </tag>
             
             <tag> Scripting </tag>
             
@@ -442,11 +442,11 @@
             
             <tag> pwn </tag>
             
+            <tag> GOT Hijacking </tag>
+            
             <tag> ret2code </tag>
             
             <tag> ret2lib </tag>
-            
-            <tag> GOT Hijacking </tag>
             
             <tag> format string </tag>
             
@@ -463,7 +463,7 @@
       <link href="/2023/09/27/cybertea/"/>
       <url>/2023/09/27/cybertea/</url>
       
-        <content type="html"><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">  <script id="hbeData" type="hbeData" data-hmacdigest="505ec7ae2206ee648de29cca875cd39e56f214a055471c4e15118b1722e107c9">1cf1c246b979d6f93056ea1e8004a73fde8ffbb97fcd66a125a5b44485a048f43974f500a284afbb69486fd5cba6df610ed53475438a7ac7364ce0f069c09a1cd52f9e41e60f15d5b5bc30b8370fa90a33153f1b034ae036e6580c06ace08bc1c0758dff9044b30bcef334328ad051a680d63d6ce319e3dbb1b3daac1a2f3715f7d9cb097840801368d51a00c6f88103906e2c41f4a9069d046987c557604c35d3ac3d544b55bf76fc9c8671b1e24d696e58efaf36a90f5f121d5aef3fc920dd0e16088c08492162466fbd09eb4637c206f0e637c4cde2d2fee1f24c56970df9544ae317f2f6eeaf5d501b6eb71698ca6f09f36fdf3c156770d6afb0269ef068e2c1b39cbf6ad1d06862be04be3477016dfb3992548027dccc9b9cec48ce5e81d1b8daddadc2e4add4bf8d497b20b35d6015496aee85795b4023e624bb8c9237600029715ff42459bf1321533b38dd72bd2e7d955ff9d7e224755702a1ceae425b2cf76a66f94244a6d1a485fe6a76a765bcea2dab23b2accd6e1a03fa2daaf2601afa90960e9963ef7fa70e3041bab1bcc404c647c1451322e863030f57d02e30b44becf0aee35f68c44cbd7ac605fea23e1df1a9c6de0361e5f204e955ee935094e219bcb2eb54eb5eb55eee0f97543da001ee1a62d969f4b3f70cc81a2a1f7bf434994cf03013c858e442ace6f7508f07f5563af2de59e97b99f99d90609f6562ff21c306030acb304d97becadb23d4c8a100f836f106a61e6b259075ae960a15d7d1862d8202c6c07e2b29a1e479f508377d7f7c25fc92506e261f753514ab16f3565c1acc9bf20f046b66d93bb8c23c9a210ec93ac44c44f0a81a84cde7830196a55e84479cbbeb28cd40f5891a4e86bfbe4ccedff71ebf4b71adcbe4c1037008c3434cb272b10826f6881f4c140ce8fffd270aca79b0f32120b69f58440536c90e3a8e7303040a27b0f470013aa48243fec143ab39ef21bf9e998300316a377ed5e12165087ce52151dd512960937438545e4094c76c6bbd667b8f79c631cca9a6f53593f1aa37ce357d84c7db43e0e2de15473035b24ec17642ce0e436c0dd769470d6c00cbefedb3690bc6250410bbd4b328ceb2e7bb1cd6fcbc26582163ab822b573d749e342bf09c5efa1cfcc509307b298f93ef3e63a057774af3dc58a42d0e081f695e358630d1fea251f8b32926b8605a833f4ce39c30764133f6ea6262738527e5e08f63083d72e1d89453ce823d40be8c096adcba915b81742b7f7a9c65fcef4ffff2423186867f218727224ff41cda6fbb6d70e08725c9aa0e5d1b5ad778e2240f67530a8ec298c55209f8a27911ca8eefa70380b26700c1cb36a07348e158989c528d007b5dafa6787d81866f4b1716e7ea360d38647d6fd7fd1a60820477d0aa063ca65ef7a302fe33b8c354bde1ac6469d79369f65d2f3842a28fc5e5874800806861275188b57cda8cc1162d8e819218ee8a5f97c61c011310e525d2258d01d433f11b1c3cac8237d220a7743c6e54fd0c1fcd09da07e7400ea888fd07c6f431e4cccb970a2a634580dd22205619a9d0022c5abb8f6c2561570fbf3043f2c56c4e8111e4daeec4065cb4c363e06f0d5a88caebc4a5b71cd453fd0ec16e4470ddfeeccce17d9b883197fc9d0a0abe99861f2dbb75b3582b0e4aa736e87f0796f38ea896aefe757f0b3ef2eac91d94bc821a3d3e1f6e74b55bcd03902977e52c2602daccd2df1e9e3239d99c49727bc9d3a0a47aacd4fe6dc7708151716933afaaddffe70628a622e227036841da4c86fd2c15c9620395312cbff13449bab16263396e43c7cc4d6d542a20490ec05a391470a29c770858987b9126457a47fd7c2cd6958a330f89c2c02da48a4484abd1b55ce3f0dd5943405110c56b60f19dec32794a25ecbb84417a7624a9849859e5331526d2fa81680a2232414499e55f9e215c44684db0204942fa0d1bf3bed62a46cbd476fcacf16b3ae5b6a9180ebe3073405b195544be42a2a0c115c5733e1ce533fda4ff6f5be1045a2768a54d7333f9691cc425dae24787efdb225898016e849b0604899b13d4348b0a5a5f0f343c83168a0d9b7cb79893ebe3d787ee873a37ca536906318524526d77faf7a0f81cb6f936101b9d576314206b6d672738edf1aa9391a9d18a3368a685fc5abf97c1803e91c9e5a354fbc9384caa55aaaefc139a94d06b447b6bce3a8674adbb4dce37a2bd3bb773940a651269cdff41efecfac8fc4ba4673b79380e113137b71389157a2be4cd72a8da83ff0738f4ace5f4fbda187cdd9037f4055ac6e190e6dc5d5b7f936bece49adc61e923017ad7a94564c137b8cc33d22f1aad02d484fe585abce6d920301bbb1f6ab46b38e640c80ec659dde71f16db23fed54a5213096cc623308c258e658095b66abdf28075745ff898be530672356a29d46f6762eabdcadc7894a166ee31e9121539cad57d3a08b573d9e7cc2378ae28ea86193dcb076292699837ebf30d8ba731f1f76e9bca6031db657e6009943fa04280bf71a46f7f2e6c550f0e59678955efc4725dcd2b5f9f0b278022bab04da2e9485ac8c113328efa53c50aa5b08c6c7130fa7f5dfd3d8eee7718ae72024a51e9e56acfdf585e77d74c7d158812c832444a049bd4bcab06e74d8ed476f97b3580f176b97f59cfadb580061d5ef285a1be4d05a4a63d99bc89a322037cf009fee2d8a96b31ad9d0a374bef19d1d33d33fc97daa1b130922e6666fed17287a605c4bd1e99c568f0d399a91c0f81b9a0bc466909340f6c34a32506e5382df717264adebdb8d8b9d6e97292b266bded1d0cb915b0ff4a5d1d7d7b9325b42d526c17912bdc15a7854d26d799df0f7e28782383b74906c5797fa4e86d699a4b1a50c6250ddf382f4f41edeae5ac04cc9e7d58ed47c1e1db28976958d039c8e65c18d98b79b09fbdb24bfb883cc99a160454a9387edf66a5e9b740876f803a2b1d2ceea7f55fbcb80ab023feda2900f475f6f1a8a834f4ae9951444d999a1238aeac642c4e56a9dad70f6fc50916fa0182142bb67b2560332645aa272473bb9ba9a8cbb63ad6c32b1ab1fc75a6b3007e2d5a593f435f9b80de152f154ca7c987726e0c5dd1aa8a416e402c0b2f9fd53a7f70d38c9985e329ddac3e48a8d4af5bbc50f9b7250ee562bde01c890f0733c3b425b5f4322763835e6d9e12be9409fdc5475904fd23d1874b848fd01cbcc274f115337cf6a662b6e80c5a3df615afb45da371f79eaa44f413535a259f7dc51403efb6cf2ab8756922f57ace8ab28cab61313ab46b1111ebcfc82d6d7d452c4da69ba6ddae1a393fe724c50f521f60748957fce23e90349dc2a536fa7a4b77dc7923c3f4dc2bf8687a7ee0a9fc33a069fce5e40bdcfdf0f3ed4cc1758ef08546062fe6b5e87e0a3612d4b2d722e98dc54f6c4e6fb229d7a3aa2aa23546574114deb48869d1c1e071c4c4bc3694d7cb9046977271c2543cdaf37f7f7037afb993265fe50b908bdcc5549ab0b53465177a65c53fcb7378fc1906440e29620bcb5dfd479fb4c77c28d1bd7cbd2157050b4bc6fed23a08d1144af66d39c6c4beb44842fe5ec46801e4b44567627ea6f088fd4d72bd9d9b8a63984fc9ab2539b33616e3f2a11e70fbc2496f99cf61ad277b6a84ed13c1d6fef6f9bd369a5432731fa57f6ed32e3d537d170504c534aeb88398b27fdf69181523f8ce420f09900d424fe675d605109710fdb9b0492931108785077374daeb732388300a1d19c06fd1c2e539f408bb9093c9e0efbe39ac0d50d626416cf9c27812355f8b4ab9be2eb9c0fd6f7536d464a772a38bce209a3934159c9970f9ef9e638c45b983af25350f5a34fb14112727079d63769e595285daa2ecd0fa3a45a390a2aa82c441658fc95ceab8ea84f6388dc33cef5a531cc9e1cc33af3fe2bd6266ef5285c1ef3cdf3529a645c74bdf0616a905f2dcfd9f3f84cf6f6b02804530ed0dfc4dd6c48d96f23a70ee871cfefd2a4defbc82305eb0484d7fa5cc1cf9c5c7cbba898d667a034585020b877107accdd49855eded0cfd7c846762f036ae83ffbcec24a69d6d19eca6a0a525fa2a3d141a7d42d24a3a330267d504965b93a2ab4dcbaccd858397c83fc7cadd3de3ea67427337642be7555e3b31ac6c997584aa37649963b8ff79a9a260f55c72f5e8c481fb67c7af05515bebe7664a4fcf08ab32ddb902777172f1095b9bf1a35eba0b8bf20d99a66150d13eb180a62fc7892e4ac12a67126e6c3ba1b1e884d7ee90c27e25d3e4fe36be6e7237611d6f957376a4605fbb90552882a6fc9eaa806a84bf98304b44212b07aa3d114c5d25e63358cf8fe6765dec02d17568a5f9172779e45db794253c4b2f984960d49558478c5d240db58464305654ddbcd0ba31e5ab4194488a254b3be82e5bf4b506d83691815fc2d1da7b83d08efaa092984e1b8b3371f4a3320302f2a8ebf79305aec0a08af2e32c327c92aee31d39a2260015c4957db1e2bf49b754602d0f23236639c6466f58cf9fdba6cefcffee6d013184f8fa222cb0bcf2d044d5c16d591f6ed1df0ce7b4e52d532af8e63927b61a3e80d560acbfb1640342def8045a3f7269cb92958c346f5065887b31a02d7a1328385117fb7025d35890c1407b3c4614d1589fdf330beab7ff53c1c74d66a49dddf398be42e2c666871dee0212b999bf47d99383f92abe36b7f77b6838bc3c6052d93c74e5b29156f994fa6438621d56a88e717b214ddc2fd51710791e3522807655a37f66472f977d3cdc01b633c630335966fffce8967d791005ff29e04333f6f25ea17edc8b98272e45d9a1f8e79bd30f40d56f6672ddaa423e54d112cc780e6c55e9db866f0c3617f257a246c4fb5dc75100218d044c854dd2fe3b1bbac82b68f966e1cbe7e3b7081cea5f060c535928afe3e12013ef850b7ed84bd42d29776eef0f8f5cb871194ba7629bc220679a86667ba333666cc8f77f08999c562a13dbabff5e3312c53efeef38876b1daf3813eb445ac179d46ee1cdd9890d439c706ee3710119f12a58dfe2c099cc283c21d71e112176e41ff234c49e16ed4f64621ae1b245e36c86874c963df971e8a12253765f142efbf46eb22a93bd125866e3a50044dae51c868a9d0695552fde018034bd116785d499ef2c6dfc3355466919b9238f72d24220de8f0c861461c078b16bc065043ce9ec09a7a4dad9c6a9c3a7cb933d4ce24e56041782b4e0ecce3dc6362a84011a231ea0d7add887c2b7513b2e7235caba24154b822c0c2378aed6e0a37c60c92a5a8e0d6dc1805db59325b9f6d3cd9c9bea8c4d101e275c7002f188b552a4592d3e71c428dcc70cb35d74d3792461b7479400178259989f92af2b54ebc61f495228b4a63653c237a3f53f5093f32a21f083e01d7b43e9e834c81807e6a8d6fc7b1356fec351045a32de8b1999a1efda96ebf9cd7af0bb27c26c7b3e18af8929cb74d5d529473938018af5a7e6474df08be067a9460add324aac6409d9cee4088261b84c7c69311aa54c7dc8f01283aedcb199f4a29a9bb9cefa50985d5ab5116f406001b9f5d0be6d5a7de73bdac4eb1b5e901882c116df8ec4a3594f17ff19737ecf40308d8e775f1be1db0c93c9f06583c096b198d4c150be8aa2723286ffa3b9fd6e23eb0a01f872482a1a39e805867bde2b3ba92685b836ec241584c08ce7880c12f21bafd47362e790d17949fa89c9cca1ca320f1822832a694c97febd2514dc2c1fcedbdc892a212e5addbafeb051f25e6aa155d06cbe46e13eb314855569f2a46dc0618c01ca6e43e40a9d0a851d81308c5143f14743a73db00cd19e843150fa9a4c758c94946bea6579d6eb17d6e970c303759f741264620817fba623fd02d38468440e91a7be8bcd3009159fb3c388f16be4bd32f01a65fd3528300fe212bf9df6b7e5b7c9f88aa04df6041ded73b0ca704dae601139b18ee6cbc33d671a3a24b4539bca9be1bbe294639c5ab60a4312e8f28e96a82dd79b14b6394a653e6a651a85fba50b048a1f9eb29631598d3ff333b7ef684e5a2fb80348df15de1e3f58a83eedec9513611c0bb0c8cf567a9aba8eda5f2cc9b08e50511e35bd58a858a458f7b9d48077edaab08c8edf9c0e1ac1aa8ce8293394ff86b3711abfe2838038d67b3bb5ec8bd4f78ee3ff0feb501111b05d6deeded953d707bbb355cc2c1ed6c39ec5111a33ffd7eaa1de1fba8292605ce84402de70622ace716b2c2052130c3d5559697cf93921f0aa43bd07aa1de8652bdde7473f155c38f727b35e4c499b002ed4de32743086188eae34d0b2c9f0bf44c5929716c451bb4222b97e67db4f975a22b42788602150a0b1e28598cf45f28862acad7223a5a6c6b9f060a19013e5f3f5a45a8ca981787735999d93461d9f408e8a063b5317a61a921e538adac207ce3493363340386b0d7da5ebdcf7e9a8f246573c21232506a995e20e55920a48de49ee4455938119f908b49c314a903a0d1e2d9e7138c4b8e7fd386b4d3c62142669fce6e9a5ece603330b97fb4d2d2c740e8fd742ec7b171f090d200733b4261ac677c3d9b9641523bfbf4abbd327f24d8080adf225f50c7f85c9f7bb08dd570b91f2109b4142154fafddcda513be1ed10958f0dd8a51755a3694f7e862c042ac760a9e1a5342cdce839f71d7d839763f8d788ac954f65188860c96a01c728d3e154d9e6052c29fd351a5b7c257d772d7b241f54ab7e1205388120d1820cde33072cbdf15baa053979df09b458aed496757de4519a8b4102c3cab5005bd132ecd796a45cf44b92d9c2d4fb670e0c1096ebdc5d15fdf557c095e926f25170eba48619ef2d54a3af74c3e22734f14e7b206fcde71a982997c20f7a8a4d219151452b6929258ce910cd07b8c796b444ad488b200879a0efd0b66c632a984364c0c88b9c0320f9557af38c8cba30da60330e2f401e5fb5d1896310d436e5596f17a6e1c222c4cca05474b4893bc83916d3ea5d4c8b05a46cb8b98222dd05156ab3b252a83cc4e30c8bdc3c1965d54b21f12c80c0402e2815c8f42c771ac8e9ce54901ad5f8ca004b49f7b93a028a22e59901ee033f85b1df0f95137f5d86846444639c69056fa5254968093dfdcff156a6ee0d237e2a018e97d20a6a85a77cb6c726f2d7981e88fc1e262c66e0ab56108d723ac4e41a6e1214f303589c3511de5db2d1f386c760f831a1a9b5a9994989f25812981727393659c62395eb820451c31d87565820ce20c303eb8da8eb2fd072c97ce1ee8a789bca0d837fef9be75d74588e04aa2703bb66f1224f95b7d79ee0ae73eef30efe8373dd6b8592a4510aed8760c47fb7013a058aebd273f20ea0b7d97abe47cb2151c0b9356e51c5f7e97d2d16b7f3f83b94b6c79f47d4259b725c2c3d27b85a65f9145915f1892223f41b6d8a651271f78fca1f96009134d3caf9985a08d2ab1fb85c9717c46287c82151278ba841e7d2525b4994a31a3824062440ee2a40d6dca55156031e6730efce38f6e0c4a13e7ba62edb978bb006987527107d08e78e64c5904df63a07f8642cb6ddfb1ddedd7ef08db941b99a76fc3bbba8e519a3dfce605e0e9543d90c5e56f5565c6dfdbc863c9229937c1bd7a6ed16a34143ad79ad526e68deee5f7b7f415152c4eea8710e335295fc1572507ce841a9ac024b310bb8706525459af8bfb464cb4b98f0e1ac381a78cf6189ba2480baefd5ef1973fe76a815cddc40944adf2ac2e626a3a39577503e15f8f03300c168d7bdc73cd62ceb66ea2b9366d91792a75de45edb806ad1834d396848e8bc19be5f769c04c720a7ddf5f344fb34f871109948721c28fb5c967681a2291bf4161e195712f3daf658be2b628abd2cd91d7f5491b3efcd655421f78ed82aa989a15337a7e532097ba0539c2e80173437bd019819ac6cf11718cb17c149acc0743b778ee37c2fa142d677a4c7ff79bc91d14af5d08e2262ad4cbe61081b8d47a7dad081970737a6c5627b4ef7e813242c04c78b3f909c0d44d4a1cd1aa2a2c165ee16742e58209c39a2b28a8fef2afb9bee79c9d5e24175f84cf507c429d0c02945e692c9a301144eea0602a4b2acbe36dd96d7b4818ae5c4b7828f5fe9c6b7d80099485bf51ea307b2e9025c2a5a01abfb80bd82f1742a64b6884e9d691915f84c7952db973b5d0e9f3baae4b7450baa86f9f28ac9fb4e3960b4ea8801d60b329055d576c1886a276f90569635a1c9d09b4fe6187d9cd722bd72878b2e8c74efea8c32bf00ea791e4574daf4e080851a5e6b795cae2c018bb2f193691b67a07d22ecb58b9c4b1d419272af11de356804e3fb79b8790ef77a0ac5746a5e7b72bdfcebdf5ba7e21a8eb101ccf4a41de1dfdc976045c70e24d41aca1b0341df29aaed7fba909f4b0a23d8d10490b3f28f73a97e9369a54092fb06ddb0df814dbd7fa16fba592dff4f14206c31b7762e4d05c53b1ad059d6ba2c71ed15bfc9e6c0d033ad6ca3afc284145ba42ab6d3f79eb7b8630ce5ad71ff658a7203cf10d36c0323f624addad914d451839649402ff1e348545a4a4ec209c5a5d35a533d19d6231cdcaf032cdcf499d30ce5c54acd15847f8ce21b41f302e53792dfda2c74b56f51935777db3e34bd29dada001f4277181cc7f9bed0f59333da14b2f2080dbc9c41f8878bbf52e758f48717cc9ce36ad6d6304aaec9b23028f637ec9ec63acb317a9eb86362204cc6ce8de685a08e1254ed2d2250196e48a194eb47c2eddd214e5d0965995dfdf1b4bcbc3f1c3ce2f3f27f480ffb670519db009464dd99e7ca26ed67de16da6730141d15d9c40adde6dbc01ef77f763d4738d6c16e9fd2a360bdd00b4cf7b3171c29f9af6afa4c06710a5762368ab13b3a46f642e987eb93c32e10458804fb2cc2501b150f13ee1d0110d3348048d90df44a65d53b1bb45a2b2191e6818689e1f51bfa31a024c9df9cf39af6d545e281b00dbf29da53c2c4d81dfb80a21a0990c47c275e650626072fce52246b6b3dc938bf0bf43ddc2fbc82d6996e4d9d12562fa05826725ac58e244e725b71d8f50b09577af369cd084dc3f2a8e9c062639db8b0dac186f6228b701e54ada1d22d240bde8d4a5af8118622d40734a01e14e2b5fe1438e9a7b971ad1e32470700bfc</script>  <div class="hbe hbe-content">    <div class="hbe hbe-input hbe-input-default">      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>      </label>    </div>  </div></div><script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+        <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因為我好像也不強，應該也沒資格說怎麼學比較好<br>所以目前不公開，就只給社員們看啦~<br><del>反正不要看我的blog學就好，會瘋掉</del>  </p><ul><li>最後更新：2023&#x2F;12&#x2F;24  ; 上次更新：2023&#x2F;10&#x2F;10</li></ul><h3 id="CTF-v-s-reality"><a href="#CTF-v-s-reality" class="headerlink" title="CTF v.s. reality ?"></a>CTF v.s. reality ?</h3><p>好像第一堂課有人問而且很重要所以就放在這了。<br>我們的資安比賽CTF跟現實世界的差異我認為在於領域的廣泛性和複雜點不同吧，CTF最主要的就五個類別(web, crypto, pwn, reverse engineering, misc…)，可是現實世界還有像是滲透、工業控制、blablabla你想得到想不到的東西，這年頭跟資訊有關的東西都有它的資安，所以從CTF學資安和打比賽、大學申請加分完全ok，但偶爾看點現實世界的東西絕對不虧。  </p><p>至於複雜性，CTF比賽通常是高複雜性但服務本身複雜度低，但現實世界(還有金盾獎)，你要會RECON(偵查)，從不同服務中找到攻擊點或攻擊鍊。  </p><h2 id="資源區"><a href="#資源區" class="headerlink" title="資源區"></a>資源區</h2><h3 id="行前準備"><a href="#行前準備" class="headerlink" title="行前準備"></a>行前準備</h3><ol><li>kali linux+vmware <a href="https://hackmd.io/@aifred0729/Install_Kali#%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%9D">安裝教學點我</a>  </li><li>學會基本linx指令 <a href="https://linuxsurvival.com/linux-tutorial-introduction/">Linux Survival</a>  </li><li>先學一點點python： <a href="https://www.youtube.com/playlist?list=PL-g0fdC5RMboYEyt6QS2iLb_1m7QcgfHk">python 新手村</a>  </li><li>去看刑法 <a href="https://depart.moe.edu.tw/ED2700/News_Content.aspx?n=6F7CB09F756DF1E7&s=6B0C5DE54C305959&sms=A67688921AA3EF58">戳下去</a></li></ol><p>C&#x2F;C++學校都有教應該不用特別放，如果之後學深了要看一些演算法和數學。<br>還是要強調第四點，主要就是打滲透測試&#x2F;弱點通報要注意，避免自己越線(<br>啊至於不做壞事應該是基本常識(應該…啦，很丟臉的)  </p><h3 id="綜合"><a href="#綜合" class="headerlink" title="綜合"></a>綜合</h3><p><a href="https://picoctf.org/">picoCTF(新手從General Skills開始)</a><br><a href="https://lotuxctf.com/">LoTuX CTF(pico摸到一定程度再來看，很多題目有官方解答)</a><br><a href="https://www.youtube.com/c/OfficialSCIST">SCIST 的影片</a><br><a href="https://discord.gg/szYqKAdRS2">成大NCKUCTF</a><br><a href="https://discord.gg/yN2yzaeEtv">交大BAMBOOFOX</a><br><a href="https://ctf.nicewhite.xyz/">ICEDCTF(社團的，Crypto比較多，web和pwn沒有經費丟)</a><br><a href="https://ctftime.org/">CTF TIME(看比賽用的)</a><br>新手絕對建議從picoCTF開始打，然後不會得按照題目名稱+picoCTF上網估狗幾乎都有解答<br>課程的話有興趣的SCIST的課程影片好像真的不錯，推。  </p><h3 id="類別"><a href="#類別" class="headerlink" title="類別"></a>類別</h3><p>還是以CTF為主畢竟社團時間不多<br><a href="#web">網站安全</a><br><a href="#crypto">密碼學</a><br><a href="#rev">逆向工程</a><br><a href="#pwn">帶漏洞服務</a><br><a href="#forensics">鑑識科學</a><br><a href="#misc">雜項</a><br><a href="#PT">滲透測試</a></p><h4 id="web"><a href="#web" class="headerlink" title="web"></a>web</h4><p>易入門難精通<br><a href="https://portswigger.net/web-security">Port Swigger(分類詳細講解，強推)</a><br><a href="https://ctf.hacker101.com/">Hacker101CTF(題目比較貼近現實，用來練習RECON和黑盒居多)</a><br><a href="https://overthewire.org/wargames/natas/">Wargames Natas</a>  </p><h4 id="crypto"><a href="#crypto" class="headerlink" title="crypto"></a>crypto</h4><p><a href="https://cryptohack.org/challenges/">CryptoHack(打完應該就很夠了)</a><br>有數學和演算法底子看應該會輕鬆很多。  </p><h4 id="rev"><a href="#rev" class="headerlink" title="rev"></a>rev</h4><p>由於講師不熟逆向工程，先把picoCTF打一打。<br>等你填坑<br><a href="https://www.youtube.com/@frozenkp">Frozenkp 逆向工程入門課</a>  </p><h4 id="pwn"><a href="#pwn" class="headerlink" title="pwn"></a>pwn</h4><p>一定要先學rev再來學pwn<br><a href="https://www.youtube.com/@frozenkp">Frozenkp pwn入門到進階</a><br><a href="https://github.com/ss8651twtw/Pwn-CTF-writeups/tree/main">ISIP課程題目，可以配合Frozenkp的影片</a><br><a href="https://drive.google.com/file/d/1DdcDiM-tmcdm8C6SKs32NkTZQ7J8pJwD/view?usp=sharing">Frozenkp的講義</a>  </p><h4 id="forensics"><a href="#forensics" class="headerlink" title="forensics"></a>forensics</h4><p>等你填坑，一樣先pico  </p><h4 id="misc"><a href="#misc" class="headerlink" title="misc"></a>misc</h4><p>多拜拜(?)  </p><h4 id="PT"><a href="#PT" class="headerlink" title="PT"></a>PT</h4><p>一般的CTF比賽比較少，但金盾獎有時候會有。<br><a href="https://tryhackme.com/">TryHackMe</a><br><a href="https://www.hackthebox.com/">Hack The Box</a>  </p><h2 id="比賽"><a href="#比賽" class="headerlink" title="比賽"></a>比賽</h2><p>這邊以國內高中生可以打得為主。<br><a href="https://csc.nics.nat.gov.tw/">金盾獎(每年下半年，算國內最重要賽事之一，初賽選擇題有點怪)</a><br><a href="https://ais3.org/mfctf/">MyFirstCTF，每年五月左右，新手友善但只能考一次</a><br><a href="https://ais3.org/eof">AIS3 EOF(高階比賽，要跟大學生一起打，每年一月到二月左右)</a><br><a href="https://gics.tw/">資安女婕思(有性別限制qq，題目有夠水但聽說初賽很怪)</a><br><a href="https://cggc.nchc.org.tw/">CGGC網路守護者挑戰賽(要跟大學生一起打)</a><br><a href="https://tcat2023.twisc.ncku.edu.tw/">T貓盃(怪?)</a><br>其他就CTF TIME上面看一看  </p><h2 id="課程"><a href="#課程" class="headerlink" title="課程"></a>課程</h2><p>這邊就放公開，教育部辦的(等於可以刷證書(X))<br><a href="https://www.facebook.com/AIS3tw">AIS3</a><br><a href="https://www.facebook.com/profile.php?id=100067003001515">台灣好厲駭</a><br><a href="https://www.facebook.com/profile.php?id=100065584200879">ISIP</a>  </p>]]></content>
       
       
       
@@ -525,13 +525,13 @@
             
             <tag> Cryptography </tag>
             
-            <tag> Wiener&#39;s Attack </tag>
-            
             <tag> picoCTF </tag>
             
             <tag> Pollard p-1 </tag>
             
             <tag> Smooth Prime </tag>
+            
+            <tag> Wiener&#39;s Attack </tag>
             
         </tags>
       
@@ -550,13 +550,15 @@
       
         <tags>
             
-            <tag> AES </tag>
-            
             <tag> CTF </tag>
             
             <tag> RSA </tag>
             
+            <tag> AES </tag>
+            
             <tag> Cryptography </tag>
+            
+            <tag> Wiener&#39;s Attack </tag>
             
             <tag> Known High Bits Of p </tag>
             
@@ -565,8 +567,6 @@
             <tag> Linux </tag>
             
             <tag> LoTuX CTF </tag>
-            
-            <tag> Wiener&#39;s Attack </tag>
             
             <tag> john </tag>
             
@@ -595,11 +595,11 @@
             
             <tag> Web Security </tag>
             
+            <tag> SQL Injection </tag>
+            
             <tag> LFI </tag>
             
             <tag> loTuX CTF </tag>
-            
-            <tag> SQL Injection </tag>
             
             <tag> XSS </tag>
             

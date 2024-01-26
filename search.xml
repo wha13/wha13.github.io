@@ -16,11 +16,11 @@
             
             <tag> CTF </tag>
             
+            <tag> Web Security </tag>
+            
             <tag> ECC </tag>
             
             <tag> Cryptography </tag>
-            
-            <tag> Web Security </tag>
             
             <tag> Command Injection </tag>
             
@@ -89,11 +89,11 @@
       
         <tags>
             
+            <tag> Note </tag>
+            
             <tag> Pentesting </tag>
             
             <tag> TryHackMe </tag>
-            
-            <tag> Note </tag>
             
             <tag> msfconsole </tag>
             
@@ -110,7 +110,7 @@
       <link href="/2023/12/06/ecc-basic/"/>
       <url>/2023/12/06/ecc-basic/</url>
       
-        <content type="html"><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>橢圓曲線好ㄟ &gt;&lt; b<br>隨筆記一下，一樣是從CryptoHack學來ㄉ<br>未完成，會慢慢補齊全。  </p><h2 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h2><h3 id="基本知識："><a href="#基本知識：" class="headerlink" title="基本知識："></a>基本知識：</h3><p>通常ECC丟出來的曲線都是：  </p><ul><li>E: Y^2 &#x3D; X^3 + aX + b  </li><li>4a^3 + 27b^2 ≠ 0</li></ul><p>在F_p下曲線點加法定律：<br>簡單來說就是取兩點連線後交取縣的第三點之對稱點。  </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(a) P + O = O + P = P</span><br><span class="line">(b) P + (−P) = O</span><br><span class="line">(c) (P + Q) + R = P + (Q + R)</span><br><span class="line">(d) P + Q = Q + P</span><br></pre></td></tr></table></figure><p>加法算法owo：  </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(a) If P = O, then P + Q = Q.</span><br><span class="line">(b) Otherwise, if Q = O, then P + Q = P.</span><br><span class="line">(c) Otherwise, write P = (x1, y1) and Q = (x2, y2).</span><br><span class="line">(d) If x1 = x2 and y1 = −y2, then P + Q = O.</span><br><span class="line">(e) Otherwise:</span><br><span class="line">  (e1) if P ≠ Q: λ = (y2 - y1) / (x2 - x1)</span><br><span class="line">  (e2) if P = Q: λ = (3x12 + a) / 2y1</span><br><span class="line">(f) x3 = λ2 − x1 − x2,     y3 = λ(x1 −x3) − y1</span><br><span class="line">(g) P + Q = (x3, y3)</span><br></pre></td></tr></table></figure><p><img src="https://hackmd.io/_uploads/Sym8PbCST.png" alt="image"><br><strong>source code</strong>  </p><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add_point</span>(<span class="params">p1, p2</span>):</span><br><span class="line">    <span class="keyword">if</span> p1 == (<span class="number">0</span>, <span class="number">0</span>):</span><br><span class="line">        <span class="keyword">return</span> p2</span><br><span class="line">    <span class="keyword">if</span> p2 == (<span class="number">0</span>,<span class="number">0</span>):</span><br><span class="line">        <span class="keyword">return</span> p1</span><br><span class="line">    x1, y1 = p1</span><br><span class="line">    x2, y2 = p2</span><br><span class="line">    <span class="keyword">if</span> x1 == x2 <span class="keyword">and</span> y1 == -y2:</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">    lamda = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> p1 == p2:</span><br><span class="line">        lamda = <span class="built_in">int</span>((<span class="number">3</span>*<span class="built_in">pow</span>(x1,<span class="number">2</span>,p)+a) * inverse(<span class="number">2</span>*y1, p))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        lamda = <span class="built_in">int</span>((y2-y1) * inverse(x2-x1, p))</span><br><span class="line">    x3 = <span class="built_in">int</span>((<span class="built_in">pow</span>(lamda, <span class="number">2</span>) - x1 - x2) % p)</span><br><span class="line">    y3 = <span class="built_in">int</span>((lamda*(x1 - x3) - y1) % p )</span><br><span class="line">    <span class="keyword">return</span> (x3, y3)</span><br></pre></td></tr></table></figure><p>乘法運算owo：<br>p.s.所有點都要用int()不然<code>sage</code>會抓Zmodp<br>像這樣：<br><img src="https://hackmd.io/_uploads/ByPQIIQIT.png" alt="image">  </p><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">mul_point</span>(<span class="params">n, P</span>):</span><br><span class="line">    Q = P</span><br><span class="line">    R = (<span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">while</span> n &gt; <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">if</span> n % <span class="number">2</span> == <span class="number">1</span>:</span><br><span class="line">            R = add_point(R, Q)</span><br><span class="line">        Q = add_point(Q, Q)</span><br><span class="line">        n = n//<span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> R</span><br></pre></td></tr></table></figure><p><strong>密鑰共享：</strong><br><img src="https://hackmd.io/_uploads/B1BpmHB8p.png" alt="image"><br><strong>Efficient Exchange:</strong><br>就是透過x求y，蠻好懂ㄉ。  </p><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">q_x = <span class="number">4726</span></span><br><span class="line">nB = <span class="number">6534</span></span><br><span class="line">y_2 = (<span class="built_in">pow</span>(q_x,<span class="number">3</span>) + <span class="number">497</span>*q_x + <span class="number">1768</span>) % p</span><br><span class="line">q_y = <span class="built_in">pow</span>(y_2, (p+<span class="number">1</span>)//<span class="number">4</span>, p)</span><br><span class="line">Q = (q_x, q_y)</span><br></pre></td></tr></table></figure><h3 id="DLP"><a href="#DLP" class="headerlink" title="DLP"></a>DLP</h3><p>基於ecc的離散對數問題  </p><h4 id="MoV-Attack"><a href="#MoV-Attack" class="headerlink" title="MoV Attack"></a>MoV Attack</h4><p>當p是質數的時候標準型可以用以下算法去解，你的order越smooth計算速度會越快。<br>如果今天公鑰的模不是質數，先分解之後CRT就好。<br><strong>source</strong></p><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">a=-<span class="number">104951229064556148327739944704067225950771091414555823142245215914591450861058912834056552784840698307176425328594627265181382568207073595237991025400591036568504091217142152714020714029902656538299906438142893329711443629030712718260179304547062440636851281426983383018754523639374608995894644699923989</span></span><br><span class="line">b=<span class="number">330613225413866308562655832653992432640737790102976283577689980446254383044796881349939456563614098677350931763722745890480665024910308168117972351801983224014875943389010425754101569428868865308406299896128864429744942281764740765767448933787468732728303440425139427370295303413074468467311732278185653261247210818747688700223033416748171231713809540831008656574944346358659431821890836056720018803565200414398913172518371053256926775457844063169319469</span></span><br><span class="line">q=<span class="number">3591608460994443482903056947791347533219077096619857698652660287924077811288852756512943998535250953842495478400553982301989400163261910744550921758147</span></span><br><span class="line">E = EllipticCurve(GF(q), [a, b])</span><br><span class="line">G=E(<span class="number">28607748532586155305766590971512659203413099194155217832119487667929904063769085772752568246866731921408737399300889149334418551010959577073796486388937480663378183502384364325599822278159619696537650011902619010103876865119734678532259458237178383683768508566703123494722154129671015135020887186845060</span> , <span class="number">11556771936710627311327152614495265716197411903352782890022099742435127886458521280682189301147652900443377696183067981621473494668018204621652208514757</span>)</span><br><span class="line">C=E(<span class="number">26711100496576685119729576632487291804536666301038622556968335217486889947153426038920564765985480495027226192426180920889404710714177330897458470987192539137847486749759239413620141196304823376881474287741080498376534259054440609508444858615416246577282166556054773489020913794668822330843444608421730</span>, <span class="number">12165040241593082803221196359814491555817137316163617470672182014503810780161804477407976153593724606514937006081912866361176466134156934782183659322121025579094922887583052870888825027604616070534178050563950169432924241914421544127099391730894894981983461145749926628000691771375822508363489298910865</span>)</span><br><span class="line">factors, exponents = <span class="built_in">zip</span>(*factor(E.order()))</span><br><span class="line">primes = [factors[i] ^ exponents[i] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(factors))]</span><br><span class="line">dlogs = []</span><br><span class="line"><span class="keyword">for</span> fac <span class="keyword">in</span> primes:</span><br><span class="line">    t = <span class="built_in">int</span>(G.order()) // <span class="built_in">int</span>(fac)</span><br><span class="line">    dlog = discrete_log(t*C,t*G,operation=<span class="string">&quot;+&quot;</span>)</span><br><span class="line">    dlogs += [dlog]</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;factor: &quot;</span>+<span class="built_in">str</span>(fac)+<span class="string">&quot;, Discrete Log: &quot;</span>+<span class="built_in">str</span>(dlog)) <span class="comment">#calculates discrete logarithm for each prime order</span></span><br><span class="line"></span><br><span class="line">l = crt(dlogs,primes)</span><br><span class="line"><span class="built_in">print</span>(l)</span><br></pre></td></tr></table></figure><h4 id="Pohlig-Hellman"><a href="#Pohlig-Hellman" class="headerlink" title="Pohlig-Hellman"></a>Pohlig-Hellman</h4><p>sage裡面的<code>discrete_log</code>是基於Pohlig-Hellman和BSGS，所以用<code>discrete_log</code>即可實現。</p>]]></content>
+        <content type="html"><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>橢圓曲線好ㄟ &gt;&lt; b<br>隨筆記一下，一樣是從CryptoHack學來ㄉ<br>未完成，會慢慢補齊全。  </p><h2 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h2><h3 id="基本知識："><a href="#基本知識：" class="headerlink" title="基本知識："></a>基本知識：</h3><p>通常ECC丟出來的曲線都是：  </p><ul><li>E: Y^2 &#x3D; X^3 + aX + b  </li><li>4a^3 + 27b^2 ≠ 0</li></ul><p>在F_p下曲線點加法定律：<br>簡單來說就是取兩點連線後交取縣的第三點之對稱點。  </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(a) P + O = O + P = P</span><br><span class="line">(b) P + (−P) = O</span><br><span class="line">(c) (P + Q) + R = P + (Q + R)</span><br><span class="line">(d) P + Q = Q + P</span><br></pre></td></tr></table></figure><p>加法算法owo：  </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(a) If P = O, then P + Q = Q.</span><br><span class="line">(b) Otherwise, if Q = O, then P + Q = P.</span><br><span class="line">(c) Otherwise, write P = (x1, y1) and Q = (x2, y2).</span><br><span class="line">(d) If x1 = x2 and y1 = −y2, then P + Q = O.</span><br><span class="line">(e) Otherwise:</span><br><span class="line">  (e1) if P ≠ Q: λ = (y2 - y1) / (x2 - x1)</span><br><span class="line">  (e2) if P = Q: λ = (3x12 + a) / 2y1</span><br><span class="line">(f) x3 = λ2 − x1 − x2,     y3 = λ(x1 −x3) − y1</span><br><span class="line">(g) P + Q = (x3, y3)</span><br></pre></td></tr></table></figure><p><img src="https://hackmd.io/_uploads/Sym8PbCST.png" alt="image"><br><strong>source code</strong>  </p><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add_point</span>(<span class="params">p1, p2</span>):</span><br><span class="line">    <span class="keyword">if</span> p1 == (<span class="number">0</span>, <span class="number">0</span>):</span><br><span class="line">        <span class="keyword">return</span> p2</span><br><span class="line">    <span class="keyword">if</span> p2 == (<span class="number">0</span>,<span class="number">0</span>):</span><br><span class="line">        <span class="keyword">return</span> p1</span><br><span class="line">    x1, y1 = p1</span><br><span class="line">    x2, y2 = p2</span><br><span class="line">    <span class="keyword">if</span> x1 == x2 <span class="keyword">and</span> y1 == -y2:</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">    lamda = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> p1 == p2:</span><br><span class="line">        lamda = <span class="built_in">int</span>((<span class="number">3</span>*<span class="built_in">pow</span>(x1,<span class="number">2</span>,p)+a) * inverse(<span class="number">2</span>*y1, p))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        lamda = <span class="built_in">int</span>((y2-y1) * inverse(x2-x1, p))</span><br><span class="line">    x3 = <span class="built_in">int</span>((<span class="built_in">pow</span>(lamda, <span class="number">2</span>) - x1 - x2) % p)</span><br><span class="line">    y3 = <span class="built_in">int</span>((lamda*(x1 - x3) - y1) % p )</span><br><span class="line">    <span class="keyword">return</span> (x3, y3)</span><br></pre></td></tr></table></figure><p>乘法運算owo：<br>p.s.所有點都要用int()不然<code>sage</code>會抓Zmodp<br>像這樣：<br><img src="https://hackmd.io/_uploads/ByPQIIQIT.png" alt="image">  </p><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">mul_point</span>(<span class="params">n, P</span>):</span><br><span class="line">    Q = P</span><br><span class="line">    R = (<span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">while</span> n &gt; <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">if</span> n % <span class="number">2</span> == <span class="number">1</span>:</span><br><span class="line">            R = add_point(R, Q)</span><br><span class="line">        Q = add_point(Q, Q)</span><br><span class="line">        n = n//<span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> R</span><br></pre></td></tr></table></figure><p><strong>密鑰共享：</strong><br><img src="https://hackmd.io/_uploads/B1BpmHB8p.png" alt="image"><br><strong>Efficient Exchange:</strong><br>就是透過x求y，蠻好懂ㄉ。  </p><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">q_x = <span class="number">4726</span></span><br><span class="line">nB = <span class="number">6534</span></span><br><span class="line">y_2 = (<span class="built_in">pow</span>(q_x,<span class="number">3</span>) + <span class="number">497</span>*q_x + <span class="number">1768</span>) % p</span><br><span class="line">q_y = <span class="built_in">pow</span>(y_2, (p+<span class="number">1</span>)//<span class="number">4</span>, p)</span><br><span class="line">Q = (q_x, q_y)</span><br></pre></td></tr></table></figure><h3 id="DLP"><a href="#DLP" class="headerlink" title="DLP"></a>DLP</h3><p>基於ecc的離散對數問題  </p><h4 id="MOV-Attack"><a href="#MOV-Attack" class="headerlink" title="MOV Attack"></a>MOV Attack</h4><p><a href="https://people.cs.nycu.edu.tw/~rjchen/ECC2009/19_MOVattack.pdf">link here</a><br>當p是質數的時候標準型可以用以下算法去解，你的order越smooth計算速度會越快。<br>如果今天公鑰的模不是質數，先分解之後CRT就好。<br><strong>source</strong></p><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">a=-<span class="number">104951229064556148327739944704067225950771091414555823142245215914591450861058912834056552784840698307176425328594627265181382568207073595237991025400591036568504091217142152714020714029902656538299906438142893329711443629030712718260179304547062440636851281426983383018754523639374608995894644699923989</span></span><br><span class="line">b=<span class="number">330613225413866308562655832653992432640737790102976283577689980446254383044796881349939456563614098677350931763722745890480665024910308168117972351801983224014875943389010425754101569428868865308406299896128864429744942281764740765767448933787468732728303440425139427370295303413074468467311732278185653261247210818747688700223033416748171231713809540831008656574944346358659431821890836056720018803565200414398913172518371053256926775457844063169319469</span></span><br><span class="line">q=<span class="number">3591608460994443482903056947791347533219077096619857698652660287924077811288852756512943998535250953842495478400553982301989400163261910744550921758147</span></span><br><span class="line">E = EllipticCurve(GF(q), [a, b])</span><br><span class="line">G=E(<span class="number">28607748532586155305766590971512659203413099194155217832119487667929904063769085772752568246866731921408737399300889149334418551010959577073796486388937480663378183502384364325599822278159619696537650011902619010103876865119734678532259458237178383683768508566703123494722154129671015135020887186845060</span> , <span class="number">11556771936710627311327152614495265716197411903352782890022099742435127886458521280682189301147652900443377696183067981621473494668018204621652208514757</span>)</span><br><span class="line">C=E(<span class="number">26711100496576685119729576632487291804536666301038622556968335217486889947153426038920564765985480495027226192426180920889404710714177330897458470987192539137847486749759239413620141196304823376881474287741080498376534259054440609508444858615416246577282166556054773489020913794668822330843444608421730</span>, <span class="number">12165040241593082803221196359814491555817137316163617470672182014503810780161804477407976153593724606514937006081912866361176466134156934782183659322121025579094922887583052870888825027604616070534178050563950169432924241914421544127099391730894894981983461145749926628000691771375822508363489298910865</span>)</span><br><span class="line">factors, exponents = <span class="built_in">zip</span>(*factor(E.order()))</span><br><span class="line">primes = [factors[i] ^ exponents[i] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(factors))]</span><br><span class="line">dlogs = []</span><br><span class="line"><span class="keyword">for</span> fac <span class="keyword">in</span> primes:</span><br><span class="line">    t = <span class="built_in">int</span>(G.order()) // <span class="built_in">int</span>(fac)</span><br><span class="line">    dlog = discrete_log(t*C,t*G,operation=<span class="string">&quot;+&quot;</span>)</span><br><span class="line">    dlogs += [dlog]</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;factor: &quot;</span>+<span class="built_in">str</span>(fac)+<span class="string">&quot;, Discrete Log: &quot;</span>+<span class="built_in">str</span>(dlog)) <span class="comment">#calculates discrete logarithm for each prime order</span></span><br><span class="line"></span><br><span class="line">l = crt(dlogs,primes)</span><br><span class="line"><span class="built_in">print</span>(l)</span><br></pre></td></tr></table></figure><h4 id="Pohlig-Hellman"><a href="#Pohlig-Hellman" class="headerlink" title="Pohlig-Hellman"></a>Pohlig-Hellman</h4><p>sage裡面的<code>discrete_log</code>是基於Pohlig-Hellman和BSGS，所以用<code>discrete_log</code>即可實現。</p>]]></content>
       
       
       
@@ -308,9 +308,9 @@
             
             <tag> CTF </tag>
             
-            <tag> Cryptography </tag>
-            
             <tag> Web Security </tag>
+            
+            <tag> Cryptography </tag>
             
             <tag> WAN </tag>
             
@@ -449,23 +449,23 @@
             
             <tag> CTF </tag>
             
-            <tag> Cryptography </tag>
+            <tag> ROP </tag>
             
             <tag> Web Security </tag>
             
-            <tag> ROP </tag>
+            <tag> Cryptography </tag>
             
             <tag> WAN </tag>
             
             <tag> pwn </tag>
-            
-            <tag> Classical cipher </tag>
             
             <tag> GOT Hijacking </tag>
             
             <tag> SunShine CTF </tag>
             
             <tag> Forensics </tag>
+            
+            <tag> Classical cipher </tag>
             
             <tag> Scripting </tag>
             
@@ -536,8 +536,6 @@
             
             <tag> CTF </tag>
             
-            <tag> Web Security </tag>
-            
             <tag> BOF </tag>
             
             <tag> ROP </tag>
@@ -547,6 +545,8 @@
             <tag> SSRF </tag>
             
             <tag> SSTI </tag>
+            
+            <tag> Web Security </tag>
             
             <tag> gopher </tag>
             
@@ -573,17 +573,17 @@
             
             <tag> CTF </tag>
             
-            <tag> Cryptography </tag>
-            
             <tag> RSA </tag>
             
-            <tag> Wiener&#39;s Attack </tag>
+            <tag> Cryptography </tag>
             
             <tag> picoCTF </tag>
             
             <tag> Pollard p-1 </tag>
             
             <tag> Smooth Prime </tag>
+            
+            <tag> Wiener&#39;s Attack </tag>
             
         </tags>
       
@@ -604,11 +604,15 @@
             
             <tag> CTF </tag>
             
-            <tag> Cryptography </tag>
-            
             <tag> RSA </tag>
             
+            <tag> Cryptography </tag>
+            
             <tag> AES </tag>
+            
+            <tag> Wiener&#39;s Attack </tag>
+            
+            <tag> Classical cipher </tag>
             
             <tag> Known High Bits Of p </tag>
             
@@ -618,13 +622,9 @@
             
             <tag> LoTuX CTF </tag>
             
-            <tag> Wiener&#39;s Attack </tag>
-            
             <tag> john </tag>
             
             <tag> substitution cipher </tag>
-            
-            <tag> Classical cipher </tag>
             
         </tags>
       

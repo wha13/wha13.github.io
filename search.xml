@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>2024EOFFINAL</title>
+      <link href="/2024/02/05/2024EOFFINAL/"/>
+      <url>/2024/02/05/2024EOFFINAL/</url>
+      
+        <content type="html"><![CDATA[<h1 id="2024-AIS3-EOF-CTF-FINAL-心得文"><a href="#2024-AIS3-EOF-CTF-FINAL-心得文" class="headerlink" title="2024 AIS3 EOF CTF FINAL 心得文"></a>2024 AIS3 EOF CTF FINAL 心得文</h1><h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Team Name:ButterOverFork<br>Rank:6</p><h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><p>初賽是線上賽，靠密碼學和網站安全不燒雞進的決賽（還附帶一個被懷疑作弊的小插曲（X<br>初賽後就是分隊的環節，就是大家按照調整後的分數依次挑選隊伍，這邊想小小吐槽一點，雖然說是為了平衡比賽，但一開打實力差距其實有（ㄔㄠ）點（ㄐㄧˊ）明顯。<br>我進入了一個所有人我都不認識的隊伍（其實很正常，因為幾乎所有錄取選手都是大學生），賽前唯一的討論就是用來讓我們跳進主辦方內網的Jump VM釋出後自架VPN跟交流強項。<br>接下來就是這兩天是線下賽的決賽，分為A&amp;D, KoH和Pwn2Own三個項目。<br>不免俗的先科普一下這三種賽制在幹嘛好了。<br>A&amp;D，就是Attack and Defence，大家一開始都會拿到一個有漏洞的機器，然後你要在每回合同時進行攻擊和防守，攻擊就是用盡任何方法，搶到其他隊伍需要保護的flag檔案內容，防護則是你可以傳一個更新後的機器檔案上去部署，但要注意的是其他隊伍也看得到你的防禦方法。<br>KoH，就是King of Hill，主辦方有一個大型的機器，然後你必須傳送某種最優解去攻擊&#x2F;佔領機器&#x2F;解決問題等等，然後當下勝利的隊伍就是King，當King越久拿到的分數越多。<br>Pwn2Own，就是你要在主辦方給的機器上挖到漏洞，然後去表演給他們看拿分數。以這場比賽來看多了主辦方會上防護後重新釋出給大家打的環節。<br>再來是題目的部分，這次有五題，第一天一開始只有A&amp;D的哈哈姆特，KoH的POPP3R跟這次Pwn2Own的計分板釋出，我想先講最有趣的計分板。<br>就是每隊桌上都會有一個螢幕跟我放封面的Pi小型電腦，然後usb裡面有機器要載入的Firmware，官方會在機器被打下來（判定標準是機器自己播放一個叫做“豆花好ㄘ”的影片），好一段時間後釋出新的Firmware。一開始把硬碟資料讀出來後我就看到登入繞過跟登入頁面本身Command Injection的兩個大洞，結果我搞好正要搓腳本的時候主辦大螢幕的賽況轉播就跳First Blood了，那時候想法就是下一版Firmware出來前都不要輕舉妄動，免得一直跟別人撞洞，結果就錯失了其他攻擊機會qq<br>有一次我們差一點點就可以拿分，結果被告知讓螢幕播放影片必須自動播放才算成功（QQ）<br>如果有讓我拿到這題分數我會覺得它更好玩唷（X）但其實這題的很多分數都被B33F戰隊三人組給搶了（其他隊有些也有啦，就當經驗 :D）<br>KoH其實我沒什麼打所以就來講哈哈姆特那題，他是一個網站服務，主要由js寫成（我不熟很吃虧qq），然後一開始翻一翻只有看到一個XSS的洞但不覺得可以RCE（？）<br>某一回合開始有隊伍拿到FLAG，所以我們的SOP就變成：分析封包-&gt;還原打法我寫腳本攻擊-&gt;上其他隊伍的防護，這樣的SOP一路到比賽結束都蠻順暢的，攻擊次數只輸給第一隊（可見我們都是抄他們打法）<br>喔但我第二天有挖到第一隊防火牆的洞結果拿RCE後我就直接刪除他們機器owobbbbbbbbbbbbbbb，看他們在那邊罵人好開心（誤誤誤）<br>再來後續有出來一個競程（X）題目叫ICPC，就是會釋出競程題後叫你用x86組合語言寫解題腳本上傳，值得注意的是每隊都可以選一個byte ban掉，然後只要ret被ban我們就差不知道怎麼做（我其實不熟逆向所以水個幾回後就丟給我們這隊大學生寫了）<br>再來是第二天，有個叫做Casino的題目出來，簡單來說就是一個漏洞一堆的拉霸機，然後每隊都有一個user跟一個拉罷機，要去強錢的同時還要保護自己的拉霸機，但因為主辦方說不能打銀行和偷別人的驗證碼，大部分的人就是去想隨機預測和輸入負數錢匾額弱點（包含我）<br>結果一開賽大家就開始連不上服務，賽後才知道可以跑去拉霸機拿RCE，結果好笑的是第八隊比賽一開始就跑去把所有拉霸機數據刪除，最後發現他們也拿不到分數才停止攻擊（連主辦都嚇傻🤣）<br>最後服務回來後我馬上靠負數和超快手速搶到好幾隊的錢，但最後發現好幾隊都上了我寫得防護就也過不了了@@<br>賽後檢討題目時間其實好像還有很多洞但因為時間太短其實都沒打得很深，偏可惜，然後出題者真的都好用心（還有負責前端畫面的工程師為了計分板美觀和拉霸機畫面順暢不知道幾晚沒睡了），感謝你們😆<br>總之呢，很開心跟大家一起玩，一起互相傷害（X），看到電神（還有電神小時候 @curious_hello )，吃吃喝喝還有一個很棒的歷程。<br>結語：<br>After party pizza好吃，謝謝有錢的主辦（<br>我的A&amp;D, KoH, Pwn2Own初體驗同時出現在這場比賽，有點混亂但玩起來超嗨超開心，之後有機會一定要多打比賽！  </p><h2 id="Photos"><a href="#Photos" class="headerlink" title="Photos"></a>Photos</h2><p>Pwn2Own要打下來的機器和記分板(這個我賽中沒拍，用官方的圖片ppt代替)  </p><p><img src="https://hackmd.io/_uploads/HkWnBwA9a.png" alt="image">    </p><p><img src="https://hackmd.io/_uploads/ryj6BD05a.png" alt="image">  </p><p>酷酷ㄉ賽中轉播畫面  </p><p><img src="https://hackmd.io/_uploads/Hy61IDCq6.png" alt="image">  </p><p>賽後ㄉ官方煙火  </p><p><img src="https://hackmd.io/_uploads/rJsLLD09p.png" alt="image">  </p><p>回新竹的雨中高鐵站  </p><p><img src="https://hackmd.io/_uploads/ryydLwC5p.png" alt="image">  </p><p>A&amp;D項目的統計圖，我們攻擊第二高  </p><p><img src="https://hackmd.io/_uploads/rJEsLvRqa.png" alt="image">  </p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> CTF </tag>
+            
+            <tag> EOF </tag>
+            
+            <tag> A&amp;D </tag>
+            
+            <tag> KoH </tag>
+            
+            <tag> Pwn2Own </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>AIS3 EOF QUAL 2024 Write Up</title>
       <link href="/2024/01/10/EOFQUAL2023/"/>
       <url>/2024/01/10/EOFQUAL2023/</url>
@@ -18,9 +45,9 @@
             
             <tag> Web Security </tag>
             
-            <tag> Cryptography </tag>
-            
             <tag> ECC </tag>
+            
+            <tag> Cryptography </tag>
             
             <tag> Command Injection </tag>
             
@@ -89,11 +116,11 @@
       
         <tags>
             
-            <tag> Note </tag>
-            
             <tag> Pentesting </tag>
             
             <tag> TryHackMe </tag>
+            
+            <tag> Note </tag>
             
             <tag> msfconsole </tag>
             
@@ -116,11 +143,11 @@
       
         <tags>
             
+            <tag> ECC </tag>
+            
             <tag> Cryptography </tag>
             
             <tag> Note </tag>
-            
-            <tag> ECC </tag>
             
             <tag> sagemath </tag>
             
@@ -166,11 +193,11 @@
       
         <tags>
             
-            <tag> pwn </tag>
-            
             <tag> CTF </tag>
             
             <tag> Web Security </tag>
+            
+            <tag> pwn </tag>
             
             <tag> game hacking </tag>
             
@@ -206,9 +233,9 @@
       
         <tags>
             
-            <tag> LD_PRELOAD </tag>
-            
             <tag> Pentesting </tag>
+            
+            <tag> LD_PRELOAD </tag>
             
             <tag> MongoDB </tag>
             
@@ -252,13 +279,13 @@
             
             <tag> CTF </tag>
             
-            <tag> XSS </tag>
+            <tag> SQL Injection </tag>
             
             <tag> Pentesting </tag>
             
-            <tag> SQL Injection </tag>
-            
             <tag> TryHackMe </tag>
+            
+            <tag> XSS </tag>
             
             <tag> Wildcard Injection </tag>
             
@@ -306,17 +333,17 @@
       
         <tags>
             
-            <tag> pwn </tag>
-            
             <tag> CTF </tag>
-            
-            <tag> WAN </tag>
             
             <tag> Web Security </tag>
             
             <tag> Cryptography </tag>
             
+            <tag> WAN </tag>
+            
             <tag> SQL Injection </tag>
+            
+            <tag> pwn </tag>
             
             <tag> vtable </tag>
             
@@ -391,11 +418,11 @@
       
         <tags>
             
-            <tag> pwn </tag>
-            
             <tag> CTF </tag>
             
             <tag> ROP </tag>
+            
+            <tag> pwn </tag>
             
             <tag> Stack Migration </tag>
             
@@ -447,21 +474,21 @@
       
         <tags>
             
-            <tag> pwn </tag>
-            
             <tag> CTF </tag>
             
             <tag> ROP </tag>
             
-            <tag> GOT Hijacking </tag>
-            
-            <tag> WAN </tag>
-            
-            <tag> SunShine CTF </tag>
-            
             <tag> Web Security </tag>
             
             <tag> Cryptography </tag>
+            
+            <tag> WAN </tag>
+            
+            <tag> pwn </tag>
+            
+            <tag> GOT Hijacking </tag>
+            
+            <tag> SunShine CTF </tag>
             
             <tag> Forensics </tag>
             
@@ -486,13 +513,13 @@
       
         <tags>
             
-            <tag> pwn </tag>
+            <tag> BOF </tag>
             
             <tag> ROP </tag>
             
             <tag> ret2shellcode </tag>
             
-            <tag> BOF </tag>
+            <tag> pwn </tag>
             
             <tag> ret2code </tag>
             
@@ -536,13 +563,9 @@
             
             <tag> CTF </tag>
             
-            <tag> ROP </tag>
-            
-            <tag> ret2shellcode </tag>
-            
             <tag> BOF </tag>
             
-            <tag> Web Security </tag>
+            <tag> ROP </tag>
             
             <tag> RSA </tag>
             
@@ -550,7 +573,11 @@
             
             <tag> SSTI </tag>
             
+            <tag> Web Security </tag>
+            
             <tag> gopher </tag>
+            
+            <tag> ret2shellcode </tag>
             
             <tag> serialization </tag>
             
@@ -573,9 +600,9 @@
             
             <tag> CTF </tag>
             
-            <tag> Cryptography </tag>
-            
             <tag> RSA </tag>
+            
+            <tag> Cryptography </tag>
             
             <tag> Wiener&#39;s Attack </tag>
             
@@ -604,13 +631,13 @@
             
             <tag> CTF </tag>
             
-            <tag> Cryptography </tag>
-            
-            <tag> Classical cipher </tag>
-            
             <tag> RSA </tag>
             
+            <tag> Cryptography </tag>
+            
             <tag> AES </tag>
+            
+            <tag> Classical cipher </tag>
             
             <tag> Known High Bits Of p </tag>
             
@@ -647,13 +674,13 @@
             
             <tag> Web Security </tag>
             
-            <tag> XSS </tag>
-            
             <tag> SQL Injection </tag>
             
             <tag> LFI </tag>
             
             <tag> loTuX CTF </tag>
+            
+            <tag> XSS </tag>
             
             <tag> RCE </tag>
             

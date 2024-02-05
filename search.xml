@@ -4,7 +4,7 @@
   
     
     <entry>
-      <title>2024EOFFINAL</title>
+      <title>AIS3 EOF FINAL 2024 Write Up</title>
       <link href="/2024/02/05/2024EOFFINAL/"/>
       <url>/2024/02/05/2024EOFFINAL/</url>
       
@@ -43,11 +43,11 @@
             
             <tag> CTF </tag>
             
-            <tag> Web Security </tag>
-            
             <tag> ECC </tag>
             
             <tag> Cryptography </tag>
+            
+            <tag> Web Security </tag>
             
             <tag> Command Injection </tag>
             
@@ -335,9 +335,9 @@
             
             <tag> CTF </tag>
             
-            <tag> Web Security </tag>
-            
             <tag> Cryptography </tag>
+            
+            <tag> Web Security </tag>
             
             <tag> WAN </tag>
             
@@ -476,23 +476,23 @@
             
             <tag> CTF </tag>
             
-            <tag> ROP </tag>
+            <tag> Cryptography </tag>
             
             <tag> Web Security </tag>
             
-            <tag> Cryptography </tag>
+            <tag> ROP </tag>
             
             <tag> WAN </tag>
             
             <tag> pwn </tag>
+            
+            <tag> Classical cipher </tag>
             
             <tag> GOT Hijacking </tag>
             
             <tag> SunShine CTF </tag>
             
             <tag> Forensics </tag>
-            
-            <tag> Classical cipher </tag>
             
             <tag> Scripting </tag>
             
@@ -563,6 +563,8 @@
             
             <tag> CTF </tag>
             
+            <tag> Web Security </tag>
+            
             <tag> BOF </tag>
             
             <tag> ROP </tag>
@@ -572,8 +574,6 @@
             <tag> SSRF </tag>
             
             <tag> SSTI </tag>
-            
-            <tag> Web Security </tag>
             
             <tag> gopher </tag>
             
@@ -600,9 +600,9 @@
             
             <tag> CTF </tag>
             
-            <tag> RSA </tag>
-            
             <tag> Cryptography </tag>
+            
+            <tag> RSA </tag>
             
             <tag> Wiener&#39;s Attack </tag>
             
@@ -631,13 +631,11 @@
             
             <tag> CTF </tag>
             
-            <tag> RSA </tag>
-            
             <tag> Cryptography </tag>
             
-            <tag> AES </tag>
+            <tag> RSA </tag>
             
-            <tag> Classical cipher </tag>
+            <tag> AES </tag>
             
             <tag> Known High Bits Of p </tag>
             
@@ -652,6 +650,8 @@
             <tag> john </tag>
             
             <tag> substitution cipher </tag>
+            
+            <tag> Classical cipher </tag>
             
         </tags>
       

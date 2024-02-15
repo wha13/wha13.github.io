@@ -197,6 +197,8 @@
             
             <tag> lattices </tag>
             
+            <tag> LLL </tag>
+            
         </tags>
       
     </entry>
@@ -658,9 +660,9 @@
             
             <tag> AES </tag>
             
-            <tag> Known High Bits Of p </tag>
-            
             <tag> LLL </tag>
+            
+            <tag> Known High Bits Of p </tag>
             
             <tag> Linux </tag>
             

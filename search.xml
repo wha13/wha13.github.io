@@ -4,6 +4,27 @@
   
     
     <entry>
+      <title>2024/2/29 note</title>
+      <link href="/2024/02/29/2024-2-29-note/"/>
+      <url>/2024/02/29/2024-2-29-note/</url>
+      
+        <content type="html"><![CDATA[<p>[2024&#x2F;2&#x2F;29]<br>四年一次，還是寫一下吧<br>想問四年後的自己的問題<br>四年後的在我想待的校系嗎?<br>最主要的興趣&#x2F;方向還是資安嗎?如果是，有成為一個合格的攻擊手了嗎?拿過CVE了嗎?實習過了嗎?<br>如果沒有，那我新的興趣是什麼?<br>身邊耍怪的朋友還是這群人嗎?<del>我有朋友嗎(X)</del><br>有準備出國了嗎?<br>單身&#x2F;脫單?<br>喜歡現在的生活嗎?<br>如果可以，想告訴現在的自己什麼?<br>喵<br>放隻linux貓咪(oneko)<br><img src="https://hackmd.io/_uploads/Hkkrg-A26.png" alt="image"></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> life </tag>
+            
+            <tag> 2/29 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Coppersmith&#39;s Attack Note</title>
       <link href="/2024/02/25/coppersmith/"/>
       <url>/2024/02/25/coppersmith/</url>
@@ -47,11 +68,11 @@
             
             <tag> CTF </tag>
             
+            <tag> Command Injection </tag>
+            
             <tag> Pentesting </tag>
             
             <tag> TryHackMe </tag>
-            
-            <tag> Command Injection </tag>
             
         </tags>
       
@@ -72,11 +93,11 @@
             
             <tag> CTF </tag>
             
+            <tag> Command Injection </tag>
+            
             <tag> Pentesting </tag>
             
             <tag> TryHackMe </tag>
-            
-            <tag> Command Injection </tag>
             
             <tag> pspy </tag>
             
@@ -191,11 +212,11 @@
             
             <tag> CTF </tag>
             
-            <tag> Web Security </tag>
-            
             <tag> ECC </tag>
             
             <tag> Cryptography </tag>
+            
+            <tag> Web Security </tag>
             
             <tag> Command Injection </tag>
             
@@ -485,15 +506,15 @@
             
             <tag> CTF </tag>
             
-            <tag> Web Security </tag>
-            
             <tag> Cryptography </tag>
             
-            <tag> pwn </tag>
+            <tag> Web Security </tag>
             
             <tag> WAN </tag>
             
             <tag> SQL Injection </tag>
+            
+            <tag> pwn </tag>
             
             <tag> vtable </tag>
             
@@ -626,23 +647,23 @@
             
             <tag> CTF </tag>
             
-            <tag> ROP </tag>
+            <tag> Cryptography </tag>
             
             <tag> Web Security </tag>
             
-            <tag> Cryptography </tag>
-            
-            <tag> pwn </tag>
+            <tag> ROP </tag>
             
             <tag> WAN </tag>
             
+            <tag> pwn </tag>
+            
             <tag> Classical cipher </tag>
+            
+            <tag> GOT Hijacking </tag>
             
             <tag> SunShine CTF </tag>
             
             <tag> Forensics </tag>
-            
-            <tag> GOT Hijacking </tag>
             
             <tag> Scripting </tag>
             
@@ -671,11 +692,11 @@
             
             <tag> pwn </tag>
             
-            <tag> GOT Hijacking </tag>
-            
             <tag> ret2code </tag>
             
             <tag> ret2lib </tag>
+            
+            <tag> GOT Hijacking </tag>
             
             <tag> format string </tag>
             
@@ -713,6 +734,8 @@
             
             <tag> CTF </tag>
             
+            <tag> Web Security </tag>
+            
             <tag> BOF </tag>
             
             <tag> ROP </tag>
@@ -722,8 +745,6 @@
             <tag> SSRF </tag>
             
             <tag> SSTI </tag>
-            
-            <tag> Web Security </tag>
             
             <tag> gopher </tag>
             
@@ -750,9 +771,9 @@
             
             <tag> CTF </tag>
             
-            <tag> RSA </tag>
-            
             <tag> Cryptography </tag>
+            
+            <tag> RSA </tag>
             
             <tag> Wiener&#39;s Attack </tag>
             
@@ -781,9 +802,9 @@
             
             <tag> CTF </tag>
             
-            <tag> RSA </tag>
-            
             <tag> Cryptography </tag>
+            
+            <tag> RSA </tag>
             
             <tag> AES </tag>
             
@@ -824,9 +845,9 @@
             
             <tag> Web Security </tag>
             
-            <tag> LFI </tag>
-            
             <tag> SQL Injection </tag>
+            
+            <tag> LFI </tag>
             
             <tag> loTuX CTF </tag>
             

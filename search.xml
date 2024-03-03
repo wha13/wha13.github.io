@@ -395,9 +395,9 @@
             
             <tag> sagemath </tag>
             
-            <tag> lattices </tag>
-            
             <tag> LLL </tag>
+            
+            <tag> lattices </tag>
             
         </tags>
       
@@ -562,11 +562,11 @@
             
             <tag> Web Security </tag>
             
+            <tag> pwn </tag>
+            
             <tag> WAN </tag>
             
             <tag> SQL Injection </tag>
-            
-            <tag> pwn </tag>
             
             <tag> vtable </tag>
             
@@ -705,9 +705,9 @@
             
             <tag> ROP </tag>
             
-            <tag> WAN </tag>
-            
             <tag> pwn </tag>
+            
+            <tag> WAN </tag>
             
             <tag> Classical cipher </tag>
             

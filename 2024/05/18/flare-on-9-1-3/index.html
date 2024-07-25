@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before all剛考完段考，來練rev &gt;&lt;flare-on 是 Google Threat Intelligence Team 在每年秋天辦的逆向工程比賽，然後打起來真的挺有趣的 owobb祝 AIS3 PRE-EXAM 可以打得好 wp.s. 啊為什麼我的 IDA 用起來跟官方差那麼多啦😡只好動不動就PATCH東西flare-on的官網：https:&#x2F;&#x2F;flare-on.co">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flare-On 9 challenge 1~3 Write Up">
+<meta property="og:url" content="http://wha13.github.io/2024/05/18/flare-on-9-1-3/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before all剛考完段考，來練rev &gt;&lt;flare-on 是 Google Threat Intelligence Team 在每年秋天辦的逆向工程比賽，然後打起來真的挺有趣的 owobb祝 AIS3 PRE-EXAM 可以打得好 wp.s. 啊為什麼我的 IDA 用起來跟官方差那麼多啦😡只好動不動就PATCH東西flare-on的官網：https:&#x2F;&#x2F;flare-on.co">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/rkZbN_SQA.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/r1cLSuHXA.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/Sy6YSuS70.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/S1kYS_BX0.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/B1l0rOSXC.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rJUqc_rXR.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BJO8oOSQR.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SJtg2OHXR.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/Sk1d3_SX0.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SkM3F_HQR.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ryIuYdB7C.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ryvD5_SXC.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SJRS5uSQR.png">
+<meta property="article:published_time" content="2024-05-18T12:08:00.000Z">
+<meta property="article:modified_time" content="2024-07-25T09:30:32.267Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="Windows">
+<meta property="article:tag" content="Flare-On">
+<meta property="article:tag" content="reverse engineering">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/rkZbN_SQA.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Flare-On 9 challenge 1~3 Write Up</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2024/05/22/test-if-work/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/04/30/thjcc-2024/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/05/18/flare-on-9-1-3/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/05/18/flare-on-9-1-3/&text=Flare-On 9 challenge 1~3 Write Up"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/05/18/flare-on-9-1-3/&title=Flare-On 9 challenge 1~3 Write Up"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/05/18/flare-on-9-1-3/&is_video=false&description=Flare-On 9 challenge 1~3 Write Up"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Flare-On 9 challenge 1~3 Write Up&body=Check out this article: http://wha13.github.io/2024/05/18/flare-on-9-1-3/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/05/18/flare-on-9-1-3/&title=Flare-On 9 challenge 1~3 Write Up"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/05/18/flare-on-9-1-3/&title=Flare-On 9 challenge 1~3 Write Up"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/05/18/flare-on-9-1-3/&title=Flare-On 9 challenge 1~3 Write Up"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/05/18/flare-on-9-1-3/&title=Flare-On 9 challenge 1~3 Write Up"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/05/18/flare-on-9-1-3/&name=Flare-On 9 challenge 1~3 Write Up&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/05/18/flare-on-9-1-3/&t=Flare-On 9 challenge 1~3 Write Up"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#01-flaredle"><span class="toc-number">2.</span> <span class="toc-text">01_flaredle</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#02-PixelPoker"><span class="toc-number">3.</span> <span class="toc-text">02_PixelPoker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#03-magic8ball"><span class="toc-number">4.</span> <span class="toc-text">03_magic8ball</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">5.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Flare-On 9 challenge 1~3 Write Up
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-05-18T12:08:00.000Z" class="dt-published" itemprop="datePublished">2024-05-18</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/CTF/" rel="tag">CTF</a>, <a class="p-category" href="/tags/Flare-On/" rel="tag">Flare-On</a>, <a class="p-category" href="/tags/Windows/" rel="tag">Windows</a>, <a class="p-category" href="/tags/reverse-engineering/" rel="tag">reverse engineering</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>剛考完段考，來練rev &gt;&lt;<br>flare-on 是 Google Threat Intelligence Team 在每年秋天辦的逆向工程比賽，然後打起來真的挺有趣的 owobb<br>祝 AIS3 PRE-EXAM 可以打得好 w<br>p.s. 啊為什麼我的 IDA 用起來跟官方差那麼多啦😡<br><del>只好動不動就PATCH東西</del><br>flare-on的官網：<a target="_blank" rel="noopener" href="https://flare-on.com/">https://flare-on.com/</a>  </p>
+<h2 id="01-flaredle"><a href="#01-flaredle" class="headerlink" title="01_flaredle"></a>01_flaredle</h2><p><a target="_blank" rel="noopener" href="https://william957-web.github.io/01_flaredle/">https://william957-web.github.io/01_flaredle&#x2F;</a>  </p>
+<p>打開來是一個前端的 web，會發現是一個類似wordle的遊戲(?)<br><img src="https://hackmd.io/_uploads/rkZbN_SQA.png" alt="image"><br>看到JS這一段<br><img src="https://hackmd.io/_uploads/r1cLSuHXA.png" alt="image"><br>直接用F12打斷點抓下一行，然後<code>rightGuessString</code>就可以找到正確字串了(或者去抓words.js那個陣列的第58個字串)<br><img src="https://hackmd.io/_uploads/Sy6YSuS70.png" alt="image">  </p>
+<p><img src="https://hackmd.io/_uploads/S1kYS_BX0.png" alt="image">  </p>
+<p>Get flag :   </p>
+<p><img src="https://hackmd.io/_uploads/B1l0rOSXC.png" alt="image">  </p>
+<h2 id="02-PixelPoker"><a href="#02-PixelPoker" class="headerlink" title="02_PixelPoker"></a>02_PixelPoker</h2><p>進去以後大致上就是一個點像素的遊戲：<br><img src="https://hackmd.io/_uploads/rJUqc_rXR.png" alt="image"><br>點錯十次就會爆掉，先用ghidra看一下：<br><img src="https://hackmd.io/_uploads/BJO8oOSQR.png" alt="image"><br>抓到判斷的地方，用IDA PATCH掉吧 :D(本來想要找資料的數字但在我電腦上看資料是壞掉的(?!))<br>patch的點：<code>00401486</code>和<code>0040149D</code>，都改成<code>jz</code>就好<br><img src="https://hackmd.io/_uploads/SJtg2OHXR.png" alt="image">  </p>
+<p>重新進去亂點一通(?)  </p>
+<p><img src="https://hackmd.io/_uploads/Sk1d3_SX0.png" alt="image">  </p>
+<p>成功?!  </p>
+<h2 id="03-magic8ball"><a href="#03-magic8ball" class="headerlink" title="03_magic8ball"></a>03_magic8ball</h2><p>這支程式大概長這樣<br><img src="https://hackmd.io/_uploads/SkM3F_HQR.png" alt="image"><br>可以問問題+操作方向鍵控制那顆球<br>用ghidra打開程式，滑一滑找到 function  <code>FUN_004024e0</code><br><img src="https://hackmd.io/_uploads/ryIuYdB7C.png" alt="image">  </p>
+<p>簡單觀察，會發現很多關於 <code>UDLR</code> 的字串判斷，推測是要打出相應的方向鍵，並且在最後有個奇怪的判斷。跟上一題一樣，直接把它用 ida patch file的功能從jnz改成jz<br><img src="https://hackmd.io/_uploads/ryvD5_SXC.png" alt="image">  </p>
+<p>patch好後重新打開程式，先輸入方向鍵<code>LLURULDUL</code>，接著隨便打一句話當問題進去就可以拿到FLAGㄌ<br><img src="https://hackmd.io/_uploads/SJRS5uSQR.png" alt="image">  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>逆向工程真的是要吃經驗(哪個資安領域不是啦(<br>多練多學(?)<br>不過flare-on的題目我到後面真的打不動，還好菜qwq  </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#01-flaredle"><span class="toc-number">2.</span> <span class="toc-text">01_flaredle</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#02-PixelPoker"><span class="toc-number">3.</span> <span class="toc-text">02_PixelPoker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#03-magic8ball"><span class="toc-number">4.</span> <span class="toc-text">03_magic8ball</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">5.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/05/18/flare-on-9-1-3/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/05/18/flare-on-9-1-3/&text=Flare-On 9 challenge 1~3 Write Up"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/05/18/flare-on-9-1-3/&title=Flare-On 9 challenge 1~3 Write Up"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/05/18/flare-on-9-1-3/&is_video=false&description=Flare-On 9 challenge 1~3 Write Up"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Flare-On 9 challenge 1~3 Write Up&body=Check out this article: http://wha13.github.io/2024/05/18/flare-on-9-1-3/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/05/18/flare-on-9-1-3/&title=Flare-On 9 challenge 1~3 Write Up"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/05/18/flare-on-9-1-3/&title=Flare-On 9 challenge 1~3 Write Up"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/05/18/flare-on-9-1-3/&title=Flare-On 9 challenge 1~3 Write Up"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/05/18/flare-on-9-1-3/&title=Flare-On 9 challenge 1~3 Write Up"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/05/18/flare-on-9-1-3/&name=Flare-On 9 challenge 1~3 Write Up&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/05/18/flare-on-9-1-3/&t=Flare-On 9 challenge 1~3 Write Up"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2024
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

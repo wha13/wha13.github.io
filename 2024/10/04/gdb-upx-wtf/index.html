@@ -6,19 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="關於 Linux 上用 gdb 脫混淆後的 UPX 殼這檔事Before all一個難得的颱風連假後，突然冒出了一個對我這隻web狗（痾，好吧，是web鯨）頗困難的問題：    怎麼不用 IDA Pro 脫混淆後的 UPX 殼？  希望以下內容不是什麼已知用火的發言放在這邊給自己當筆記，迷途的孩子也請多加利用w水篇Blog的公開文章，我要回去做別的事了 LAB 建置whale.c   123456">
+    <meta name="description" content="Before all一個難得的颱風連假後，突然冒出了一個對我這隻web狗（痾，好吧，是web鯨）頗困難的問題：    怎麼不用 IDA Pro 脫混淆後的 UPX 殼？  希望以下內容不是什麼已知用火的發言放在這邊給自己當筆記，迷途的孩子也請多加利用w水篇Blog的公開文章，我要回去做別的事了 LAB 建置whale.c   1234567891011121314151617#include&amp;qu">
 <meta property="og:type" content="article">
 <meta property="og:title" content="關於 Linux 上用 gdb 脫混淆後的 UPX 殼這檔事">
 <meta property="og:url" content="http://wha13.github.io/2024/10/04/gdb-upx-wtf/index.html">
 <meta property="og:site_name" content="Whale120&#39;s Blog">
-<meta property="og:description" content="關於 Linux 上用 gdb 脫混淆後的 UPX 殼這檔事Before all一個難得的颱風連假後，突然冒出了一個對我這隻web狗（痾，好吧，是web鯨）頗困難的問題：    怎麼不用 IDA Pro 脫混淆後的 UPX 殼？  希望以下內容不是什麼已知用火的發言放在這邊給自己當筆記，迷途的孩子也請多加利用w水篇Blog的公開文章，我要回去做別的事了 LAB 建置whale.c   123456">
+<meta property="og:description" content="Before all一個難得的颱風連假後，突然冒出了一個對我這隻web狗（痾，好吧，是web鯨）頗困難的問題：    怎麼不用 IDA Pro 脫混淆後的 UPX 殼？  希望以下內容不是什麼已知用火的發言放在這邊給自己當筆記，迷途的孩子也請多加利用w水篇Blog的公開文章，我要回去做別的事了 LAB 建置whale.c   1234567891011121314151617#include&amp;qu">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://hackmd.io/_uploads/SJEC3OT0A.png">
 <meta property="og:image" content="https://hackmd.io/_uploads/Bk229upA0.png">
 <meta property="og:image" content="https://hackmd.io/_uploads/Bk0sjOpCC.png">
 <meta property="og:image" content="https://hackmd.io/_uploads/r11D3u60R.png">
 <meta property="article:published_time" content="2024-10-04T14:38:52.000Z">
-<meta property="article:modified_time" content="2024-10-04T14:39:19.217Z">
+<meta property="article:modified_time" content="2024-10-04T14:45:51.873Z">
 <meta property="article:author" content="William Lin">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://hackmd.io/_uploads/SJEC3OT0A.png">
@@ -133,7 +133,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%97%9C%E6%96%BC-Linux-%E4%B8%8A%E7%94%A8-gdb-%E8%84%AB%E6%B7%B7%E6%B7%86%E5%BE%8C%E7%9A%84-UPX-%E6%AE%BC%E9%80%99%E6%AA%94%E4%BA%8B"><span class="toc-number">1.</span> <span class="toc-text">關於 Linux 上用 gdb 脫混淆後的 UPX 殼這檔事</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LAB-%E5%BB%BA%E7%BD%AE"><span class="toc-number">1.2.</span> <span class="toc-text">LAB 建置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%96%8B%E8%84%AB%EF%BC%81"><span class="toc-number">1.3.</span> <span class="toc-text">開脫！</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LAB-%E5%BB%BA%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">LAB 建置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%96%8B%E8%84%AB%EF%BC%81"><span class="toc-number">3.</span> <span class="toc-text">開脫！</span></a></li></ol>
       </div>
     
   </span>
@@ -173,7 +173,7 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <h1 id="關於-Linux-上用-gdb-脫混淆後的-UPX-殼這檔事"><a href="#關於-Linux-上用-gdb-脫混淆後的-UPX-殼這檔事" class="headerlink" title="關於 Linux 上用 gdb 脫混淆後的 UPX 殼這檔事"></a>關於 Linux 上用 gdb 脫混淆後的 UPX 殼這檔事</h1><h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>一個難得的颱風連假後，突然冒出了一個對我這隻web狗（痾，好吧，是web鯨）頗困難的問題：  </p>
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>一個難得的颱風連假後，突然冒出了一個對我這隻web狗（痾，好吧，是web鯨）頗困難的問題：  </p>
 <blockquote>
 <p>怎麼不用 IDA Pro 脫混淆後的 UPX 殼？</p>
 </blockquote>
@@ -227,7 +227,7 @@
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%97%9C%E6%96%BC-Linux-%E4%B8%8A%E7%94%A8-gdb-%E8%84%AB%E6%B7%B7%E6%B7%86%E5%BE%8C%E7%9A%84-UPX-%E6%AE%BC%E9%80%99%E6%AA%94%E4%BA%8B"><span class="toc-number">1.</span> <span class="toc-text">關於 Linux 上用 gdb 脫混淆後的 UPX 殼這檔事</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LAB-%E5%BB%BA%E7%BD%AE"><span class="toc-number">1.2.</span> <span class="toc-text">LAB 建置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%96%8B%E8%84%AB%EF%BC%81"><span class="toc-number">1.3.</span> <span class="toc-text">開脫！</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LAB-%E5%BB%BA%E7%BD%AE"><span class="toc-number">2.</span> <span class="toc-text">LAB 建置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%96%8B%E8%84%AB%EF%BC%81"><span class="toc-number">3.</span> <span class="toc-text">開脫！</span></a></li></ol>
       </div>
     
 

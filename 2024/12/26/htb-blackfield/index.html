@@ -6,16 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="Before all這系列我之後決定不每台靶機都一個 Write Up 了，好累而且多半只有一兩點值得寫Victim’s IP : 10.10.10.192Victim’s Host : *.blackfield.locaclAttacker’s IP : 10.10.14.14   RECONport scanCommand   1rustscan -a 10.10.10.192 --ulimi">
+    <meta name="description" content="Before allVictim’s IP : 10.10.10.192Victim’s Host : *.blackfield.locaclAttacker’s IP : 10.10.14.14   RECONport scanCommand   1rustscan -a 10.10.10.192 --ulimit 5000 -- -sC -sV -Pn Result   12345678910">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Blackfield on HackTheBox">
 <meta property="og:url" content="http://wha13.github.io/2024/12/26/htb-blackfield/index.html">
 <meta property="og:site_name" content="Whale120&#39;s Blog">
-<meta property="og:description" content="Before all這系列我之後決定不每台靶機都一個 Write Up 了，好累而且多半只有一兩點值得寫Victim’s IP : 10.10.10.192Victim’s Host : *.blackfield.locaclAttacker’s IP : 10.10.14.14   RECONport scanCommand   1rustscan -a 10.10.10.192 --ulimi">
+<meta property="og:description" content="Before allVictim’s IP : 10.10.10.192Victim’s Host : *.blackfield.locaclAttacker’s IP : 10.10.14.14   RECONport scanCommand   1rustscan -a 10.10.10.192 --ulimit 5000 -- -sC -sV -Pn Result   12345678910">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://hackmd.io/_uploads/S1wQtd9ryx.png">
 <meta property="article:published_time" content="2024-12-27T03:11:05.000Z">
-<meta property="article:modified_time" content="2024-12-26T07:03:33.282Z">
+<meta property="article:modified_time" content="2024-12-27T01:21:09.957Z">
 <meta property="article:author" content="William Lin">
 <meta property="article:tag" content="Pentesting">
 <meta property="article:tag" content="AD">
@@ -105,6 +105,8 @@
     <span id="actions">
       <ul>
         
+        <li><a class="icon" aria-label="Previous post" href="/2024/12/27/htb-resolute/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
         
         <li><a class="icon" aria-label="Next post" href="/2024/12/25/htb-active/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
@@ -181,7 +183,7 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>這系列我之後決定不每台靶機都一個 Write Up 了，好累而且多半只有一兩點值得寫<br>Victim’s IP : 10.10.10.192<br>Victim’s Host : *.blackfield.locacl<br>Attacker’s IP : 10.10.14.14  </p>
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Victim’s IP : 10.10.10.192<br>Victim’s Host : *.blackfield.locacl<br>Attacker’s IP : 10.10.14.14  </p>
 <h2 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h2><h3 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h3><p><strong>Command</strong>  </p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rustscan -a 10.10.10.192 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
 <p><strong>Result</strong>  </p>

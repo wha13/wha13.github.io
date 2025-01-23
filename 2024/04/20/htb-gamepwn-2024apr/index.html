@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before all最近打HTB，發現了GamePwn這個好玩的領域。顧名思義，就是一些遊戲作弊的挑戰，然後打起來挺好玩的w然後…其實都是昨天打得這邊丟兩個昨天打起來覺得有趣的題目w   有興趣玩game hacking的一定要看cheat enginehttps:&#x2F;&#x2F;www.cnblogs.com&#x2F;LyShark&#x2F;p&#x2F;10799926.html   Lightning Fasthttps:&#x2F;&#x2F;a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HackTheBox GamePwn 隨筆 4&#x2F;20">
+<meta property="og:url" content="http://wha13.github.io/2024/04/20/htb-gamepwn-2024apr/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before all最近打HTB，發現了GamePwn這個好玩的領域。顧名思義，就是一些遊戲作弊的挑戰，然後打起來挺好玩的w然後…其實都是昨天打得這邊丟兩個昨天打起來覺得有趣的題目w   有興趣玩game hacking的一定要看cheat enginehttps:&#x2F;&#x2F;www.cnblogs.com&#x2F;LyShark&#x2F;p&#x2F;10799926.html   Lightning Fasthttps:&#x2F;&#x2F;a">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/HyQZ8ClWA.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/H1FlI0lW0.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HkiOI0lWC.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/r13tURxW0.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/B1NZwRgZ0.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HJs4d0l-A.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SkS7FRgbA.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rJ3R9Cg-A.png">
+<meta property="article:published_time" content="2024-04-20T18:06:11.000Z">
+<meta property="article:modified_time" content="2024-07-25T09:30:32.267Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="HackTheBox">
+<meta property="article:tag" content="game hacking">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/HyQZ8ClWA.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>HackTheBox GamePwn 隨筆 4/20</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2024/04/20/htb-crypto-2024apr/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/04/18/eastern-rabbit-htb/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/04/20/htb-gamepwn-2024apr/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/04/20/htb-gamepwn-2024apr/&text=HackTheBox GamePwn 隨筆 4/20"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/04/20/htb-gamepwn-2024apr/&title=HackTheBox GamePwn 隨筆 4/20"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/04/20/htb-gamepwn-2024apr/&is_video=false&description=HackTheBox GamePwn 隨筆 4/20"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=HackTheBox GamePwn 隨筆 4/20&body=Check out this article: http://wha13.github.io/2024/04/20/htb-gamepwn-2024apr/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/04/20/htb-gamepwn-2024apr/&title=HackTheBox GamePwn 隨筆 4/20"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/04/20/htb-gamepwn-2024apr/&title=HackTheBox GamePwn 隨筆 4/20"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/04/20/htb-gamepwn-2024apr/&title=HackTheBox GamePwn 隨筆 4/20"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/04/20/htb-gamepwn-2024apr/&title=HackTheBox GamePwn 隨筆 4/20"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/04/20/htb-gamepwn-2024apr/&name=HackTheBox GamePwn 隨筆 4/20&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/04/20/htb-gamepwn-2024apr/&t=HackTheBox GamePwn 隨筆 4/20"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lightning-Fast"><span class="toc-number">2.</span> <span class="toc-text">Lightning Fast</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#StayInTheBoxCorp"><span class="toc-number">3.</span> <span class="toc-text">StayInTheBoxCorp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">4.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        HackTheBox GamePwn 隨筆 4/20
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-04-20T18:06:11.000Z" class="dt-published" itemprop="datePublished">2024-04-20</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/CTF/" rel="tag">CTF</a>, <a class="p-category" href="/tags/HackTheBox/" rel="tag">HackTheBox</a>, <a class="p-category" href="/tags/game-hacking/" rel="tag">game hacking</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>最近打HTB，發現了GamePwn這個好玩的領域。<br>顧名思義，就是一些遊戲作弊的挑戰，然後打起來挺好玩的w<br>然後…<del>其實都是昨天打得</del><br>這邊丟兩個昨天打起來覺得有趣的題目w  </p>
+<p>有興趣玩game hacking的一定要看cheat engine<br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/LyShark/p/10799926.html">https://www.cnblogs.com/LyShark/p/10799926.html</a>  </p>
+<h2 id="Lightning-Fast"><a href="#Lightning-Fast" class="headerlink" title="Lightning Fast"></a>Lightning Fast</h2><p><a target="_blank" rel="noopener" href="https://app.hackthebox.com/challenges/315">https://app.hackthebox.com/challenges/315</a>  </p>
+<p>進去之後要先輸入instance的ip和port</p>
+<p><img src="https://hackmd.io/_uploads/HyQZ8ClWA.png" alt="image">  </p>
+<p>隨便玩一局看看</p>
+<p><img src="https://hackmd.io/_uploads/H1FlI0lW0.png" alt="image"></p>
+<p>有稍微試過用cheat engine改血量，分數，但都找不到qwq<br>開wireshark錄封包：  </p>
+<p><img src="https://hackmd.io/_uploads/HkiOI0lWC.png" alt="image"></p>
+<p>Follow TCP Stream  </p>
+<p><img src="https://hackmd.io/_uploads/r13tURxW0.png" alt="image"></p>
+<p>ㄟ…不會可以自己送score出去吧?!<br>對!!!<br><strong>exp.py</strong></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests <span class="keyword">as</span> req</span><br><span class="line">headers=&#123;<span class="string">&#x27;Host&#x27;</span>:<span class="string">&#x27;94.237.62.195:35003&#x27;</span>, <span class="string">&#x27;User-Agent&#x27;</span>:<span class="string">&#x27;UnityPlayer/2021.1.12f1 (UnityWebRequest/1.0, libcurl/7.75.0-DEV)&#x27;</span>, <span class="string">&#x27;Accept-Encoding&#x27;</span>:<span class="string">&#x27;identity&#x27;</span>, <span class="string">&#x27;X-Unity-Version&#x27;</span>:<span class="string">&#x27;2021.1.12f1&#x27;</span>&#125;</span><br><span class="line">url=<span class="string">&#x27;http://94.237.62.195:35003/Q4VWqp&#x27;</span></span><br><span class="line">data=&#123;<span class="string">&quot;score&quot;</span>: <span class="number">10000000</span>&#125;</span><br><span class="line">req.post(url, json=data)</span><br></pre></td></tr></table></figure>
+
+<p>Get flag!!!  </p>
+<p><img src="https://hackmd.io/_uploads/B1NZwRgZ0.png" alt="image"></p>
+<p>註：  </p>
+<p><img src="https://hackmd.io/_uploads/HJs4d0l-A.png" alt="image"></p>
+<p>要去&#x2F;endpoints找setter url  </p>
+<h2 id="StayInTheBoxCorp"><a href="#StayInTheBoxCorp" class="headerlink" title="StayInTheBoxCorp"></a>StayInTheBoxCorp</h2><p><img src="https://hackmd.io/_uploads/SkS7FRgbA.png" alt="image"><br>沒什麼，就是一直用CE抓角色位置的值(?)<br>唯一的點是我抓到最後看到一堆很大的數跟一些小的，我推測小的代表位置所以我加了一個 bugger than -26的filter<br>最後全部改成19跳過那個桿子就好<br><img src="https://hackmd.io/_uploads/rJ3R9Cg-A.png" alt="image">  </p>
+<p>莫名成為第80個做出這台的，但感覺難度根本不是hard啊(<br><a target="_blank" rel="noopener" href="https://www.hackthebox.com/achievement/challenge/1519847/579">https://www.hackthebox.com/achievement/challenge/1519847/579</a></p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>好懶但還有好多東西要寫RRR</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lightning-Fast"><span class="toc-number">2.</span> <span class="toc-text">Lightning Fast</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#StayInTheBoxCorp"><span class="toc-number">3.</span> <span class="toc-text">StayInTheBoxCorp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">4.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/04/20/htb-gamepwn-2024apr/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/04/20/htb-gamepwn-2024apr/&text=HackTheBox GamePwn 隨筆 4/20"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/04/20/htb-gamepwn-2024apr/&title=HackTheBox GamePwn 隨筆 4/20"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/04/20/htb-gamepwn-2024apr/&is_video=false&description=HackTheBox GamePwn 隨筆 4/20"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=HackTheBox GamePwn 隨筆 4/20&body=Check out this article: http://wha13.github.io/2024/04/20/htb-gamepwn-2024apr/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/04/20/htb-gamepwn-2024apr/&title=HackTheBox GamePwn 隨筆 4/20"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/04/20/htb-gamepwn-2024apr/&title=HackTheBox GamePwn 隨筆 4/20"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/04/20/htb-gamepwn-2024apr/&title=HackTheBox GamePwn 隨筆 4/20"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/04/20/htb-gamepwn-2024apr/&title=HackTheBox GamePwn 隨筆 4/20"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/04/20/htb-gamepwn-2024apr/&name=HackTheBox GamePwn 隨筆 4/20&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/04/20/htb-gamepwn-2024apr/&t=HackTheBox GamePwn 隨筆 4/20"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2025
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

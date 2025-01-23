@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before allA quick Block Cipher Mode review for myself.All the exploits down below are for Labs made by Oalieno   Recommended Course   Block Cipher ModeCut and Paste AttackEBC MODE vulnerabilityBecause">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Block Cipher Mode note">
+<meta property="og:url" content="http://wha13.github.io/2023/11/04/block-cipher-1/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before allA quick Block Cipher Mode review for myself.All the exploits down below are for Labs made by Oalieno   Recommended Course   Block Cipher ModeCut and Paste AttackEBC MODE vulnerabilityBecause">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-11-04T04:10:04.000Z">
+<meta property="article:modified_time" content="2024-07-25T09:30:32.267Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="Prepend Oracle">
+<meta property="article:tag" content="AES">
+<meta property="article:tag" content="ECB">
+<meta property="article:tag" content="CBC">
+<meta property="article:tag" content="Cut and Paste">
+<meta property="article:tag" content="Bit Flipping">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Block Cipher Mode note</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/11/10/mrrobotctf/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/10/29/rop1/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2023/11/04/block-cipher-1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2023/11/04/block-cipher-1/&text=Block Cipher Mode note"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2023/11/04/block-cipher-1/&title=Block Cipher Mode note"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2023/11/04/block-cipher-1/&is_video=false&description=Block Cipher Mode note"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Block Cipher Mode note&body=Check out this article: http://wha13.github.io/2023/11/04/block-cipher-1/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2023/11/04/block-cipher-1/&title=Block Cipher Mode note"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2023/11/04/block-cipher-1/&title=Block Cipher Mode note"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2023/11/04/block-cipher-1/&title=Block Cipher Mode note"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2023/11/04/block-cipher-1/&title=Block Cipher Mode note"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2023/11/04/block-cipher-1/&name=Block Cipher Mode note&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2023/11/04/block-cipher-1/&t=Block Cipher Mode note"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Block-Cipher-Mode"><span class="toc-number">2.</span> <span class="toc-text">Block Cipher Mode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cut-and-Paste-Attack"><span class="toc-number">3.</span> <span class="toc-text">Cut and Paste Attack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prepend-Oracle"><span class="toc-number">4.</span> <span class="toc-text">Prepend Oracle</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Padding-Oracle"><span class="toc-number">5.</span> <span class="toc-text">Padding Oracle</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Block Cipher Mode note
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-11-04T04:10:04.000Z" class="dt-published" itemprop="datePublished">2023-11-04</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/AES/" rel="tag">AES</a>, <a class="p-category" href="/tags/Bit-Flipping/" rel="tag">Bit Flipping</a>, <a class="p-category" href="/tags/CBC/" rel="tag">CBC</a>, <a class="p-category" href="/tags/Cut-and-Paste/" rel="tag">Cut and Paste</a>, <a class="p-category" href="/tags/ECB/" rel="tag">ECB</a>, <a class="p-category" href="/tags/Prepend-Oracle/" rel="tag">Prepend Oracle</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>A quick Block Cipher Mode review for myself.<br>All the exploits down below are for <a target="_blank" rel="noopener" href="https://github.com/oalieno/Crypto-Course/tree/master/Block-Cipher-Mode">Labs made by Oalieno</a>  </p>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=VzuIjk1bmFE">Recommended Course</a>  </p>
+<h2 id="Block-Cipher-Mode"><a href="#Block-Cipher-Mode" class="headerlink" title="Block Cipher Mode"></a>Block Cipher Mode</h2><h2 id="Cut-and-Paste-Attack"><a href="#Cut-and-Paste-Attack" class="headerlink" title="Cut and Paste Attack"></a>Cut and Paste Attack</h2><p><strong>EBC MODE vulnerability</strong><br>Because in ECB mode, size of an block is always 16 bytes, so even though we can’t crack it, it’s still feasible to construct datas with specific size and rearrange the encrypted blocks which bring spoofing<br><strong>Exploit</strong>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">r=remote(<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">20001</span>)</span><br><span class="line">s=r.recvuntil(<span class="string">b&#x27; = &#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s.decode())</span><br><span class="line"><span class="comment">#user:AAAAAAAAAAA 999999999999999 BBBBBBBBB;money: 10;</span></span><br><span class="line">payload=<span class="string">&#x27;A&#x27;</span>*<span class="number">11</span>+<span class="string">&#x27;9&#x27;</span>*<span class="number">16</span>+<span class="string">&#x27;B&#x27;</span>*<span class="number">9</span></span><br><span class="line">r.sendline(payload.encode())</span><br><span class="line">s=r.recvuntil(<span class="string">b&#x27;\n&#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s.decode)</span><br><span class="line">s=<span class="built_in">bytes</span>.fromhex(s.decode().split(<span class="string">&#x27; &#x27;</span>)[<span class="number">2</span>])</span><br><span class="line">payload=s[:<span class="number">16</span>]+s[<span class="number">32</span>:<span class="number">48</span>]+s[<span class="number">16</span>:<span class="number">32</span>]+s[<span class="number">48</span>:]</span><br><span class="line">payload=payload.<span class="built_in">hex</span>()</span><br><span class="line">s=r.recvuntil(<span class="string">b&#x27; = &#x27;</span>)</span><br><span class="line">r.sendline(payload.encode())</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+<h2 id="Prepend-Oracle"><a href="#Prepend-Oracle" class="headerlink" title="Prepend Oracle"></a>Prepend Oracle</h2><p><strong>EBC MODE vulnerability</strong><br>This method can be used when your input would be encrypted with message you want to encrpt<br>The main idea is to enumerate through characters until it’s same with encrypted blocks generated from only padding input.<br><strong>Exploit</strong>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">r=remote(<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">20005</span>)</span><br><span class="line">flag=<span class="string">b&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">oracle</span>(<span class="params">data</span>):</span><br><span class="line">    data=data.<span class="built_in">hex</span>().encode()</span><br><span class="line">    s=r.recvuntil(<span class="string">b&#x27; = &#x27;</span>)</span><br><span class="line"><span class="comment">#    print(s)</span></span><br><span class="line">    r.sendline(data)</span><br><span class="line">    s=r.recvuntil(<span class="string">b&#x27;\n&#x27;</span>).decode()</span><br><span class="line">    <span class="keyword">return</span> s.split(<span class="string">&#x27; = &#x27;</span>)[<span class="number">1</span>]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">32</span>):</span><br><span class="line">    padding=<span class="string">b&#x27;A&#x27;</span>*(<span class="number">32</span>-<span class="number">1</span>-i)</span><br><span class="line">    test=oracle(padding)</span><br><span class="line">    <span class="keyword">for</span> c <span class="keyword">in</span> string.printable:</span><br><span class="line">        <span class="keyword">if</span> oracle(padding+flag+c.encode())[:<span class="number">64</span>]==test[:<span class="number">64</span>]:</span><br><span class="line"><span class="comment">#            print(test)</span></span><br><span class="line"><span class="comment">#            print(oracle(padding+flag+c.encode()))</span></span><br><span class="line">            flag=flag+c.encode()</span><br><span class="line">            <span class="built_in">print</span>(flag, i)</span><br><span class="line">            <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+<h2 id="Padding-Oracle"><a href="#Padding-Oracle" class="headerlink" title="Padding Oracle"></a>Padding Oracle</h2><p><strong>CBC MODE vulnerability</strong><br>This method can be used when it’s possible to get the IV(Initialized Iector) value and the padding method is knowned. Also, it’s necessary that there exist some clues to check whether the input is unpaded successfuly or not<br>The main idea is to enumerate through characters until the message have been unpad successfuly, and remember to adjust the iv value sended cautiously!  </p>
+<p><strong>How to cauculate the correct value after unpad successfuly?</strong><br>that byte of data &#x3D; Now_Trying ^ IV Value at that position ^ padding<br><code>cur=xor(k, iv[now], (16-now))+cur</code><br>cur &#x3D; the decrypted block,<br>k &#x3D; the value be tried now,<br>16-now &#x3D; padding.<br><strong>Exploit</strong>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> *</span><br><span class="line">r=remote(<span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="number">3140</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">oracle</span>(<span class="params">iv, mess</span>):</span><br><span class="line">    r.sendlineafter(<span class="string">b&#x27; = &#x27;</span>, (iv+mess).<span class="built_in">hex</span>().encode())</span><br><span class="line"><span class="comment">#    info(len((iv+mess).hex().encode()))</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">b&#x27;PADDING CORRECT!!!&#x27;</span> <span class="keyword">in</span> r.recvline()</span><br><span class="line"></span><br><span class="line">flag=long_to_bytes(<span class="built_in">int</span>(r.recvline()[:-<span class="number">1</span>].decode().split(<span class="string">&#x27; = &#x27;</span>)[<span class="number">1</span>], <span class="number">16</span>))</span><br><span class="line"><span class="comment">#print(flag, len(flag))</span></span><br><span class="line">ans=<span class="string">b&#x27;&#x27;</span></span><br><span class="line">cur=<span class="string">b&#x27;&#x27;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> tqdm(<span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(flag)-<span class="number">16</span>, <span class="number">16</span>)):</span><br><span class="line">    iv, mess=flag[i:i+<span class="number">16</span>], flag[i+<span class="number">16</span>:i+<span class="number">32</span>]</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">16</span>):</span><br><span class="line">        now=<span class="number">15</span>-j</span><br><span class="line"><span class="comment">#        info(now)</span></span><br><span class="line">        <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">256</span>):</span><br><span class="line"><span class="comment">#            info(len(bytes([k]))==1)</span></span><br><span class="line">            <span class="keyword">if</span> oracle(iv[:now]+<span class="built_in">bytes</span>([k])+xor(cur, iv[now+<span class="number">1</span>:], <span class="built_in">chr</span>(<span class="number">16</span>-now).encode()*(<span class="number">15</span>-now)), mess):</span><br><span class="line">                <span class="keyword">if</span> now==<span class="number">15</span>:</span><br><span class="line">                    <span class="keyword">if</span> k!=iv[<span class="number">15</span>]:</span><br><span class="line">                        cur=xor(k, iv[<span class="number">15</span>], <span class="number">1</span>)+cur</span><br><span class="line">                        <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    cur=xor(k, iv[now], (<span class="number">16</span>-now))+cur</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">    ans+=cur</span><br><span class="line">    cur=<span class="string">b&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(ans)</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Block-Cipher-Mode"><span class="toc-number">2.</span> <span class="toc-text">Block Cipher Mode</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cut-and-Paste-Attack"><span class="toc-number">3.</span> <span class="toc-text">Cut and Paste Attack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prepend-Oracle"><span class="toc-number">4.</span> <span class="toc-text">Prepend Oracle</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Padding-Oracle"><span class="toc-number">5.</span> <span class="toc-text">Padding Oracle</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2023/11/04/block-cipher-1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2023/11/04/block-cipher-1/&text=Block Cipher Mode note"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2023/11/04/block-cipher-1/&title=Block Cipher Mode note"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2023/11/04/block-cipher-1/&is_video=false&description=Block Cipher Mode note"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Block Cipher Mode note&body=Check out this article: http://wha13.github.io/2023/11/04/block-cipher-1/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2023/11/04/block-cipher-1/&title=Block Cipher Mode note"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2023/11/04/block-cipher-1/&title=Block Cipher Mode note"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2023/11/04/block-cipher-1/&title=Block Cipher Mode note"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2023/11/04/block-cipher-1/&title=Block Cipher Mode note"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2023/11/04/block-cipher-1/&name=Block Cipher Mode note&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2023/11/04/block-cipher-1/&t=Block Cipher Mode note"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2025
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

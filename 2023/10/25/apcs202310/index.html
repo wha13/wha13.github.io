@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before all這是我第二次考APCS，上次已經是去年了（中間一直有其他事情orz）但這次不論是上午的觀念題還是下午的實作感覺都比去年還要順手很多，應該跟我暑假練很多有關吧，所以希望這次可以撈到 5&#x2F;5…底下是我考後打得code，題目在zerojudge上面應該都有   Write UpProblem 1機械鼠用一個for迴圈讀取，再創造兩組變數分別記錄大於原始座標、小於原始座標的最">
+<meta property="og:type" content="article">
+<meta property="og:title" content="APCS 2023 10月場心得">
+<meta property="og:url" content="http://wha13.github.io/2023/10/25/apcs202310/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before all這是我第二次考APCS，上次已經是去年了（中間一直有其他事情orz）但這次不論是上午的觀念題還是下午的實作感覺都比去年還要順手很多，應該跟我暑假練很多有關吧，所以希望這次可以撈到 5&#x2F;5…底下是我考後打得code，題目在zerojudge上面應該都有   Write UpProblem 1機械鼠用一個for迴圈讀取，再創造兩組變數分別記錄大於原始座標、小於原始座標的最">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-10-25T17:10:04.000Z">
+<meta property="article:modified_time" content="2024-07-25T09:30:32.267Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="Competitive Programming">
+<meta property="article:tag" content="APCS">
+<meta property="article:tag" content="implementation">
+<meta property="article:tag" content="DSU">
+<meta property="article:tag" content="DP">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>APCS 2023 10月場心得</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/10/29/rop1/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/10/14/sunshinectf/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2023/10/25/apcs202310/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2023/10/25/apcs202310/&text=APCS 2023 10月場心得"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2023/10/25/apcs202310/&title=APCS 2023 10月場心得"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2023/10/25/apcs202310/&is_video=false&description=APCS 2023 10月場心得"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=APCS 2023 10月場心得&body=Check out this article: http://wha13.github.io/2023/10/25/apcs202310/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2023/10/25/apcs202310/&title=APCS 2023 10月場心得"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2023/10/25/apcs202310/&title=APCS 2023 10月場心得"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2023/10/25/apcs202310/&title=APCS 2023 10月場心得"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2023/10/25/apcs202310/&title=APCS 2023 10月場心得"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2023/10/25/apcs202310/&name=APCS 2023 10月場心得&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2023/10/25/apcs202310/&t=APCS 2023 10月場心得"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Write-Up"><span class="toc-number">2.</span> <span class="toc-text">Write Up</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-1"><span class="toc-number">2.1.</span> <span class="toc-text">Problem 1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-2"><span class="toc-number">2.2.</span> <span class="toc-text">Problem 2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-3"><span class="toc-number">2.3.</span> <span class="toc-text">Problem 3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-4"><span class="toc-number">2.4.</span> <span class="toc-text">Problem 4</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">3.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        APCS 2023 10月場心得
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-10-25T17:10:04.000Z" class="dt-published" itemprop="datePublished">2023-10-25</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/APCS/" rel="tag">APCS</a>, <a class="p-category" href="/tags/Competitive-Programming/" rel="tag">Competitive Programming</a>, <a class="p-category" href="/tags/DP/" rel="tag">DP</a>, <a class="p-category" href="/tags/DSU/" rel="tag">DSU</a>, <a class="p-category" href="/tags/implementation/" rel="tag">implementation</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>這是我第二次考APCS，上次已經是去年了（中間一直有其他事情orz）<br>但這次不論是上午的觀念題還是下午的實作感覺都比去年還要順手很多，應該跟我暑假練很多有關吧，所以希望這次可以撈到 5&#x2F;5…<br>底下是我考後打得code，題目在<a target="_blank" rel="noopener" href="https://zerojudge.tw/">zerojudge</a>上面應該都有  </p>
+<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="Problem-1"><a href="#Problem-1" class="headerlink" title="Problem 1"></a>Problem 1</h3><p><strong>機械鼠</strong><br>用一個for迴圈讀取，再創造兩組變數分別記錄大於原始座標、小於原始座標的最遠距離和數量，比較大小後再輸出即可。  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Enjoy coding</span></span><br><span class="line"><span class="comment">//eeenuuu</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> F first</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> S second</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> phb push_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ppb pop_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pii pair<span class="string">&lt;int, int&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> wh_ale ios::sync_with_stdio(0);cin.tie(0);cout.tie(0)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> all(x) x.begin(),x.end()</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> INF (long long) 1e18</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mod 1e9+7</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> maxn 2000010</span></span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    wh_ale;</span><br><span class="line">    <span class="type">int</span> x, n, i, a, cnt1=<span class="number">0</span>, cnt2=<span class="number">0</span>, l1, l2;</span><br><span class="line">    cin &gt;&gt; x &gt;&gt; n;</span><br><span class="line">    l1=x;</span><br><span class="line">    l2=x;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">        cin &gt;&gt; a;</span><br><span class="line">        <span class="keyword">if</span>(a&gt;x)&#123;</span><br><span class="line">            cnt1++;</span><br><span class="line">            l1=<span class="built_in">max</span>(l1, a);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            cnt2++;</span><br><span class="line">            l2=<span class="built_in">min</span>(l2, a);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(cnt1&gt;cnt2)&#123;</span><br><span class="line">        cout &lt;&lt; cnt1 &lt;&lt; <span class="string">&#x27; &#x27;</span> &lt;&lt; l1 &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> cout &lt;&lt; cnt2 &lt;&lt; <span class="string">&#x27; &#x27;</span> &lt;&lt; l2 &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Problem-2"><a href="#Problem-2" class="headerlink" title="Problem 2"></a>Problem 2</h3><p><strong>卡牌遊戲</strong><br>我是用while迴圈不斷去重複動作直到已經沒有牌之間可以消去，然後移走的則在陣列中以<code>-1</code>標記。  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Enjoy coding</span></span><br><span class="line"><span class="comment">//eeenuuu</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> F first</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> S second</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> phb push_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ppb pop_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pii pair<span class="string">&lt;int, int&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> wh_ale ios::sync_with_stdio(0);cin.tie(0);cout.tie(0)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> all(x) x.begin(),x.end()</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> INF (long long) 1e18</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mod 1e9+7</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> maxn 2000010</span></span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    wh_ale;</span><br><span class="line">    <span class="type">int</span> n, m, i, j, a[<span class="number">100</span>][<span class="number">100</span>], k, cnt=<span class="number">0</span>, cur=<span class="number">0</span>;</span><br><span class="line">    <span class="type">bool</span> t=<span class="literal">true</span>;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)<span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;m;j++) cin &gt;&gt; a[i][j];</span><br><span class="line">    <span class="keyword">while</span>(t)&#123;</span><br><span class="line">        cur=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)<span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;m<span class="number">-1</span>;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(a[i][j]!=<span class="number">-1</span>)&#123;</span><br><span class="line">                <span class="keyword">for</span>(k=<span class="number">1</span>;k&lt;m-j;k++)&#123;</span><br><span class="line">                    <span class="keyword">if</span>(a[i][j+k]!=<span class="number">-1</span>)&#123;</span><br><span class="line">                        <span class="keyword">if</span>(a[i][j+k]==a[i][j])&#123;</span><br><span class="line">                            cur+=a[i][j];</span><br><span class="line">                            a[i][j]=<span class="number">-1</span>;</span><br><span class="line">                            a[i][j+k]=<span class="number">-1</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;m;i++)<span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;n<span class="number">-1</span>;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(a[j][i]!=<span class="number">-1</span>)&#123;</span><br><span class="line">                <span class="keyword">for</span>(k=<span class="number">1</span>;k&lt;n-j;k++)&#123;</span><br><span class="line">                    <span class="keyword">if</span>(a[j+k][i]!=<span class="number">-1</span>)&#123;</span><br><span class="line">                        <span class="keyword">if</span>(a[j+k][i]==a[j][i])&#123;</span><br><span class="line">                            cur+=a[j][i];</span><br><span class="line">                            a[j][i]=<span class="number">-1</span>;</span><br><span class="line">                            a[j+k][i]=<span class="number">-1</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(cur==<span class="number">0</span>)&#123;</span><br><span class="line">            t=<span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> cnt+=cur;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; cnt &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Problem-3"><a href="#Problem-3" class="headerlink" title="Problem 3"></a>Problem 3</h3><p><strong>搬家</strong><br>建圖有點麻煩，剩下就是DSU算連通塊數量就好。<br>p.s.一開始海牛測資是錯的整個把我嚇死owo（只有十分）  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Enjoy coding</span></span><br><span class="line"><span class="comment">//eeenuuu</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> F first</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> S second</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> phb push_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ppb pop_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pii pair<span class="string">&lt;int, int&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> wh_ale ios::sync_with_stdio(0);cin.tie(0);cout.tie(0)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> all(x) x.begin(),x.end()</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> INF (long long) 1e18</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mod 1e9+7</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> maxn 200010</span></span><br><span class="line"><span class="type">int</span> p[<span class="number">510510</span>]=&#123;&#125;, n, m;</span><br><span class="line">set&lt;<span class="type">int</span>&gt; s[<span class="number">510510</span>];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">findp</span><span class="params">(<span class="type">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(p[x]&lt;<span class="number">0</span>) <span class="keyword">return</span> x;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">return</span> <span class="built_in">findp</span>(p[x]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">combine</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> y)</span></span>&#123;</span><br><span class="line">    x=<span class="built_in">findp</span>(x);</span><br><span class="line">    y=<span class="built_in">findp</span>(y);</span><br><span class="line">    <span class="keyword">if</span>(x==y) exit;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(p[x]&gt;p[y]) <span class="built_in">swap</span>(x, y);</span><br><span class="line">        p[x]+=p[y];</span><br><span class="line">        p[y]=x;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    wh_ale;</span><br><span class="line">    <span class="type">int</span> i, j, ans=<span class="number">0</span>;</span><br><span class="line">    <span class="type">char</span> c;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; m;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)<span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;m;j++)&#123;</span><br><span class="line">        cin &gt;&gt; c;</span><br><span class="line">        p[<span class="number">1000</span>*i+j]=<span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">if</span>(c==<span class="string">&#x27;X&#x27;</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i+<span class="number">1</span>&gt;=<span class="number">0</span> <span class="keyword">and</span> i+<span class="number">1</span>&lt;n) s[<span class="number">1000</span>*i+j].<span class="built_in">insert</span>((i+<span class="number">1</span>)*<span class="number">1000</span>+j);</span><br><span class="line">            <span class="keyword">if</span>(i<span class="number">-1</span>&gt;=<span class="number">0</span> <span class="keyword">and</span> i<span class="number">-1</span>&lt;n) s[<span class="number">1000</span>*i+j].<span class="built_in">insert</span>((i<span class="number">-1</span>)*<span class="number">1000</span>+j);</span><br><span class="line">            <span class="keyword">if</span>(j+<span class="number">1</span>&gt;=<span class="number">0</span> <span class="keyword">and</span> j+<span class="number">1</span>&lt;m) s[<span class="number">1000</span>*i+j].<span class="built_in">insert</span>(i*<span class="number">1000</span>+j+<span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span>(j<span class="number">-1</span>&gt;=<span class="number">0</span> <span class="keyword">and</span> j<span class="number">-1</span>&lt;m) s[<span class="number">1000</span>*i+j].<span class="built_in">insert</span>(i*<span class="number">1000</span>+j<span class="number">-1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(c==<span class="string">&#x27;F&#x27;</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(j+<span class="number">1</span>&gt;=<span class="number">0</span> <span class="keyword">and</span> j+<span class="number">1</span>&lt;m) s[<span class="number">1000</span>*i+j].<span class="built_in">insert</span>(i*<span class="number">1000</span>+j+<span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span>(i+<span class="number">1</span>&gt;=<span class="number">0</span> <span class="keyword">and</span> i+<span class="number">1</span>&lt;n) s[<span class="number">1000</span>*i+j].<span class="built_in">insert</span>((i+<span class="number">1</span>)*<span class="number">1000</span>+j);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(c==<span class="string">&#x27;H&#x27;</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(j+<span class="number">1</span>&gt;=<span class="number">0</span> <span class="keyword">and</span> j+<span class="number">1</span>&lt;m) s[<span class="number">1000</span>*i+j].<span class="built_in">insert</span>(i*<span class="number">1000</span>+j+<span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span>(j<span class="number">-1</span>&gt;=<span class="number">0</span> <span class="keyword">and</span> j<span class="number">-1</span>&lt;m) s[<span class="number">1000</span>*i+j].<span class="built_in">insert</span>(i*<span class="number">1000</span>+j<span class="number">-1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(c==<span class="string">&#x27;7&#x27;</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(j<span class="number">-1</span>&gt;=<span class="number">0</span> <span class="keyword">and</span> j<span class="number">-1</span>&lt;m) s[<span class="number">1000</span>*i+j].<span class="built_in">insert</span>(i*<span class="number">1000</span>+j<span class="number">-1</span>);</span><br><span class="line">            <span class="keyword">if</span>(i+<span class="number">1</span>&gt;=<span class="number">0</span> <span class="keyword">and</span> i+<span class="number">1</span>&lt;n) s[<span class="number">1000</span>*i+j].<span class="built_in">insert</span>((i+<span class="number">1</span>)*<span class="number">1000</span>+j);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(c==<span class="string">&#x27;I&#x27;</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i+<span class="number">1</span>&gt;=<span class="number">0</span> <span class="keyword">and</span> i+<span class="number">1</span>&lt;n) s[<span class="number">1000</span>*i+j].<span class="built_in">insert</span>((i+<span class="number">1</span>)*<span class="number">1000</span>+j);</span><br><span class="line">            <span class="keyword">if</span>(i<span class="number">-1</span>&gt;=<span class="number">0</span> <span class="keyword">and</span> i<span class="number">-1</span>&lt;n) s[<span class="number">1000</span>*i+j].<span class="built_in">insert</span>((i<span class="number">-1</span>)*<span class="number">1000</span>+j);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(c==<span class="string">&#x27;L&#x27;</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i<span class="number">-1</span>&gt;=<span class="number">0</span> <span class="keyword">and</span> i<span class="number">-1</span>&lt;n) s[<span class="number">1000</span>*i+j].<span class="built_in">insert</span>((i<span class="number">-1</span>)*<span class="number">1000</span>+j);</span><br><span class="line">            <span class="keyword">if</span>(j+<span class="number">1</span>&gt;=<span class="number">0</span> <span class="keyword">and</span> j+<span class="number">1</span>&lt;m) s[<span class="number">1000</span>*i+j].<span class="built_in">insert</span>(i*<span class="number">1000</span>+j+<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(c==<span class="string">&#x27;J&#x27;</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(j<span class="number">-1</span>&gt;=<span class="number">0</span> <span class="keyword">and</span> j<span class="number">-1</span>&lt;m) s[<span class="number">1000</span>*i+j].<span class="built_in">insert</span>(i*<span class="number">1000</span>+j<span class="number">-1</span>);</span><br><span class="line">            <span class="keyword">if</span>(i<span class="number">-1</span>&gt;=<span class="number">0</span> <span class="keyword">and</span> i<span class="number">-1</span>&lt;n) s[<span class="number">1000</span>*i+j].<span class="built_in">insert</span>((i<span class="number">-1</span>)*<span class="number">1000</span>+j);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> p[<span class="number">1000</span>*i+j]=<span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)<span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;m;j++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(s[i*<span class="number">1000</span>+j].<span class="built_in">count</span>((i+<span class="number">1</span>)*<span class="number">1000</span>+j) <span class="keyword">and</span> s[(i+<span class="number">1</span>)*<span class="number">1000</span>+j].<span class="built_in">count</span>(i*<span class="number">1000</span>+j))&#123;</span><br><span class="line">            <span class="built_in">combine</span>((i+<span class="number">1</span>)*<span class="number">1000</span>+j, i*<span class="number">1000</span>+j);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(s[i*<span class="number">1000</span>+j].<span class="built_in">count</span>(i*<span class="number">1000</span>+j+<span class="number">1</span>) <span class="keyword">and</span> s[i*<span class="number">1000</span>+j+<span class="number">1</span>].<span class="built_in">count</span>(i*<span class="number">1000</span>+j))&#123;</span><br><span class="line">            <span class="built_in">combine</span>(i*<span class="number">1000</span>+j+<span class="number">1</span>, i*<span class="number">1000</span>+j);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)<span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;m;j++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(p[i*<span class="number">1000</span>+j]&lt;<span class="number">0</span>)ans=<span class="built_in">max</span>(ans, p[i*<span class="number">1000</span>+j]*<span class="number">-1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; ans &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Problem-4"><a href="#Problem-4" class="headerlink" title="Problem 4"></a>Problem 4</h3><p><strong>投資遊戲</strong><br><del>線段樹</del><br>dp，紀錄現在用了幾張金牌以及從哪一天退場，於是會有：  </p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dp[j][<span class="number">1</span>]=<span class="built_in">max</span>(dp[j<span class="number">-1</span>][<span class="number">1</span>]+a[j]-a[j<span class="number">-1</span>], dp[j<span class="number">-1</span>][<span class="number">0</span>]+<span class="built_in">max</span>(<span class="number">0LL</span>, a[j]-a[j<span class="number">-1</span>]))</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Enjoy coding</span></span><br><span class="line"><span class="comment">//eeenuuu</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> F first</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> S second</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> phb push_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> ppb pop_back</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> pii pair<span class="string">&lt;int, int&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> wh_ale ios::sync_with_stdio(0);cin.tie(0);cout.tie(0)</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> all(x) x.begin(),x.end()</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> INF (long long) 1e18</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> mod 1e9+7</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> maxn 200010</span></span><br><span class="line"><span class="function"><span class="type">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    wh_ale;</span><br><span class="line">    <span class="type">int</span> n, k, a[maxn]=&#123;&#125;, dp[maxn][<span class="number">2</span>]=&#123;&#125;, i, j, x, cur=<span class="number">0</span>, ans=<span class="number">0</span>;</span><br><span class="line">    cin &gt;&gt; n &gt;&gt; k;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">        cin &gt;&gt; x;</span><br><span class="line">        a[i]=a[i<span class="number">-1</span>]+x;</span><br><span class="line">        cur=<span class="built_in">min</span>(cur, a[i]);</span><br><span class="line">        dp[i][<span class="number">0</span>]=a[i]-cur;</span><br><span class="line">        ans=<span class="built_in">max</span>(ans, dp[i][<span class="number">0</span>]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=k;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">1</span>;j&lt;=n;j++)&#123;</span><br><span class="line">            dp[j][<span class="number">1</span>]=<span class="built_in">max</span>(dp[j<span class="number">-1</span>][<span class="number">1</span>]+a[j]-a[j<span class="number">-1</span>], dp[j<span class="number">-1</span>][<span class="number">0</span>]+<span class="built_in">max</span>(<span class="number">0LL</span>, a[j]-a[j<span class="number">-1</span>]));</span><br><span class="line">            ans=<span class="built_in">max</span>(ans, dp[j][<span class="number">1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(j=<span class="number">1</span>;j&lt;=n;j++) dp[j][<span class="number">0</span>]=dp[j][<span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; ans &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>實作順利五級分啦~~~<br>最後觀念差一題五級分小可惜但沒關係owob  </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Write-Up"><span class="toc-number">2.</span> <span class="toc-text">Write Up</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-1"><span class="toc-number">2.1.</span> <span class="toc-text">Problem 1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-2"><span class="toc-number">2.2.</span> <span class="toc-text">Problem 2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-3"><span class="toc-number">2.3.</span> <span class="toc-text">Problem 3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Problem-4"><span class="toc-number">2.4.</span> <span class="toc-text">Problem 4</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">3.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2023/10/25/apcs202310/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2023/10/25/apcs202310/&text=APCS 2023 10月場心得"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2023/10/25/apcs202310/&title=APCS 2023 10月場心得"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2023/10/25/apcs202310/&is_video=false&description=APCS 2023 10月場心得"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=APCS 2023 10月場心得&body=Check out this article: http://wha13.github.io/2023/10/25/apcs202310/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2023/10/25/apcs202310/&title=APCS 2023 10月場心得"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2023/10/25/apcs202310/&title=APCS 2023 10月場心得"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2023/10/25/apcs202310/&title=APCS 2023 10月場心得"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2023/10/25/apcs202310/&title=APCS 2023 10月場心得"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2023/10/25/apcs202310/&name=APCS 2023 10月場心得&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2023/10/25/apcs202310/&t=APCS 2023 10月場心得"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2025
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

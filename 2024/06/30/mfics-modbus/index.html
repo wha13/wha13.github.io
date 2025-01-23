@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before all今天心血來潮研究了一下工業控制和Modbusㄉ東西，最後在github上寫了個小專案，歡迎來玩玩 &gt;&lt;https:&#x2F;&#x2F;github.com&#x2F;William957-web&#x2F;modbus_weather_station_lab   References:https:&#x2F;&#x2F;www.csimn.com&#x2F;CSI_pages&#x2F;Modbus101.html   https">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初探 ICS Security - Modbus">
+<meta property="og:url" content="http://wha13.github.io/2024/06/30/mfics-modbus/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before all今天心血來潮研究了一下工業控制和Modbusㄉ東西，最後在github上寫了個小專案，歡迎來玩玩 &gt;&lt;https:&#x2F;&#x2F;github.com&#x2F;William957-web&#x2F;modbus_weather_station_lab   References:https:&#x2F;&#x2F;www.csimn.com&#x2F;CSI_pages&#x2F;Modbus101.html   https">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/rJT3qkkvA.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SJER_lJwA.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ryGlKx1wA.png">
+<meta property="article:published_time" content="2024-06-30T22:08:08.000Z">
+<meta property="article:modified_time" content="2024-10-26T02:17:00.612Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="OT">
+<meta property="article:tag" content="ICS">
+<meta property="article:tag" content="modbus">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/rJT3qkkvA.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>初探 ICS Security - Modbus</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2024/07/12/win-basic-privesc/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/06/29/ais3-pre-exam-2024/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/06/30/mfics-modbus/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/06/30/mfics-modbus/&text=初探 ICS Security - Modbus"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/06/30/mfics-modbus/&title=初探 ICS Security - Modbus"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/06/30/mfics-modbus/&is_video=false&description=初探 ICS Security - Modbus"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=初探 ICS Security - Modbus&body=Check out this article: http://wha13.github.io/2024/06/30/mfics-modbus/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/06/30/mfics-modbus/&title=初探 ICS Security - Modbus"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/06/30/mfics-modbus/&title=初探 ICS Security - Modbus"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/06/30/mfics-modbus/&title=初探 ICS Security - Modbus"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/06/30/mfics-modbus/&title=初探 ICS Security - Modbus"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/06/30/mfics-modbus/&name=初探 ICS Security - Modbus&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/06/30/mfics-modbus/&t=初探 ICS Security - Modbus"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Note"><span class="toc-number">2.</span> <span class="toc-text">Note</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E6%8E%A7%E5%90%8D%E8%A9%9E"><span class="toc-number">2.1.</span> <span class="toc-text">工控名詞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#modbus-protocol"><span class="toc-number">2.2.</span> <span class="toc-text">modbus protocol</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python-Implementation"><span class="toc-number">2.3.</span> <span class="toc-text">Python Implementation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Client"><span class="toc-number">2.3.1.</span> <span class="toc-text">Client</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Server"><span class="toc-number">2.3.2.</span> <span class="toc-text">Server</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">3.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        初探 ICS Security - Modbus
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-06-30T22:08:08.000Z" class="dt-published" itemprop="datePublished">2024-06-30</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/ICS/" rel="tag">ICS</a>, <a class="p-category" href="/tags/OT/" rel="tag">OT</a>, <a class="p-category" href="/tags/modbus/" rel="tag">modbus</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>今天心血來潮研究了一下工業控制和Modbusㄉ東西，最後在github上寫了個小專案，歡迎來玩玩 &gt;&lt;<br><a target="_blank" rel="noopener" href="https://github.com/William957-web/modbus_weather_station_lab">https://github.com/William957-web/modbus_weather_station_lab</a>  </p>
+<p><strong>References:</strong><br><a target="_blank" rel="noopener" href="https://www.csimn.com/CSI_pages/Modbus101.html">https://www.csimn.com/CSI_pages&#x2F;Modbus101.html</a>  </p>
+<p><a target="_blank" rel="noopener" href="https://pymodbus.readthedocs.io/en/latest/source/client.html">https://pymodbus.readthedocs.io/en/latest/source/client.html</a>  </p>
+<p>P.S. TryHackMe上面的 Attacking ICS Plant系列推薦去打打看  </p>
+<h2 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h2><h3 id="工控名詞"><a href="#工控名詞" class="headerlink" title="工控名詞"></a>工控名詞</h3><p>所謂的工控，就是工業控制(?)<br><del>好像很明確了</del><br>看幾個常見名詞  </p>
+<ol>
+<li>Operational Technology, OT  </li>
+<li>Industrial Control System, ICS  </li>
+<li>Programmable Logic Controller, PLC  </li>
+<li>Supervisor Control And Data Acqusition, SCADA  </li>
+<li>Distributed Control System, DCS  </li>
+<li>Human Machine Interaction, HMI</li>
+</ol>
+<p>簡單來說，OT就是操作技術的大圈圈，而ICS就是今天的主角工業控制<br>工業控制裡面大致上又可以分為 PLC (邏輯控制的程式)、SCADA(可監控和控制的系統)、DCS (分散式的控制系統)以及 HMI(人機互動的部分)  </p>
+<p><strong>SCADA v.s. DCS</strong><br>相較之下，通常DCS更注重於控制，而SCADA則注重監測<br>而SCADA也較為靈活，但並沒有絕對的優缺比較，而兩者本質上是出於相同目的的。  </p>
+<p>詳細更多內容請參考：<a target="_blank" rel="noopener" href="https://blog.digiinfr.com/dcs%E5%92%8Cscada%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/">https://blog.digiinfr.com/dcs%E5%92%8Cscada%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F/</a></p>
+<p>最後，DCS, SCADA會用到PLC，本身也會被HMI去做實體化，而PLC就是接收SENSOR跟呼叫ACTUATORS，所以它們之間的關係圖大概長這樣：<br><img src="https://hackmd.io/_uploads/rJT3qkkvA.png" alt="image">  </p>
+<p>P.S. 在正式部署前的測試環境叫做testbed  </p>
+<h3 id="modbus-protocol"><a href="#modbus-protocol" class="headerlink" title="modbus protocol"></a>modbus protocol</h3><p>工業控制有很多種 protocol，modbus就是常用的其中一種！<br>這些protocol的目的是在工控環境下傳遞正確的資訊，讓工廠有正確的操作。  </p>
+<p>再來是 modbus 的簡介：<br>本體是基於RTU over RS-485(實體層)，而遠端呼叫時modbus是透過tcp傳送的，也是後續lab採用的方法(容易被打的地方)。<br>modbus協議定義了主從(master&#x2F;slave)的關係，必須有個master以及一個以上的slave去接收&#x2F;回顯訊息。  </p>
+<p>每個 modbus 的封包都必須包含一個 function code 以及要呼叫的變量(?)以及值  </p>
+<p>Function Code Table  </p>
+<table>
+<thead>
+<tr>
+<th>Function Code</th>
+<th>Register Type</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>Read Coil</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Read Discrete Input</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Read Holding Registers</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Read Input Registers</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Write Single Coil</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Write Single Holding Register</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Write Multiple Coils</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Write Multiple Holding Registers</td>
+</tr>
+</tbody></table>
+<p>變量分為這三種：  </p>
+<ul>
+<li>Discrete Input : 1 bit, read only</li>
+<li>Coil : 1 bit, read&#x2F;write</li>
+<li>Input Registers : 16 bits, read only</li>
+<li>Holding Registers : 16 bits, read&#x2F;write</li>
+</ul>
+<p>傳遞時封包列起來會像這樣：<br>(Read Holding Registers)<br><img src="https://hackmd.io/_uploads/SJER_lJwA.png" alt="image"><br>(Write Single Holding Register)<br><img src="https://hackmd.io/_uploads/ryGlKx1wA.png" alt="image">  </p>
+<p>會看到有個 Func 的選項，就是丟出去的 function code，modbus段就是丟出去的參數們  </p>
+<h3 id="Python-Implementation"><a href="#Python-Implementation" class="headerlink" title="Python Implementation"></a>Python Implementation</h3><p>以我做的 <a target="_blank" rel="noopener" href="https://github.com/William957-web/modbus_weather_station_lab">lab</a> 為範例  </p>
+<p>安裝 python modbus 庫，就包含server端跟client端ㄌ  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install pymodbus==<span class="number">2.5</span><span class="number">.2</span></span><br></pre></td></tr></table></figure>
+<p>p.s. 以前版本限制沒那麼多，我是用這個  </p>
+<h4 id="Client"><a href="#Client" class="headerlink" title="Client"></a>Client</h4><p><strong>attack&#x2F;recon.py</strong>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> pymodbus.client.sync <span class="keyword">import</span> ModbusTcpClient <span class="keyword">as</span> ModbusClient</span><br><span class="line"><span class="keyword">from</span> pymodbus.exceptions <span class="keyword">import</span> ConnectionException</span><br><span class="line"></span><br><span class="line">ip = sys.argv[<span class="number">1</span>]</span><br><span class="line">client = ModbusClient(ip, port=<span class="number">502</span>)</span><br><span class="line">client.connect()</span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    rr = client.read_holding_registers(<span class="number">1</span>, <span class="number">16</span>)</span><br><span class="line">    <span class="built_in">print</span>(rr.registers)</span><br><span class="line">    time.sleep(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>利用<code>ModbusClient</code>建立連線，以<code>read_holding_registers</code>去閱讀<code>Holding Register</code>，就是func code 3的呼叫<br><strong>attack&#x2F;set_register.py</strong>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">from</span> pymodbus.client.sync <span class="keyword">import</span> ModbusTcpClient <span class="keyword">as</span> ModbusClient</span><br><span class="line"><span class="keyword">from</span> pymodbus.exceptions <span class="keyword">import</span> ConnectionException</span><br><span class="line"></span><br><span class="line">ip = sys.argv[<span class="number">1</span>]</span><br><span class="line">registry = <span class="built_in">int</span>(sys.argv[<span class="number">2</span>])</span><br><span class="line">value = <span class="built_in">int</span>(sys.argv[<span class="number">3</span>])</span><br><span class="line">client = ModbusClient(ip, port=<span class="number">502</span>)</span><br><span class="line">client.connect()</span><br><span class="line">client.write_register(registry, value)</span><br></pre></td></tr></table></figure>
+<p>跟剛剛很像，以<code>write_register</code>去寫入register  </p>
+<h4 id="Server"><a href="#Server" class="headerlink" title="Server"></a>Server</h4><p><strong>station.py</strong></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pymodbus.server.sync <span class="keyword">import</span> StartTcpServer</span><br><span class="line"><span class="keyword">from</span> pymodbus.datastore <span class="keyword">import</span> ModbusSequentialDataBlock</span><br><span class="line"><span class="keyword">from</span> pymodbus.datastore <span class="keyword">import</span> ModbusSlaveContext, ModbusServerContext</span><br><span class="line"><span class="keyword">from</span> pymodbus.device <span class="keyword">import</span> ModbusDeviceIdentification</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">online = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">update_registers</span>(<span class="params">context</span>):</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        slave_id = <span class="number">0x00</span></span><br><span class="line">        address = <span class="number">0x01</span></span><br><span class="line"></span><br><span class="line">        temperature = random.randint(<span class="number">20</span>, <span class="number">30</span>)</span><br><span class="line">        pressure = random.randint(<span class="number">1000</span>, <span class="number">1100</span>)</span><br><span class="line">        humidity = random.randint(<span class="number">30</span>, <span class="number">50</span>)</span><br><span class="line">        context[slave_id].setValues(<span class="number">3</span>, address, [temperature])</span><br><span class="line">        context[slave_id].setValues(<span class="number">3</span>, address + <span class="number">1</span>, [pressure])</span><br><span class="line">        context[slave_id].setValues(<span class="number">3</span>, address + <span class="number">2</span>, [humidity])</span><br><span class="line">        context[slave_id].setValues(<span class="number">3</span>, address + <span class="number">15</span>, [online])</span><br><span class="line"></span><br><span class="line">        time.sleep(<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Data storage</span></span><br><span class="line">store = ModbusSlaveContext(</span><br><span class="line">    hr=ModbusSequentialDataBlock(<span class="number">0</span>, [<span class="number">0</span>]*<span class="number">100</span>)</span><br><span class="line">)</span><br><span class="line">context = ModbusServerContext(slaves=store, single=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Machine Configurations</span></span><br><span class="line">identity = ModbusDeviceIdentification()</span><br><span class="line">identity.VendorName = <span class="string">&#x27;pymodbus&#x27;</span></span><br><span class="line">identity.ProductCode = <span class="string">&#x27;PM&#x27;</span></span><br><span class="line">identity.VendorUrl = <span class="string">&#x27;http://github.com/riptideio/pymodbus/&#x27;</span></span><br><span class="line">identity.ProductName = <span class="string">&#x27;pymodbus Server&#x27;</span></span><br><span class="line">identity.ModelName = <span class="string">&#x27;pymodbus Server&#x27;</span></span><br><span class="line">identity.MajorMinorRevision = <span class="string">&#x27;1.0&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Multi Threadings</span></span><br><span class="line">update_thread = threading.Thread(target=update_registers, args=(context,))</span><br><span class="line">update_thread.daemon = <span class="literal">True</span></span><br><span class="line">update_thread.start()</span><br><span class="line"></span><br><span class="line"><span class="comment"># Modbus TCP Server</span></span><br><span class="line">StartTcpServer(context, identity=identity, address=(<span class="string">&quot;0.0.0.0&quot;</span>, <span class="number">502</span>))</span><br></pre></td></tr></table></figure>
+<p>這段程式碼建立了一百個初始值為0的data block</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">store = ModbusSlaveContext(</span><br><span class="line">    hr=ModbusSequentialDataBlock(<span class="number">0</span>, [<span class="number">0</span>]*<span class="number">100</span>)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>接著以<code>context = ModbusServerContext(slaves=store, single=True)</code><br>建立一個 modbus server(slave資料就是剛剛的datablock)<br>函數<code>update_registers</code>裡面的<code>setValues</code>則是去改 register 值。  </p>
+<p>大致上就是這些啦~  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>工控其實挺有趣的，之前在HTB也有打過抽換惡意PLC彈rev shell的題目，之後可以多碰碰<br>但要先處理資格考…🐳  </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Note"><span class="toc-number">2.</span> <span class="toc-text">Note</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A5%E6%8E%A7%E5%90%8D%E8%A9%9E"><span class="toc-number">2.1.</span> <span class="toc-text">工控名詞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#modbus-protocol"><span class="toc-number">2.2.</span> <span class="toc-text">modbus protocol</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Python-Implementation"><span class="toc-number">2.3.</span> <span class="toc-text">Python Implementation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Client"><span class="toc-number">2.3.1.</span> <span class="toc-text">Client</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Server"><span class="toc-number">2.3.2.</span> <span class="toc-text">Server</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">3.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/06/30/mfics-modbus/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/06/30/mfics-modbus/&text=初探 ICS Security - Modbus"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/06/30/mfics-modbus/&title=初探 ICS Security - Modbus"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/06/30/mfics-modbus/&is_video=false&description=初探 ICS Security - Modbus"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=初探 ICS Security - Modbus&body=Check out this article: http://wha13.github.io/2024/06/30/mfics-modbus/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/06/30/mfics-modbus/&title=初探 ICS Security - Modbus"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/06/30/mfics-modbus/&title=初探 ICS Security - Modbus"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/06/30/mfics-modbus/&title=初探 ICS Security - Modbus"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/06/30/mfics-modbus/&title=初探 ICS Security - Modbus"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/06/30/mfics-modbus/&name=初探 ICS Security - Modbus&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/06/30/mfics-modbus/&t=初探 ICS Security - Modbus"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2025
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

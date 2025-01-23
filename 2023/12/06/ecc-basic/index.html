@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before all橢圓曲線好ㄟ &gt;&lt; b隨筆記一下，一樣是從CryptoHack學來ㄉ未完成，會慢慢補齊全。   Note基本知識：通常ECC丟出來的曲線都是：    E: Y^2 &#x3D; X^3 + aX + b   4a^3 + 27b^2 ≠ 0  在F_p下曲線點加法定律：簡單來說就是取兩點連線後交取縣的第三點之對稱點。   1234(a) P + O &#x3D; O + P">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ECC 隨筆">
+<meta property="og:url" content="http://wha13.github.io/2023/12/06/ecc-basic/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before all橢圓曲線好ㄟ &gt;&lt; b隨筆記一下，一樣是從CryptoHack學來ㄉ未完成，會慢慢補齊全。   Note基本知識：通常ECC丟出來的曲線都是：    E: Y^2 &#x3D; X^3 + aX + b   4a^3 + 27b^2 ≠ 0  在F_p下曲線點加法定律：簡單來說就是取兩點連線後交取縣的第三點之對稱點。   1234(a) P + O &#x3D; O + P">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/Sym8PbCST.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ByPQIIQIT.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/B1BpmHB8p.png">
+<meta property="article:published_time" content="2023-12-07T00:10:04.000Z">
+<meta property="article:modified_time" content="2024-07-25T09:30:32.267Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="Cryptography">
+<meta property="article:tag" content="ECC">
+<meta property="article:tag" content="Note">
+<meta property="article:tag" content="sagemath">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/Sym8PbCST.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>ECC 隨筆</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/12/13/msfconsole/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/12/05/lattice-sage/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2023/12/06/ecc-basic/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2023/12/06/ecc-basic/&text=ECC 隨筆"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2023/12/06/ecc-basic/&title=ECC 隨筆"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2023/12/06/ecc-basic/&is_video=false&description=ECC 隨筆"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=ECC 隨筆&body=Check out this article: http://wha13.github.io/2023/12/06/ecc-basic/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2023/12/06/ecc-basic/&title=ECC 隨筆"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2023/12/06/ecc-basic/&title=ECC 隨筆"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2023/12/06/ecc-basic/&title=ECC 隨筆"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2023/12/06/ecc-basic/&title=ECC 隨筆"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2023/12/06/ecc-basic/&name=ECC 隨筆&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2023/12/06/ecc-basic/&t=ECC 隨筆"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Note"><span class="toc-number">2.</span> <span class="toc-text">Note</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AD%98%EF%BC%9A"><span class="toc-number">2.1.</span> <span class="toc-text">基本知識：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DLP"><span class="toc-number">2.2.</span> <span class="toc-text">DLP</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MOV-Attack"><span class="toc-number">2.2.1.</span> <span class="toc-text">MOV Attack</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Pohlig-Hellman"><span class="toc-number">2.2.2.</span> <span class="toc-text">Pohlig-Hellman</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Smart%E2%80%99s-Attack"><span class="toc-number">2.2.3.</span> <span class="toc-text">Smart’s Attack</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        ECC 隨筆
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-12-07T00:10:04.000Z" class="dt-published" itemprop="datePublished">2023-12-06</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Cryptography/" rel="tag">Cryptography</a>, <a class="p-category" href="/tags/ECC/" rel="tag">ECC</a>, <a class="p-category" href="/tags/Note/" rel="tag">Note</a>, <a class="p-category" href="/tags/sagemath/" rel="tag">sagemath</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>橢圓曲線好ㄟ &gt;&lt; b<br>隨筆記一下，一樣是從CryptoHack學來ㄉ<br>未完成，會慢慢補齊全。  </p>
+<h2 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h2><h3 id="基本知識："><a href="#基本知識：" class="headerlink" title="基本知識："></a>基本知識：</h3><p>通常ECC丟出來的曲線都是：  </p>
+<ul>
+<li>E: Y^2 &#x3D; X^3 + aX + b  </li>
+<li>4a^3 + 27b^2 ≠ 0</li>
+</ul>
+<p>在F_p下曲線點加法定律：<br>簡單來說就是取兩點連線後交取縣的第三點之對稱點。  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(a) P + O = O + P = P</span><br><span class="line">(b) P + (−P) = O</span><br><span class="line">(c) (P + Q) + R = P + (Q + R)</span><br><span class="line">(d) P + Q = Q + P</span><br></pre></td></tr></table></figure>
+<p>加法算法owo：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">(a) If P = O, then P + Q = Q.</span><br><span class="line">(b) Otherwise, if Q = O, then P + Q = P.</span><br><span class="line">(c) Otherwise, write P = (x1, y1) and Q = (x2, y2).</span><br><span class="line">(d) If x1 = x2 and y1 = −y2, then P + Q = O.</span><br><span class="line">(e) Otherwise:</span><br><span class="line">  (e1) if P ≠ Q: λ = (y2 - y1) / (x2 - x1)</span><br><span class="line">  (e2) if P = Q: λ = (3x12 + a) / 2y1</span><br><span class="line">(f) x3 = λ2 − x1 − x2,     y3 = λ(x1 −x3) − y1</span><br><span class="line">(g) P + Q = (x3, y3)</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/Sym8PbCST.png" alt="image"><br><strong>source code</strong>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add_point</span>(<span class="params">p1, p2</span>):</span><br><span class="line">    <span class="keyword">if</span> p1 == (<span class="number">0</span>, <span class="number">0</span>):</span><br><span class="line">        <span class="keyword">return</span> p2</span><br><span class="line">    <span class="keyword">if</span> p2 == (<span class="number">0</span>,<span class="number">0</span>):</span><br><span class="line">        <span class="keyword">return</span> p1</span><br><span class="line">    x1, y1 = p1</span><br><span class="line">    x2, y2 = p2</span><br><span class="line">    <span class="keyword">if</span> x1 == x2 <span class="keyword">and</span> y1 == -y2:</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">    lamda = <span class="number">0</span></span><br><span class="line">    <span class="keyword">if</span> p1 == p2:</span><br><span class="line">        lamda = <span class="built_in">int</span>((<span class="number">3</span>*<span class="built_in">pow</span>(x1,<span class="number">2</span>,p)+a) * inverse(<span class="number">2</span>*y1, p))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        lamda = <span class="built_in">int</span>((y2-y1) * inverse(x2-x1, p))</span><br><span class="line">    x3 = <span class="built_in">int</span>((<span class="built_in">pow</span>(lamda, <span class="number">2</span>) - x1 - x2) % p)</span><br><span class="line">    y3 = <span class="built_in">int</span>((lamda*(x1 - x3) - y1) % p )</span><br><span class="line">    <span class="keyword">return</span> (x3, y3)</span><br></pre></td></tr></table></figure>
+<p>乘法運算owo：<br>p.s.所有點都要用int()不然<code>sage</code>會抓Zmodp<br>像這樣：<br><img src="https://hackmd.io/_uploads/ByPQIIQIT.png" alt="image">  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">mul_point</span>(<span class="params">n, P</span>):</span><br><span class="line">    Q = P</span><br><span class="line">    R = (<span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">while</span> n &gt; <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">if</span> n % <span class="number">2</span> == <span class="number">1</span>:</span><br><span class="line">            R = add_point(R, Q)</span><br><span class="line">        Q = add_point(Q, Q)</span><br><span class="line">        n = n//<span class="number">2</span></span><br><span class="line">    <span class="keyword">return</span> R</span><br></pre></td></tr></table></figure>
+<p><strong>密鑰共享：</strong><br><img src="https://hackmd.io/_uploads/B1BpmHB8p.png" alt="image"><br><strong>Efficient Exchange:</strong><br>就是透過x求y，蠻好懂ㄉ。  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">q_x = <span class="number">4726</span></span><br><span class="line">nB = <span class="number">6534</span></span><br><span class="line">y_2 = (<span class="built_in">pow</span>(q_x,<span class="number">3</span>) + <span class="number">497</span>*q_x + <span class="number">1768</span>) % p</span><br><span class="line">q_y = <span class="built_in">pow</span>(y_2, (p+<span class="number">1</span>)//<span class="number">4</span>, p)</span><br><span class="line">Q = (q_x, q_y)</span><br></pre></td></tr></table></figure>
+
+<h3 id="DLP"><a href="#DLP" class="headerlink" title="DLP"></a>DLP</h3><p>基於ecc的離散對數問題  </p>
+<h4 id="MOV-Attack"><a href="#MOV-Attack" class="headerlink" title="MOV Attack"></a>MOV Attack</h4><p><a target="_blank" rel="noopener" href="https://people.cs.nycu.edu.tw/~rjchen/ECC2009/19_MOVattack.pdf">link here</a><br>當p是質數的時候標準型可以用以下算法去解，你的order越smooth計算速度會越快。<br>如果今天公鑰的模不是質數，先分解之後CRT就好。<br><strong>source</strong></p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">a=-<span class="number">104951229064556148327739944704067225950771091414555823142245215914591450861058912834056552784840698307176425328594627265181382568207073595237991025400591036568504091217142152714020714029902656538299906438142893329711443629030712718260179304547062440636851281426983383018754523639374608995894644699923989</span></span><br><span class="line">b=<span class="number">330613225413866308562655832653992432640737790102976283577689980446254383044796881349939456563614098677350931763722745890480665024910308168117972351801983224014875943389010425754101569428868865308406299896128864429744942281764740765767448933787468732728303440425139427370295303413074468467311732278185653261247210818747688700223033416748171231713809540831008656574944346358659431821890836056720018803565200414398913172518371053256926775457844063169319469</span></span><br><span class="line">q=<span class="number">359160846099444348290305694779134753321907709661985769865266028792407078112888527565129439985352509538424954784005539823019894001632619107445650921758147</span></span><br><span class="line">E = EllipticCurve(GF(q), [a, b])</span><br><span class="line">G=E(<span class="number">28607748532586155305766590971512659203413099194155217832119487667929904063769085772752568246866731921408737399300889149334418551010959577073796486388937480663378183502384364325599822278159619696537650011902619010103876865119734678532259458237178383683768508566703123494722154129671015135020887186845060</span> , <span class="number">11556771936710627311327152614495265716197411903352782890022099742435127886458521280682189301147652900443377696183067981621473494668018204621652208514757</span>)</span><br><span class="line">C=E(<span class="number">26711100496576685119729576632487291804536666301038622556968335217486889947153426038920564765985480495027226192426180920889404710714177330897458470987192539137847486749759239413620141196304823376881474287741080498376534259054440609508444858615416246577282166556054773489020913794668822330843444608421730</span>, <span class="number">12165040241593082803221196359814491555817137316163617470672182014503810780161804477407976153593724606514937006081912866361176466134156934782183659322121025579094922887583052870888825027604616070534178050563950169432924241914421544127099391730894894981983461145749926628000691771375822508363489298910865</span>)</span><br><span class="line">factors, exponents = <span class="built_in">zip</span>(*factor(E.order()))</span><br><span class="line">primes = [factors[i] ^ exponents[i] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(factors))]</span><br><span class="line">dlogs = []</span><br><span class="line"><span class="keyword">for</span> fac <span class="keyword">in</span> primes:</span><br><span class="line">    t = <span class="built_in">int</span>(G.order()) // <span class="built_in">int</span>(fac)</span><br><span class="line">    dlog = discrete_log(t*C,t*G,operation=<span class="string">&quot;+&quot;</span>)</span><br><span class="line">    dlogs += [dlog]</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;factor: &quot;</span>+<span class="built_in">str</span>(fac)+<span class="string">&quot;, Discrete Log: &quot;</span>+<span class="built_in">str</span>(dlog)) <span class="comment">#calculates discrete logarithm for each prime order</span></span><br><span class="line"></span><br><span class="line">l = crt(dlogs,primes)</span><br><span class="line"><span class="built_in">print</span>(l)</span><br></pre></td></tr></table></figure>
+<h4 id="Pohlig-Hellman"><a href="#Pohlig-Hellman" class="headerlink" title="Pohlig-Hellman"></a>Pohlig-Hellman</h4><p>sage裡面的<code>discrete_log</code>是基於Pohlig-Hellman和BSGS，所以用<code>discrete_log</code>即可實現。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">discrete_log(A, G, G.order(), operation=<span class="string">&#x27;+&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="Smart’s-Attack"><a href="#Smart’s-Attack" class="headerlink" title="Smart’s Attack"></a>Smart’s Attack</h4><p>當曲線的order&#x3D;p時，基於 Hensel’s Lemma的攻擊方案<br>詳細證明可以去看：<a target="_blank" rel="noopener" href="https://wstein.org/edu/2010/414/projects/novotney.pdf">https://wstein.org/edu/2010/414/projects/novotney.pdf</a>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">SmartAttack</span>(<span class="params">P,Q,p</span>):</span><br><span class="line">    E = P.curve()</span><br><span class="line">    Eqp = EllipticCurve(Qp(p, <span class="number">2</span>), [ ZZ(t) + randint(<span class="number">0</span>,p)*p <span class="keyword">for</span> t <span class="keyword">in</span> E.a_invariants() ])</span><br><span class="line">    P_Qps = Eqp.lift_x(ZZ(P.xy()[<span class="number">0</span>]), <span class="built_in">all</span>=<span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">for</span> P_Qp <span class="keyword">in</span> P_Qps:</span><br><span class="line">        <span class="keyword">if</span> GF(p)(P_Qp.xy()[<span class="number">1</span>]) == P.xy()[<span class="number">1</span>]:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    Q_Qps = Eqp.lift_x(ZZ(Q.xy()[<span class="number">0</span>]), <span class="built_in">all</span>=<span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">for</span> Q_Qp <span class="keyword">in</span> Q_Qps:</span><br><span class="line">        <span class="keyword">if</span> GF(p)(Q_Qp.xy()[<span class="number">1</span>]) == Q.xy()[<span class="number">1</span>]:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">    p_times_P = p*P_Qp</span><br><span class="line">    p_times_Q = p*Q_Qp</span><br><span class="line">    x_P,y_P = p_times_P.xy()</span><br><span class="line">    x_Q,y_Q = p_times_Q.xy()</span><br><span class="line">    phi_P = -(x_P/y_P)</span><br><span class="line">    phi_Q = -(x_Q/y_Q)</span><br><span class="line">    k = phi_Q/phi_P</span><br><span class="line">    <span class="keyword">return</span> ZZ(k)</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Note"><span class="toc-number">2.</span> <span class="toc-text">Note</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AD%98%EF%BC%9A"><span class="toc-number">2.1.</span> <span class="toc-text">基本知識：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DLP"><span class="toc-number">2.2.</span> <span class="toc-text">DLP</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MOV-Attack"><span class="toc-number">2.2.1.</span> <span class="toc-text">MOV Attack</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Pohlig-Hellman"><span class="toc-number">2.2.2.</span> <span class="toc-text">Pohlig-Hellman</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Smart%E2%80%99s-Attack"><span class="toc-number">2.2.3.</span> <span class="toc-text">Smart’s Attack</span></a></li></ol></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2023/12/06/ecc-basic/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2023/12/06/ecc-basic/&text=ECC 隨筆"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2023/12/06/ecc-basic/&title=ECC 隨筆"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2023/12/06/ecc-basic/&is_video=false&description=ECC 隨筆"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=ECC 隨筆&body=Check out this article: http://wha13.github.io/2023/12/06/ecc-basic/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2023/12/06/ecc-basic/&title=ECC 隨筆"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2023/12/06/ecc-basic/&title=ECC 隨筆"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2023/12/06/ecc-basic/&title=ECC 隨筆"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2023/12/06/ecc-basic/&title=ECC 隨筆"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2023/12/06/ecc-basic/&name=ECC 隨筆&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2023/12/06/ecc-basic/&t=ECC 隨筆"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2025
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

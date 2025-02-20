@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="更多是抱怨文，如果看到最後   Before all一篇小品文，我要水一下 Blog XD近期算是要幫某些單位做資安檢測，就剛好接觸到了一些 apk 相關的滲透測試 …就開啟了頭痛之旅，首要的問題就是，怎麼把 apk 抓進電腦分析底下是我曾經的第一個解答，上網查其實也都是看到它…但…它…真的好嗎？戳開 Request Update 的按鈕有這樣一段話：   1Post the app packag">
+<meta property="og:type" content="article">
+<meta property="og:title" content="精確抓取 PlayStore 上的 APK 檔案，和一些 APK 測試的小故事...">
+<meta property="og:url" content="http://wha13.github.io/2025/02/20/apk-wtf-1/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="更多是抱怨文，如果看到最後   Before all一篇小品文，我要水一下 Blog XD近期算是要幫某些單位做資安檢測，就剛好接觸到了一些 apk 相關的滲透測試 …就開啟了頭痛之旅，首要的問題就是，怎麼把 apk 抓進電腦分析底下是我曾經的第一個解答，上網查其實也都是看到它…但…它…真的好嗎？戳開 Request Update 的按鈕有這樣一段話：   1Post the app packag">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/Skwk6sVcyl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HJdPpiNckl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HJxgAsVcJg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BkM-RoN9Je.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/Sy35Aj49Jx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SkdT0iEcyx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/B1MYx2Eqyx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ryGoehV51l.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/r171z3V5ye.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rkrTQ3V9Jx.png">
+<meta property="article:published_time" content="2025-02-20T16:51:20.000Z">
+<meta property="article:modified_time" content="2025-02-20T13:57:43.361Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="Pentesting">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="APK">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/Skwk6sVcyl.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>精確抓取 PlayStore 上的 APK 檔案，和一些 APK 測試的小故事...</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/02/09/eof-final-2025/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2025/02/20/apk-wtf-1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2025/02/20/apk-wtf-1/&text=精確抓取 PlayStore 上的 APK 檔案，和一些 APK 測試的小故事..."><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2025/02/20/apk-wtf-1/&title=精確抓取 PlayStore 上的 APK 檔案，和一些 APK 測試的小故事..."><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2025/02/20/apk-wtf-1/&is_video=false&description=精確抓取 PlayStore 上的 APK 檔案，和一些 APK 測試的小故事..."><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=精確抓取 PlayStore 上的 APK 檔案，和一些 APK 測試的小故事...&body=Check out this article: http://wha13.github.io/2025/02/20/apk-wtf-1/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2025/02/20/apk-wtf-1/&title=精確抓取 PlayStore 上的 APK 檔案，和一些 APK 測試的小故事..."><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2025/02/20/apk-wtf-1/&title=精確抓取 PlayStore 上的 APK 檔案，和一些 APK 測試的小故事..."><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2025/02/20/apk-wtf-1/&title=精確抓取 PlayStore 上的 APK 檔案，和一些 APK 測試的小故事..."><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2025/02/20/apk-wtf-1/&title=精確抓取 PlayStore 上的 APK 檔案，和一些 APK 測試的小故事..."><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2025/02/20/apk-wtf-1/&name=精確抓取 PlayStore 上的 APK 檔案，和一些 APK 測試的小故事...&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2025/02/20/apk-wtf-1/&t=精確抓取 PlayStore 上的 APK 檔案，和一些 APK 測試的小故事..."><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BE%86%E7%94%A8-Blue-Stacks-%E5%90%A7%EF%BC%81"><span class="toc-number">2.</span> <span class="toc-text">來用 Blue Stacks 吧！</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">3.</span> <span class="toc-text">After all</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Google-Map"><span class="toc-number">3.1.</span> <span class="toc-text">Google Map</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Google-Firebase-API"><span class="toc-number">3.2.</span> <span class="toc-text">Google&#x2F;Firebase API</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        精確抓取 PlayStore 上的 APK 檔案，和一些 APK 測試的小故事...
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-02-20T16:51:20.000Z" class="dt-published" itemprop="datePublished">2025-02-20</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/APK/" rel="tag">APK</a>, <a class="p-category" href="/tags/Android/" rel="tag">Android</a>, <a class="p-category" href="/tags/Pentesting/" rel="tag">Pentesting</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><del>更多是抱怨文，如果看到最後</del>  </p>
+<h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>一篇小品文，我要水一下 Blog XD<br>近期算是要幫某些單位做資安檢測，就剛好接觸到了一些 apk 相關的滲透測試 …<br><del>就開啟了頭痛之旅</del>，首要的問題就是，怎麼把 apk 抓進電腦分析<br>底下是我曾經的第一個解答，上網查其實也都是看到它…<br><img src="https://hackmd.io/_uploads/Skwk6sVcyl.png" alt="image"><br>但…它…真的好嗎？<br>戳開 Request Update 的按鈕有這樣一段話：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Post the app package name/ID in the comment box below if you like to request us to update or fetch the app</span><br></pre></td></tr></table></figure>
+<p>痾…其實它是先 fetch 起來檔案，等有需要的時候再遞過來，所以很可能不是最新版的 APK ?!<br><img src="https://hackmd.io/_uploads/HJdPpiNckl.png" alt="image"><br><del>荒謬的更新留言串</del><br>蝦~怎麼辦，或許有些人會說直接從自己的安卓手機上提取，但那既麻煩，有些演練環境又不允許攜帶手機入內…更不要提版本不對導致無法下載的窘境🫠  </p>
+<h2 id="來用-Blue-Stacks-吧！"><a href="#來用-Blue-Stacks-吧！" class="headerlink" title="來用 Blue Stacks 吧！"></a>來用 Blue Stacks 吧！</h2><p>安裝最新版的 Blue Stacks，設定的地方記得調成允許 root<br><img src="https://hackmd.io/_uploads/HJxgAsVcJg.png" alt="image">  </p>
+<p>另外就是進階選項要開啟 adb<br><img src="https://hackmd.io/_uploads/BkM-RoN9Je.png" alt="image">  </p>
+<p>Adb 是一個蠻方便的軟體，可以快速幫你連接手機&#x2F;debug 它，當中就包含 shell&#x2F;拉取、推入檔案的功能<br>Windows 載點：<a target="_blank" rel="noopener" href="https://dl.google.com/android/repository/platformtools-latest-windows.zip">https://dl.google.com/android/repository/platformtools-latest-windows.zip</a><br>接下來我的情況(port 5555 開啟)就是：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.\adb.exe connect 127.0.0.1:5555</span><br></pre></td></tr></table></figure>
+<p>接下來下一下 devices 就能確認是否連上ㄌ<br><img src="https://hackmd.io/_uploads/Sy35Aj49Jx.png" alt="image">  </p>
+<p>下 shell 命令，進去之後 su 直接 root：<br><img src="https://hackmd.io/_uploads/SkdT0iEcyx.png" alt="image"><br>方便 &gt;&lt;<br>最後，安卓上的 apk 都會存在 <code>/data/app</code> 的資料夾內，用 pull 指令拉取就好，可以直接拉整個資料夾  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.\adb.exe -s 127.0.0.1:5555 pull /data/app/你的資料夾名稱 .</span><br></pre></td></tr></table></figure>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>同場加映一下怎麼快速找出 API KEY 以及舉例一下看到的兩種 API KEY 洩漏問題：  </p>
+<h3 id="Google-Map"><a href="#Google-Map" class="headerlink" title="Google Map"></a>Google Map</h3><p>Google Map 的 API Key 越來越多需付費了，而這些 API KEY 理論上也該被好好保護&#x2F;以中繼站的方法去間接調用。<br>工具下載：<a target="_blank" rel="noopener" href="https://github.com/ozguralp/gmapsapiscanner">https://github.com/ozguralp/gmapsapiscanner</a><br>舉個🌰：  </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">uses-library</span> <span class="attr">android:name</span>=<span class="string">&quot;org.apache.http.legacy&quot;</span> <span class="attr">android:required</span>=<span class="string">&quot;false&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta-data</span> <span class="attr">android:name</span>=<span class="string">&quot;firebase_performance_logcat_enabled&quot;</span> <span class="attr">android:value</span>=<span class="string">&quot;false&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta-data</span> <span class="attr">android:name</span>=<span class="string">&quot;com.google.android.maps.v2.API_KEY&quot;</span> <span class="attr">android:value</span>=<span class="string">&quot;@string/map_api_key&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta-data</span> <span class="attr">android:name</span>=<span class="string">&quot;android.app.default_searchable&quot;</span> <span class="attr">android:value</span>=<span class="string">&quot;com.nineyi.searchview.SearchViewNavContentsActivity&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">meta-data</span> <span class="attr">android:name</span>=<span class="string">&quot;firebase_crashlytics_collection_enabled&quot;</span> <span class="attr">android:value</span>=<span class="string">&quot;false&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>洩漏了！<br>在 APK 裡面舉凡像是 <code>@string/map_api_key</code> 的調用都是去抓取 <code>/resources/res/values/strings.xml</code> 這些 xml 找值<br><img src="https://hackmd.io/_uploads/B1MYx2Eqyx.png" alt="image"><br>API KEY 裸奔拉~!<br><img src="https://hackmd.io/_uploads/ryGoehV51l.png" alt="image"><br>還會有計價結果 XD  </p>
+<h3 id="Google-Firebase-API"><a href="#Google-Firebase-API" class="headerlink" title="Google&#x2F;Firebase API"></a>Google&#x2F;Firebase API</h3><p><img src="https://hackmd.io/_uploads/r171z3V5ye.png" alt="image"><br>遇到這類資料洩漏的時候可以參考這兩篇文章進行測試：<br><a target="_blank" rel="noopener" href="https://szczecin.github.io/2024/01/25/Firebase-Installations-Server-API/">https://szczecin.github.io/2024/01/25/Firebase-Installations-Server-API/</a><br><a target="_blank" rel="noopener" href="https://szczecin.github.io/2024/01/31/Firebase-API-Key-Hard-Coding/">https://szczecin.github.io/2024/01/31/Firebase-API-Key-Hard-Coding/</a>  </p>
+<p>像如果可以請求就會產生一個 device id，去做各種紀錄??<br><img src="https://hackmd.io/_uploads/rkrTQ3V9Jx.png" alt="image">  </p>
+<p>不過基本上好像就是確認可用性??<br>詳細還請大老教我 &gt;&lt;，在此求救<br>對，為什麼我會知道那麼一大坨東西呢…<br>是這樣的，一開始用 apk downloader 下載後解包，看到 google map api key 很開心的去掃而且發現有問題，結果…<br><strong>它不是最新版！！！</strong><br>然後就不能報ㄌ…後來發現了 Google &#x2F; Firebase API 但僅有這些東西我不確定能打出什麼效果，目前就是證明能用而已…  </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BE%86%E7%94%A8-Blue-Stacks-%E5%90%A7%EF%BC%81"><span class="toc-number">2.</span> <span class="toc-text">來用 Blue Stacks 吧！</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">3.</span> <span class="toc-text">After all</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Google-Map"><span class="toc-number">3.1.</span> <span class="toc-text">Google Map</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Google-Firebase-API"><span class="toc-number">3.2.</span> <span class="toc-text">Google&#x2F;Firebase API</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2025/02/20/apk-wtf-1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2025/02/20/apk-wtf-1/&text=精確抓取 PlayStore 上的 APK 檔案，和一些 APK 測試的小故事..."><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2025/02/20/apk-wtf-1/&title=精確抓取 PlayStore 上的 APK 檔案，和一些 APK 測試的小故事..."><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2025/02/20/apk-wtf-1/&is_video=false&description=精確抓取 PlayStore 上的 APK 檔案，和一些 APK 測試的小故事..."><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=精確抓取 PlayStore 上的 APK 檔案，和一些 APK 測試的小故事...&body=Check out this article: http://wha13.github.io/2025/02/20/apk-wtf-1/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2025/02/20/apk-wtf-1/&title=精確抓取 PlayStore 上的 APK 檔案，和一些 APK 測試的小故事..."><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2025/02/20/apk-wtf-1/&title=精確抓取 PlayStore 上的 APK 檔案，和一些 APK 測試的小故事..."><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2025/02/20/apk-wtf-1/&title=精確抓取 PlayStore 上的 APK 檔案，和一些 APK 測試的小故事..."><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2025/02/20/apk-wtf-1/&title=精確抓取 PlayStore 上的 APK 檔案，和一些 APK 測試的小故事..."><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2025/02/20/apk-wtf-1/&name=精確抓取 PlayStore 上的 APK 檔案，和一些 APK 測試的小故事...&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2025/02/20/apk-wtf-1/&t=精確抓取 PlayStore 上的 APK 檔案，和一些 APK 測試的小故事..."><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2025
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

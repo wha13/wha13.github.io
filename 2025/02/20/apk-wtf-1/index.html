@@ -27,7 +27,7 @@
 <meta property="og:image" content="https://hackmd.io/_uploads/rkrTQ3V9Jx.png">
 <meta property="og:image" content="https://hackmd.io/_uploads/Syutt6c9yx.png">
 <meta property="article:published_time" content="2025-02-20T16:51:20.000Z">
-<meta property="article:modified_time" content="2025-02-25T14:09:27.888Z">
+<meta property="article:modified_time" content="2025-02-25T14:20:54.960Z">
 <meta property="article:author" content="William Lin">
 <meta property="article:tag" content="apk">
 <meta property="article:tag" content="Pentesting">
@@ -213,7 +213,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -H <span class="string">&quot;content-type: application/json&quot;</span> -d <span class="string">&quot;&#123;appId: &#x27;<span class="variable">$app_id</span>&#x27;, sdkVersion: &#x27;t:1&#x27;&#125;&quot;</span> https://firebaseinstallations.googleapis.com/v1/projects/<span class="variable">$project_identifier</span>/installations/?key=<span class="variable">$api_key</span>;</span><br></pre></td></tr></table></figure>
 
 <p>不過基本上這就是確認可用性，詳細還需要拿著 api key 到處測試<br>接下來是關於這的小故事：<br>為什麼我會知道那麼一大坨東西呢…<br>是這樣的，一開始打是用 apk downloader 下載後解包，看到 google map api key 很開心的去掃而且發現有問題，結果…<br><strong>它不是最新版！！！</strong><br>然後按規定就不能報ㄌ…後來發現了 Google &#x2F; Firebase API 但僅有這些東西，我不確定能打出什麼效果，目前就是證明能用而已…  </p>
-<h3 id="Facebook-API"><a href="#Facebook-API" class="headerlink" title="Facebook API"></a>Facebook API</h3><p>再來也是遇到的一個情況，Facebook api key leak  </p>
+<h3 id="Facebook-API"><a href="#Facebook-API" class="headerlink" title="Facebook API"></a>Facebook API</h3><p>官方 Ref (以 Graph API 為例)：<a target="_blank" rel="noopener" href="https://developers.facebook.com/docs/graph-api/">https://developers.facebook.com/docs/graph-api/</a><br>HackerOne 案例：<a target="_blank" rel="noopener" href="https://hackerone.com/reports/1641475">https://hackerone.com/reports/1641475</a><br>再來也是遇到的一個情況，Facebook api key leak  </p>
 <p><img src="https://hackmd.io/_uploads/Syutt6c9yx.png" alt="image"><br>首先，拿到 id 與 token 後要先去請求一組 access_token：  </p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://graph.facebook.com/oauth/access_token?client_id=&lt;id&gt;&amp;client_secret=&lt;token&gt;&amp;redirect_uri=&amp;grant_type=client_credentials</span><br></pre></td></tr></table></figure>
 

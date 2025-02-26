@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before all最近剛好推坑學員來打，自己上來補一下以前沒打的安卓題XD整體而言很舒服，挺適合新手的（含 Writeup 大概一節自習弄完ㄅ）   H1 Thermostat用 decompiler.com 拆包，在 &#x2F;sources&#x2F;com&#x2F;hacker101&#x2F;level11&#x2F;PayloadRequest.java 就可以在請求的 requests headers 中找到兩把 flag 了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hacker101 CTF Android 通關紀錄">
+<meta property="og:url" content="http://wha13.github.io/2025/02/26/hacker101-android/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before all最近剛好推坑學員來打，自己上來補一下以前沒打的安卓題XD整體而言很舒服，挺適合新手的（含 Writeup 大概一節自習弄完ㄅ）   H1 Thermostat用 decompiler.com 拆包，在 &#x2F;sources&#x2F;com&#x2F;hacker101&#x2F;level11&#x2F;PayloadRequest.java 就可以在請求的 requests headers 中找到兩把 flag 了">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/B1vd61nqyg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ByrvyKh9yg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ryi61YncJx.png">
+<meta property="article:published_time" content="2025-02-26T07:02:02.000Z">
+<meta property="article:modified_time" content="2025-02-26T12:01:35.874Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="apk">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/B1vd61nqyg.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Hacker101 CTF Android 通關紀錄</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/02/20/apk-wtf-1/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2025/02/26/hacker101-android/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2025/02/26/hacker101-android/&text=Hacker101 CTF Android 通關紀錄"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2025/02/26/hacker101-android/&title=Hacker101 CTF Android 通關紀錄"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2025/02/26/hacker101-android/&is_video=false&description=Hacker101 CTF Android 通關紀錄"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Hacker101 CTF Android 通關紀錄&body=Check out this article: http://wha13.github.io/2025/02/26/hacker101-android/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2025/02/26/hacker101-android/&title=Hacker101 CTF Android 通關紀錄"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2025/02/26/hacker101-android/&title=Hacker101 CTF Android 通關紀錄"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2025/02/26/hacker101-android/&title=Hacker101 CTF Android 通關紀錄"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2025/02/26/hacker101-android/&title=Hacker101 CTF Android 通關紀錄"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2025/02/26/hacker101-android/&name=Hacker101 CTF Android 通關紀錄&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2025/02/26/hacker101-android/&t=Hacker101 CTF Android 通關紀錄"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#H1-Thermostat"><span class="toc-number">2.</span> <span class="toc-text">H1 Thermostat</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Intentional-Exercise"><span class="toc-number">3.</span> <span class="toc-text">Intentional Exercise</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Oauthbreaker"><span class="toc-number">4.</span> <span class="toc-text">Oauthbreaker</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Flag-1"><span class="toc-number">4.1.</span> <span class="toc-text">Flag 1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Flag-2"><span class="toc-number">4.2.</span> <span class="toc-text">Flag 2</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mobile-Webdev"><span class="toc-number">5.</span> <span class="toc-text">Mobile Webdev</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Hacker101 CTF Android 通關紀錄
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-02-26T07:02:02.000Z" class="dt-published" itemprop="datePublished">2025-02-26</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/CTF/" rel="tag">CTF</a>, <a class="p-category" href="/tags/apk/" rel="tag">apk</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>最近剛好推坑學員來打，自己上來補一下以前沒打的安卓題XD<br>整體而言很舒服，挺適合新手的（含 Writeup 大概一節自習弄完ㄅ）  </p>
+<h2 id="H1-Thermostat"><a href="#H1-Thermostat" class="headerlink" title="H1 Thermostat"></a>H1 Thermostat</h2><p>用 decompiler.com 拆包，在 <code>/sources/com/hacker101/level11/PayloadRequest.java</code> 就可以在請求的 requests headers 中找到兩把 flag 了  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="title function_">PayloadRequest</span><span class="params">(JSONObject jSONObject, <span class="keyword">final</span> Response.Listener&lt;String&gt; listener)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">    <span class="built_in">super</span>(<span class="number">1</span>, <span class="string">&quot;https://8902e68f31e537242087dcf6b1b9ce7b.ctf.hacker101.com/&quot;</span>, <span class="keyword">new</span> <span class="title class_">Response</span>.ErrorListener() &#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onErrorResponse</span><span class="params">(VolleyError volleyError)</span> &#123;</span><br><span class="line">            Response.Listener.<span class="built_in">this</span>.onResponse(<span class="string">&quot;Connection failed&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="built_in">this</span>.mListener = listener;</span><br><span class="line">    <span class="type">String</span> <span class="variable">buildPayload</span> <span class="operator">=</span> buildPayload(jSONObject);</span><br><span class="line">    <span class="built_in">this</span>.mParams.put(<span class="string">&quot;d&quot;</span>, buildPayload);</span><br><span class="line">    <span class="built_in">this</span>.mHeaders = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">    <span class="type">MessageDigest</span> <span class="variable">instance</span> <span class="operator">=</span> MessageDigest.getInstance(<span class="string">&quot;MD5&quot;</span>);</span><br><span class="line">    instance.update(<span class="string">&quot;^FLAG^1cc123c2258b6b617ec31b25d4e9f91ec564809f31dee35e2b3051e1724bc9dc$FLAG$&quot;</span>.getBytes());</span><br><span class="line">    instance.update(buildPayload.getBytes());</span><br><span class="line">    <span class="built_in">this</span>.mHeaders.put(<span class="string">&quot;X-MAC&quot;</span>, Base64.encodeToString(instance.digest(), <span class="number">0</span>));</span><br><span class="line">    <span class="built_in">this</span>.mHeaders.put(<span class="string">&quot;X-Flag&quot;</span>, <span class="string">&quot;^FLAG^cb1bbd86372b3da20e3d3be856526a5367b0ec75d4f699bc82aff2a6f59c9cfd$FLAG$&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Intentional-Exercise"><a href="#Intentional-Exercise" class="headerlink" title="Intentional Exercise"></a>Intentional Exercise</h2><p>拆 <code>/sources/com/hacker101/level13/MainActivity.java</code>，找到這一段：  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onCreate</span><span class="params">(Bundle bundle)</span> &#123;</span><br><span class="line">    <span class="built_in">super</span>.onCreate(bundle);</span><br><span class="line">    setContentView((<span class="type">int</span>) R.layout.activity_main);</span><br><span class="line">    <span class="type">WebView</span> <span class="variable">webView</span> <span class="operator">=</span> (WebView) findViewById(R.id.webview);</span><br><span class="line">    webView.setWebViewClient(<span class="keyword">new</span> <span class="title class_">WebViewClient</span>());</span><br><span class="line">    <span class="type">Uri</span> <span class="variable">data</span> <span class="operator">=</span> getIntent().getData();</span><br><span class="line">    <span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> <span class="string">&quot;https://46191d6bd16422b230e5f462400be91e.ctf.hacker101.com/appRoot&quot;</span>;</span><br><span class="line">    <span class="type">String</span> <span class="variable">str2</span> <span class="operator">=</span> BuildConfig.FLAVOR;</span><br><span class="line">    <span class="keyword">if</span> (data != <span class="literal">null</span>) &#123;</span><br><span class="line">        str2 = data.toString().substring(<span class="number">28</span>);</span><br><span class="line">        str = str + str2;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!str.contains(<span class="string">&quot;?&quot;</span>)) &#123;</span><br><span class="line">        str = str + <span class="string">&quot;?&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="type">MessageDigest</span> <span class="variable">instance</span> <span class="operator">=</span> MessageDigest.getInstance(<span class="string">&quot;SHA-256&quot;</span>);</span><br><span class="line">        instance.update(<span class="string">&quot;s00p3rs3cr3tk3y&quot;</span>.getBytes(StandardCharsets.UTF_8));</span><br><span class="line">        instance.update(str2.getBytes(StandardCharsets.UTF_8));</span><br><span class="line">        webView.loadUrl(str + <span class="string">&quot;&amp;hash=&quot;</span> + String.format(<span class="string">&quot;%064x&quot;</span>, <span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;<span class="keyword">new</span> <span class="title class_">BigInteger</span>(<span class="number">1</span>, instance.digest())&#125;));</span><br><span class="line">    &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 Android 中，getIntent 的方法會在點下圖標&#x2F;連結或某些系統變化發生時取值，在這邊感覺是拼接一個 url 所以先假設它想取的是一個連結。<br>再來注意到 <code>/resources/AndroidManifest.xml</code> 裡的 hardcode 值：  </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">intent-filter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">&quot;android.intent.action.VIEW&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">&quot;android.intent.category.DEFAULT&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">&quot;android.intent.category.BROWSABLE&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">data</span> <span class="attr">android:scheme</span>=<span class="string">&quot;http&quot;</span> <span class="attr">android:host</span>=<span class="string">&quot;level13.hacker101.com&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">intent-filter</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>可以看到 <code>http://level13.hacker101.com</code> 的長度正好為 28，大概就是你了…<br>最後又因為打開 <code>https://46191d6bd16422b230e5f462400be91e.ctf.hacker101.com/appRoot/</code> 後獲得的連結  </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>Welcome to Level13<span class="tag">&lt;/<span class="name">h1</span>&gt;</span><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;appRoot/flagBearer&quot;</span>&gt;</span>Flag<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>嘗試拿 hash 為 <code>SHA-256(&#39;s00p3rs3cr3tk3y/flagBearer&#39;)</code> 去存取成功拿到 flag &gt;&lt;<br><img src="https://hackmd.io/_uploads/B1vd61nqyg.png" alt="image">  </p>
+<p>Final Payload: <code>https://46191d6bd16422b230e5f462400be91e.ctf.hacker101.com/appRoot/flagBearer?&amp;hash=8743a18df6861ced0b7d472b34278dc29abba81b3fa4cf836013426d6256bd5e</code><br>P.S. 我一開始沒有 <code>?&amp;</code> 被卡好久…  </p>
+<h2 id="Oauthbreaker"><a href="#Oauthbreaker" class="headerlink" title="Oauthbreaker"></a>Oauthbreaker</h2><h3 id="Flag-1"><a href="#Flag-1" class="headerlink" title="Flag 1"></a>Flag 1</h3><p>首先注意到 <code>/sources/com/hacker101/oauth/WebAppInterface.java</code><br>當中定義了一個 getFlagPath 的函數：  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">  <span class="keyword">public</span> String <span class="title function_">getFlagPath</span><span class="params">()</span> &#123;</span><br><span class="line">      <span class="type">int</span>[] iArr = &#123;<span class="number">174</span>, <span class="number">95</span>, ......&#125;;</span><br><span class="line">...... 略</span><br><span class="line">      <span class="keyword">return</span> str + <span class="string">&quot;.html&quot;</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>把它包進去另一個 Java，然後 <code>println</code> 出來就行 XD  </p>
+<p>solve script: <a target="_blank" rel="noopener" href="https://www.programiz.com/online-compiler/8vC5V0QcMaODh">https://www.programiz.com/online-compiler/8vC5V0QcMaODh</a>  </p>
+<h3 id="Flag-2"><a href="#Flag-2" class="headerlink" title="Flag 2"></a>Flag 2</h3><p>分析 <code>/sources/com/hacker101/oauth/MainActivity.java</code>  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">package</span> com.hacker101.oauth;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.content.Intent;</span><br><span class="line"><span class="keyword">import</span> android.net.Uri;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> android.widget.Button;</span><br><span class="line"><span class="keyword">import</span> androidx.annotation.RequiresApi;</span><br><span class="line"><span class="keyword">import</span> androidx.appcompat.app.AppCompatActivity;</span><br><span class="line"><span class="keyword">import</span> java.io.UnsupportedEncodingException;</span><br><span class="line"><span class="keyword">import</span> java.net.URLEncoder;</span><br><span class="line"><span class="keyword">import</span> java.nio.charset.StandardCharsets;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MainActivity</span> <span class="keyword">extends</span> <span class="title class_">AppCompatActivity</span> <span class="keyword">implements</span> <span class="title class_">View</span>.OnClickListener &#123;</span><br><span class="line">    String authRedirectUri;</span><br><span class="line">    Button button;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* access modifiers changed from: protected */</span></span><br><span class="line">    <span class="meta">@RequiresApi(api = 19)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onCreate</span><span class="params">(Bundle bundle)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onCreate(bundle);</span><br><span class="line">        setContentView((<span class="type">int</span>) R.layout.activity_main);</span><br><span class="line">        <span class="built_in">this</span>.authRedirectUri = <span class="string">&quot;oauth://final/&quot;</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="type">Uri</span> <span class="variable">data</span> <span class="operator">=</span> getIntent().getData();</span><br><span class="line">            <span class="keyword">if</span> (!(data == <span class="literal">null</span> || data.getQueryParameter(<span class="string">&quot;redirect_uri&quot;</span>) == <span class="literal">null</span>)) &#123;</span><br><span class="line">                <span class="built_in">this</span>.authRedirectUri = data.getQueryParameter(<span class="string">&quot;redirect_uri&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception unused) &#123;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">this</span>.button = (Button) findViewById(R.id.button);</span><br><span class="line">        <span class="built_in">this</span>.button.setOnClickListener(<span class="built_in">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onClick</span><span class="params">(View view)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (view.getId() == R.id.button) &#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">str</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                str = <span class="string">&quot;https://022f85b6d943e20227ea7920941a21e0.ctf.hacker101.com/oauth?redirect_url=&quot;</span> + URLEncoder.encode(<span class="built_in">this</span>.authRedirectUri, StandardCharsets.UTF_8.toString()) + <span class="string">&quot;login&amp;response_type=token&amp;scope=all&quot;</span>;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="type">Intent</span> <span class="variable">intent</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Intent</span>(<span class="string">&quot;android.intent.action.VIEW&quot;</span>);</span><br><span class="line">            intent.setData(Uri.parse(str));</span><br><span class="line">            startActivity(intent);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>觀察一下，就是一個 Oauth URL 請求器，走的是自己的 <code>oauth://</code> 協議<br>一開始根本沒有 Oauth URL 可用，所以會是 <code>oauth://final/</code><br>首先請求 <code>https://022f85b6d943e20227ea7920941a21e0.ctf.hacker101.com/oauth?redirect_url=oauth://final/login&amp;response_type=token&amp;scope=all</code><br>獲得含 token url <code>oauth://final/login?token=afbe631ca8889b2000be4b6c820b6f09</code><br>再次請求，就可以在回傳的 oauth url 中拿到 flag<br><code>https://022f85b6d943e20227ea7920941a21e0.ctf.hacker101.com/oauth?redirect_url=oauth://final/login?token=afbe631ca8889b2000be4b6c820b6f09&amp;response_type=token&amp;scope=all</code></p>
+<h2 id="Mobile-Webdev"><a href="#Mobile-Webdev" class="headerlink" title="Mobile Webdev"></a>Mobile Webdev</h2><p>拆開，在 <code>/sources/com/hacker101/webdev/MainActivity.java</code> 拿到幾個 endpoint 和 hmac key  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line">    <span class="keyword">package</span> com.hacker101.webdev;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.net.http.SslError;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> android.webkit.SslErrorHandler;</span><br><span class="line"><span class="keyword">import</span> android.webkit.WebView;</span><br><span class="line"><span class="keyword">import</span> android.webkit.WebViewClient;</span><br><span class="line"><span class="keyword">import</span> android.widget.Button;</span><br><span class="line"><span class="keyword">import</span> androidx.annotation.RequiresApi;</span><br><span class="line"><span class="keyword">import</span> androidx.appcompat.app.AppCompatActivity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MainActivity</span> <span class="keyword">extends</span> <span class="title class_">AppCompatActivity</span> <span class="keyword">implements</span> <span class="title class_">View</span>.OnClickListener &#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="type">String</span> <span class="variable">HmacKey</span> <span class="operator">=</span> <span class="string">&quot;8c34bac50d9b096d41cafb53683b315690acf65a11b5f63250c61f7718fa1d1d&quot;</span>;</span><br><span class="line">    Button editButton;</span><br><span class="line">    <span class="type">Boolean</span> <span class="variable">editing</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">    Button refreshButton;</span><br><span class="line">    WebView webView;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">class</span> <span class="title class_">SSLTolerantWebViewClient</span> <span class="keyword">extends</span> <span class="title class_">WebViewClient</span> &#123;</span><br><span class="line">        WebView webView;</span><br><span class="line"></span><br><span class="line">        SSLTolerantWebViewClient(WebView webView2) &#123;</span><br><span class="line">            <span class="built_in">this</span>.webView = webView2;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">shouldOverrideUrlLoading</span><span class="params">(WebView webView2, String str)</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.webView.loadUrl(str);</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onReceivedSslError</span><span class="params">(WebView webView2, SslErrorHandler sslErrorHandler, SslError sslError)</span> &#123;</span><br><span class="line">            <span class="built_in">super</span>.onReceivedSslError(webView2, sslErrorHandler, sslError);</span><br><span class="line">            sslErrorHandler.proceed();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* access modifiers changed from: protected */</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">Hmac</span><span class="params">(<span class="type">byte</span>[] bArr)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Exception</span>(<span class="string">&quot;TODO: Implement this and expose to JS&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* access modifiers changed from: protected */</span></span><br><span class="line">    <span class="meta">@RequiresApi(api = 19)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onCreate</span><span class="params">(Bundle bundle)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>.onCreate(bundle);</span><br><span class="line">        setContentView((<span class="type">int</span>) R.layout.activity_main);</span><br><span class="line">        <span class="built_in">this</span>.editButton = (Button) findViewById(R.id.edit);</span><br><span class="line">        <span class="built_in">this</span>.editButton.setOnClickListener(<span class="built_in">this</span>);</span><br><span class="line">        <span class="built_in">this</span>.refreshButton = (Button) findViewById(R.id.refresh);</span><br><span class="line">        <span class="built_in">this</span>.refreshButton.setOnClickListener(<span class="built_in">this</span>);</span><br><span class="line">        <span class="built_in">this</span>.webView = (WebView) findViewById(R.id.webview);</span><br><span class="line">        <span class="type">WebView</span> <span class="variable">webView2</span> <span class="operator">=</span> <span class="built_in">this</span>.webView;</span><br><span class="line">        webView2.setWebViewClient(<span class="keyword">new</span> <span class="title class_">SSLTolerantWebViewClient</span>(webView2));</span><br><span class="line">        <span class="built_in">this</span>.webView.getSettings().setJavaScriptEnabled(<span class="literal">true</span>);</span><br><span class="line">        <span class="built_in">this</span>.webView.loadUrl(<span class="string">&quot;https://477e4c09ef978f693ce0ea1dac93d31e.ctf.hacker101.com/content/&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onClick</span><span class="params">(View view)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">id</span> <span class="operator">=</span> view.getId();</span><br><span class="line">        <span class="keyword">if</span> (id != R.id.edit) &#123;</span><br><span class="line">            <span class="keyword">if</span> (id == R.id.refresh) &#123;</span><br><span class="line">                <span class="built_in">this</span>.webView.reload();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="built_in">this</span>.editing.booleanValue()) &#123;</span><br><span class="line">            <span class="built_in">this</span>.editButton.setText(<span class="string">&quot;Edit&quot;</span>);</span><br><span class="line">            <span class="built_in">this</span>.webView.loadUrl(<span class="string">&quot;https://477e4c09ef978f693ce0ea1dac93d31e.ctf.hacker101.com/content/&quot;</span>);</span><br><span class="line">            <span class="built_in">this</span>.editing = <span class="literal">false</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">this</span>.editButton.setText(<span class="string">&quot;View&quot;</span>);</span><br><span class="line">            <span class="built_in">this</span>.webView.loadUrl(<span class="string">&quot;https://477e4c09ef978f693ce0ea1dac93d31e.ctf.hacker101.com/edit.php&quot;</span>);</span><br><span class="line">            <span class="built_in">this</span>.editing = <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>大致上是一個文件上傳&#x2F;編輯網站，直接連進去 edit.php 找到一個 upload.php<br><img src="https://hackmd.io/_uploads/ByrvyKh9yg.png" alt="image"></p>
+<p>進去之後發現只能上傳 zip，上傳後會顯示 Incorrect Hmac，接著會說大小為 16 bytes， 盲猜用 HMAC.MD5 簽  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> hmac</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"></span><br><span class="line">file_content = <span class="built_in">open</span>(<span class="string">&#x27;l.zip&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>).read()</span><br><span class="line">hmac_key = <span class="string">&quot;8c34bac50d9b096d41cafb53683b315690acf65a11b5f63250c61f7718fa1d1d&quot;</span></span><br><span class="line">hmac_key_bytes = <span class="built_in">bytes</span>.fromhex(hmac_key)</span><br><span class="line"></span><br><span class="line">hmac_digest = hmac.new(hmac_key_bytes, file_content, hashlib.md5).hexdigest()</span><br><span class="line"><span class="built_in">print</span>(hmac_digest)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>這是 Signer，最後送回去上傳就好<br><img src="https://hackmd.io/_uploads/ryi61YncJx.png" alt="image"><br><del>結果本來只是手癢開 hexedit 上 zip-slip 攻擊不小心就多一個 Flag 惹</del>  </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#H1-Thermostat"><span class="toc-number">2.</span> <span class="toc-text">H1 Thermostat</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Intentional-Exercise"><span class="toc-number">3.</span> <span class="toc-text">Intentional Exercise</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Oauthbreaker"><span class="toc-number">4.</span> <span class="toc-text">Oauthbreaker</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Flag-1"><span class="toc-number">4.1.</span> <span class="toc-text">Flag 1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Flag-2"><span class="toc-number">4.2.</span> <span class="toc-text">Flag 2</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mobile-Webdev"><span class="toc-number">5.</span> <span class="toc-text">Mobile Webdev</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2025/02/26/hacker101-android/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2025/02/26/hacker101-android/&text=Hacker101 CTF Android 通關紀錄"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2025/02/26/hacker101-android/&title=Hacker101 CTF Android 通關紀錄"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2025/02/26/hacker101-android/&is_video=false&description=Hacker101 CTF Android 通關紀錄"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Hacker101 CTF Android 通關紀錄&body=Check out this article: http://wha13.github.io/2025/02/26/hacker101-android/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2025/02/26/hacker101-android/&title=Hacker101 CTF Android 通關紀錄"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2025/02/26/hacker101-android/&title=Hacker101 CTF Android 通關紀錄"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2025/02/26/hacker101-android/&title=Hacker101 CTF Android 通關紀錄"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2025/02/26/hacker101-android/&title=Hacker101 CTF Android 通關紀錄"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2025/02/26/hacker101-android/&name=Hacker101 CTF Android 通關紀錄&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2025/02/26/hacker101-android/&t=Hacker101 CTF Android 通關紀錄"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2025
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

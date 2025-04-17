@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before all恩，這次居然不是寫一整場 CTF 的 Write Up，主要是當時的我 (&amp;最近) 基本上都在忙各種雜事 …這題是 @QnQSec 在打的時候我臨時跳下去看得，剛好覺得蠻有趣就寫一下 Write Up   WriteupChallenge Source一個 RPG (?) 遊戲，本質上就是進行了一次 Oblivious Transfer(wiki)，簡單來說就是用 RS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DiceCTF Qual 2025 - winxy-pistol">
+<meta property="og:url" content="http://wha13.github.io/2025/04/17/dicectf-2025-qual/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before all恩，這次居然不是寫一整場 CTF 的 Write Up，主要是當時的我 (&amp;最近) 基本上都在忙各種雜事 …這題是 @QnQSec 在打的時候我臨時跳下去看得，剛好覺得蠻有趣就寫一下 Write Up   WriteupChallenge Source一個 RPG (?) 遊戲，本質上就是進行了一次 Oblivious Transfer(wiki)，簡單來說就是用 RS">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-04-17T06:02:02.000Z">
+<meta property="article:modified_time" content="2025-04-17T06:35:24.742Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="Cryptography">
+<meta property="article:tag" content="Oblivious Transfer">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>DiceCTF Qual 2025 - winxy-pistol</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/04/04/htb-haze/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2025/04/17/dicectf-2025-qual/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2025/04/17/dicectf-2025-qual/&text=DiceCTF Qual 2025 - winxy-pistol"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2025/04/17/dicectf-2025-qual/&title=DiceCTF Qual 2025 - winxy-pistol"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2025/04/17/dicectf-2025-qual/&is_video=false&description=DiceCTF Qual 2025 - winxy-pistol"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=DiceCTF Qual 2025 - winxy-pistol&body=Check out this article: http://wha13.github.io/2025/04/17/dicectf-2025-qual/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2025/04/17/dicectf-2025-qual/&title=DiceCTF Qual 2025 - winxy-pistol"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2025/04/17/dicectf-2025-qual/&title=DiceCTF Qual 2025 - winxy-pistol"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2025/04/17/dicectf-2025-qual/&title=DiceCTF Qual 2025 - winxy-pistol"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2025/04/17/dicectf-2025-qual/&title=DiceCTF Qual 2025 - winxy-pistol"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2025/04/17/dicectf-2025-qual/&name=DiceCTF Qual 2025 - winxy-pistol&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2025/04/17/dicectf-2025-qual/&t=DiceCTF Qual 2025 - winxy-pistol"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Writeup"><span class="toc-number">2.</span> <span class="toc-text">Writeup</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Challenge-Source"><span class="toc-number">2.1.</span> <span class="toc-text">Challenge Source</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solution"><span class="toc-number">2.2.</span> <span class="toc-text">Solution</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        DiceCTF Qual 2025 - winxy-pistol
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-04-17T06:02:02.000Z" class="dt-published" itemprop="datePublished">2025-04-17</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Cryptography/" rel="tag">Cryptography</a>, <a class="p-category" href="/tags/Oblivious-Transfer/" rel="tag">Oblivious Transfer</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>恩，這次居然不是寫一整場 CTF 的 Write Up，主要是當時的我 (&amp;最近) 基本上都在忙各種雜事 …<br>這題是 @QnQSec 在打的時候我臨時跳下去看得，剛好覺得蠻有趣就寫一下 Write Up  </p>
+<h2 id="Writeup"><a href="#Writeup" class="headerlink" title="Writeup"></a>Writeup</h2><h3 id="Challenge-Source"><a href="#Challenge-Source" class="headerlink" title="Challenge Source"></a>Challenge Source</h3><p>一個 RPG (?) 遊戲，本質上就是進行了一次 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Oblivious_transfer#1%E2%80%932_oblivious_transfer">Oblivious Transfer(wiki)</a>，簡單來說就是用 RSA 的方法，發信端發送兩筆隨機值，由接收端決定要接收那一筆的原始資料後提供一個數字，並由發送端以剛剛的(隨機值 + 接收端提供的數字) 做 Mask。<br>只有接收端決定要接收的資訊是他能 unmask 並取得值的。  </p>
+<p>但這次的跟一般不太一樣，在本來的加法 $(m_0+k_0)$ 的段落改用了 xor 運算。  </p>
+<p>而題目的任務是每次(連續 64 次)都從兩個訊息中還原出真正正確的那個(you continue walking……)，而另一種死亡提示則有固定的格式與回應  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/local/bin/python</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> secrets</span><br><span class="line"><span class="keyword">from</span> Crypto.PublicKey <span class="keyword">import</span> RSA</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.strxor <span class="keyword">import</span> strxor</span><br><span class="line"></span><br><span class="line">DEATH_CAUSES = [</span><br><span class="line">	<span class="string">&#x27;a fever&#x27;</span>,</span><br><span class="line">	<span class="string">&#x27;dysentery&#x27;</span>,</span><br><span class="line">	<span class="string">&#x27;measles&#x27;</span>,</span><br><span class="line">	<span class="string">&#x27;cholera&#x27;</span>,</span><br><span class="line">	<span class="string">&#x27;typhoid&#x27;</span>,</span><br><span class="line">	<span class="string">&#x27;exhaustion&#x27;</span>,</span><br><span class="line">	<span class="string">&#x27;a snakebite&#x27;</span>,</span><br><span class="line">	<span class="string">&#x27;a broken leg&#x27;</span>,</span><br><span class="line">	<span class="string">&#x27;a broken arm&#x27;</span>,</span><br><span class="line">	<span class="string">&#x27;drowning&#x27;</span>,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">encrypt</span>(<span class="params">k, msg</span>):</span><br><span class="line">	key = k.to_bytes(<span class="number">1024</span>//<span class="number">8</span>, <span class="string">&#x27;big&#x27;</span>)</span><br><span class="line">	msg = msg.encode().ljust(<span class="number">64</span>, <span class="string">b&#x27;\x00&#x27;</span>)</span><br><span class="line">	pad = hashlib.shake_256(key).digest(<span class="built_in">len</span>(msg))</span><br><span class="line">	<span class="keyword">return</span> strxor(pad, msg)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">run_ot</span>(<span class="params">key, msg0, msg1</span>):</span><br><span class="line">	<span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">	https://en.wikipedia.org/wiki/Oblivious_transfer#1–2_oblivious_transfer</span></span><br><span class="line"><span class="string">	&#x27;&#x27;&#x27;</span></span><br><span class="line">	x0 = secrets.randbelow(key.n)</span><br><span class="line">	x1 = secrets.randbelow(key.n)</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">f&#x27;n: <span class="subst">&#123;key.n&#125;</span>&#x27;</span>)</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">f&#x27;e: <span class="subst">&#123;key.e&#125;</span>&#x27;</span>)</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">f&#x27;x0: <span class="subst">&#123;x0&#125;</span>&#x27;</span>)</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">f&#x27;x1: <span class="subst">&#123;x1&#125;</span>&#x27;</span>)</span><br><span class="line">	v = <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&#x27;v: &#x27;</span>))</span><br><span class="line">	<span class="keyword">assert</span> <span class="number">0</span> &lt;= v &lt; key.n, <span class="string">&#x27;invalid value&#x27;</span></span><br><span class="line">	k0 = <span class="built_in">pow</span>(v - x0, key.d, key.n)</span><br><span class="line">	k1 = <span class="built_in">pow</span>(v - x1, key.d, key.n)</span><br><span class="line">	c0 = encrypt(k0, msg0)</span><br><span class="line">	c1 = encrypt(k1, msg1)</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">f&#x27;c0: <span class="subst">&#123;c0.<span class="built_in">hex</span>()&#125;</span>&#x27;</span>)</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">f&#x27;c1: <span class="subst">&#123;c1.<span class="built_in">hex</span>()&#125;</span>&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">	<span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;flag.txt&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">		flag = f.read().strip()</span><br><span class="line"></span><br><span class="line">	<span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;key.pem&#x27;</span>, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">		key = RSA.import_key(f.read())</span><br><span class="line"></span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&#x27;=== CHOOSE YOUR OWN ADVENTURE: Winxy Pistol Edition ===&#x27;</span>)</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">&#x27;you enter a cave.&#x27;</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">64</span>):</span><br><span class="line">		<span class="built_in">print</span>(<span class="string">&#x27;the tunnel forks ahead. do you take the left or right path?&#x27;</span>)</span><br><span class="line">		msgs = [<span class="literal">None</span>, <span class="literal">None</span>]</span><br><span class="line">		page = secrets.randbits(<span class="number">32</span>)</span><br><span class="line">		live = <span class="string">f&#x27;you continue walking. turn to page <span class="subst">&#123;page&#125;</span>.&#x27;</span></span><br><span class="line">		die = <span class="string">f&#x27;you die of <span class="subst">&#123;secrets.choice(DEATH_CAUSES)&#125;</span>.&#x27;</span></span><br><span class="line">		msgs = (live, die) <span class="keyword">if</span> secrets.randbits(<span class="number">1</span>) <span class="keyword">else</span> (die, live)</span><br><span class="line">		run_ot(key, *msgs)</span><br><span class="line">		page_guess = <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&#x27;turn to page: &#x27;</span>))</span><br><span class="line">		<span class="keyword">if</span> page_guess != page:</span><br><span class="line">			exit()</span><br><span class="line"></span><br><span class="line">	<span class="built_in">print</span>(<span class="string">f&#x27;you find a chest containing <span class="subst">&#123;flag&#125;</span>&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h3><p>注意到這邊的 N 是定值，為方便起見我每次提供的數字都是 $x_0$，意思就是我選擇的 k &#x3D; 0  </p>
+<p>那麼對於選錯的情況其實也不是毫無收穫，首先我們知道我們真正想獲得的訊息是被 $(x_0-x_1)^d$ MASK 了，其次因為公鑰 N 是固定值，且死亡提示有固定格式。所以能透過開啟另一個 remote session，客製化送出數字嘗試構造對面的 mask &#x3D; $(x_0-x_1)^d$，最後賭 1&#x2F;2 的機率(能連很多次所以先 assume 100% 會成功)他會是死亡提示，嘗試爆破，相減並按照訊息格式過濾就能取得當前本來沒拿成功的訊息  </p>
+<p><strong>exp.py</strong>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> trange</span><br><span class="line"></span><br><span class="line">n=<span class="number">130384696953971899628690721848889033882994533720464185052766383301994630563415990704603201379792729683585495846339364121536801007813544691669500891869527828303072450596801900956532044286332481629829421469305788118694261311048899345689331461633650477273068836367526585199709062458604136176004498784107766385593</span></span><br><span class="line"></span><br><span class="line">z=<span class="number">0</span></span><br><span class="line">z_key=hashlib.shake_256(z.to_bytes(<span class="number">1024</span>//<span class="number">8</span>, <span class="string">&#x27;big&#x27;</span>)).digest(<span class="number">64</span>)</span><br><span class="line"></span><br><span class="line">DEATH_CAUSES = [</span><br><span class="line">        <span class="string">&#x27;a fever&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;dysentery&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;measles&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;cholera&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;typhoid&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;exhaustion&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;a snakebite&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;a broken leg&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;a broken arm&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;drowning&#x27;</span>,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">death_causes = [<span class="string">f&#x27;you die of <span class="subst">&#123;cause&#125;</span>.&#x27;</span>.encode() <span class="keyword">for</span> cause <span class="keyword">in</span> DEATH_CAUSES]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">trial</span>(<span class="params">c</span>):</span><br><span class="line">    rr=remote(<span class="string">&#x27;dicec.tf&#x27;</span>, <span class="number">31002</span>)</span><br><span class="line">    <span class="built_in">print</span>(rr.recvuntil(<span class="string">b&#x27;the tunnel forks ahead. do you take the left or right path?\n&#x27;</span>))</span><br><span class="line">    rr.recvlines(<span class="number">2</span>)</span><br><span class="line">    xx0=<span class="built_in">int</span>(rr.recvline().split(<span class="string">b&#x27;: &#x27;</span>)[<span class="number">1</span>].decode())</span><br><span class="line">    xx1=<span class="built_in">int</span>(rr.recvline().split(<span class="string">b&#x27;: &#x27;</span>)[<span class="number">1</span>].decode())</span><br><span class="line">    <span class="comment">#r.recv()</span></span><br><span class="line">    rr.sendline(<span class="built_in">str</span>((xx0+c)%n).encode())</span><br><span class="line">    cc0=rr.recvline()</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">len</span>(cc0), cc0)</span><br><span class="line">    cc0=<span class="built_in">bytes</span>.fromhex(cc0.split(<span class="string">b&#x27;c0: &#x27;</span>)[<span class="number">1</span>].decode())</span><br><span class="line">    rr.close()</span><br><span class="line">    <span class="keyword">return</span> [xor(cc0, cause.ljust(<span class="number">64</span>, <span class="string">b&#x27;\x00&#x27;</span>)) <span class="keyword">for</span> cause <span class="keyword">in</span> death_causes]</span><br><span class="line"></span><br><span class="line">r=remote(<span class="string">&#x27;dicec.tf&#x27;</span>, <span class="number">31002</span>)</span><br><span class="line">        </span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> trange(<span class="number">64</span>):</span><br><span class="line">    <span class="built_in">print</span>(r.recvuntil(<span class="string">b&#x27;the tunnel forks ahead. do you take the left or right path?\n&#x27;</span>))</span><br><span class="line">    <span class="built_in">print</span>(r.recvlines(<span class="number">2</span>))</span><br><span class="line">    x0=<span class="built_in">int</span>(r.recvline().split(<span class="string">b&#x27;: &#x27;</span>)[<span class="number">1</span>].decode())</span><br><span class="line">    x1=<span class="built_in">int</span>(r.recvline().split(<span class="string">b&#x27;: &#x27;</span>)[<span class="number">1</span>].decode())</span><br><span class="line">    <span class="comment">#r.recv()</span></span><br><span class="line">    r.sendline(<span class="built_in">str</span>(x0).encode())</span><br><span class="line">    c0=<span class="built_in">bytes</span>.fromhex(r.recvline().split(<span class="string">b&#x27;c0: &#x27;</span>)[<span class="number">1</span>].decode())</span><br><span class="line">    c1=<span class="built_in">bytes</span>.fromhex(r.recvline().split(<span class="string">b&#x27;c1: &#x27;</span>)[<span class="number">1</span>].decode())</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">len</span>(c0), <span class="built_in">len</span>(c1))</span><br><span class="line">    <span class="keyword">if</span> <span class="string">b&#x27;you continue walking. turn to page &#x27;</span> <span class="keyword">in</span> xor(z_key, c0):</span><br><span class="line">        <span class="comment">#print(xor(z_key, c0).split(b&#x27;you continue walking. turn to page &#x27;)[1].replace(b&#x27;\x00&#x27;, b&#x27;&#x27;))</span></span><br><span class="line">        r.sendline(xor(z_key, c0).split(<span class="string">b&#x27;you continue walking. turn to page &#x27;</span>)[<span class="number">1</span>].replace(<span class="string">b&#x27;\x00&#x27;</span>, <span class="string">b&#x27;&#x27;</span>)[:-<span class="number">1</span>])</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        found=<span class="literal">False</span></span><br><span class="line">        <span class="keyword">while</span> found==<span class="literal">False</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;Trying: <span class="subst">&#123;(x0-x1)%n&#125;</span>&quot;</span>)</span><br><span class="line">            <span class="keyword">for</span> t_key <span class="keyword">in</span> trial((x0-x1)%n):</span><br><span class="line">                <span class="built_in">print</span>(<span class="built_in">len</span>(t_key), xor(t_key, c1))</span><br><span class="line">                <span class="keyword">if</span> <span class="string">b&#x27;you continue walking. turn to page &#x27;</span> <span class="keyword">in</span> xor(t_key, c1):</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">&#x27;meow&#x27;</span>)</span><br><span class="line">                    <span class="comment">#print(xor(t_key, c1).split(b&#x27;you continue walking. turn to page &#x27;)[1].replace(b&#x27;\x00&#x27;, b&#x27;&#x27;))</span></span><br><span class="line">                    r.sendline(xor(t_key, c1).split(<span class="string">b&#x27;you continue walking. turn to page &#x27;</span>)[<span class="number">1</span>].replace(<span class="string">b&#x27;\x00&#x27;</span>, <span class="string">b&#x27;&#x27;</span>)[:-<span class="number">1</span>])</span><br><span class="line">                    found=<span class="literal">True</span></span><br><span class="line"></span><br><span class="line">r.interactive()</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Writeup"><span class="toc-number">2.</span> <span class="toc-text">Writeup</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Challenge-Source"><span class="toc-number">2.1.</span> <span class="toc-text">Challenge Source</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Solution"><span class="toc-number">2.2.</span> <span class="toc-text">Solution</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2025/04/17/dicectf-2025-qual/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2025/04/17/dicectf-2025-qual/&text=DiceCTF Qual 2025 - winxy-pistol"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2025/04/17/dicectf-2025-qual/&title=DiceCTF Qual 2025 - winxy-pistol"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2025/04/17/dicectf-2025-qual/&is_video=false&description=DiceCTF Qual 2025 - winxy-pistol"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=DiceCTF Qual 2025 - winxy-pistol&body=Check out this article: http://wha13.github.io/2025/04/17/dicectf-2025-qual/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2025/04/17/dicectf-2025-qual/&title=DiceCTF Qual 2025 - winxy-pistol"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2025/04/17/dicectf-2025-qual/&title=DiceCTF Qual 2025 - winxy-pistol"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2025/04/17/dicectf-2025-qual/&title=DiceCTF Qual 2025 - winxy-pistol"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2025/04/17/dicectf-2025-qual/&title=DiceCTF Qual 2025 - winxy-pistol"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2025/04/17/dicectf-2025-qual/&name=DiceCTF Qual 2025 - winxy-pistol&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2025/04/17/dicectf-2025-qual/&t=DiceCTF Qual 2025 - winxy-pistol"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2025
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before all打給賀，挖勾來水幾ㄆㄧ文啊，沒，最近應該會重回頻繁更新之路（？）這次在 THJCC 出了三道題目，lIne, F&amp;S Farm 兩道 Insane 難度以及一個 DAES（預設是 HARD 就隨手出個 MitM，結果好像太小看大家(和 LLM)了）。   特別來題解一下兩道 Insane 吧，不然都沒高中生要念 Crypto 了 qWq （沒有高中生做出來，公開組解出人">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Official THJCC Writeups for lIne &amp; F&amp;S Farm">
+<meta property="og:url" content="http://wha13.github.io/2025/04/24/thjcc-2025-1/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before all打給賀，挖勾來水幾ㄆㄧ文啊，沒，最近應該會重回頻繁更新之路（？）這次在 THJCC 出了三道題目，lIne, F&amp;S Farm 兩道 Insane 難度以及一個 DAES（預設是 HARD 就隨手出個 MitM，結果好像太小看大家(和 LLM)了）。   特別來題解一下兩道 Insane 吧，不然都沒高中生要念 Crypto 了 qWq （沒有高中生做出來，公開組解出人">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-04-24T06:02:02.000Z">
+<meta property="article:modified_time" content="2025-04-24T13:04:44.849Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="Cryptography">
+<meta property="article:tag" content="ECC">
+<meta property="article:tag" content="LLL">
+<meta property="article:tag" content="Jacobian Curve">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Official THJCC Writeups for lIne &amp; F&amp;S Farm</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/04/17/dicectf-2025-qual/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2025/04/24/thjcc-2025-1/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2025/04/24/thjcc-2025-1/&text=Official THJCC Writeups for lIne &amp; F&amp;S Farm"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2025/04/24/thjcc-2025-1/&title=Official THJCC Writeups for lIne &amp; F&amp;S Farm"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2025/04/24/thjcc-2025-1/&is_video=false&description=Official THJCC Writeups for lIne &amp; F&amp;S Farm"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Official THJCC Writeups for lIne &amp; F&amp;S Farm&body=Check out this article: http://wha13.github.io/2025/04/24/thjcc-2025-1/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2025/04/24/thjcc-2025-1/&title=Official THJCC Writeups for lIne &amp; F&amp;S Farm"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2025/04/24/thjcc-2025-1/&title=Official THJCC Writeups for lIne &amp; F&amp;S Farm"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2025/04/24/thjcc-2025-1/&title=Official THJCC Writeups for lIne &amp; F&amp;S Farm"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2025/04/24/thjcc-2025-1/&title=Official THJCC Writeups for lIne &amp; F&amp;S Farm"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2025/04/24/thjcc-2025-1/&name=Official THJCC Writeups for lIne &amp; F&amp;S Farm&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2025/04/24/thjcc-2025-1/&t=Official THJCC Writeups for lIne &amp; F&amp;S Farm"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lIne"><span class="toc-number">2.</span> <span class="toc-text">lIne</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#F-S-Farm"><span class="toc-number">3.</span> <span class="toc-text">F&amp;S Farm</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Official THJCC Writeups for lIne &amp; F&amp;S Farm
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-04-24T06:02:02.000Z" class="dt-published" itemprop="datePublished">2025-04-24</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Cryptography/" rel="tag">Cryptography</a>, <a class="p-category" href="/tags/ECC/" rel="tag">ECC</a>, <a class="p-category" href="/tags/Jacobian-Curve/" rel="tag">Jacobian Curve</a>, <a class="p-category" href="/tags/LLL/" rel="tag">LLL</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p><del>打給賀，挖勾來水幾ㄆㄧ文啊</del>，沒，最近應該會重回頻繁更新之路（？）<br>這次在 THJCC 出了三道題目，lIne, F&amp;S Farm 兩道 Insane 難度以及一個 DAES（預設是 HARD 就隨手出個 MitM，結果好像太小看大家(和 LLM)了）。  </p>
+<p>特別來題解一下兩道 Insane 吧，不然都沒高中生要念 Crypto 了 qWq （沒有高中生做出來，公開組解出人數分別是 3&#x2F;2，特別感謝 Chisheng Chen 和 papa9995 特別捧場 qq）<br>解這兩題分別需要的相關知識都可以在 CryptoHack 的 Lattices 和 ECC 兩個章節學到！  </p>
+<p>*題目設計雖然說防破台，但認真 Google 跟 GPT 其實都是有機會解出來的，希望下次有人挑戰成功我的 Crypto :P  </p>
+<h2 id="lIne"><a href="#lIne" class="headerlink" title="lIne"></a>lIne</h2><p>給定就是一個參數比未知數大很多的複數平面線性方程，但只給一條：  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> getrandbits</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"></span><br><span class="line">flag=os.urandom(<span class="number">8</span>).<span class="built_in">hex</span>()</span><br><span class="line">keys=[getrandbits(<span class="number">48</span>) <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">16</span>)]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">to_complex</span>(<span class="params">datas</span>):</span><br><span class="line">    imag_datas=[]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(datas), <span class="number">2</span>):</span><br><span class="line">        imag_datas.append(CC([datas[i], datas[i+<span class="number">1</span>]]))</span><br><span class="line">    <span class="keyword">return</span> imag_datas</span><br><span class="line"></span><br><span class="line">imag_flag=to_complex([<span class="built_in">int</span>(<span class="built_in">chr</span>, <span class="number">16</span>) <span class="keyword">for</span> <span class="built_in">chr</span> <span class="keyword">in</span> flag])</span><br><span class="line">imag_keys=to_complex(keys)</span><br><span class="line"></span><br><span class="line">cnt=<span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">8</span>):</span><br><span class="line">    cnt+=imag_flag[i]*imag_keys[i]</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;imag_keys&#125;</span>\n<span class="subst">&#123;cnt&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Gift: <span class="subst">&#123;hashlib.md5(<span class="string">b&#x27;THJCC&#123;&#x27;</span>+flag.encode()+<span class="string">b&#x27;&#125;&#x27;</span>).hexdigest()&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># [9.83329568728950e13 + 1.94539067458416e14*I, 4.57795946512170e13 + 5.54913449090490e13*I, 3.35752608137010e13 + 1.10651091133529e14*I, 8.09172050820060e13 + 6.09012985967910e13*I, 2.75388068605530e13 + 5.12867910525740e13*I, 2.33510497525684e14 + 9.11264352204540e13*I, 2.36186170290599e14 + 2.03323868604921e14*I, 1.37793863865401e14 + 1.40354868241912e14*I]</span></span><br><span class="line"><span class="comment"># 3.22421607806873e14 + 1.37668712938916E+16*I</span></span><br><span class="line"><span class="comment"># Gift: 69ae60327282356b2f2731e6acf624f4</span></span><br></pre></td></tr></table></figure>
+<p>首先，對於實數的 Case，其實當兩邊量級不同的時候可以參考一種叫做 LLL 的算法進行解題。<br>想懶人包一點可以直接看我去年在完全新手向（今年不再是）的 NoHackNoCTF 出的題目：<a target="_blank" rel="noopener" href="https://blog.whale-tw.com/2024/11/17/nhnc-2024-wp/#Lion-RSA">https://blog.whale-tw.com/2024/11/17/nhnc-2024-wp/#Lion-RSA</a><br>再來，剩下其實就是一條複數平面的方程終究是帶兩個參數的，簡單的觀察（在 <a target="_blank" rel="noopener" href="https://blog.whale-tw.com/2025/01/06/irisctf-2025/#knutsacque">IrisCTF 2025 (Write Up Link)</a>其實有很類似的題目），可以發現經由線性變換能把它直接換成兩條算式，最後再一口氣拿這兩條壓 LLL 就可以約束出解了 … 嗎（？）<br>沒有，我很故意的讓浮點數大小超出精度，所以對於 <code>1.37668712938916E+16*I</code> 這一項要爆搜後兩位（一百組），每次都找 LLL 才能解決！  </p>
+<p>*為方便解題，我直接送了 flag md5 給選手比對 :P</p>
+<p><strong>Solve Script</strong>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> random <span class="keyword">import</span> getrandbits</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> trange</span><br><span class="line"></span><br><span class="line">keys=[<span class="number">9.83329568728950e13</span> + <span class="number">1.94539067458416e14</span>*I, <span class="number">4.57795946512170e13</span> + <span class="number">5.54913449090490e13</span>*I, <span class="number">3.35752608137010e13</span> + <span class="number">1.10651091133529e14</span>*I, <span class="number">8.09172050820060e13</span> + <span class="number">6.09012985967910e13</span>*I, <span class="number">2.75388068605530e13</span> + <span class="number">5.12867910525740e13</span>*I, <span class="number">2.33510497525684e14</span> + <span class="number">9.11264352204540e13</span>*I, <span class="number">2.36186170290599e14</span> + <span class="number">2.03323868604921e14</span>*I, <span class="number">1.37793863865401e14</span> + <span class="number">1.40354868241912e14</span>*I]</span><br><span class="line">cnt1=<span class="built_in">int</span>(<span class="number">3.22421607806873e14</span>)</span><br><span class="line">cnt2=<span class="built_in">int</span>(<span class="number">1.37668712938916E+16</span>)</span><br><span class="line">chksum=<span class="string">&quot;69ae60327282356b2f2731e6acf624f4&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">arr2str</span>(<span class="params">datas</span>):</span><br><span class="line">    val=<span class="string">&#x27;THJCC&#123;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> datas:</span><br><span class="line">        val+=<span class="built_in">hex</span>(i)[-<span class="number">1</span>]</span><br><span class="line">    val+=<span class="string">&#x27;&#125;&#x27;</span></span><br><span class="line">    <span class="keyword">return</span> val</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">solve_2</span>(<span class="params">keys1, keys2, c1, c2, size</span>):</span><br><span class="line">    A=[[<span class="number">0</span>]*(size+<span class="number">3</span>) <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(size+<span class="number">1</span>)]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(size):</span><br><span class="line">        A[i][<span class="number">0</span>]=keys1[i]*-<span class="number">1024</span></span><br><span class="line">        A[i][<span class="number">1</span>]=keys2[i]*-<span class="number">1024</span></span><br><span class="line">        A[i][i+<span class="number">2</span>]=<span class="number">1</span></span><br><span class="line"></span><br><span class="line">    A[size][<span class="number">0</span>]=c1*<span class="number">1024</span></span><br><span class="line">    A[size][<span class="number">1</span>]=c2*<span class="number">1024</span></span><br><span class="line">    A[size][-<span class="number">1</span>]=<span class="number">2</span>**<span class="number">128</span></span><br><span class="line">    A=Matrix(ZZ, A)</span><br><span class="line">    <span class="keyword">return</span> A.LLL()</span><br><span class="line"></span><br><span class="line">key1=[]</span><br><span class="line">key2=[]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">8</span>):</span><br><span class="line">    key1.append(<span class="built_in">int</span>(keys[i].real()))</span><br><span class="line">    key1.append(<span class="built_in">int</span>(keys[i].imag())*-<span class="number">1</span>)</span><br><span class="line">    key2.append(<span class="built_in">int</span>(keys[i].imag()))</span><br><span class="line">    key2.append(<span class="built_in">int</span>(keys[i].real()))</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> trange(<span class="number">100</span>):</span><br><span class="line">    sol=solve_2(key1, key2, cnt1, cnt2+i, <span class="number">16</span>)</span><br><span class="line">    <span class="keyword">if</span> hashlib.md5(arr2str(sol[-<span class="number">1</span>][<span class="number">2</span>:<span class="number">18</span>]).encode()).hexdigest()==chksum:</span><br><span class="line">        <span class="built_in">print</span>(arr2str(sol[-<span class="number">1</span>][<span class="number">2</span>:<span class="number">18</span>]))</span><br></pre></td></tr></table></figure>
+<h2 id="F-S-Farm"><a href="#F-S-Farm" class="headerlink" title="F&amp;S Farm"></a>F&amp;S Farm</h2><p>牛牛都在用 ECC 對話了呢 (x)<br>題目：  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> bytes_to_long</span><br><span class="line"><span class="keyword">from</span> secrets <span class="keyword">import</span> flag</span><br><span class="line"></span><br><span class="line">p=<span class="number">62879100257270410351378827582399744186567306643585504679294001019813699019068488434060287</span></span><br><span class="line">G=(<span class="number">29744250428373565997166706391119259777317687430240284769755486706450263827970573185114321</span>, <span class="number">58040952245003801555956486798081163256240960098545028765546427006596708448541303071682039</span>, <span class="number">27494033982261584279714070225528681888589641976608352586941470965443043075381645410758543</span>)</span><br><span class="line">a=<span class="number">0x1ced7ea</span></span><br><span class="line">k=Integer(bytes_to_long(flag))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">point_add_mod</span>(<span class="params">P, Q, a, p</span>):</span><br><span class="line">    X1, Y1, Z1 = P</span><br><span class="line">    X2, Y2, Z2 = Q</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> Z1 % p == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> Q</span><br><span class="line">    <span class="keyword">if</span> Z2 % p == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> P</span><br><span class="line">    </span><br><span class="line">    Z1_sq = <span class="built_in">pow</span>(Z1, <span class="number">2</span>, p)</span><br><span class="line">    Z2_sq = <span class="built_in">pow</span>(Z2, <span class="number">2</span>, p)</span><br><span class="line">    U1 = (X1 * Z2_sq) % p</span><br><span class="line">    U2 = (X2 * Z1_sq) % p</span><br><span class="line">    S1 = (Y1 * <span class="built_in">pow</span>(Z2, <span class="number">3</span>, p)) % p</span><br><span class="line">    S2 = (Y2 * <span class="built_in">pow</span>(Z1, <span class="number">3</span>, p)) % p</span><br><span class="line">    </span><br><span class="line">    H = (U2 - U1) % p</span><br><span class="line">    R = (S2 - S1) % p</span><br><span class="line">   </span><br><span class="line">    <span class="keyword">if</span> H % p == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">if</span> R % p == <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">return</span> point_double_mod(P, a, p)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> (<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>)</span><br><span class="line">    </span><br><span class="line">    H_sq = <span class="built_in">pow</span>(H, <span class="number">2</span>, p)</span><br><span class="line">    H_cu = <span class="built_in">pow</span>(H, <span class="number">3</span>, p)</span><br><span class="line">    R_sq = <span class="built_in">pow</span>(R, <span class="number">2</span>, p)</span><br><span class="line">    </span><br><span class="line">    X3 = (R_sq - H_cu - <span class="number">2</span> * U1 * H_sq) % p</span><br><span class="line">    Y3 = (R * (U1 * H_sq - X3) - S1 * H_cu) % p</span><br><span class="line">    Z3 = (Z1 * Z2 * H) % p</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> (X3, Y3, Z3)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">point_double_mod</span>(<span class="params">P, a, p</span>):</span><br><span class="line">    X1, Y1, Z1 = P</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> Z1 % p == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>)</span><br><span class="line">    </span><br><span class="line">    Y1_sq = <span class="built_in">pow</span>(Y1, <span class="number">2</span>, p)</span><br><span class="line">    A = <span class="built_in">pow</span>(X1, <span class="number">2</span>, p)</span><br><span class="line">    B = Y1_sq</span><br><span class="line">    C = <span class="built_in">pow</span>(B, <span class="number">2</span>, p)</span><br><span class="line">    D = (<span class="number">2</span> * ((<span class="built_in">pow</span>(X1 + B, <span class="number">2</span>, p) - A - C))) % p </span><br><span class="line">    E = (<span class="number">3</span> * A + a * <span class="built_in">pow</span>(Z1, <span class="number">4</span>, p)) % p</span><br><span class="line">    F = <span class="built_in">pow</span>(E, <span class="number">2</span>, p)</span><br><span class="line">    </span><br><span class="line">    X3 = (F - <span class="number">2</span> * D) % p</span><br><span class="line">    Y3 = (E * (D - X3) - <span class="number">8</span> * C) % p</span><br><span class="line">    Z3 = (<span class="number">2</span> * Y1 * Z1) % p</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> (X3, Y3, Z3)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">point_scalar_mult</span>(<span class="params">k, P, a, p</span>):</span><br><span class="line">    result = (<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>)</span><br><span class="line">    <span class="keyword">if</span> k == <span class="number">0</span> <span class="keyword">or</span> P == (<span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>):</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    </span><br><span class="line">    Q = P</span><br><span class="line">    <span class="keyword">for</span> bit <span class="keyword">in</span> <span class="built_in">reversed</span>(k.bits()):</span><br><span class="line">        result = point_double_mod(result, a, p)</span><br><span class="line">        <span class="keyword">if</span> bit == <span class="number">1</span>:</span><br><span class="line">            result = point_add_mod(result, Q, a, p)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(point_scalar_mult(k, G, a, p))</span><br><span class="line"><span class="comment"># (11124982001864013322453099807532963752362958176203400769835646437519628542120137037648651, 6911772123608455530174938059753499932701792542764880851311370143692220479290267649006859, 61659910325477356427200894513232023552537183179022949708356534152728209603841725323867499)</span></span><br></pre></td></tr></table></figure>
+<p>這道題目的 ECC 運算跟一般的 $y^2&#x3D;x^3+ax+b$ 不太一樣，或許你有能力直接看出，也可能查文獻，或乾脆一點 Chat GPT 問一問應該都會得知這是一種叫做 Jocabian Form 的曲線！<br>有興趣認真研究的可以看看這兩篇：<br><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Jacobian_curve">https://en.wikipedia.org/wiki/Jacobian_curve</a><br><a target="_blank" rel="noopener" href="https://eprint.iacr.org/2014/1014.pdf">https://eprint.iacr.org/2014/1014.pdf</a><br>懶人包：他的曲線模式是 $y^2 &#x3D; x^3 + axz^4 + bz^6$，然後 $(x, y, z)$ 會對應到 $(\frac{x}{z^2}, \frac{y}{z^3})$<br>EZ!<br>接下來轉換完就是去找找這條曲線的洞，本來是要算嵌入度過小做 MoV Attack：<br>看完這邊 <a target="_blank" rel="noopener" href="https://risencrypto.github.io/WeilMOV/">https://risencrypto.github.io/WeilMOV/</a><br>懶人包：反正這種東西他可以被算成一種 order 比較好算的另一種群（$F_{p^k}$）的運算，所以 DLP 很好解  </p>
+<p>最後的 Solve Script，其中使用的座標是我經過 $(\frac{x}{z^2}, \frac{y}{z^3})$ 變換的，記得除法是對於整數同餘 $p$ 的乘法群所以除法其實是乘以模逆元 pow(z, q, -1) 的概念 :P  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">p=<span class="number">62879100257270410351378827582399744186567306643585504679294001019813699019068488434060287</span></span><br><span class="line">G=(<span class="number">21032054291018026850893429260281324837357336859712891830625893665496718606255158332594666</span>, <span class="number">14673210533022557360839956302611064144635693910962357937771307057604112623302442480828361</span>)</span><br><span class="line">Q=(<span class="number">62224852567433890039016721509197121057473008753624816661744394931746383504379118854421719</span>, <span class="number">52163034654574478445279194476444315566293392088030892939008892455119127289985541051204630</span>)</span><br><span class="line"></span><br><span class="line">a = <span class="number">0x1ced7ea</span></span><br><span class="line">b = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">order = p+<span class="number">1</span></span><br><span class="line"><span class="built_in">print</span>(order)</span><br><span class="line">F = GF(p)</span><br><span class="line">k = <span class="number">2</span> <span class="comment"># min_k E.order() | (p^k-1)</span></span><br><span class="line">Fy = GF(p^k,<span class="string">&#x27;y&#x27;</span>)</span><br><span class="line"></span><br><span class="line">E = EllipticCurve(F,[a,b])</span><br><span class="line">Ee = EllipticCurve(Fy,[a,b])</span><br><span class="line"></span><br><span class="line">P = E(G)</span><br><span class="line">xP = E(Q)</span><br><span class="line"></span><br><span class="line">Pe = Ee(P)</span><br><span class="line">xPe = Ee(xP)</span><br><span class="line"></span><br><span class="line">R = Ee.random_point()</span><br><span class="line">m = R.order()</span><br><span class="line">d = gcd(m, P.order())</span><br><span class="line">Q = (m//d)*R</span><br><span class="line"></span><br><span class="line"><span class="keyword">assert</span> P.order()/Q.order() <span class="keyword">in</span> ZZ</span><br><span class="line"><span class="keyword">assert</span> P.order() == Q.order()</span><br><span class="line"></span><br><span class="line">n = P.order()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;computing pairings&#x27;</span>)</span><br><span class="line">alpha = Pe.weil_pairing(Q,n)</span><br><span class="line">beta = xPe.weil_pairing(Q,n)</span><br><span class="line"><span class="built_in">print</span>(alpha, beta)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;computing log&#x27;</span>)</span><br><span class="line">dd = beta.log(alpha)</span><br><span class="line"><span class="built_in">print</span>(dd)</span><br></pre></td></tr></table></figure>
+<p>P.S. 因為我 ORDER Factor 後最大的是 $10^{15}$，好像有個叫做 Chisheng Chen 的人說：啊還是夠 Smooth 啊，Pohlig-Hellman 走起（  </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#lIne"><span class="toc-number">2.</span> <span class="toc-text">lIne</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#F-S-Farm"><span class="toc-number">3.</span> <span class="toc-text">F&amp;S Farm</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2025/04/24/thjcc-2025-1/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2025/04/24/thjcc-2025-1/&text=Official THJCC Writeups for lIne &amp; F&amp;S Farm"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2025/04/24/thjcc-2025-1/&title=Official THJCC Writeups for lIne &amp; F&amp;S Farm"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2025/04/24/thjcc-2025-1/&is_video=false&description=Official THJCC Writeups for lIne &amp; F&amp;S Farm"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Official THJCC Writeups for lIne &amp; F&amp;S Farm&body=Check out this article: http://wha13.github.io/2025/04/24/thjcc-2025-1/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2025/04/24/thjcc-2025-1/&title=Official THJCC Writeups for lIne &amp; F&amp;S Farm"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2025/04/24/thjcc-2025-1/&title=Official THJCC Writeups for lIne &amp; F&amp;S Farm"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2025/04/24/thjcc-2025-1/&title=Official THJCC Writeups for lIne &amp; F&amp;S Farm"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2025/04/24/thjcc-2025-1/&title=Official THJCC Writeups for lIne &amp; F&amp;S Farm"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2025/04/24/thjcc-2025-1/&name=Official THJCC Writeups for lIne &amp; F&amp;S Farm&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2025/04/24/thjcc-2025-1/&t=Official THJCC Writeups for lIne &amp; F&amp;S Farm"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2025
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

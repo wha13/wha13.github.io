@@ -18,7 +18,7 @@
 <meta property="og:image" content="https://hackmd.io/_uploads/HJxBQoH2lg.png">
 <meta property="og:image" content="https://hackmd.io/_uploads/H19IBjB3lg.png">
 <meta property="article:published_time" content="2025-09-29T00:21:20.000Z">
-<meta property="article:modified_time" content="2025-09-27T18:11:18.945Z">
+<meta property="article:modified_time" content="2025-09-27T18:15:49.986Z">
 <meta property="article:author" content="William Lin">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="Web Security">
@@ -194,9 +194,9 @@
 <p>所謂的 Truncated LCG Problem 就是一般的 $x_i \equiv a*x_{i-1}+b\space(mod\space p)$ 的 LCG Problem 做隨機數，但是只給你前幾或後幾 bits，反正就是有資料損耗的一個 case  </p>
 <p>詳細可以看 <del>或者你只是想 Script Kiddie</del>：<br><a target="_blank" rel="noopener" href="https://crypto.stackexchange.com/questions/37836/problem-with-lll-reduction-on-truncated-lcg-schemes">https://crypto.stackexchange.com/questions/37836/problem-with-lll-reduction-on-truncated-lcg-schemes</a><br><a target="_blank" rel="noopener" href="https://gist.github.com/maple3142/c7c31d2e5893d524e71eb5e12b0278f0">https://gist.github.com/maple3142/c7c31d2e5893d524e71eb5e12b0278f0</a>  </p>
 <p>但快速翻譯年糕一下：<br>首先，先考慮一種降階版的 case，也就是 b &#x3D; 0 的時候。<br>這時候我們有 $x_i-x_{i-1}*a \equiv 0 \space (mode \space p)$  </p>
-<p>於是可以嘗試構造一個 Lattice，它的其中一個解正好就是 {x}<br>$$<br>L &#x3D; \begin{pmatrix}<br>p &amp; 0 &amp;&amp; \dots &amp; 0\<br>\alpha &amp; -1 &amp;0&amp; \dots &amp; 0\<br>\alpha^2 &amp; 0 &amp; -1 &amp; \dots &amp; 0\<br>\vdots &amp;&amp;&amp;\ddots &amp; \vdots\<br>\alpha^{k-1} &amp; 0 &amp; 0 &amp; \dots &amp; -1\<br>\end{pmatrix}<br>$$</p>
+<p>於是可以嘗試構造一個 Lattice，它的其中一個解正好就是 {x}<br>$$<br>L &#x3D; \begin{pmatrix}<br>p &amp; 0 &amp;&amp; \dots &amp; 0 \newline<br>\alpha &amp; -1 &amp;0&amp; \dots &amp; 0 \newline<br>\alpha^2 &amp; 0 &amp; -1 &amp; \dots &amp; 0 \newline<br>\vdots &amp;&amp;&amp;\ddots &amp; \vdots \newline<br>\alpha^{k-1} &amp; 0 &amp; 0 &amp; \dots &amp; -1 \newline<br>\end{pmatrix}<br>$$</p>
 <p>考慮到 $\mathbf{x}$ 為原本 x 解的向量，同時另 y 為高位 z 為低位<br>我們考慮 <code>B = LLL(L)</code> 會是某一組(幾乎可說是)最小的線性解，那就可以用如下的推導：</p>
-<p>$$<br>\begin{align}<br>&amp; L \cdot \mathbf{x} \equiv 0 \pmod{p} \<br>&amp; B \cdot \mathbf{x} \equiv 0 \pmod{p} \<br>&amp; B \cdot \mathbf{x} &#x3D; p \cdot \mathbf{k} \quad \mbox{( $\mathbf{k}$ 未知)}  \<br>&amp; B \cdot (\mathbf{y} + \mathbf{z}) &#x3D; p \cdot \mathbf{k}  \<br>&amp; B \cdot \mathbf{z} &#x3D; p \cdot \mathbf{k} - B \cdot \mathbf{y}<br>\end{align}<br>$$</p>
+<p>$$<br>\begin{align}<br>&amp; L \cdot \mathbf{x} \equiv 0 \pmod{p} \newline<br>&amp; B \cdot \mathbf{x} \equiv 0 \pmod{p} \newline<br>&amp; B \cdot \mathbf{x} &#x3D; p \cdot \mathbf{k} \quad \mbox{( $\mathbf{k}$ 未知)}  \newline<br>&amp; B \cdot (\mathbf{y} + \mathbf{z}) &#x3D; p \cdot \mathbf{k}  \newline<br>&amp; B \cdot \mathbf{z} &#x3D; p \cdot \mathbf{k} - B \cdot \mathbf{y}<br>\end{align}<br>$$</p>
 <p>因為我們知道 B 是小向量，那 k 也必須相對是。<br>於是我們有，換句話說我們知道 $k_i<em>p$ 超級靠近 $(B</em>y)_i$ (因為 z 的量級跟 y 比起相對小很多，它是後面的位元)  </p>
 <p>取<br>$$<br>k_i &#x3D; \lfloor (B’ \cdot \mathbf{y})_i &#x2F; p \rceil<br>$$</p>
 <p>然後最後根據上面那條，解個簡單的線性方程就有 z 的結果，我們就成功還原了整個 LCG  </p>

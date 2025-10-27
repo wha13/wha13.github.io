@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before allRank 11 &#x2F; Team: ICEDTEA這周末有點久違的跟 ICEDTEA 一起打了 Project Sekai 辦的 osu!gamming CTF，整體題目其實不算難，Crypto 差一題 AK，偏可惜，如果我不要忙段考前拖更得那坨作業一定有機會打出來 TwT還是來 writeup 一下，題目有些偏技巧，有點有趣   但感覺整的隊變強了不錯w我打完 Cryp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="osu!gamming CTF 2025 Writeup">
+<meta property="og:url" content="http://wha13.github.io/2025/10/27/osu-ctf-202/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before allRank 11 &#x2F; Team: ICEDTEA這周末有點久違的跟 ICEDTEA 一起打了 Project Sekai 辦的 osu!gamming CTF，整體題目其實不算難，Crypto 差一題 AK，偏可惜，如果我不要忙段考前拖更得那坨作業一定有機會打出來 TwT還是來 writeup 一下，題目有些偏技巧，有點有趣   但感覺整的隊變強了不錯w我打完 Cryp">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-10-27T16:01:08.000Z">
+<meta property="article:modified_time" content="2025-10-27T12:30:23.007Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="Cryptography">
+<meta property="article:tag" content="Coppersmith&#39;s Attack">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>osu!gamming CTF 2025 Writeup</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/10/22/hitcon-final-2025/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2025/10/27/osu-ctf-202/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2025/10/27/osu-ctf-202/&text=osu!gamming CTF 2025 Writeup"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2025/10/27/osu-ctf-202/&title=osu!gamming CTF 2025 Writeup"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2025/10/27/osu-ctf-202/&is_video=false&description=osu!gamming CTF 2025 Writeup"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=osu!gamming CTF 2025 Writeup&body=Check out this article: http://wha13.github.io/2025/10/27/osu-ctf-202/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2025/10/27/osu-ctf-202/&title=osu!gamming CTF 2025 Writeup"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2025/10/27/osu-ctf-202/&title=osu!gamming CTF 2025 Writeup"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2025/10/27/osu-ctf-202/&title=osu!gamming CTF 2025 Writeup"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2025/10/27/osu-ctf-202/&title=osu!gamming CTF 2025 Writeup"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2025/10/27/osu-ctf-202/&name=osu!gamming CTF 2025 Writeup&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2025/10/27/osu-ctf-202/&t=osu!gamming CTF 2025 Writeup"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Writeup"><span class="toc-number">2.</span> <span class="toc-text">Writeup</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#pls-nominate"><span class="toc-number">2.1.</span> <span class="toc-text">pls-nominate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#linear-feedback"><span class="toc-number">2.2.</span> <span class="toc-text">linear-feedback</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ssss"><span class="toc-number">2.3.</span> <span class="toc-text">ssss</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#please-nominate"><span class="toc-number">2.4.</span> <span class="toc-text">please-nominate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ssss-%E8%B3%BD%E5%BE%8C-%E6%84%8F%E5%BF%B5-upsolve"><span class="toc-number">2.5.</span> <span class="toc-text">*ssss+ (賽後 意念 upsolve)</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        osu!gamming CTF 2025 Writeup
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-10-27T16:01:08.000Z" class="dt-published" itemprop="datePublished">2025-10-27</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/CTF/" rel="tag">CTF</a>, <a class="p-category" href="/tags/Coppersmith-s-Attack/" rel="tag">Coppersmith's Attack</a>, <a class="p-category" href="/tags/Cryptography/" rel="tag">Cryptography</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Rank 11 &#x2F; Team: ICEDTEA<br>這周末有點久違的跟 ICEDTEA 一起打了 Project Sekai 辦的 osu!gamming CTF，整體題目其實不算難，Crypto 差一題 AK，偏可惜，如果我不要忙段考前拖更得那坨作業一定有機會打出來 TwT<br>還是來 writeup 一下，題目有些偏技巧，有點有趣  </p>
+<p>但感覺整的隊變強了不錯w<br>我打完 Crypto 沒空了本來要救 web 發現都打完了，然後可能是隊上 osu 玩家太多導致我們 osu 題打很快？！ <del>但我都看不懂在幹嘛w 暫時不是 osu 廚</del>  </p>
+<p>其他就是，Crypto 狗在 LLM 的成長下是不是要失業了 T_T  </p>
+<h2 id="Writeup"><a href="#Writeup" class="headerlink" title="Writeup"></a>Writeup</h2><p><del>這次我只打了 Crypto</del>  </p>
+<h3 id="pls-nominate"><a href="#pls-nominate" class="headerlink" title="pls-nominate"></a>pls-nominate</h3><p>RSA，一個長訊息被 e&#x3D;5 加密了五次，所以不能直接廣播攻擊。<br><strong>script.py</strong>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">FLAG = <span class="built_in">open</span>(<span class="string">&quot;flag.txt&quot;</span>, <span class="string">&quot;rb&quot;</span>).read()</span><br><span class="line">message = bytes_to_long(</span><br><span class="line">    <span class="string">b&quot;hello there can you pls nominate my map https://osu.ppy.sh/beatmapsets/2436259 :steamhappy: i can bribe you with a flag if you do: &quot;</span> + FLAG</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">ns = [getPrime(<span class="number">727</span>) * getPrime(<span class="number">727</span>) <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>)]</span><br><span class="line">e = <span class="number">5</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(FLAG))</span><br><span class="line"><span class="built_in">print</span>(ns)</span><br><span class="line"><span class="built_in">print</span>([<span class="built_in">pow</span>(message, e, n) <span class="keyword">for</span> n <span class="keyword">in</span> ns])</span><br></pre></td></tr></table></figure>
+
+<p>所以要透過 known high bits of message <code>b&quot;hello there can you pls nominate my map https://osu.ppy.sh/beatmapsets/2436259 :steamhappy: i can bribe you with a flag if you do: &quot;</code>，構造一個多項式然後一樣做 CRT，解 $(HIGH_BITS + x)^5 - CRT([Cs], [Ns]) \space (mod \space \prod N_i)$<br>然後因為 x 之於 $N^5$ 左右的量級一定相對小，直接 Coppersmith Method 找 small_roots 做完  </p>
+<p><strong>exp.py</strong><br><del>對不起我想完後直接把腳本詠唱出來了</del>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sage.<span class="built_in">all</span> <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> long_to_bytes</span><br><span class="line"></span><br><span class="line"><span class="comment"># 讀取 output.txt</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;output.txt&quot;</span>, <span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    lines = f.readlines()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解析資料</span></span><br><span class="line">flag_length = <span class="built_in">int</span>(lines[<span class="number">0</span>].strip())</span><br><span class="line">ns = <span class="built_in">eval</span>(lines[<span class="number">1</span>].strip())</span><br><span class="line">cs = <span class="built_in">eval</span>(lines[<span class="number">2</span>].strip())</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;[+] Flag length: <span class="subst">&#123;flag_length&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;[+] Number of moduli: <span class="subst">&#123;<span class="built_in">len</span>(ns)&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 已知的明文前綴</span></span><br><span class="line">known_prefix = <span class="string">b&quot;hello there can you pls nominate my map https://osu.ppy.sh/beatmapsets/2436259 :steamhappy: i can bribe you with a flag if you do: &quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 將已知前綴轉換為數字</span></span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> bytes_to_long</span><br><span class="line">BIG_PART = bytes_to_long(known_prefix)*<span class="number">2</span>^(<span class="number">8</span> * flag_length)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;[+] Known prefix length: <span class="subst">&#123;<span class="built_in">len</span>(known_prefix)&#125;</span> bytes&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;[+] BIG_PART: <span class="subst">&#123;BIG_PART&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用中國剩餘定理合併所有密文</span></span><br><span class="line"><span class="comment"># 我們要找到 C，使得 C ≡ cs[i] (mod ns[i]) for all i</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;[+] Applying Chinese Remainder Theorem...&quot;</span>)</span><br><span class="line">N = <span class="number">1</span></span><br><span class="line"><span class="keyword">for</span> n <span class="keyword">in</span> ns:</span><br><span class="line">    N *= n</span><br><span class="line"></span><br><span class="line">C = crt(cs, ns)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;[+] CRT result computed (mod N)&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 設置多項式環</span></span><br><span class="line"><span class="comment"># 我們的目標是求解: (BIG_PART + x)^5 ≡ C (mod N)</span></span><br><span class="line"><span class="comment"># 即: (BIG_PART + x)^5 - C ≡ 0 (mod N)</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;[+] Setting up polynomial...&quot;</span>)</span><br><span class="line">ZmodN = Zmod(N)</span><br><span class="line">P.&lt;x&gt; = PolynomialRing(ZmodN)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 構造多項式 f(x) = (BIG_PART + x)^5 - C</span></span><br><span class="line">f = (BIG_PART + x)^<span class="number">5</span> - C</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;[+] Polynomial: f(x) = (BIG_PART + x)^5 - C&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;[+] Searching for small roots (flag length: <span class="subst">&#123;flag_length&#125;</span>)...&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 small_roots 方法</span></span><br><span class="line"><span class="comment"># X 是 x 的上界，這裡設為 flag 可能的最大值</span></span><br><span class="line">X = <span class="number">2</span>^(<span class="number">8</span> * flag_length)  <span class="comment"># flag 最多 flag_length 個字節</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    roots = f.small_roots(X=X, beta=<span class="number">0.5</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> roots:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;[+] Found <span class="subst">&#123;<span class="built_in">len</span>(roots)&#125;</span> root(s)!&quot;</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> i, root <span class="keyword">in</span> <span class="built_in">enumerate</span>(roots):</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;\n[+] Testing root <span class="subst">&#123;i+<span class="number">1</span>&#125;</span>: <span class="subst">&#123;root&#125;</span>&quot;</span>)</span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                flag_value = <span class="built_in">int</span>(root)</span><br><span class="line">                <span class="keyword">if</span> flag_value &gt; <span class="number">0</span>:</span><br><span class="line">                    flag = long_to_bytes(flag_value)</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">f&quot;[+] Decoded bytes: <span class="subst">&#123;flag&#125;</span>&quot;</span>)</span><br><span class="line">                    </span><br><span class="line">                    <span class="comment"># 驗證結果</span></span><br><span class="line">                    full_message = bytes_to_long(known_prefix + flag)</span><br><span class="line">                    <span class="keyword">if</span> <span class="built_in">all</span>(<span class="built_in">pow</span>(full_message, <span class="number">5</span>, ns[j]) == cs[j] <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(ns))):</span><br><span class="line">                        <span class="built_in">print</span>(<span class="string">f&quot;\n[SUCCESS] Flag found: <span class="subst">&#123;flag.decode(<span class="string">&#x27;utf-8&#x27;</span>, errors=<span class="string">&#x27;ignore&#x27;</span>)&#125;</span>&quot;</span>)</span><br><span class="line">                        <span class="built_in">print</span>(<span class="string">f&quot;[SUCCESS] Full flag: <span class="subst">&#123;flag&#125;</span>&quot;</span>)</span><br><span class="line">                        <span class="keyword">break</span></span><br><span class="line">                    <span class="keyword">else</span>:</span><br><span class="line">                        <span class="built_in">print</span>(<span class="string">&quot;[!] Verification failed for this root&quot;</span>)</span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f&quot;[!] Error decoding root: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[!] No roots found. Try adjusting parameters.&quot;</span>)</span><br><span class="line">        </span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;[!] Error during root finding: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;[!] You may need to adjust beta or X parameters&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="linear-feedback"><a href="#linear-feedback" class="headerlink" title="linear-feedback"></a>linear-feedback</h3><p>自己實作了一種 LFSR，然後生成一個 29 bits seed stream 和一個 21 bits seed stream 後做 xnor，要反推出 seed 們  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> secrets <span class="keyword">import</span> randbits</span><br><span class="line"><span class="keyword">from</span> math <span class="keyword">import</span> floor</span><br><span class="line"><span class="keyword">from</span> hashlib <span class="keyword">import</span> sha256</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">LFSR</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, key, taps, <span class="built_in">format</span></span>):</span><br><span class="line">        self.key = key</span><br><span class="line">        self.taps = taps</span><br><span class="line">        self.state = <span class="built_in">list</span>(<span class="built_in">map</span>(<span class="built_in">int</span>, <span class="built_in">list</span>(<span class="built_in">format</span>.<span class="built_in">format</span>(key))))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_clock</span>(<span class="params">self</span>):</span><br><span class="line">        ob = self.state[<span class="number">0</span>]</span><br><span class="line">        self.state = self.state[<span class="number">1</span>:] + [<span class="built_in">sum</span>([self.state[t] <span class="keyword">for</span> t <span class="keyword">in</span> self.taps]) % <span class="number">2</span>]</span><br><span class="line">        <span class="keyword">return</span> ob</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">xnor_gate</span>(<span class="params">a, b</span>):</span><br><span class="line">    <span class="keyword">if</span> a == <span class="number">0</span> <span class="keyword">and</span> b == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">elif</span> a == <span class="number">0</span> <span class="keyword">and</span> b == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">elif</span> a == <span class="number">1</span> <span class="keyword">and</span> b == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line">key1 = randbits(<span class="number">21</span>)</span><br><span class="line">key2 = randbits(<span class="number">29</span>)</span><br><span class="line">L1 = LFSR(key1, [<span class="number">2</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">7</span>, <span class="number">9</span>, <span class="number">8</span>], <span class="string">&quot;&#123;:021b&#125;&quot;</span>)</span><br><span class="line">L2 = LFSR(key2, [<span class="number">5</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">9</span>, <span class="number">9</span>, <span class="number">7</span>], <span class="string">&quot;&#123;:029b&#125;&quot;</span>)</span><br><span class="line"></span><br><span class="line">bits = [xnor_gate(L1._clock(), L2._clock()) <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(floor(<span class="number">72.7</span>))]</span><br><span class="line"><span class="built_in">print</span>(bits)</span><br><span class="line"></span><br><span class="line">FLAG = <span class="built_in">open</span>(<span class="string">&quot;flag.txt&quot;</span>, <span class="string">&quot;rb&quot;</span>).read()</span><br><span class="line">keystream = sha256((<span class="built_in">str</span>(key1) + <span class="built_in">str</span>(key2)).encode()).digest() * <span class="number">2</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">bytes</span>([b1 ^ b2 <span class="keyword">for</span> b1, b2 <span class="keyword">in</span> <span class="built_in">zip</span>(FLAG, keystream)]).<span class="built_in">hex</span>())</span><br></pre></td></tr></table></figure>
+
+<p>因為 xnor 運算是可反推的，最有效率的做法就是枚舉 21 bits 的所有可能，生成 stream 後反推 xnor 回去，然後計算 stream 前 29 bits 拿來生 LSFR 是不是一樣的結果，是的話它可能就是我們要的 KEY。  </p>
+<p><strong>sol.py</strong>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> hashlib <span class="keyword">import</span> sha256</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> trange</span><br><span class="line"></span><br><span class="line">result = [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>]</span><br><span class="line">enc = <span class="built_in">bytes</span>.fromhex(<span class="string">&#x27;9f7f799ec2fb64e743d8ed06ca6be98e24724c9ca48e21013c8baefe83b5a304af3f7ad6c4cc64fa4380e854e8&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">LFSR</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, key, taps, <span class="built_in">format</span></span>):</span><br><span class="line">        self.key = key</span><br><span class="line">        self.taps = taps</span><br><span class="line">        self.state = <span class="built_in">list</span>(<span class="built_in">map</span>(<span class="built_in">int</span>, <span class="built_in">list</span>(<span class="built_in">format</span>.<span class="built_in">format</span>(key))))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_clock</span>(<span class="params">self</span>):</span><br><span class="line">        ob = self.state[<span class="number">0</span>]</span><br><span class="line">        self.state = self.state[<span class="number">1</span>:] + [<span class="built_in">sum</span>([self.state[t] <span class="keyword">for</span> t <span class="keyword">in</span> self.taps]) % <span class="number">2</span>]</span><br><span class="line">        <span class="keyword">return</span> ob</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">xnor_gate</span>(<span class="params">a, b</span>):</span><br><span class="line">    <span class="keyword">if</span> a == <span class="number">0</span> <span class="keyword">and</span> b == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">elif</span> a == <span class="number">0</span> <span class="keyword">and</span> b == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">elif</span> a == <span class="number">1</span> <span class="keyword">and</span> b == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> trange(<span class="number">2</span>**<span class="number">21</span>):</span><br><span class="line">    trial_L1 = LFSR(i, [<span class="number">2</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">1</span>, <span class="number">7</span>, <span class="number">9</span>, <span class="number">8</span>], <span class="string">&quot;&#123;:021b&#125;&quot;</span>)</span><br><span class="line">    L2_stream = [xnor_gate(trial_L1._clock(), result[j]) <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">72</span>)]</span><br><span class="line">    trial_L2_key = <span class="built_in">int</span>(<span class="string">&#x27;&#x27;</span>.join(<span class="built_in">map</span>(<span class="built_in">str</span>, L2_stream[:<span class="number">29</span>])), <span class="number">2</span>)</span><br><span class="line">    trial_L2 = LFSR(trial_L2_key, [<span class="number">5</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">9</span>, <span class="number">9</span>, <span class="number">7</span>], <span class="string">&quot;&#123;:029b&#125;&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> [trial_L2._clock() <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">72</span>)] == L2_stream:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;[*] Possible Solution F0UND!&quot;</span>)</span><br><span class="line">        keystream = sha256((<span class="built_in">str</span>(i) + <span class="built_in">str</span>(trial_L2_key)).encode()).digest() * <span class="number">2</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">bytes</span>([b1 ^ b2 <span class="keyword">for</span> b1, b2 <span class="keyword">in</span> <span class="built_in">zip</span>(enc, keystream)]).<span class="built_in">hex</span>())</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">bytes</span>([b1 ^ b2 <span class="keyword">for</span> b1, b2 <span class="keyword">in</span> <span class="built_in">zip</span>(enc, keystream)]))</span><br></pre></td></tr></table></figure>
+
+<h3 id="ssss"><a href="#ssss" class="headerlink" title="ssss"></a>ssss</h3><p>在質數 p25519 下做 Secret Sharing，多項式係數是 lcg 生出來的係數未知，oracle 最多可以做 14 次，就是回傳 <code>f(x)</code> 的值其中 x 介於 1 ~ p25519<br>要 leak 出常數項（lcg 的頭）來拿 flag<br><strong>server.py</strong>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/local/bin/python3</span></span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line">p = <span class="number">2</span>**<span class="number">255</span> - <span class="number">19</span></span><br><span class="line">k = <span class="number">15</span></span><br><span class="line">SECRET = random.randrange(<span class="number">0</span>, p)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">lcg</span>(<span class="params">x, a, b, p</span>):</span><br><span class="line">    <span class="keyword">return</span> (a * x + b) % p</span><br><span class="line"></span><br><span class="line">a = random.randrange(<span class="number">0</span>, p)</span><br><span class="line">b = random.randrange(<span class="number">0</span>, p)</span><br><span class="line">poly = [SECRET]</span><br><span class="line"><span class="keyword">while</span> <span class="built_in">len</span>(poly) != k: poly.append(lcg(poly[-<span class="number">1</span>], a, b, p))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">evaluate_poly</span>(<span class="params">f, x</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sum</span>(c * <span class="built_in">pow</span>(x, i, p) <span class="keyword">for</span> i, c <span class="keyword">in</span> <span class="built_in">enumerate</span>(f)) % p</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;welcome to ssss&quot;</span>, flush=<span class="literal">True</span>)</span><br><span class="line"><span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(k - <span class="number">1</span>):</span><br><span class="line">    x = <span class="built_in">int</span>(<span class="built_in">input</span>())</span><br><span class="line">    <span class="keyword">assert</span> <span class="number">0</span> &lt; x &lt; p, <span class="string">&quot;no cheating!&quot;</span></span><br><span class="line">    <span class="built_in">print</span>(evaluate_poly(poly, x), flush=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> <span class="built_in">int</span>(<span class="built_in">input</span>(<span class="string">&quot;secret? &quot;</span>)) == SECRET:</span><br><span class="line">    FLAG = <span class="built_in">open</span>(<span class="string">&quot;flag.txt&quot;</span>).read()</span><br><span class="line">    <span class="built_in">print</span>(FLAG, flush=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<p>整個問題其實有一個觀察是未知數從頭到尾只有 a, b, SECRET 三項，能把他們線性化就解完了。<br>一個代數小觀察：<br>$$<br>\begin{align}<br>\alpha &#x3D; \frac{f(x)+f(-x)}{2} \newline<br>\beta &#x3D; \frac{f(x)-f(-x)}{2}<br>\end{align}<br>$$</p>
+<p>其中 $\alpha$ 是多項式 $f(x)$ 偶數項運算的加總結果， $\beta$ 是多項式 $f(x)$ 奇數項運算的加總結果，簡單推一下會發現  </p>
+<p>$\alpha &#x3D; \beta \cdot x \cdot a + b \cdot (x^2 + x^4 + x^6 + \cdots + x^{14}) + SECRET$<br>於是做六次(三對) oracles 就可以 leak 出 a, b, SECRET 了，不過我的腳本保險起見領了四個數字確定三元等式有正確被解  </p>
+<p><strong>exp.py</strong>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sage.<span class="built_in">all</span> <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line"><span class="comment"># nc ssss.challs.sekai.team 1337</span></span><br><span class="line">r = remote(<span class="string">&#x27;ssss.challs.sekai.team&#x27;</span>, <span class="number">1337</span>)</span><br><span class="line"><span class="built_in">print</span>(r.recvlines(<span class="number">2</span>))</span><br><span class="line">p = <span class="number">2</span>**<span class="number">255</span> - <span class="number">19</span></span><br><span class="line">ZZ = Zmod(p)</span><br><span class="line"></span><br><span class="line">coeffs = []</span><br><span class="line">results = []</span><br><span class="line">oracles = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">oracle</span>(<span class="params">x</span>):</span><br><span class="line">    x = x%p</span><br><span class="line">    r.sendline(<span class="built_in">str</span>(x).encode())</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">int</span>(r.recvline().decode())</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">5</span>):</span><br><span class="line">    pos_i = oracle(i)</span><br><span class="line">    neg_i = oracle(-i)</span><br><span class="line">    oracles.append([pos_i, neg_i])</span><br><span class="line">    coeffs.append([(pos_i-neg_i)*i*<span class="built_in">pow</span>(<span class="number">2</span>, -<span class="number">1</span>, p)%p, <span class="built_in">sum</span>([i**(<span class="number">2</span>*j) <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, <span class="number">8</span>)])%p, <span class="number">1</span>])</span><br><span class="line">    results.append((pos_i+neg_i)*<span class="built_in">pow</span>(<span class="number">2</span>, -<span class="number">1</span>, p)%p)</span><br><span class="line"></span><br><span class="line">A_M = Matrix(ZZ, coeffs)</span><br><span class="line">b_v = vector(ZZ, results)</span><br><span class="line"><span class="comment"># print(A_M, b_v, type(A_M), type(b_v))</span></span><br><span class="line"><span class="built_in">print</span>(A_M.solve_right(b_v))</span><br><span class="line"></span><br><span class="line">k = <span class="number">15</span></span><br><span class="line">a, b, SECRET = A_M.solve_right(b_v)</span><br><span class="line"></span><br><span class="line">poly = [SECRET]</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">lcg</span>(<span class="params">x, a, b, p</span>):</span><br><span class="line">    <span class="keyword">return</span> (a * x + b) % p</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="built_in">len</span>(poly) != k: poly.append(lcg(poly[-<span class="number">1</span>], a, b, p))</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">evaluate_poly</span>(<span class="params">f, x</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sum</span>(c * <span class="built_in">pow</span>(x, i, p) <span class="keyword">for</span> i, c <span class="keyword">in</span> <span class="built_in">enumerate</span>(f)) % p</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(oracles[<span class="number">0</span>][<span class="number">0</span>])</span><br><span class="line"><span class="built_in">print</span>(evaluate_poly(poly, <span class="number">1</span>))</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">14</span>-<span class="number">8</span>):</span><br><span class="line">    oracle(<span class="number">1337</span>)</span><br><span class="line"></span><br><span class="line">r.sendline(<span class="built_in">str</span>(SECRET).encode())</span><br><span class="line">r.interactive()</span><br><span class="line">exit()</span><br></pre></td></tr></table></figure>
+
+<h3 id="please-nominate"><a href="#please-nominate" class="headerlink" title="please-nominate"></a>please-nominate</h3><p>三條有幾個字元不一樣的訊息被三把不同的 RSA 公鑰加密。<br>要把 hidden 的 flag 解出來。<br>flag 很長  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">FLAG = <span class="built_in">open</span>(<span class="string">&quot;flag.txt&quot;</span>).read()</span><br><span class="line"></span><br><span class="line">BNS = [<span class="string">&quot;Plus4j&quot;</span>, <span class="string">&quot;Mattay&quot;</span>, <span class="string">&quot;Dailycore&quot;</span>]</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(FLAG))</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> BN <span class="keyword">in</span> BNS:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;message for&quot;</span>, BN)</span><br><span class="line">    message = bytes_to_long(</span><br><span class="line">        (<span class="string">f&quot;hi there <span class="subst">&#123;BN&#125;</span>, &quot;</span> + FLAG).encode()</span><br><span class="line">    )</span><br><span class="line">    n = getPrime(<span class="number">727</span>) * getPrime(<span class="number">727</span>)</span><br><span class="line">    e = <span class="number">3</span></span><br><span class="line">    <span class="built_in">print</span>(n)</span><br><span class="line">    <span class="built_in">print</span>(<span class="built_in">pow</span>(message, e, n))</span><br></pre></td></tr></table></figure>
+
+<p>一開始肯定想構造三條多項式像是(C_i 是密文輸出)<br>$P_i(X) &#x3D; (HIGH_BITS\space_i + X)^3 - C_i \space  (&#x3D; 0)$<br>然後就會發現沒什麼用因為他們實際在不同的 Ring 下<br>所以先把他們抬到同一個 Ring 下，反正我是挑 $Zmod(N_1 \cdot N_2 \cdot N_3)$<br>接著因為中國剩餘定理，我知道像是 $N2\cdot N3 \cdot P_1(X)$ 多項式會對 $N_2, N_3$ 同餘 0，然後 對 $mod\space N_1$ 又是 $N2\cdot N3 \cdot P_1(X)$，所以顯然會有 $N2\cdot N3 \cdot P_1(X) \space (mod \space N_1 \cdot N_2 \cdot N_3)$ 的結果是可以直接被等價計算的。<br>（會這樣是因為我們不能直接知道 $P_1(X) \space (mod \space N_1 \cdot N_2 \cdot N_3)$ 的結果）</p>
+<p>最後把三條多項式加在一起我們會知道他等於 0，最後因為 FLAG (X) 遠小於 $N_1 \cdot N_2 \cdot N_3$ 所以 Coppersmith Method 一樣可以把 small_roots 做出來  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sage.<span class="built_in">all</span> <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> bytes_to_long, long_to_bytes</span><br><span class="line"><span class="keyword">from</span> tqdm <span class="keyword">import</span> trange</span><br><span class="line"></span><br><span class="line"><span class="comment"># 讀取 output.txt</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;output.txt&quot;</span>, <span class="string">&quot;r&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    lines = f.readlines()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 解析資料</span></span><br><span class="line">flag_len = <span class="built_in">int</span>(lines[<span class="number">0</span>].strip())</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;[+] Flag length: <span class="subst">&#123;flag_len&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># BN 名稱列表</span></span><br><span class="line">BNS = [<span class="string">&quot;Plus4j&quot;</span>, <span class="string">&quot;Mattay&quot;</span>, <span class="string">&quot;Dailycore&quot;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 存儲每個 BN 的 n 和 c</span></span><br><span class="line">data = []</span><br><span class="line">line_idx = <span class="number">1</span></span><br><span class="line">N = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> BN <span class="keyword">in</span> BNS:</span><br><span class="line">    <span class="comment"># 跳過 &quot;message for XXX&quot; 這一行</span></span><br><span class="line">    line_idx += <span class="number">1</span></span><br><span class="line">    n = <span class="built_in">int</span>(lines[line_idx].strip())</span><br><span class="line">    N *= n</span><br><span class="line">    line_idx += <span class="number">1</span></span><br><span class="line">    c = <span class="built_in">int</span>(lines[line_idx].strip())</span><br><span class="line">    line_idx += <span class="number">1</span></span><br><span class="line">    data.append((BN, n, c))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;[+] <span class="subst">&#123;BN&#125;</span>: n=<span class="subst">&#123;n&#125;</span>, c=<span class="subst">&#123;c&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\n[+] Starting to solve for each modulus...&quot;</span>)</span><br><span class="line"></span><br><span class="line">P.&lt;x&gt;=PolynomialRing(Zmod(N))</span><br><span class="line">f = <span class="number">0</span></span><br><span class="line">under_N = <span class="number">0</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">3</span>):</span><br><span class="line">    prefix = <span class="string">f&quot;hi there <span class="subst">&#123;data[i][<span class="number">0</span>]&#125;</span>, &quot;</span></span><br><span class="line">    prefix_bytes = prefix.encode()</span><br><span class="line">    r_i = bytes_to_long(prefix_bytes) * (<span class="number">2</span>^(<span class="number">8</span> * flag_len))</span><br><span class="line">    f += (N//data[i][<span class="number">1</span>])*(x^<span class="number">3</span> + <span class="number">3</span>*x^<span class="number">2</span>*r_i + <span class="number">3</span>*x*r_i^<span class="number">2</span>)</span><br><span class="line">    under_N += (N//data[i][<span class="number">1</span>])*(data[i][<span class="number">2</span>] - r_i^<span class="number">3</span>)</span><br><span class="line"> </span><br><span class="line">f = f-under_N</span><br><span class="line">f = f.monic()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> trange(<span class="number">1</span>, <span class="number">101</span>):</span><br><span class="line">    cur_sol = f.small_roots(X=<span class="number">2</span>**(<span class="number">8</span>*flag_len), beta=i/<span class="number">100</span>)</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(cur_sol) &gt; <span class="number">0</span>:</span><br><span class="line">        <span class="built_in">print</span>(long_to_bytes(<span class="built_in">int</span>(cur_sol[<span class="number">0</span>])))</span><br></pre></td></tr></table></figure>
+
+<h3 id="ssss-賽後-意念-upsolve"><a href="#ssss-賽後-意念-upsolve" class="headerlink" title="*ssss+ (賽後 意念 upsolve)"></a>*ssss+ (賽後 <del>意念</del> upsolve)</h3><p>殘念…<br>簡言之就是剛剛的 ssss lcg 的 mod 換成一個隨機的 prime(不公開)<br>之後有空補一下腳本，反正就是拿 $\pm 1 \pm 2 \cdots \pm 7$ 去做 oracle，然後我們能解出奇數項的所有係數，最後係數一樣是以 $a, b$ 為基組合出的某種線性關係，最後把相減的結果做 gcd 就可以 leak 出隨機的 prime 值，回推 a, b 然後把所有係數還原 leak 出 SECRET。  </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Writeup"><span class="toc-number">2.</span> <span class="toc-text">Writeup</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#pls-nominate"><span class="toc-number">2.1.</span> <span class="toc-text">pls-nominate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#linear-feedback"><span class="toc-number">2.2.</span> <span class="toc-text">linear-feedback</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ssss"><span class="toc-number">2.3.</span> <span class="toc-text">ssss</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#please-nominate"><span class="toc-number">2.4.</span> <span class="toc-text">please-nominate</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ssss-%E8%B3%BD%E5%BE%8C-%E6%84%8F%E5%BF%B5-upsolve"><span class="toc-number">2.5.</span> <span class="toc-text">*ssss+ (賽後 意念 upsolve)</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2025/10/27/osu-ctf-202/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2025/10/27/osu-ctf-202/&text=osu!gamming CTF 2025 Writeup"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2025/10/27/osu-ctf-202/&title=osu!gamming CTF 2025 Writeup"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2025/10/27/osu-ctf-202/&is_video=false&description=osu!gamming CTF 2025 Writeup"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=osu!gamming CTF 2025 Writeup&body=Check out this article: http://wha13.github.io/2025/10/27/osu-ctf-202/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2025/10/27/osu-ctf-202/&title=osu!gamming CTF 2025 Writeup"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2025/10/27/osu-ctf-202/&title=osu!gamming CTF 2025 Writeup"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2025/10/27/osu-ctf-202/&title=osu!gamming CTF 2025 Writeup"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2025/10/27/osu-ctf-202/&title=osu!gamming CTF 2025 Writeup"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2025/10/27/osu-ctf-202/&name=osu!gamming CTF 2025 Writeup&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2025/10/27/osu-ctf-202/&t=osu!gamming CTF 2025 Writeup"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2025
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

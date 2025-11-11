@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before all哈囉，這是一篇屯了快半年的文章，前幾天收到 Bounty 結果所以可以公開出來惹 XD但是會去識別化   感覺自己今年拆了特別多 APK XD，但通常都是 MitM 抓一下包、找一下各種 Hardcoded 或解 SSL PINNING 之類的過程，剛好這個是打比較仔細的一次想說來講個故事。   另一方面是之前在另一個私人場域報告過這個主題了，很多東西就直接偷簡報吧   真正意">
+<meta property="og:type" content="article">
+<meta property="og:title" content="紀錄一次 Bug Bounty 中的 Android 流量解密到 Game Hacking！">
+<meta property="og:url" content="http://wha13.github.io/2025/11/07/apk-game-hacking/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before all哈囉，這是一篇屯了快半年的文章，前幾天收到 Bounty 結果所以可以公開出來惹 XD但是會去識別化   感覺自己今年拆了特別多 APK XD，但通常都是 MitM 抓一下包、找一下各種 Hardcoded 或解 SSL PINNING 之類的過程，剛好這個是打比較仔細的一次想說來講個故事。   另一方面是之前在另一個私人場域報告過這個主題了，很多東西就直接偷簡報吧   真正意">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/ByULAzggbl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/S1VsRMgeZg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/Bk5aCMgeZx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BJlyJQgxbg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/Sy0jlQel-x.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/H1iFW7gebg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BJKhzQllZl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/S1jgXmxgZg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ByZUXXlg-g.png">
+<meta property="article:published_time" content="2025-11-08T01:21:20.000Z">
+<meta property="article:modified_time" content="2025-11-11T02:55:30.028Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="apk">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="Bug Bounty">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/ByULAzggbl.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>紀錄一次 Bug Bounty 中的 Android 流量解密到 Game Hacking！</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/10/27/osu-ctf-202/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2025/11/07/apk-game-hacking/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2025/11/07/apk-game-hacking/&text=紀錄一次 Bug Bounty 中的 Android 流量解密到 Game Hacking！"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2025/11/07/apk-game-hacking/&title=紀錄一次 Bug Bounty 中的 Android 流量解密到 Game Hacking！"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2025/11/07/apk-game-hacking/&is_video=false&description=紀錄一次 Bug Bounty 中的 Android 流量解密到 Game Hacking！"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=紀錄一次 Bug Bounty 中的 Android 流量解密到 Game Hacking！&body=Check out this article: http://wha13.github.io/2025/11/07/apk-game-hacking/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2025/11/07/apk-game-hacking/&title=紀錄一次 Bug Bounty 中的 Android 流量解密到 Game Hacking！"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2025/11/07/apk-game-hacking/&title=紀錄一次 Bug Bounty 中的 Android 流量解密到 Game Hacking！"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2025/11/07/apk-game-hacking/&title=紀錄一次 Bug Bounty 中的 Android 流量解密到 Game Hacking！"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2025/11/07/apk-game-hacking/&title=紀錄一次 Bug Bounty 中的 Android 流量解密到 Game Hacking！"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2025/11/07/apk-game-hacking/&name=紀錄一次 Bug Bounty 中的 Android 流量解密到 Game Hacking！&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2025/11/07/apk-game-hacking/&t=紀錄一次 Bug Bounty 中的 Android 流量解密到 Game Hacking！"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%9F%E6%AD%A3%E6%84%8F%E7%BE%A9%E4%B8%8A%E7%9A%84-Before-all"><span class="toc-number">1.1.</span> <span class="toc-text">真正意義上的 Before all</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%9E%90%E9%81%8E%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">分析過程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">3.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        紀錄一次 Bug Bounty 中的 Android 流量解密到 Game Hacking！
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-11-08T01:21:20.000Z" class="dt-published" itemprop="datePublished">2025-11-07</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Android/" rel="tag">Android</a>, <a class="p-category" href="/tags/Bug-Bounty/" rel="tag">Bug Bounty</a>, <a class="p-category" href="/tags/apk/" rel="tag">apk</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>哈囉，這是一篇屯了快半年的文章，前幾天收到 Bounty 結果所以可以公開出來惹 XD<br><del>但是會去識別化</del>  </p>
+<p>感覺自己今年拆了特別多 APK XD，但通常都是 MitM 抓一下包、找一下各種 Hardcoded 或解 SSL PINNING 之類的過程，剛好這個是打比較仔細的一次想說來講個故事。  </p>
+<p><del>另一方面是之前在另一個私人場域報告過這個主題了，很多東西就直接偷簡報吧</del>  </p>
+<h3 id="真正意義上的-Before-all"><a href="#真正意義上的-Before-all" class="headerlink" title="真正意義上的 Before all"></a>真正意義上的 Before all</h3><p>先來介紹一次這次 Target 的標的<br>一款類似 Pokemon Go! 的地圖遊戲，不過架構相對簡單就是領寶物而已，值得注意的是 <strong>領到的寶物某種意義上直接等價金錢</strong>  </p>
+<p>然後是一款 Android APP，玩家量級大概在 $10^6$ ～ $10^7$  </p>
+<p><strong>技術性前情提要</strong>  </p>
+<p>這邊使用 BlueStacks 模擬器下載&#x2F;提取 app，並加上 Burp Suite 做流量側錄，詳細可以看<br><a target="_blank" rel="noopener" href="https://blog.whale-tw.com/2025/02/20/apk-wtf-1/">https://blog.whale-tw.com/2025/02/20/apk-wtf-1/</a><br><a target="_blank" rel="noopener" href="https://blog.whale-tw.com/2025/03/20/burp-bluestacks/">https://blog.whale-tw.com/2025/03/20/burp-bluestacks/</a>  </p>
+<p>值得一提的是這次 MitM 的 Binder 我使用的是 sockscap64 工具  </p>
+<p>接下來將帶大家走入靜態&#x2F;動態分析的世界！</p>
+<h2 id="分析過程"><a href="#分析過程" class="headerlink" title="分析過程"></a>分析過程</h2><p>好的，那我們先來做靜態分析，這邊將 APK 拖出後透過 decompile.com、jadx 等工具進行反編譯與拆包。<br><img src="https://hackmd.io/_uploads/ByULAzggbl.png" alt="image">  </p>
+<p>然後基本上就看到一坨了🤡  </p>
+<p>我也是沒招了 T_T，來看攔出來的封包吧<br>登入請求：<br><img src="https://hackmd.io/_uploads/S1VsRMgeZg.png" alt="image"></p>
+<p>開寶箱的請求：<br><img src="https://hackmd.io/_uploads/Bk5aCMgeZx.png" alt="image">  </p>
+<p>然後就會發現這些看起來很像是簽章的東西 … 格式都長這樣？！<br>我們來認真思考一下 …  </p>
+<p><img src="https://hackmd.io/_uploads/BJlyJQgxbg.png" alt="image">  </p>
+<p>什麼加密方法會長這樣啊，那沒錯！其實就是我們的 DES 系列！  </p>
+<p>後來我也是想到了一個很好的 grep 方法可以快速定位出可能的相關程式碼，使用 HTTP Header 作為關鍵字 <code>application/json</code> 以及剛剛發現的加密方案 DES，最終鎖定在 <code>/source/rc/e0.java</code> 並循線找到了 <code>/source/d9/f.java</code><br><img src="https://hackmd.io/_uploads/Sy0jlQel-x.png" alt="image">  </p>
+<p>啊哈！<br>果然剛剛的格式是 密文@密鑰！  </p>
+<p>既然這樣我們就可以來開始解密過程中的每個欄位了，其中最讓我感到困惑的依然是剛剛的開寶相請求，因為事實上把 signature 解密後會得到…  </p>
+<p><code>Decrypt : 1779450268.827181</code><br>阿哩喜向？（啊你是誰？）  </p>
+<p><img src="https://hackmd.io/_uploads/H1iFW7gebg.png" alt="image">  </p>
+<p>ok 的，繼續追了一下剛剛 grep 出來的檔案會發現他其實是 經度+緯度+當前的 timestamp + 一個神秘 hardcoded 數字 28552664 + <code>com.google...api.internal.a.I()</code>  </p>
+<p>其中我追了一下，發現我依然不知道 <code>com.google...api.internal.a.I()</code> 的值是多少  </p>
+<p>總是追一追就斷了 乁( ˙ω˙ )厂  </p>
+<p>但蒐集很多組值，把其他已知的值扣一扣後，我發現這個數字居然固定在 220124 ??  </p>
+<p><img src="https://hackmd.io/_uploads/BJKhzQllZl.png" alt="image"></p>
+<p>這格數字 真的就是 … 好眼熟喔~<br>戳回去剛剛的 Burp Suite 封包翻了一下，找到改名字的時候送出的請求，原來！是我的 User ID！  </p>
+<p><img src="https://hackmd.io/_uploads/S1jgXmxgZg.png" alt="image">  </p>
+<p>至此，我們就可以偽造所有的封包<br>我有針對參數嘗試進行過各種 injection&#x2F;ssrf&#x2F;file upload 等等常見不常見的攻擊，最終發現都沒什麼結果 …  </p>
+<p>但別忘了一開始提到的，其實只要能穩定的任意開寶箱 + 完成任務，就可以獲得等價金錢的獎勵  </p>
+<p>利用寶箱地址獲得 api 我可以成功寫自動化程式直接改定位到寶箱位置並完成任務開啟他！  </p>
+<p><img src="https://hackmd.io/_uploads/ByZUXXlg-g.png" alt="image">  </p>
+<p>至此，這次的任務已完成！  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>這篇文章看起來其實一直挺順水推舟的，但實際情況是在分析的過程中，推動的每一步背後可能都藏著無數的猜測、通靈與各式各樣的環境問題，像是我本來還特別作了 anti-ssl pinning 最後才發現自己 proxy server 沒開對 IP TwT，他 ssl pinning 根本做爛了ㄏㄏ  </p>
+<p>在實戰中要產出一個完整的 Exploit 方向也不竟然是一個這麼容易的過程，雖然這些步驟 + 寫報告大概就花了我一天吧 XD，但主要時間都拿來尋找更有意義的漏洞了。  </p>
+<p>最近打 PT 的心得感想真的是 app 類真的是一個很大的 Security Edge，像是在另一起 Bounty 遇過 apk 解包後找到以前的 Host， API 接進去就是一整個個資大外洩 + sql injection 2 RCE<br>還有桌面 .NET APP 解包後翻到一個 json config 檔案目錄，請求後獲得了銀行 Token + 內部系統 IP，進去後又又又又是 SQL Injection 2 RCE<br>不過這些又都是另外的故事了，基於 NDA 或者我的各種懶惰或者其實就是一些 Old stories 我就不想多提筆撰寫了 XD  </p>
+<p><del>好的我現在其實在 NASA 課上</del>  </p>
+<p>最後他們 patch 的方法是更動態的 key + 速度檢查，基本上應該已經是在風險承擔範圍內可接受的 solution 了，不過未來我總覺得那個 web 肯定可以被打出一些新花樣，只可惜我不熟 ASP.NET …  </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9C%9F%E6%AD%A3%E6%84%8F%E7%BE%A9%E4%B8%8A%E7%9A%84-Before-all"><span class="toc-number">1.1.</span> <span class="toc-text">真正意義上的 Before all</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%9E%90%E9%81%8E%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">分析過程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">3.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2025/11/07/apk-game-hacking/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2025/11/07/apk-game-hacking/&text=紀錄一次 Bug Bounty 中的 Android 流量解密到 Game Hacking！"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2025/11/07/apk-game-hacking/&title=紀錄一次 Bug Bounty 中的 Android 流量解密到 Game Hacking！"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2025/11/07/apk-game-hacking/&is_video=false&description=紀錄一次 Bug Bounty 中的 Android 流量解密到 Game Hacking！"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=紀錄一次 Bug Bounty 中的 Android 流量解密到 Game Hacking！&body=Check out this article: http://wha13.github.io/2025/11/07/apk-game-hacking/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2025/11/07/apk-game-hacking/&title=紀錄一次 Bug Bounty 中的 Android 流量解密到 Game Hacking！"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2025/11/07/apk-game-hacking/&title=紀錄一次 Bug Bounty 中的 Android 流量解密到 Game Hacking！"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2025/11/07/apk-game-hacking/&title=紀錄一次 Bug Bounty 中的 Android 流量解密到 Game Hacking！"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2025/11/07/apk-game-hacking/&title=紀錄一次 Bug Bounty 中的 Android 流量解密到 Game Hacking！"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2025/11/07/apk-game-hacking/&name=紀錄一次 Bug Bounty 中的 Android 流量解密到 Game Hacking！&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2025/11/07/apk-game-hacking/&t=紀錄一次 Bug Bounty 中的 Android 流量解密到 Game Hacking！"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2025
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

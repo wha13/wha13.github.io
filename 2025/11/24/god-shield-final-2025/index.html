@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before allRank: 2Team: CakeisTheFake很開心，謝謝我的隊友 Aukro Naup Flydragon rota1001這次參加了中科院辦的神盾盃，經過初賽（在我前面ㄉ文章有 Web 狗沒人權專心當 Crypto 狗的 Writeup (link)）   只能說，不愧是中科，成本和獎金跟國內其他比賽比起來高到誇張（這次的賽制是 每個隊伍都有獨立網域、然後分為霸主攻防">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2025 神盾盃 FINAL 隨筆">
+<meta property="og:url" content="http://wha13.github.io/2025/11/24/god-shield-final-2025/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before allRank: 2Team: CakeisTheFake很開心，謝謝我的隊友 Aukro Naup Flydragon rota1001這次參加了中科院辦的神盾盃，經過初賽（在我前面ㄉ文章有 Web 狗沒人權專心當 Crypto 狗的 Writeup (link)）   只能說，不愧是中科，成本和獎金跟國內其他比賽比起來高到誇張（這次的賽制是 每個隊伍都有獨立網域、然後分為霸主攻防">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/rJkvWeG-be.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/H1h5WxG-bl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ryMzzxM-Wx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/S1l2veG-Zx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/B1AbvxfbZl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/r1goulfZWx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rJAPsgfbWg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SJotixfWbe.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rJQyhgfbWe.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HJQWneGWbe.png">
+<meta property="article:published_time" content="2025-11-24T17:01:08.000Z">
+<meta property="article:modified_time" content="2025-11-24T15:40:58.738Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="CakeisTheFake">
+<meta property="article:tag" content="Pentesting">
+<meta property="article:tag" content="AD">
+<meta property="article:tag" content="Active Directory">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/rJkvWeG-be.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>2025 神盾盃 FINAL 隨筆</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/11/07/apk-game-hacking/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2025/11/24/god-shield-final-2025/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2025/11/24/god-shield-final-2025/&text=2025 神盾盃 FINAL 隨筆"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2025/11/24/god-shield-final-2025/&title=2025 神盾盃 FINAL 隨筆"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2025/11/24/god-shield-final-2025/&is_video=false&description=2025 神盾盃 FINAL 隨筆"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=2025 神盾盃 FINAL 隨筆&body=Check out this article: http://wha13.github.io/2025/11/24/god-shield-final-2025/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2025/11/24/god-shield-final-2025/&title=2025 神盾盃 FINAL 隨筆"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2025/11/24/god-shield-final-2025/&title=2025 神盾盃 FINAL 隨筆"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2025/11/24/god-shield-final-2025/&title=2025 神盾盃 FINAL 隨筆"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2025/11/24/god-shield-final-2025/&title=2025 神盾盃 FINAL 隨筆"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2025/11/24/god-shield-final-2025/&name=2025 神盾盃 FINAL 隨筆&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2025/11/24/god-shield-final-2025/&t=2025 神盾盃 FINAL 隨筆"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Day-1"><span class="toc-number">2.</span> <span class="toc-text">Day 1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Day-2"><span class="toc-number">3.</span> <span class="toc-text">Day 2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">4.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        2025 神盾盃 FINAL 隨筆
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-11-24T17:01:08.000Z" class="dt-published" itemprop="datePublished">2025-11-24</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/AD/" rel="tag">AD</a>, <a class="p-category" href="/tags/Active-Directory/" rel="tag">Active Directory</a>, <a class="p-category" href="/tags/CTF/" rel="tag">CTF</a>, <a class="p-category" href="/tags/CakeisTheFake/" rel="tag">CakeisTheFake</a>, <a class="p-category" href="/tags/Pentesting/" rel="tag">Pentesting</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Rank: 2<br>Team: CakeisTheFake<br>很開心，謝謝我的隊友 Aukro Naup Flydragon rota1001<br>這次參加了中科院辦的神盾盃，經過初賽（在我前面ㄉ文章有 Web 狗沒人權專心當 Crypto 狗的 Writeup <a href="/2025/09/28/aegis-2025/">(link)</a>）  </p>
+<p>只能說，不愧是中科，成本和獎金跟國內其他比賽比起來高到誇張（<br>這次的賽制是 每個隊伍都有獨立網域、然後分為霸主攻防（由<del>萬年</del>去年冠軍隊當霸主保護 pwn 靶機和寫 LLM 防護 Prompt）的 CTF 題目和 紅隊演練的大題（三個分層網段 + 十幾台機器的滲透大題）<br>計分是 紅隊 FLAG * (1+FLOOR(CTF 寶石數量&#x2F;10))，然後寶石是一 round 拿一次 flag 得到兩顆，霸主 sla 壞掉大家都得一顆  </p>
+<p>隊上都是強大的 CTFer 和 Pwner，所以顯然滲透的重擔就落到我身上了 :D，這邊特別感謝隊友 FlyDragon 願意跳下來一起陪我看滲透  </p>
+<p>簡單放點看到的酷東西和照片就好，其實蠻難寫詳細 WP  </p>
+<h2 id="Day-1"><a href="#Day-1" class="headerlink" title="Day 1"></a>Day 1</h2><p>耶 五點起床搭車去台南  </p>
+<p><img src="https://hackmd.io/_uploads/rJkvWeG-be.png" alt="image">  </p>
+<p>人生第一次的捷運首班車  </p>
+<p><img src="https://hackmd.io/_uploads/H1h5WxG-bl.png" alt="image"></p>
+<p>一進去就看到酷酷的記分板<br><img src="https://hackmd.io/_uploads/ryMzzxM-Wx.png" alt="image">  </p>
+<p>好耶看起來蠻好玩的 … 嗎？<br><del>不，一開始網路環境狗的跟什麼一樣 TwT</del>，然後我的 VPN 上不去一早上，剛好我對面ㄉ飛龍電腦沒有 RJ45 可以接我們就一起沒網路ㄉ打了一早上 QQ  </p>
+<p>我印象比較深刻的事情就是：<br>(PWNER 三人組)：打完 XXXX 洞我們只有 16 bytes RCE，他還不吃 wildcard 字元我要怎麼讀到那個 flag<br>然後他們講了老半天，我忍不住聽了一下：<br>你們有試過 <code>;sh</code> 嗎<br>然後就過了，3 bytes 而已嘛～<br><del>這把也算是對 pwn 有貢獻了</del>，不過海豹他們都很盡責地當霸主，被打兩回合後就會固定 patch 好 ww  </p>
+<p>到了大概 11.30 的時候我的網路終於可以連進去滲透靶機，掃了一下，一開始外網有五台：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">Nmap scan report for 192.168.10.24</span><br><span class="line">Host is up (0.0050s latency).</span><br><span class="line">Not shown: 980 filtered tcp ports (no-response)</span><br><span class="line">PORT     STATE SERVICE</span><br><span class="line">22/tcp   open  ssh</span><br><span class="line">23/tcp   open  telnet</span><br><span class="line">25/tcp   open  smtp</span><br><span class="line">53/tcp   open  domain</span><br><span class="line">80/tcp   open  http</span><br><span class="line">110/tcp  open  pop3</span><br><span class="line">113/tcp  open  ident</span><br><span class="line">135/tcp  open  msrpc</span><br><span class="line">139/tcp  open  netbios-ssn</span><br><span class="line">256/tcp  open  fw1-secureremote</span><br><span class="line">443/tcp  open  https</span><br><span class="line">445/tcp  open  microsoft-ds</span><br><span class="line">993/tcp  open  imaps</span><br><span class="line">995/tcp  open  pop3s</span><br><span class="line">1025/tcp open  NFS-or-IIS</span><br><span class="line">1720/tcp open  h323q931</span><br><span class="line">1723/tcp open  pptp</span><br><span class="line">3306/tcp open  mysql</span><br><span class="line">5900/tcp open  vnc</span><br><span class="line">8888/tcp open  sun-answerbook</span><br><span class="line"></span><br><span class="line">Nmap scan report for 192.168.10.31</span><br><span class="line">Host is up (0.0031s latency).</span><br><span class="line">Not shown: 986 filtered tcp ports (no-response)</span><br><span class="line">PORT     STATE  SERVICE</span><br><span class="line">21/tcp   open   ftp</span><br><span class="line">42/tcp   open   nameserver</span><br><span class="line">80/tcp   open   http</span><br><span class="line">135/tcp  open   msrpc</span><br><span class="line">443/tcp  open   https</span><br><span class="line">445/tcp  open   microsoft-ds</span><br><span class="line">1080/tcp closed socks</span><br><span class="line">1433/tcp open   ms-sql-s</span><br><span class="line">1723/tcp open   pptp</span><br><span class="line">2222/tcp open   EtherNetIP-1</span><br><span class="line">5060/tcp open   sip</span><br><span class="line">5061/tcp open   sip-tls</span><br><span class="line">8080/tcp open   http-proxy</span><br><span class="line">9999/tcp open   abyss</span><br><span class="line"></span><br><span class="line">Nmap scan report for 192.168.10.101</span><br><span class="line">Host is up (0.0024s latency).</span><br><span class="line">Not shown: 995 closed tcp ports (reset)</span><br><span class="line">PORT     STATE SERVICE</span><br><span class="line">135/tcp  open  msrpc</span><br><span class="line">139/tcp  open  netbios-ssn</span><br><span class="line">445/tcp  open  microsoft-ds</span><br><span class="line">1433/tcp open  ms-sql-s</span><br><span class="line">5985/tcp open  wsman</span><br><span class="line"></span><br><span class="line">Nmap scan report for 192.168.10.254</span><br><span class="line">Host is up (0.0019s latency).</span><br><span class="line">Not shown: 998 closed tcp ports (reset)</span><br><span class="line">PORT     STATE SERVICE</span><br><span class="line">22/tcp   open  ssh</span><br><span class="line">3389/tcp open  ms-wbt-server </span><br></pre></td></tr></table></figure>
+<p>後面重新打一打 <del>才發現 <code>.100</code> 也有機器</del><br>Emm … 一開始有兩台 warmup 機器，跟後面內網滲透完全無關，分別是：  </p>
+<p>GLPI 的 CVE-2025-24801，預設密碼登入 + 更改可接受的檔案類別上後門<br><del>然後發現阿我的 shell.php 怎麼變成 shell.php.bak</del>，改成上 .phtml 就過了ㄏ，事後 get shell 發現內部有 .sh 檔案 process 在防護<br>後面就是改 &#x2F;opt&#x2F;bin&#x2F;monitor.sh，一個 root 會 cronjob 的檔案還 rwxrwxrwx，直接送上 shell 了（<del>結果回去撈 flag 才知道 intended 是要先打 redis 提權成 jdoe user 再 root</del><br>另一台是 Tomcat LFI 上 JSP shell + python3.8 檔案的 Capabilities 有 +sid  </p>
+<p>最後就是在看 web01 靶機的時候他的 js file 裡面有一把 FLAG，然後第一天就結束了 … <del>對，我和飛龍都以為對方看過 LINPEAS 所以就一直在翻垃圾直到我們都鬼打牆大家不知道怎麼解，開了錦囊才發現超簡單就浪費了很多時間</del>  </p>
+<p>第一天回家沒有回家作業 開心，<del>但如果我要 PWN 可能就要，</del> 雖然我隊友說不用?!  </p>
+<p><img src="https://hackmd.io/_uploads/S1l2veG-Zx.png" alt="image">  </p>
+<p>附上長途跋涉回 AIRBNB 的晚餐  </p>
+<p><img src="https://hackmd.io/_uploads/B1AbvxfbZl.png" alt="image">  </p>
+<p>還有臭豆腐但我疑似沒拍到 ;P，反正隊友有去買了牛肉湯吃  </p>
+<h2 id="Day-2"><a href="#Day-2" class="headerlink" title="Day 2"></a>Day 2</h2><p><img src="https://hackmd.io/_uploads/r1goulfZWx.png" alt="image">  </p>
+<p>紀錄幾個好玩的東西：  </p>
+<ul>
+<li>importxml 路徑有 Blind XXE，然後我丟了 NETBios SMB 路徑進去，在本地開 responder 就收到 NetNTLM Crack 掉 hash 就結束了ㄏ</li>
+<li>後面就是在上一台機器翻檔案， web api 的 source 有 DB01 的登入密碼，進去之後有 Linked Server 到 DB02，然後最後是 DB02 再連回去 DB01 就會變成 sa 權限?!?! 蝦 XD  </li>
+<li>後面就是老套的 xp_cmdshell 開 shell，然後有 defender 所以掏出了自製小後門連回去 msf，最後 Potato 免殺一下就過關惹！  </li>
+<li>後面就是 “Active Directory Enumeration via MSSQL Injection”，再用 DB02 去 Enum 整個內網的 User 然後撒一下 NPUser 之類的，可惜那時候在 DB01 Get shell 後找太久，還向太多以為在 browser 紀錄因為翻到電話號碼&#x2F;email 那些資料，<del>後面才發現是因為要在靶機安裝 mssql 相關ㄉ exe 的工作人員註冊訊息</del>，開了錦囊 <del>看了有一點點多沒用的提示</del> 才知道要用 DB02 切ㄏ</li>
+</ul>
+<p>但最後我們只輸給 B33F 50UP，這不是 DEVCORE <del>練</del>實習生就是打 PWN2OWN ㄉ怪物的隊伍，合情合理 XD<br>只能說題目真的很好玩品質也高，如果網路狀況能提上去就真的完美了</p>
+<p>獎盃很漂亮！<br><img src="https://hackmd.io/_uploads/rJAPsgfbWg.png" alt="image"></p>
+<p>又是三井  </p>
+<p><img src="https://hackmd.io/_uploads/SJotixfWbe.png" alt="image">  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>比賽中途 官方自助點心<br><img src="https://hackmd.io/_uploads/rJQyhgfbWe.png" alt="image"></p>
+<p>慶功宴隨手放<br><img src="https://hackmd.io/_uploads/HJQWneGWbe.png" alt="image">  </p>
+<p>嘻嘻我去忙別的了，今天先寫到這</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Day-1"><span class="toc-number">2.</span> <span class="toc-text">Day 1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Day-2"><span class="toc-number">3.</span> <span class="toc-text">Day 2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">4.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2025/11/24/god-shield-final-2025/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2025/11/24/god-shield-final-2025/&text=2025 神盾盃 FINAL 隨筆"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2025/11/24/god-shield-final-2025/&title=2025 神盾盃 FINAL 隨筆"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2025/11/24/god-shield-final-2025/&is_video=false&description=2025 神盾盃 FINAL 隨筆"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=2025 神盾盃 FINAL 隨筆&body=Check out this article: http://wha13.github.io/2025/11/24/god-shield-final-2025/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2025/11/24/god-shield-final-2025/&title=2025 神盾盃 FINAL 隨筆"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2025/11/24/god-shield-final-2025/&title=2025 神盾盃 FINAL 隨筆"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2025/11/24/god-shield-final-2025/&title=2025 神盾盃 FINAL 隨筆"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2025/11/24/god-shield-final-2025/&title=2025 神盾盃 FINAL 隨筆"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2025/11/24/god-shield-final-2025/&name=2025 神盾盃 FINAL 隨筆&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2025/11/24/god-shield-final-2025/&t=2025 神盾盃 FINAL 隨筆"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2025
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

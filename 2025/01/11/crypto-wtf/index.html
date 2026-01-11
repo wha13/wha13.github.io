@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Here&#39;s something encrypted, password is required to continue reading.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="\[不正經密碼學\] 比 Oblivious Transfer 更簡單的浪漫">
+<meta property="og:url" content="http://wha13.github.io/2025/01/11/crypto-wtf/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Here&#39;s something encrypted, password is required to continue reading.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-01-11T17:02:02.000Z">
+<meta property="article:modified_time" content="2026-01-11T11:39:51.851Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="life">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>\[不正經密碼學\] 比 Oblivious Transfer 更簡單的浪漫</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2025/01/13/uoftctf-2025/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/01/11/htb-bucket/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2025/01/11/crypto-wtf/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2025/01/11/crypto-wtf/&text=\[不正經密碼學\] 比 Oblivious Transfer 更簡單的浪漫"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2025/01/11/crypto-wtf/&title=\[不正經密碼學\] 比 Oblivious Transfer 更簡單的浪漫"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2025/01/11/crypto-wtf/&is_video=false&description=\[不正經密碼學\] 比 Oblivious Transfer 更簡單的浪漫"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=\[不正經密碼學\] 比 Oblivious Transfer 更簡單的浪漫&body=Check out this article: http://wha13.github.io/2025/01/11/crypto-wtf/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2025/01/11/crypto-wtf/&title=\[不正經密碼學\] 比 Oblivious Transfer 更簡單的浪漫"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2025/01/11/crypto-wtf/&title=\[不正經密碼學\] 比 Oblivious Transfer 更簡單的浪漫"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2025/01/11/crypto-wtf/&title=\[不正經密碼學\] 比 Oblivious Transfer 更簡單的浪漫"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2025/01/11/crypto-wtf/&title=\[不正經密碼學\] 比 Oblivious Transfer 更簡單的浪漫"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2025/01/11/crypto-wtf/&name=\[不正經密碼學\] 比 Oblivious Transfer 更簡單的浪漫&description=Here&#39;s something encrypted, password is required to continue reading."><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2025/01/11/crypto-wtf/&t=\[不正經密碼學\] 比 Oblivious Transfer 更簡單的浪漫"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        \[不正經密碼學\] 比 Oblivious Transfer 更簡單的浪漫
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-01-11T17:02:02.000Z" class="dt-published" itemprop="datePublished">2025-01-11</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/life/" rel="tag">life</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="Oh, this is an invalid password. Check and try again, please." data-whm="OOPS, these decrypted content may changed, but you can still have a look.">
+  <script id="hbeData" type="hbeData" data-hmacdigest="5ab160ad25c872e7a778fa7a7c4b037f1b5a5faf396a59205881d75a549f28a1">148b54f0ddc34bdea560e2ef11795d4faa3cb0b32b501d3e5ed90e664e322fb5964bcd201ceef794c1b4eee85642bb5db7ffecac6f1f6b3714d9db4e5d974a995ec3e212db4e57ee5b79405a5f4be25d8d2faf84dfc31c0ed2b44b35f2dad2ea1e8f6b462ce178391f3b9701e33a46a20f2b4db0a95b43ab112d97f0d310c79629efcf0e9d224dda7d6fbc366cccd9242f8a8e7ebb8b55a94fcf820007e32f427b66592acb7c3d823b12a14e626e51142713d8caf593a80ee4e101fce7015d0477520ad72c3247e694e98ab5d83d6b78055a898b7152e4875128a6080251c3206b8eeee66625b90db46137ed1a7cbead02f284805ccfc03f77aa2636ceffa33f6281b3a78639e60e21b30ae17da132c63eb8bc7e0c84b67a01cc0a3366f92453c1e24a05c3cd5349f5264915a0f71760becff5b63d655506d8d5ed3a38efdb1b7d1b769781359c15bf9bd75228a4cecb7e4d7a6c77a9b503b8e86eab37ca9851fd05b2796e9949b531e7b5922f4906fe9e6a7d5d852461ee788d11f2ace58de7c4a044e80ea0c91b2255afa46a285eb8ee8c6263d38475451d97c9007d4b9de16893adbf3fbe82006a04aeb2418901752d6a83318cd33120ec06ecb2059b05e432680f0e359bde0896db59c7a3da0209db484e7a6f146d6b19414b333b3bad7b92a6995975bf57cbb7d1c3d5d8148c63d9d64a631a09b2c801c9f800e442c2da1ba8e9ad6e4f1011d4d8b8716c8c55bc9b6953de63b723dea8340ae4a04130491bae9d498f9dfb0d20c1e83667f3030872f86d21a378caf3b507f09d6469d537ec2de2fb32b47e15f267d7e2c09af0f88c9505cf4bbdba18fdd329c87b6aed7d01f0d98bd443e0db247066bfd6504bec4551d7c4810985d40dd7a2df4177ae63eb55955b3a529348009ca59b4b2ff80204b21d2d03ebd3f1ef8f048a0bd292fc6d10cbd9e42fa7a335640cf04f514eecf3efdc8e0adcf4a9fab64c428021b9531b81582e319073b1365416b42af3167f3ad11279e1690a6cc859769573f399c9ffdf65790a00e9fc531fc4b22186b69f08686989fbc056d9a24ad67efcc1e3ac23576f7f604a284bfb28232a89853ecc1bdd61d14d4e4f7f1cff1d06483385cefbcdea82255ac7ebafd920e3b3f053a17fd1db20e3b7f3d8f9feff413c9cb01afe36b3b221a22118e98793b5b36843fc055824115f1fbd242e0e5cffcd324e5b6c635c0aa51d9f2046d345deaabb434208403921d63d156f421217a227a1d12ab6935e08f8a8fcd4a373d00d1f5c203a55a0d7845f2abd8c05de72355f047050e36485ad7564df2e52e39b5d778dd0f6ae0b865571d7849f3d389da8b25cb970aa7a137a2382af1470369015cb905218684d645aa273a092c18b4d6784b9fcb61a99caa99be25f72a376fb2230cba3465d2c9d3265b5d993b916da231b7a760207a3af1c0364468cdd8946bbcfb27d0293c88f524c0188a5aec4d813fe2e615ad798bb37afeb3530c691bd9572abad4ebb2bd6de158e812b394906ffe8aefc724d6f3d606c576c374e6c202b83ea38beb4607c2dfb0737398e7311c096c8adba31449111fedd61d07b66149d6789323810adfe2b6f7a7fe63d60e90cf900742dad833628e38c997ceb702eb21e677100f9b11a5b34fad46598586b5ba70b73fd11693c996a70a3112c9060ef7d09ee067bc3b18fc246eeb2ac932988c9a6eefdce9a58d0a7031d3d97844de32f33c4704c2a46023682e4a2a3c1b93966258cc4ae096c4b3583f7eb3642cf38e20c366494e26c039833259287f2b5f3b008a9f10d7f0b8519e8152230732d10f18e8726e5e11f7b3237ed759c3f5e1e7c9dd2f98a8d7fdea1ce3b60d2820f4b4672af0c5600e329e7585f6b6eb7c344474313603c6f5597b726168bdd88d68f82b337cbdf1fe5b7cc758e3e2fb830ab4b289e06400209b3750ee1cf48548cb0e0a5f78a2e3d04e2d92e7457e30e747b03853de172f64cc09775ea75e57173e487d43bfbf43032f0671fb53833b6d89c3493ec80f9fbb9cf5c05d52da3a7acaaa6ee74d1ede1d4bd748de5bf5232738e4da41013ad65241afeef4a98269abdff97ee183c00fde76eb032a52e62b04f4d14b9fcda1b6c6cea98724ec250ed94477d7f23bde4d1d58cde53060b2a3e83f63b6565e5db0fe032285923b6df1dea5c1f9e89ea91f358a5f225ad492f4a9f972359fd0a8cab66caeb73e17b85f24e35efda55ce0a6f978dd6bdf5e09fddbee204de3c8aedd7ad96287a37d29bbe07b58be64ee0f77b93f1989be38a16e9774d937be36ee5bf932a69c643aa712b9d8a8f15a3e6ababfda0d64658734fa4bfd2b348ff0f44eccad74f391afa8c4f2833e5b1603092010a7ead1771b160c5dabffd31a7c90418e3e532c7d83da52b91b5a1eec6f47e426a269e3191a3581a9b6333a1230fea6d0586eff545be6c26f17aecb7ed7f222960d699a14740f955be2f5f78e2539e1cb859a4fc5503484a97706ef9632e621a0ad81d0b2525d64edf8e6b48d722218fb796f55cb759bca986afc492cf6d1fa4633cb7dd099df438aacb87625af7da0ce804192c9381ec16df95eb94e4d6e34722442a3c8cb66d7c83eef70c6877c09f1ef5401c5dd0ed69e286e57afa1a669f888318ef8ea200d1ba065fdffb17c8e58aa7d77e6bd89b53dc5b0cb128aebf7dad5fd333ad53e3101ee0f859cbee017f5a24c84b478091372a1b2a0363557f42953e257c8cc37eff191146b943fa79e746b918591760f9c0858214690fff6af2de1ed1ec858f1898377e5a98ac70db73464c2267bdb477f6582b7c2f57101ef7f3fd16c97dece246f392ac1920db1953a62e0a6abd34d3cfbe1ee6d4a91cdfabc4da8fc7fc0fa71e0a99c7e4e5760452cf59588b69d80813e852d9320f94e4aeb7d93e09163626fbbdc987c8493693f00c0d1912d03b0518e5846cffddd89e1b1256cfca0c947e6fc24fecf1f1ef1d0aafca026bd90e44f1c1fdd5f443615a4aedb8065c717f0b35964a7b4be9b4ca016f43bfe9bea3198790e490f3146395a508e189b3ae9f3b3a7e6735d3e502c6c533272558df082c6983c7f7586566ae85b7ada9bdb1555918e6a69dba0897bc4332e8566a7304a8407b58294507356eb40137bb0da4bd1bc6ee8667da9bf1397f7eb083d949d6753aa63d829672b7265464fb06777522ad40d73304f48f25151ede310530869d5c4267a4ab531f17711e3e3017352dc60ee220d3a6b515fbfbfb08387550c309b96079ec082f84b55ce55d14fc31597ad197a1924e3f2aebccc76d6adae148d97c99fc4f6fdbce6223460537b23c058cdb7e0ac635573fb07d607196a70574de0e8d9e20204134b83e0b704a9543bfaebd3d61040684bab79e6ee27fa8c00a0f848fca983491e4f7e72813d0d200f3d4cdab077ee85c2823ea22065b5165a2e538058834e8f2202814badb8e5c6289414139a87a24bb6717e7eb3ae1f525b3c092d0df8a23b7d335ebaef05f065dc20267d87bb22f68363cd1c14a78252c06419855154b2d431a270a9896a07473910f3a573f1bf208934db0723575792bbdee1208f05f469092a8027a3a6a7073f1f0b18e819ea31990d853d5cfae51a32f73faf4bb231e1730b8c001e809ff2bd8c2d49ebf619ba91e45893d25ae19d1832d8c55085ed836af8600faa475256cb8363d2175c938da4121a9a46440186e2293524e8d4edebc73935bf9b3c5317e61c8493a05841a292498cd1bf7d6b14552497f167ffcc3e68b4d2c32af339a449f49044f853f3263a28b993b45eeaee7b4bf51608348a42f5195eca542e857cfb50aa6915520ac4fbed1674f2d3a33d7c0df41ca5c8ee7cf8bbded7e6ca306836377af3fdfe5b3436f1b6676fd75134964d7186d0e1e89b4614abeb4828cdcde47d2fa3f19aa7a8db4bea8887c4d3dcc344d97e698d3351e5388c9ae38f09df0cc60adf3fb96de164dc7ebe0f3745aae452af313143cd17265f63a4758e471dbbd7819123508deac5d7285c7ca78e81032d68ee27796763d5edfefeb3e82cb3df4699a2d318dab31fadedb8c077ee7a7777b06ed305cf8a2f7812026d4682db7ae9a33984e16059cc343ebdb8f187373149b0164c0a57bc1e0379738ea8d4286158241c8deae1755c2db1ba941aa937591eabf1c04b1523a02a46bcc9d8729ecec2a943250f8239190e6b3eae78eb5b2c875b8a75c176d76a41faf1257d26a400eda16b4c9b6d404df960e6b95d906c237768c8c94d9c4baa4136f9066e63e5d26eba222da61dd8734ee2ff40e22cd585a54f066ac5310af2dc3dc22de95237a548b60cbf8fa46036b98e1d266127ffb74455e57911054a58de6691a659ee7ba9f5bacd71cba74471571193011d90c35c8196fd499bf1858a3672a0387d25c92370b004c676e93e053b6cca47be1fd90ccc8b123cac69f77b83402b9d934d9920cdfe758221befd295d77cd99b16172d3c45d6ea77caa8e1e9ff73f7dc892e9f6afaeecfe7497f9d0cf7c16e511b9f3c9eff7b539087caebe2c436b6656b03599a477f426a0a2a3e9c94dc5f10d974693b35076ee7439060734a2ad04f214a8f5bc3464f244d910a3f3657665eeb3e38a72645046f2358c58d81210c39690d67ab1b0972df32c5113847209676467208db6a85fbaccc5d3c30b7e0b4a9d47d27bf917f8a318b063791793be16ae4eda84932390e584d6216c0d50a36ad64a1b67b01667f4efb7beac210628d81e109358f08711381e7b57f37bcc273f4f66c91d417bb37775d31eb91046913cb8a5e8477df582f33477c45987aa9fcb7141e0840e4f36052675e0ea3649231e23432f9615a84282d0fcd32cb46e019e2614f1ec0a2e682dc8524dde29ef016620be4fe51dc1c416f1c9dc5d72066b492bf58fbe8f44c4d32fd00527b29b804c46786890a433da19beeeaff9f88b06114ec6c94395e513ecbeb4b2fb0d5e0994ff70463176bb4a0161094abcc8ae6ca29a941c410edb987b3a898ea106a8d2666098443ccfd5d59a30db5a0b5c3d47478c5a2c482fb4efc1ec206b180ee3171ba4c9562b3e6312bcbd1a91eb9bd58bc356cea79d6891e9f54bd62b6fbd68cad91630f4640f1469d8a1e1aeed2387abb25962c14d70958a50e898eb49eb9d2ba1949aa7663958ce3f3da5d1b237aee7a3d8be2b77a18587eb0c3725c7cd957f36077de3f5c0d13767c382c9af96ffd37655a692a118ee0fcab87c2d4394a44e45518cea57614f885a65ff0b7505f3ce1ddef3f41857183d3a23ebd5eec6884df7e1d8166591773bc7ac88ac211a4ff92073f83dc78da96684d69e682820ba7cfa78d193f2883481d658848efd0784cb72f367cce65900dd9d0a74ffc4ef7bc29c8f9f3c0a1f3cc3903123ddc5f61649b2d5598622d048431bc5192dae1256deec15ed92f73167b1da1d12a0affce3d0d62282a418a8cab17d4f5d3752416b4ea8b5c69c66df74bdd3158ab07e6fe394c3543e0ef2b20d6ae942a8d19a287bce547f7d675c1509650d2126edc951a0f62f96335a988a67b0ab3699e1e7de4d0f67f6b999245cbc501dda4fca97cc64c207d0078fdc30350b13411a1cdc9ac8c2960160294a9e5ae65480d698ce2d018115b9259d2fc812e71d630201f3687e4ca1f509ac694c2d8eae1dd004e1d70fa7599bc612e0f247b78c01a895d663e9b1339d126aabff3af313ee91de02f7a4719033fb0580361a547c99d98e54f3f2384534a2ed3ec231ce7a72f274ce6b4d673814591a72f143b917ce977439fa8fd46c290c59246485f1ccbc23e485c3ab25bb4e825cf5d71c0db00a52e08d7f1877215bd2c9e007b3c7812988aa3ea5a73af4a5ec186d3a8a0de1de74d6e9b258a8d250d0b16e6a172b30e18c3debbac1eb3d48fb5f96630897cbcf27a791063e1b6dc5b34e27108691dbad9b268c1e0ab92d4f3ed432195e8aedfe6a70fde3fb3de3199fb9d582699dcdd46ed6d99d5afb81b1d9637860fb40cbb47e4eb5ba5668c60b9458e1e3678666de8e2a606edd68e5c00a1211fc51e748e407757196c43f987ef6049668201d4164d35a69c805bf7edc03cc8dac5738dc7f3d1ea09f7b8e0ab185d885e4e1a1d47a63084b12bdd7477b16197f0d2b94aa554f51ecc20e725b912d4d95e2ac4c70126a2affb34d94b228fa9b43e74320dd973b74a55151c95e54f25cc7f48987b2baa4c678c801960a7f94a9562d5e48f40fa5dcafa8d1220df44dbdffcaa26808000c40eea8481c6367e34a17b62e3ecad34870a2bcf7f1bff9ed8a3945790c54cd045739424bd081d96d7f67409800009a6b8e1b8a1aeb019c7f3d66a25f43b91aaafed6c8f10f0a154eeb0e4a0ebd3e30cff610c6e9f55c6675a219daebc2aadb94e2122c31ef526bc1db4848d2294639d026aa931659a8c994064580af2bc0332f4144d98df4d8bac71d7247cd202a6fce384111e22c514345bb7fbb5ec53642abcb14f798ce010a18e8c6bf673f56161c497ec961a6c74c3dee86838bb3d8ff76f4435c7e56479e848c153481abd86292234113417af0ec6968e7e5bc78c15c49c78a8db724c9d4d37a798aa2ea6c15f102627655c1404b583320ffbe165e8c1abfd87bf88b605ed246f6fdbe738c0e7f5dc42384a37c004b5a0c79ff06003f8cc5928408485053f04ae81180f0f71f3c7c48c2784a6a301b354073fb3880496b91a8e10a5bcad09ceea4cb19d0b3e6f974a47e63e4cfd730fb8d7916ae5ad25a79cfca1142dd432d7b1b4cb1306993b9bc77de285d7720cd892754be95a25b45212575697461c134d272d9ac5c69b4beb6060a207f03234e5e431857873a4936788008cb9c6291ddc9ef598d7e9148abcefb45945bc4d86f96e93246f23d1596f5a3a4b162ad01d9d04bb756594101c46c44d876df3f0eb52f6e7f19d701c82e61f993db17d082ac69b66b4606a0f91b393c38d41aab66470d57a14ab49a209fc10ffd4cdc6d96c7392438cde8e570736d03dc115b33229ba16f70cec69f6f9ed8fb4baeed0b3b8e2efb1021548fdcd74957a9804799f3346e04f08d8282a69fa1ac3380c3df35843597a78c3ded3d7813e32aa6a0b6fa1b154dd86960883a327707203108f3092784ad59842d2f0b36ab1b4d62357e7eecf9c5d69f913b8bdcd60360f77bb48bab8e55fde71e3390d8c3577b0d84df8bcd94261671e7b95094bfaf54c1ecac6a685b712b06a82710156fa1e0a6ca7abc029b1b379052f42837ab94698bd1487d643419fc744fb8362bbd4118701f459cadccf089e0d473370e510d13e0f2aa22a1de4bdbd6d900f4ab147fcbf57b080e8b06ee18bf553336b1406ff1336568be382b94fa6ca2925d8cdf3b5a4bf358479e66a1e5d4e3a31172a969ffed18c760e37b35fc1079ebeebef306d94d3f1987a2010ceda5ece0ff2a752bb053cb88f610a33fef455b8a6b367a2fa62e8f65de57b2330651b014bc32f5bd7f439a5b4cb8a105985c3b9eb332428b93ab3480d06f26b8d1c048fb8e5f3e90b332f48c1476fa80b901146336e46f4febb7d984d2983f5f16f456693ffbd1a6b0be20e582a1f5cdede81a76614010bfb0f6c205392d9bc383d0f4604c5d567e04db170f2ab0dba77eb105bc8598730717dbbe2d94b0087988a7aa89b51ac18607f479111f0dafd34fc64da2615f5094f6f</script>
+  <div class="hbe hbe-content">
+    <div class="hbe hbe-input hbe-input-default">
+      <input class="hbe hbe-input-field hbe-input-field-default" type="password" id="hbePass">
+      <label class="hbe hbe-input-label hbe-input-label-default" for="hbePass">
+        <span class="hbe hbe-input-label-content hbe-input-label-content-default">Hey, password is required here.</span>
+      </label>
+    </div>
+  </div>
+</div>
+<script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2025/01/11/crypto-wtf/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2025/01/11/crypto-wtf/&text=\[不正經密碼學\] 比 Oblivious Transfer 更簡單的浪漫"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2025/01/11/crypto-wtf/&title=\[不正經密碼學\] 比 Oblivious Transfer 更簡單的浪漫"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2025/01/11/crypto-wtf/&is_video=false&description=\[不正經密碼學\] 比 Oblivious Transfer 更簡單的浪漫"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=\[不正經密碼學\] 比 Oblivious Transfer 更簡單的浪漫&body=Check out this article: http://wha13.github.io/2025/01/11/crypto-wtf/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2025/01/11/crypto-wtf/&title=\[不正經密碼學\] 比 Oblivious Transfer 更簡單的浪漫"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2025/01/11/crypto-wtf/&title=\[不正經密碼學\] 比 Oblivious Transfer 更簡單的浪漫"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2025/01/11/crypto-wtf/&title=\[不正經密碼學\] 比 Oblivious Transfer 更簡單的浪漫"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2025/01/11/crypto-wtf/&title=\[不正經密碼學\] 比 Oblivious Transfer 更簡單的浪漫"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2025/01/11/crypto-wtf/&name=\[不正經密碼學\] 比 Oblivious Transfer 更簡單的浪漫&description=Here&#39;s something encrypted, password is required to continue reading."><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2025/01/11/crypto-wtf/&t=\[不正經密碼學\] 比 Oblivious Transfer 更簡單的浪漫"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2026
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

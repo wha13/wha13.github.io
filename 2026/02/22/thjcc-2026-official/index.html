@@ -8,14 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <meta name="description" content="Before all默默的這比賽也辦到第三屆了，看了多少有點感動 XD不免俗地介紹一下，這是希望可以作為新手(尤其高中生)第一次接觸 CTF 解題的入門比賽！（嗎？怎麼說呢，現在的 CTF 圈生態因為 LLM 的氾濫幾乎導致一個什麼都不會，只會開 Agent 的選手之解題能力能與程度不錯的選手旗鼓相當，這也導致現在想要透過單純的 “解題成績” 來區分選手並進行排名困難重重，我也很擔心一些新起之秀會">
 <meta property="og:type" content="article">
-<meta property="og:title" content="\[繁中\]THJCC CTF 2026 Official Writeup by whale120">
+<meta property="og:title" content="THJCC CTF 2026 Official Writeup by whale120">
 <meta property="og:url" content="http://wha13.github.io/2026/02/22/thjcc-2026-official/index.html">
 <meta property="og:site_name" content="Whale120&#39;s Blog">
 <meta property="og:description" content="Before all默默的這比賽也辦到第三屆了，看了多少有點感動 XD不免俗地介紹一下，這是希望可以作為新手(尤其高中生)第一次接觸 CTF 解題的入門比賽！（嗎？怎麼說呢，現在的 CTF 圈生態因為 LLM 的氾濫幾乎導致一個什麼都不會，只會開 Agent 的選手之解題能力能與程度不錯的選手旗鼓相當，這也導致現在想要透過單純的 “解題成績” 來區分選手並進行排名困難重重，我也很擔心一些新起之秀會">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://hackmd.io/_uploads/H16o8Ttd-g.png">
 <meta property="article:published_time" content="2026-02-22T06:01:01.000Z">
-<meta property="article:modified_time" content="2026-02-23T13:20:16.638Z">
+<meta property="article:modified_time" content="2026-02-23T13:22:12.985Z">
 <meta property="article:author" content="William Lin">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="Cryptography">
@@ -47,7 +47,7 @@
       
     
     <!-- title -->
-    <title>\[繁中\]THJCC CTF 2026 Official Writeup by whale120</title>
+    <title>THJCC CTF 2026 Official Writeup by whale120</title>
     <!-- async scripts -->
     <!-- Google Analytics -->
 
@@ -123,16 +123,16 @@
     <div id="share" style="display: none">
       <ul>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2026/02/22/thjcc-2026-official/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&text=\[繁中\]THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&title=\[繁中\]THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&is_video=false&description=\[繁中\]THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=\[繁中\]THJCC CTF 2026 Official Writeup by whale120&body=Check out this article: http://wha13.github.io/2026/02/22/thjcc-2026-official/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&title=\[繁中\]THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&title=\[繁中\]THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&title=\[繁中\]THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&title=\[繁中\]THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&name=\[繁中\]THJCC CTF 2026 Official Writeup by whale120&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2026/02/22/thjcc-2026-official/&t=\[繁中\]THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&text=THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&title=THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&is_video=false&description=THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=THJCC CTF 2026 Official Writeup by whale120&body=Check out this article: http://wha13.github.io/2026/02/22/thjcc-2026-official/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&title=THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&title=THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&title=THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&title=THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&name=THJCC CTF 2026 Official Writeup by whale120&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2026/02/22/thjcc-2026-official/&t=THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -152,7 +152,7 @@
   <header>
     
     <h1 class="posttitle p-name" itemprop="name headline">
-        \[繁中\]THJCC CTF 2026 Official Writeup by whale120
+        THJCC CTF 2026 Official Writeup by whale120
     </h1>
 
 
@@ -295,16 +295,16 @@
     <div id="share-footer" style="display: none">
       <ul>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2026/02/22/thjcc-2026-official/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&text=\[繁中\]THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&title=\[繁中\]THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&is_video=false&description=\[繁中\]THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=\[繁中\]THJCC CTF 2026 Official Writeup by whale120&body=Check out this article: http://wha13.github.io/2026/02/22/thjcc-2026-official/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&title=\[繁中\]THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&title=\[繁中\]THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&title=\[繁中\]THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&title=\[繁中\]THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&name=\[繁中\]THJCC CTF 2026 Official Writeup by whale120&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2026/02/22/thjcc-2026-official/&t=\[繁中\]THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&text=THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&title=THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&is_video=false&description=THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=THJCC CTF 2026 Official Writeup by whale120&body=Check out this article: http://wha13.github.io/2026/02/22/thjcc-2026-official/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&title=THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&title=THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&title=THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&title=THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2026/02/22/thjcc-2026-official/&name=THJCC CTF 2026 Official Writeup by whale120&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2026/02/22/thjcc-2026-official/&t=THJCC CTF 2026 Official Writeup by whale120"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

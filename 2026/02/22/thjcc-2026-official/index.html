@@ -15,7 +15,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://hackmd.io/_uploads/H16o8Ttd-g.png">
 <meta property="article:published_time" content="2026-02-22T06:01:01.000Z">
-<meta property="article:modified_time" content="2026-02-23T13:22:12.985Z">
+<meta property="article:modified_time" content="2026-02-24T02:38:31.701Z">
 <meta property="article:author" content="William Lin">
 <meta property="article:tag" content="CTF">
 <meta property="article:tag" content="Cryptography">
@@ -214,7 +214,7 @@
 <h3 id="I-Sogo-你了喔！"><a href="#I-Sogo-你了喔！" class="headerlink" title="I Sogo 你了喔！"></a>I Sogo 你了喔！</h3><blockquote>
 <p>Sogo 台灣人的諧音梗了、、、</p>
 </blockquote>
-<p><del>理論上他應該是 Crypto 項目魔王題</del><br>哇，快速在不提及抽象代數的情況下簡介一下 Isogenies Path&#x2F;SIDH 的一些東西<br>簡單來說：<br>Isogeny？就是保持群加法結構不被破壞的映射($\phi(P)+\phi(Q) &#x3D; \phi(P+Q)$)，其中 kernel 代表被映射過去會等於 0 的點，這種映射是雙線性的<br>而在進行 SIDH 類通訊的時候，我們會挑選一個曲線他的 order 是模(質)數 p 大一的 p+1(如果有體擴張要取次方，通常在這種密碼學裡面是平方)，這類曲線叫做 supersingular curve<br>因為他們在進行 Isogenies 變換時產生的轉換圖是不規則地，如下，其中他們共享的秘密就是某一條走訪的路徑(CSIDH) 或者 利用雙線性和 Kernel 相同，最終都會到同一張 n-isogenies graph 的特性走到同一個的曲線 (SIDH，本題示範)<br><img src="https://hackmd.io/_uploads/H16o8Ttd-g.png" alt="image"></p>
+<p><del>理論上他應該是 Crypto 項目魔王題</del><br>哇，快速在不提及抽象代數的情況下簡介一下 Isogenies Path&#x2F;SIDH 的一些東西<br>簡單來說：<br>Isogeny？就是保持群加法結構不被破壞的映射($\phi(P)+\phi(Q) &#x3D; \phi(P+Q)$)，其中 kernel 代表被映射過去會等於 0 的點，這種映射是 isogeny 的<br>而在進行 SIDH 類通訊的時候，我們會挑選一個曲線他的 order 是模(質)數 p 大一的 p+1(如果有體擴張要取次方，通常在這種密碼學裡面是平方)，這類曲線叫做 supersingular curve<br>因為他們在進行 Isogenies 變換時產生的轉換圖是不規則地，如下，其中他們共享的秘密就是某一條走訪的路徑(CSIDH) 或者 利用雙線性和 Kernel 相同，最終都會到同一張 n-isogenies graph 的特性走到同一個的曲線 (SIDH，本題示範)<br><img src="https://hackmd.io/_uploads/H16o8Ttd-g.png" alt="image"></p>
 <p>怎麼換呢？<br>通常是選定一個 n-torsion point (<code>[n]P=0</code>) 作為 Kernel 傳送出去，其中 n 會是 p+1 的一個因數，而這時候 kernel 群的大小會是 n (蠻好理解的，$\phi(P)&#x3D;0\rightarrow \phi([2-N]P)&#x3D;0$)  </p>
 <p>不過怎麼換也有細節，這是 SIDH 的作法：<br>這邊假設 Prime 是 $2^{ea} + 3^{eb}$<br>然後我們有個 supersingular curve E，我們有 $2^{ea}$ torsion E[$2^{ea}$] 下的 Bases (P2, Q2) 和 $3^{eb}$ torsion E[$3^{eb}$] 下的 Bases (P3, Q3)  </p>
 <p>Alice 拿 secret sA 去算 Kernel $P2+sA \times Q2$ 然後做 isogeny，然後這個 isogeny 叫做 $\phi_A$，再把 $\phi_A(P3), \phi_A(Q3)$ 丟出來當作公鑰<br>Bob 會再去計算把 EA isogeny 到 $3^{eb}$ 上，取的點是 $\phi_A(P3) + sB \times \phi_A(Q3)$，最後因為  </p>

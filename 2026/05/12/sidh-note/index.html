@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before allSIDH 本來是 PQC (後量子加密) 技術的一個候選人，不過 2022 年被一種叫做 Castryck-Decru 的攻擊方案給破解了！這篇文章會包含基礎的 Isgoeny 、 SIDH 介紹以及 Castryck-Decru Attack 的分析大概幾個月前我重新上 CryptoHack 解題的某一陣子學了一些 Isogeny 相關的知識和實做，不過那時候看著看著有些地方">
+<meta property="og:type" content="article">
+<meta property="og:title" content="正經密碼學：聊聊 SIDH">
+<meta property="og:url" content="http://wha13.github.io/2026/05/12/sidh-note/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before allSIDH 本來是 PQC (後量子加密) 技術的一個候選人，不過 2022 年被一種叫做 Castryck-Decru 的攻擊方案給破解了！這篇文章會包含基礎的 Isgoeny 、 SIDH 介紹以及 Castryck-Decru Attack 的分析大概幾個月前我重新上 CryptoHack 解題的某一陣子學了一些 Isogeny 相關的知識和實做，不過那時候看著看著有些地方">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/ryluurPgJMx.png">
+<meta property="article:published_time" content="2026-05-12T16:11:37.000Z">
+<meta property="article:modified_time" content="2026-05-12T16:12:34.105Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="Cryptography">
+<meta property="article:tag" content="SIDH">
+<meta property="article:tag" content="Isogenies">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/ryluurPgJMx.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>正經密碼學：聊聊 SIDH</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2026/05/04/5-year-secret/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2026/05/12/sidh-note/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2026/05/12/sidh-note/&text=正經密碼學：聊聊 SIDH"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2026/05/12/sidh-note/&title=正經密碼學：聊聊 SIDH"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2026/05/12/sidh-note/&is_video=false&description=正經密碼學：聊聊 SIDH"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=正經密碼學：聊聊 SIDH&body=Check out this article: http://wha13.github.io/2026/05/12/sidh-note/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2026/05/12/sidh-note/&title=正經密碼學：聊聊 SIDH"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2026/05/12/sidh-note/&title=正經密碼學：聊聊 SIDH"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2026/05/12/sidh-note/&title=正經密碼學：聊聊 SIDH"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2026/05/12/sidh-note/&title=正經密碼學：聊聊 SIDH"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2026/05/12/sidh-note/&name=正經密碼學：聊聊 SIDH&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2026/05/12/sidh-note/&t=正經密碼學：聊聊 SIDH"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SIDH"><span class="toc-number">2.</span> <span class="toc-text">SIDH</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#What%E2%80%99s-Isogeny"><span class="toc-number">2.1.</span> <span class="toc-text">What’s Isogeny?</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#funcion-field"><span class="toc-number">2.1.1.</span> <span class="toc-text">funcion field</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rational-map"><span class="toc-number">2.1.2.</span> <span class="toc-text">rational map</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#standard-form"><span class="toc-number">2.1.3.</span> <span class="toc-text">standard form</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#kernel-where"><span class="toc-number">2.1.4.</span> <span class="toc-text">kernel where</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#degree"><span class="toc-number">2.1.5.</span> <span class="toc-text">degree</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B5%A6%E5%AE%9A-Kernel-%E7%9A%84-isogeny-%E5%B0%B1%E6%98%AF-quotient%EF%BC%81"><span class="toc-number">2.1.6.</span> <span class="toc-text">給定 Kernel 的 isogeny 就是 quotient！</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#n-torsion"><span class="toc-number">2.2.</span> <span class="toc-text">n-torsion</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#division-polynomials"><span class="toc-number">2.2.1.</span> <span class="toc-text">division polynomials</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#n"><span class="toc-number"></span> <span class="toc-text">$$n</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#n-isogenies"><span class="toc-number">0.1.</span> <span class="toc-text">n-isogenies</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#velu%E2%80%99s-formula"><span class="toc-number">0.1.1.</span> <span class="toc-text">velu’s formula</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#l-e-isogeny"><span class="toc-number">0.1.2.</span> <span class="toc-text">$l^e$ - isogeny</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#dual-isogeny"><span class="toc-number">0.1.3.</span> <span class="toc-text">dual isogeny</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SIDH-%E5%AF%A6%E8%B8%90"><span class="toc-number">0.2.</span> <span class="toc-text">SIDH 實踐</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Castryck-Decru-Attack"><span class="toc-number">1.</span> <span class="toc-text">Castryck-Decru Attack</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Known-Endomorphism-What"><span class="toc-number">1.1.</span> <span class="toc-text">Known Endomorphism What</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Kani%E2%80%99s-Diamond-and-Theorem"><span class="toc-number">1.2.</span> <span class="toc-text">Kani’s Diamond and Theorem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Oracle"><span class="toc-number">1.3.</span> <span class="toc-text">The Oracle</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">2.</span> <span class="toc-text">After all</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Appendix"><span class="toc-number">2.1.</span> <span class="toc-text">Appendix</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#References"><span class="toc-number">2.2.</span> <span class="toc-text">References</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        正經密碼學：聊聊 SIDH
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2026-05-12T16:11:37.000Z" class="dt-published" itemprop="datePublished">2026-05-12</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Cryptography/" rel="tag">Cryptography</a>, <a class="p-category" href="/tags/Isogenies/" rel="tag">Isogenies</a>, <a class="p-category" href="/tags/SIDH/" rel="tag">SIDH</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>SIDH 本來是 PQC (後量子加密) 技術的一個候選人，不過 2022 年被一種叫做 Castryck-Decru 的攻擊方案給破解了！<br>這篇文章會包含基礎的 Isgoeny 、 SIDH 介紹以及 Castryck-Decru Attack 的分析<br>大概幾個月前我重新上 CryptoHack 解題的某一陣子學了一些 Isogeny 相關的知識和實做，不過那時候看著看著有些地方也需要花上不少時間，或多或少繞了遠路才釐清所有概念。   </p>
+<p>最近有空 + 有些機會讓我需要重新釐一邊相關的知識和技術，就藉此來寫下一篇 “希望” 入門友善的 SIDH 學習筆記，不過也因此在一些數學上可能描述不是那麼嚴謹、或會跳過一些初等代數真的很難涵蓋的證明。  （<del>或者說有些地方希望大家斟酌”通靈”感覺一下他是正確的</del>）<br>預設會認定讀者有基本橢圓曲線運算和一點代數的概念？  <del>不然就是邊讀邊找，Welcome to the World of Mathematics</del>   </p>
+<!---
+### 一些說好的定義 --->
+
+<h2 id="SIDH"><a href="#SIDH" class="headerlink" title="SIDH"></a>SIDH</h2><h3 id="What’s-Isogeny"><a href="#What’s-Isogeny" class="headerlink" title="What’s Isogeny?"></a>What’s Isogeny?</h3><p>簡單來說：<br>我們考慮曲線 $E$ 以及他的運算群 $&lt;E, +&gt;$，當一個映射是 $\phi:E \rightarrow E’$ 是 Isogeny 的，它必須滿足：  </p>
+<ul>
+<li>是一個群同態 (Group Homomorphism)，也就是對於 $P, Q \in E$ 我們有 $\phi(P+Q) &#x3D; \phi(P) + \phi(Q)$  </li>
+<li>它必須保單位元，也就是無窮遠點傳送後還是無窮遠點 $\phi(\mathcal{O}<em>{E}) &#x3D; \mathcal{O}</em>{E’}$  </li>
+<li>它一定是滿射而且必須有 Finite Kernel，所謂的 Finite Kernel 就是存在 $ker_{\phi} \subset E$ 滿足 $\forall P \in ker_{\phi}, \phi(P) &#x3D; \mathcal{O}_{E’}$</li>
+</ul>
+<p>哇 這世界真美好！<br>當然不是地，實際上我們有太多東西沒解決了，像是怎麼算出 $\phi$ 的，在這樣的 Ring 上我們可以操作的運算有哪些……。<br>所以，複雜來說：  </p>
+<h4 id="funcion-field"><a href="#funcion-field" class="headerlink" title="funcion field"></a>funcion field</h4><p>定義 k 是曲線的 基體 (Base Field)  </p>
+<p>定義曲線 $E:y^2&#x3D;x^3+Ax+B$<br>則它的 affine coordinate ring 是  $k[E]&#x3D;k[x,y]&#x2F;(y^2-x^3-Ax-B)$<br>function field 是它的分式域：$k(E)&#x3D;\operatorname{Frac}(k[E])$  </p>
+<p>元素會長得像  </p>
+<p>$$<br>\frac{g(x,y)}{h(x,y)}<br>$$</p>
+<p>並且可以用曲線方程把 $y^2$ 換成 $x^3+Ax+B$，所以任何 function 都能化成 $a(x)+b(x)y$  </p>
+<p>所以可以考慮成分式版本<br>$$\frac{a(x)+b(x)y}{c(x)+d(x)y}$$  </p>
+<h4 id="rational-map"><a href="#rational-map" class="headerlink" title="rational map"></a>rational map</h4><p>一個 rational map $\phi:E_1\dashrightarrow E_2$  </p>
+<p>在 affine 上常寫成</p>
+<p>$$<br>\phi(x,y)&#x3D;(r_1(x,y),r_2(x,y))<br>$$</p>
+<p>其中</p>
+<p>$$<br>r_1,r_2\in k(E_1).<br>$$</p>
+<p>若分母在某點為 0，不代表 map 一定沒定義；可能換一個等價表示後可算。  </p>
+<h4 id="standard-form"><a href="#standard-form" class="headerlink" title="standard form"></a>standard form</h4><p>若兩條曲線都是</p>
+<p>$$<br>E_1:y^2&#x3D;f_1(x),\qquad E_2:y^2&#x3D;f_2(x),<br>$$</p>
+<p>且 $\operatorname{char}k\ne2$，則任意 isogeny 可以寫成</p>
+<p>$$<br>\phi(x,y)&#x3D;\left(\frac{u(x)}{v(x)},\frac{s(x)}{t(x)}y\right),<br>$$</p>
+<p>其中</p>
+<p>$$<br>u,v,s,t\in k[x],\qquad \gcd(u,v)&#x3D;\gcd(s,t)&#x3D;1.<br>$$</p>
+<p>接著要來解釋為什麼 $\phi$ 的 affine form 會是第一項只跟 x 相關、第二項又是怎麼來的  </p>
+<p>因為 $\phi$ 是群同態，所以 $\phi(-P)&#x3D;-\phi(P)$</p>
+<p>若 $P&#x3D;(x,y),\qquad -P&#x3D;(x,-y)$<br>設<br>$$<br>\phi(x,y)&#x3D;(r_1(x,y),r_2(x,y)).<br>$$</p>
+<p>那麼</p>
+<p>$$<br>\phi(x,-y)&#x3D;(r_1(x,-y),r_2(x,-y)),<br>$$</p>
+<p>而</p>
+<p>$$<br>-\phi(x,y)&#x3D;(r_1(x,y),-r_2(x,y)).<br>$$</p>
+<p>所以</p>
+<p>$$<br>r_1(x,-y)&#x3D;r_1(x,y),<br>$$</p>
+<p>$$<br>r_2(x,-y)&#x3D;-r_2(x,y).<br>$$</p>
+<p>第一個是 even in $y$，所以可以化成只含 $x$ 的函數：</p>
+<p>$$<br>r_1&#x3D;\frac{u(x)}{v(x)}.<br>$$</p>
+<p>第二個是 odd in $y$，所以有一個 $y$ 因子：</p>
+<p>$$<br>r_2&#x3D;\frac{s(x)}{t(x)}y.<br>$$</p>
+<h4 id="kernel-where"><a href="#kernel-where" class="headerlink" title="kernel where"></a>kernel where</h4><p>最後，在拿到一個 map $\phi$ 後，我們就可以很輕鬆地找出所有 kernel<br>若</p>
+<p>$$<br>\phi(x,y)&#x3D;\left(\frac{u(x)}{v(x)},\frac{s(x)}{t(x)}y\right),<br>$$</p>
+<p>則 affine kernel points 當然就是 x 分母為零，也就是  $v(x)&#x3D;0$  </p>
+<p>的點，再加上無窮遠點 $O$。  </p>
+<p>$$<br>\ker\phi&#x3D;{(x,y):v(x)&#x3D;0}\cup{O}.<br>$$</p>
+<h4 id="degree"><a href="#degree" class="headerlink" title="degree"></a>degree</h4><p>定義</p>
+<p>$$<br>\deg\phi&#x3D;\max(\deg u,\deg v).<br>$$</p>
+<p>若</p>
+<p>$$<br>\left(\frac{u}{v}\right)’\ne0,<br>$$</p>
+<p>稱 $\phi$ separable。</p>
+<p>separable isogeny 有個定理是 $#\ker\phi&#x3D;\deg\phi$</p>
+<p>若特徵是 $p&gt;0$，有可能 $\left(\frac{u}{v}\right)’&#x3D;0$</p>
+<p>這通常表示 $\frac{u(x)}{v(x)}&#x3D;r(x^p),$</p>
+<h4 id="給定-Kernel-的-isogeny-就是-quotient！"><a href="#給定-Kernel-的-isogeny-就是-quotient！" class="headerlink" title="給定 Kernel 的 isogeny 就是 quotient！"></a>給定 Kernel 的 isogeny 就是 quotient！</h4><p>令 $G\subset E(\bar k)$ 是有限子群。定義等價關係：  </p>
+<p>$$<br>P\sim Q\iff P-Q\in G.<br>$$</p>
+<p>也就是把 coset  </p>
+<p>$$<br>P+G&#x3D;{P+R:R\in G}<br>$$</p>
+<p>視為同一點。  </p>
+<p>商群是  </p>
+<p>$$<br>E&#x2F;G.<br>$$</p>
+<p>存在一條 separable isogeny  </p>
+<p>$$<br>\phi:E\to E&#x2F;G<br>$$</p>
+<p>滿足  </p>
+<p>$$<br>\ker\phi&#x3D;G.<br>$$</p>
+<p>它在同構意義下唯一：若  </p>
+<p>$$<br>\phi_1:E\to E_1,<br>\qquad \phi_2:E\to E_2<br>$$</p>
+<p>都是 separable 且 kernel 都是 $G$，則存在 isomorphism (等價)  (同態基本定理)  </p>
+<p>$$<br>\iota:E_1\to E_2<br>$$</p>
+<p>使得   </p>
+<p>$$<br>\phi_2&#x3D;\iota\circ\phi_1.<br>$$</p>
+<h3 id="n-torsion"><a href="#n-torsion" class="headerlink" title="n-torsion"></a>n-torsion</h3><p>定義<br>$[n]:E\to E, \qquad P\mapsto nP$  </p>
+<p>其中不難發現這個運算本身也是 isogeny</p>
+<p>它的 kernel  $E[n]&#x3D;{P\in E(\bar k):nP&#x3D;O}$   (這些是 n-torsion points)<br>($\bar{k}$ 是一個閉包包含所有 k 的元素)<br>對了，這時候其實有一件很 trivial 的事情，那就是 $n$ 一定是 $ord(E)$ 的因數<br>若 $p&#x3D;\operatorname{char}k$ (想成 Curve 的 Modulus)<br>且 $p\nmid n$，則 $[n]$ separable，因此   </p>
+<p>$#E[n]&#x3D;n^2$，為什麼呢？等等講到 division polynomial 就知道了！   </p>
+<p>啊如果 $\ell&#x3D;p$，則 $E[p^e]\cong\mathbb Z&#x2F;p^e\mathbb Z$  </p>
+<p>或</p>
+<p>$$<br>E[p^e]&#x3D;{O}.<br>$$</p>
+<p>若</p>
+<p>$$<br>E[p]&#x3D;{O},<br>$$</p>
+<p>稱為 supersingular。  </p>
+<h4 id="division-polynomials"><a href="#division-polynomials" class="headerlink" title="division polynomials"></a>division polynomials</h4><p>對一條 short Weierstrass form 的橢圓曲線</p>
+<p>$$<br>E:y^2&#x3D;x^3+Ax+B<br>$$</p>
+<p>假設 $\operatorname{char} k\ne 2,3$。<br>因為 multiplication-by-$n$ map</p>
+<p>$$<br>[n]:E\to E,\qquad P\mapsto nP<br>$$</p>
+<p>本身也是一個 isogeny，所以它也可以寫成 rational map 的形式。更具體地說，存在 division polynomials</p>
+<p>$$<br>\psi_n,\ \phi_n,\ \omega_n<br>$$</p>
+<p>使得對 affine point $P&#x3D;(x,y)$，在分母不為 $0$ 的地方有</p>
+<h1 id="n"><a href="#n" class="headerlink" title="$$n"></a>$$<br><a href="x,y">n</a></h1><p>\left(<br>\frac{\phi_n(x)}{\psi_n(x,y)^2},<br>\frac{\omega_n(x,y)}{\psi_n(x,y)^3}<br>\right).<br>$$</p>
+<p>其中 $\psi_n$ 就是用來描述 $n$-torsion 的關鍵多項式。</p>
+<p>如果 $p&#x3D;\operatorname{char}k$ 且 $p\nmid n$，那麼對非無窮遠點 $P\ne O$ 有</p>
+<p>$$<br>P\in E[n]<br>\iff<br>[n]P&#x3D;O<br>\iff<br>\psi_n(P)&#x3D;0.<br>$$</p>
+<p>因此可以把 $E[n]$ 想成：</p>
+<p>$$<br>E[n]&#x3D;{O}\cup {P\in E(\bar{k}) : \psi_n(P)&#x3D;0}.<br>$$</p>
+<p>這裡要注意，當 $\psi_n(P)&#x3D;0$ 時，上面的 affine fraction 不能直接代入計算，因為分母會變成 $0$；比較正確的理解是：<br>這個 rational expression 對應到的 morphism 在該點的值是無窮遠點 $O$。</p>
+<p>前幾個 division polynomials 是：</p>
+<p>$$<br>\psi_1&#x3D;1,<br>$$</p>
+<p>$$<br>\psi_2&#x3D;2y,<br>$$</p>
+<p>$$<br>\psi_3&#x3D;3x^4+6Ax^2+12Bx-A^2.<br>$$</p>
+<p>所以在 $\operatorname{char}k\ne 2,3$ 的情況下，非零的 $3$-torsion points 的 $x$-coordinate 會是</p>
+<p>$$<br>\psi_3(x)&#x3D;0<br>$$</p>
+<p>的根。</p>
+<p>至於這些多項是怎麼來的，以 n &#x3D; 3 舉例，我們會可以寫成 $3P &#x3D; O$ 於是有 $2P&#x3D;-P$，再帶入倍點公式<br>$$\frac{(3x^2+A)^2}{4y^2} - 2x &#x3D; x$$<br>展開一下就有了。  </p>
+<p>到這邊我們就可以理解為什麼 $#E[n]&#x3D;n^2$，在計算 x 項的時候我們有<br>$x(nP) &#x3D; \frac{\phi_n(x)}{\psi_n(x)^2}$<br>其中 $\psi_n(x)^2$ 會是 $n^2 - 1$ 次多項式，他的根在閉包 $\bar{k}$ 上正好就是 $n^2 - 1$ 個，加上 $O$ 我們就有 $n^2$ 個點了。   </p>
+<p>那最後  $E[n] \cong \mathbb{Z}&#x2F;n\mathbb{Z} \times \mathbb{Z}&#x2F;n\mathbb{Z}$ 的來源是什麼呢？ 其實回到 n-torsion group 的定義就說得通了，因為在任何一個方向（任何一個點）而言，它走了 n 次就回到單位元了，所以理所當然它不可能是長的形同  $E[n] \cong \mathbb{Z}&#x2F;n^2\mathbb{Z}$ 的樣子。<br>所以我們可以選出 basis $P, Q$ 使得裡面所有元素都是他們的線性組合（對，就是 Pairing 那個味道）。  </p>
+<h3 id="n-isogenies"><a href="#n-isogenies" class="headerlink" title="n-isogenies"></a>n-isogenies</h3><p>n-isogeny 其實就是挑選一個點 $P \in E[n]$ 並且拿它當 Kernel 去做 Isogeny $\phi$ 得到一個 codomain $E’$<br>疑？其實這個 $\phi$ 的 Kernel 大小是 n 唷 (也就是 order 也是 n)，因為很自然地 $2P, 3P, 4P, … nP$ 顯然都是它的 Kernel (因為 $\phi(P) &#x3D; O’$)<br>它有這樣漂亮的一個代數特徵<br>再提醒一次 $n$ 一定是 $#E$ 的因數<br>那總之，選一個點做 Isogeny 後其實就是在  $\mathbb{Z}&#x2F;n\mathbb{Z} \times \mathbb{Z}&#x2F;n\mathbb{Z}$  這個二維的空間裡挑了一個方向去走  </p>
+<h4 id="velu’s-formula"><a href="#velu’s-formula" class="headerlink" title="velu’s formula"></a>velu’s formula</h4><p>再來，我們的挑戰變成，在挑好 Kernel 後，打過去的那條曲線到底是誰！   </p>
+<p>假設今天 Kernel 大小為 2 (${O, G}$)，我們可以很輕易地透過帶入兩點解聯立<br>$X &#x3D; x + \frac{t}{x - x_0}$<br>$Y &#x3D; y \cdot (1 - \frac{t}{(x - x_0)^2})$  </p>
+<p>然後根據像是 Weierstrass Form解 $Y^2 &#x3D; X^3 + A’X + B’$ 就拿到我們的 $A’, B’$ 了  </p>
+<p>高次推導其實就是用相似的概念<br>說著簡單 做起來也是 <del>一篇論文</del> 呢，一點都不簡單 T^T<br><a target="_blank" rel="noopener" href="https://eprint.iacr.org/2011/430.pdf">https://eprint.iacr.org/2011/430.pdf</a> 有興趣的朋友一定可以去讀讀看得！  </p>
+<p>好消息是！想要對某個點做 Isogeny 我們有個很簡單的做法是打開 sage  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">phi = E.isogeny(K)</span><br><span class="line">E2 = phi.codomain()</span><br></pre></td></tr></table></figure>
+<p>欸嘿！其中 E 是曲線 K 是點。  </p>
+<p>其中 codomain 就是經過 $\phi$ 變換後的曲線群  </p>
+<h4 id="l-e-isogeny"><a href="#l-e-isogeny" class="headerlink" title="$l^e$ - isogeny"></a>$l^e$ - isogeny</h4><p>對於 $l^e$ - isogeny 有個特別的計算技巧，與其大費周章解那麼大的數字的 velu’s formula，我們其實可以改成挑選一個 $l^e$ - torsion point，接著做 e 次 l-isogeny<br>這樣講怪怪的，假設 $P \in E[l^e]$ ，我們在第一次變成以 $l^{e-1} P$ 為 kernel 做 l - Isogeny (注意到  $l^{e-1} P$  的 order 自然是 l) 拿到 $\phi_1$，接著把 $l^{e-2} \phi_1{P}$  做為第二次變換的 kernel，注意到 P 在經過一次 I-Isogeny 傳送後因為變成 $l^{e-1} \phi_1{P} &#x3D; O$ 所以它也自動變成一個  $l^{e-1}$ - isogeny Point on $\phi_1(E)$<br>最後就完成了把 $P$ 本身作為 Kernel 傳送的目的，也完成了從一開始 $E$ 一路走到變成 $l^e$ - isogeny 的構造，既讓 isogeny order 變很大，複雜度又對 l 取了 log  </p>
+<p>附上 demo sage  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">p = <span class="number">2</span>^<span class="number">18</span> * <span class="number">3</span>^<span class="number">13</span> - <span class="number">1</span></span><br><span class="line">F.&lt;i&gt; = GF(p^<span class="number">2</span>, modulus=[<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>])</span><br><span class="line">E = EllipticCurve(F, [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">K = E(<span class="number">357834818388</span>*i + <span class="number">53943911829</span>, <span class="number">46334220304</span>*i + <span class="number">267017462655</span>)</span><br><span class="line"></span><br><span class="line">e = <span class="number">13</span></span><br><span class="line">E_curr = E</span><br><span class="line">K_curr = K</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(e - <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>):</span><br><span class="line">    P = (<span class="number">3</span>^j) * K_curr</span><br><span class="line">    </span><br><span class="line">    phi = E_curr.isogeny(P)</span><br><span class="line">    </span><br><span class="line">    E_curr = phi.codomain()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> j &gt; <span class="number">0</span>:</span><br><span class="line">        K_curr = phi(K_curr)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Final j-invariant: <span class="subst">&#123;E_curr.j_invariant()&#125;</span>&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="dual-isogeny"><a href="#dual-isogeny" class="headerlink" title="dual isogeny"></a>dual isogeny</h4><p>對於 n-isogeny $\phi$ (事實上後續文章我們也都只會討論 n-isogeny)<br>我們會存在 $\hat\phi$ 滿足 $\hat\phi \circ \phi &#x3D; [n]$<br>這部分可以用一個構造去想，假設我們傳送的時候挑選了一個 n-torsion point $P$，但另一個 $Q$ 也是 n-torsion point （而且不在 P 的生成群中）。<br>先把 $P$ 當作 kernel 拿到 map $\phi$ ，那重新在 $E’ &#x3D; \phi(E)$ 上以 $\phi(Q)$ 作為 Kernel 再做一次 isgeony，就相當於本來的 E 被 $P, Q$ 做 quotient 也就是 $E&#x2F;\left\langle P, Q\right\rangle$  ，但別忘了， $P, Q$ 本身就變成整個 n-torsion group 的 basis 了，等於 quotient 掉整個 n-torsion group。  </p>
+<h3 id="SIDH-實踐"><a href="#SIDH-實踐" class="headerlink" title="SIDH 實踐"></a>SIDH 實踐</h3><p>終於可以進到我們的 SIDH 了，它的主要功能是 Key Sharing<br>公鑰：<br>public p (prime) &#x3D; $2^{ea}\cdot 3^{eb} -1$<br>一條曲線 E 使得它是 supersingular curve，如果不是 supersingular curve 的話它的 n-isogeny 結構會變成 isogeny volcano (如下圖)，太具有規律性將導致後續很容易被破解<br>而 E 的 order 因為是一條 Super Singular Curve 所以會是  $2^{ea}\cdot 3^{eb} -1 + 1 &#x3D; 2^{ea}\cdot 3^{eb}$  </p>
+<p><img src="https://hackmd.io/_uploads/ryluurPgJMx.png" alt="image"></p>
+<p>接下來會選擇 $2^{ea}$ -torsion group 和  $3^{eb}$ -torsion group 上的點來操作<br>$P_A, Q_A \in E[2^{ea}]$<br>$P_B, Q_B \in E[3^{eb}]$  </p>
+<p>到這邊都還是公鑰，接下來才是私鑰（一樣拿 Alice, Bob 來操作）：<br>Alice 會選擇一個 $s_A \in \mathbb{Z}&#x2F;2^{ea}\mathbb{Z}$  作為私鑰<br>接著他會以 $K_A &#x3D; P_A + s_A Q_A$ 作為 Kernel 建立 $\phi_A: E \rightarrow E_A \cong E&#x2F;K_A$<br>並且把 $E_A, \phi_A(P_B), \phi_A(Q_B)$ 公開出來給 B，類似地 B 也會通過一樣流程產出私鑰 $s_B$ 以及公開  $E_B, \phi_B(P_A), \phi_B(Q_A)$   </p>
+<p>最後最後，Alice 產生私鑰的方法是<br>計算 $\phi_B(P_A) + s_A \phi_B(Q_A) &#x3D; \phi_B(K_A)$ 並且拿它作為 Kernel 對 $E_B$ 做 Isogeny    </p>
+<p>這時候如果 Alice 和 Bob 都這樣做了， 他們會同時把 E quotient 掉兩個 Subgroup<br>$E&#x2F;\left\langle K_A, K_B \right\rangle$   </p>
+<p>這時候再去計算 j-invariant，雖然計算出來的曲線可能是不同條，但因為他們同構所以 j-invariant 相同。    </p>
+<p>關於 n-isogeny 關係還有很多有趣的 feature 我放在 Appendix a.k.a. 我不想證明了（  </p>
+<h2 id="Castryck-Decru-Attack"><a href="#Castryck-Decru-Attack" class="headerlink" title="Castryck-Decru Attack"></a>Castryck-Decru Attack</h2><p>終於要來見證 SIDH 被破解的重大歷程了<br>本質上是利用 $\phi_B(P_A), \phi_B(Q_A)$    的 info leak 做 mod 3 oracle 來攻擊。  </p>
+<h3 id="Known-Endomorphism-What"><a href="#Known-Endomorphism-What" class="headerlink" title="Known Endomorphism What"></a>Known Endomorphism What</h3><p>先回到 SIDH 最不妙的那個地方：Bob 公鑰不是只有 $E_B$，還有 $\phi_B(P_A), \phi_B(Q_A)$。這代表什麼？代表只要我拿到任何 $2^{ea}$-torsion 上的點 $T &#x3D; xP_A + yQ_A$，我就可以直接算出它經過 Bob secret isogeny 後的結果：</p>
+<p>$$<br>\phi_B(T)&#x3D;x\phi_B(P_A)+y\phi_B(Q_A).<br>$$</p>
+<p>也就是說，雖然我不知道 $\phi_B$ 本身長怎樣，但我知道它在整個 $E_0[2^{ea}]$ 上的線性作用。這件事超級致命，因為 SIDH 的起始曲線 $E_0$ 又不是一般隨機曲線，它通常有一些已知的小 Endomorphism，例如 $i$ 或 $2i$ 這種東西。既然 $\theta$ 是已知的，我們當然也知道它怎麼作用在 $P_A,Q_A$ 上：</p>
+<p>$$<br>\theta(P_A)&#x3D;aP_A+bQ_A,<br>$$</p>
+<p>$$<br>\theta(Q_A)&#x3D;cP_A+dQ_A.<br>$$</p>
+<p>然後透過 public images，我們就可以把這個 action 傳到 $E_B$ 上。直覺上就是，雖然 $\theta$ 原本住在 $E_0$，但因為 $\phi_B(P_A),\phi_B(Q_A)$ 被公開了，我們可以在 torsion level 上看到一個「被 Bob secret path 搬運過去」的 endomorphism action。換句話說，SIDH public key 洩漏的不是一點點座標而已，而是 secret isogeny 對一整塊 torsion vector space 的線性資訊。</p>
+<h3 id="Kani’s-Diamond-and-Theorem"><a href="#Kani’s-Diamond-and-Theorem" class="headerlink" title="Kani’s Diamond and Theorem"></a>Kani’s Diamond and Theorem</h3><p>接下來是這個攻擊最漂亮的地方：Kani’s theorem。我們先想一個菱形。假設我們正在猜 Bob secret 的某一段，如果候選是對的，那 Bob 的 secret isogeny</p>
+<p>$$<br>\phi_B:E_0\to E_B<br>$$</p>
+<p>就會 factor 成：</p>
+<p>$$<br>\phi_B&#x3D;\rho\circ\kappa.<br>$$</p>
+<p>這裡 $\kappa:E_0\to E’$ 是我們猜出來的前半段，$\rho:E’\to E_B$ 是 Bob 剩下那段真正的 secret tail。問題是 $\rho$ 我們不知道，但如果猜對，它就真的存在。接著攻擊者自己再從 $E’$ 構造另一條輔助 isogeny：</p>
+<p>$$<br>\gamma:E’\to C.<br>$$</p>
+<p>然後故意讓 degree 滿足：</p>
+<p>$$<br>\deg(\rho)+\deg(\gamma)&#x3D;N,<br>$$</p>
+<p>其中在原論文攻 Bob 的方向，$N$ 通常是某個 $2$-power，例如 $2^{ea-\alpha}$。這時候圖形大概長這樣：</p>
+<p>$$<br>\begin{array}{ccc}<br>&amp; E’ &amp; \<br>\gamma \swarrow &amp; &amp; \searrow \rho \<br>C &amp; &amp; E_B \<br>\searrow &amp; &amp; \swarrow \<br>&amp; D &amp;<br>\end{array}<br>$$</p>
+<p>這個就是 Kani diamond。Kani’s theorem 告訴我們：如果這個 diamond 真的存在，那麼可以從它構造一個 anti-isometry</p>
+<p>$$<br>f:C[N]\to E_B[N],<br>$$</p>
+<p>而且它的 graph</p>
+<p>$$<br>H&#x3D;\operatorname{Graph}(f)<br>$$</p>
+<p>拿去 quotient 整個 product surface：</p>
+<p>$$<br>(C\times E_B)&#x2F;H<br>$$</p>
+<p>結果會 split 成兩條 elliptic curves 的 product，而不是一個普通的 genus-2 Jacobian。那問題來了：我們不是不知道 $\rho$ 嗎？怎麼構造 $f$？答案就是 SIDH public images 又出來救援了。對 $U&#x3D;\kappa(2^\alpha P_A)$ 來說，如果候選正確：</p>
+<p>$$<br>\rho(U)&#x3D;\rho(\kappa(2^\alpha P_A))&#x3D;2^\alpha\phi_B(P_A).<br>$$</p>
+<p>同理：</p>
+<p>$$<br>\rho(\kappa(2^\alpha Q_A))&#x3D;2^\alpha\phi_B(Q_A).<br>$$</p>
+<p>而 $\gamma$ 是攻擊者自己造的，所以左邊也能算：</p>
+<p>$$<br>P_C&#x3D;\gamma(\kappa(2^\alpha P_A)),<br>$$</p>
+<p>$$<br>Q_C&#x3D;\gamma(\kappa(2^\alpha Q_A)).<br>$$</p>
+<p>於是我們就能直接寫出 graph subgroup：</p>
+<p>$$<br>H&#x3D;<br>\left\langle<br>(P_C,2^\alpha\phi_B(P_A)),<br>(Q_C,2^\alpha\phi_B(Q_A))<br>\right\rangle.<br>$$</p>
+<p>也就是 split 成兩個新群的乘法  </p>
+<p>$$<br>A_\epsilon&#x3D;(C_\epsilon\times E_B)&#x2F;H_\epsilon.<br>$$</p>
+<p>$$<br>A_\epsilon\cong E_\epsilon\times D_\epsilon.<br>$$</p>
+<p>這就是最關鍵的焊接：public image 讓我們在不知道 $\rho$ 的情況下，還是能把 $\gamma(U)$ 和 $\rho(U)$ 配對起來。然後 Kani theorem 說，如果這個配對真的是從 diamond 來的，那 quotient 就會 split；如果猜錯，diamond 不存在，這個 quotient 通常就只是 genus-2 Jacobian。這就是整個攻擊的判斷核心。</p>
+<h3 id="The-Oracle"><a href="#The-Oracle" class="headerlink" title="The Oracle"></a>The Oracle</h3><p>最後把整件事整理成 oracle。Bob 的 secret kernel 是：</p>
+<p>$$<br>K_B&#x3D;\langle P_B+sQ_B\rangle,<br>\qquad<br>s\in\mathbb Z&#x2F;3^{eb}\mathbb Z.<br>$$</p>
+<p>攻擊者要把 $s$ 一段一段猜出來。假設目前已知：</p>
+<p>$$<br>s\equiv t\pmod{3^k}.<br>$$</p>
+<p>那下一個 ternary digit 只有三種可能：</p>
+<p>$$<br>t,\qquad t+3^k,\qquad t+2\cdot 3^k.<br>$$</p>
+<p>對每個候選 $t_\epsilon&#x3D;t+\epsilon 3^k$，我們構造候選 partial kernel：</p>
+<p>$$<br>K_\epsilon&#x3D;<br>\left\langle<br>3^{eb-(k+1)}(P_B+t_\epsilon Q_B)<br>\right\rangle,<br>$$</p>
+<p>再拿它做 isogeny：</p>
+<p>$$<br>\kappa_\epsilon:E_0\to E_\epsilon.<br>$$</p>
+<p>如果這個 $\epsilon$ 猜對，則 $\ker\kappa_\epsilon\subseteq\ker\phi_B$，所以一定存在 tail isogeny</p>
+<p>$$<br>\rho_\epsilon:E_\epsilon\to E_B<br>$$</p>
+<p>使得：</p>
+<p>$$<br>\phi_B&#x3D;\rho_\epsilon\circ\kappa_\epsilon.<br>$$</p>
+<p>接著我們自己構造 auxiliary isogeny：</p>
+<p>$$<br>\gamma_\epsilon:E_\epsilon\to C_\epsilon<br>$$</p>
+<p>讓：</p>
+<p>$$<br>\deg(\gamma_\epsilon)+\deg(\rho_\epsilon)&#x3D;2^{ea-\alpha}.<br>$$</p>
+<p>然後用 public images 組出：</p>
+<p>$$<br>H_\epsilon&#x3D;<br>\left\langle<br>(<br>\gamma_\epsilon\kappa_\epsilon(2^\alpha P_A),<br>2^\alpha\phi_B(P_A)<br>),<br>(<br>\gamma_\epsilon\kappa_\epsilon(2^\alpha Q_A),<br>2^\alpha\phi_B(Q_A)<br>)<br>\right\rangle.<br>$$</p>
+<p>最後計算：</p>
+<p>$$<br>A_\epsilon&#x3D;(C_\epsilon\times E_B)&#x2F;H_\epsilon.<br>$$</p>
+<p>如果 $\epsilon$ 猜對，Kani diamond 存在，所以 $A_\epsilon$ 會 split 成：</p>
+<p>$$<br>A_\epsilon\cong E_\epsilon\times D_\epsilon.<br>$$</p>
+<p>如果 $\epsilon$ 猜錯，通常沒有 diamond，結果就會是一個 genus-2 Jacobian。實作上因為這邊 quotient level 是 $2$-power，所以可以用 $(2,2)$-Richelot isogeny chain 去算；最後如果 Richelot 公式退化，也就是 determinant $\delta&#x3D;0$，就代表 split。於是 oracle 就長這樣：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">candidate epsilon correct?</span><br><span class="line">    quotient splits as product of elliptic curves</span><br><span class="line">    Richelot determinant δ = 0</span><br><span class="line"></span><br><span class="line">candidate epsilon wrong?</span><br><span class="line">    quotient is genus-2 Jacobian</span><br><span class="line">    Richelot determinant δ != 0</span><br></pre></td></tr></table></figure>
+
+<p>Richelot 公式的證明那些的我可以很誠實說我也沒看懂 @@<br>但計算上倒是意外不複雜<br>令 $k$ 是一個 $\operatorname{char} k \ne 2$ 的 field。</p>
+<p>考慮 genus 2 hyperelliptic curve</p>
+<p>$$<br>C: y^2 &#x3D; f(x)<br>$$</p>
+<p>其中 $f(x)$ 可以分解成三個二次多項式：</p>
+<p>$$<br>f(x)&#x3D;G_1(x)G_2(x)G_3(x)<br>$$</p>
+<p>也就是</p>
+<p>$$<br>C: y^2 &#x3D; G_1(x)G_2(x)G_3(x)<br>$$</p>
+<p>其中</p>
+<p>$$<br>G_i(x)&#x3D;a_i x^2+b_i x+c_i.<br>$$</p>
+<p>定義 determinant</p>
+<p>$$<br>\Delta &#x3D;<br>\det<br>\begin{pmatrix}<br>a_1 &amp; b_1 &amp; c_1\<br>a_2 &amp; b_2 &amp; c_2\<br>a_3 &amp; b_3 &amp; c_3<br>\end{pmatrix}.<br>$$</p>
+<p>若</p>
+<p>$$<br>\Delta \ne 0,<br>$$</p>
+<p>則就沒退化  </p>
+<p>所以 Castryck-Decru Attack 本質上不是在 isogeny graph 裡面暴力找 collision，而是把「猜 secret digit」轉成一個 genus-2&#x2F;product 的 split test。  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>有點睏了 XD</p>
+<h3 id="Appendix"><a href="#Appendix" class="headerlink" title="Appendix"></a>Appendix</h3><ul>
+<li>有種叫做 modular polynomial 的多項式是根據 isogeny 大小代入 j-invariant 計算，在 sage 裡面可以用 <code>classical_modular_polynomial</code> 獲得我們的多項式 $\Phi$ ，拿來計算 neighbor，也是 SIDH 的 MitM implementation 很好用的工具 (可以參考我在 THJCC 2026 出的題目 Exploit：<a target="_blank" rel="noopener" href="https://blog.whale-tw.com/2026/02/22/thjcc-2026-official/#I-Sogo-%E4%BD%A0%E4%BA%86%E5%96%94%EF%BC%81">https://blog.whale-tw.com/2026/02/22/thjcc-2026-official/#I-Sogo-%E4%BD%A0%E4%BA%86%E5%96%94%EF%BC%81</a>)</li>
+<li>Weil Pairing 在 Isogeny map 有個酷酷的 feature $e(\phi(P), \phi(Q)) &#x3D; e(P, Q)^{deg(\phi)}$ </li>
+<li>DDH(Decisional Diffie Hellman) 和 Genus Theory 也很好玩: <a target="_blank" rel="noopener" href="https://eprint.iacr.org/2020/151.pdf">https://eprint.iacr.org/2020/151.pdf</a> 不過改天有機會再來寫文章</li>
+<li>SIDH 之後其實還沒完，我們有了 CSIDH ，也是改天有機會再來寫文章 lol (應該會輕鬆很多，畢竟 Isogeny 觀念都在這篇寫得差不多了（) ，但相信讀者讀完這篇去看 CSIDH 應該也很容易理解</li>
+</ul>
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://ocw.mit.edu/courses/18-783-elliptic-curves-spring-2021/pages/lecture-notes-and-worksheets/">https://ocw.mit.edu/courses/18-783-elliptic-curves-spring-2021/pages/lecture-notes-and-worksheets/</a></li>
+<li><a target="_blank" rel="noopener" href="https://eprint.iacr.org/2022/975.pdf">https://eprint.iacr.org/2022/975.pdf</a></li>
+<li><a target="_blank" rel="noopener" href="https://cryptohack.org/challenges/isogenies/">https://cryptohack.org/challenges/isogenies/</a></li>
+<li>My friends from Mathmetics Department.</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SIDH"><span class="toc-number">2.</span> <span class="toc-text">SIDH</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#What%E2%80%99s-Isogeny"><span class="toc-number">2.1.</span> <span class="toc-text">What’s Isogeny?</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#funcion-field"><span class="toc-number">2.1.1.</span> <span class="toc-text">funcion field</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#rational-map"><span class="toc-number">2.1.2.</span> <span class="toc-text">rational map</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#standard-form"><span class="toc-number">2.1.3.</span> <span class="toc-text">standard form</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#kernel-where"><span class="toc-number">2.1.4.</span> <span class="toc-text">kernel where</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#degree"><span class="toc-number">2.1.5.</span> <span class="toc-text">degree</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B5%A6%E5%AE%9A-Kernel-%E7%9A%84-isogeny-%E5%B0%B1%E6%98%AF-quotient%EF%BC%81"><span class="toc-number">2.1.6.</span> <span class="toc-text">給定 Kernel 的 isogeny 就是 quotient！</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#n-torsion"><span class="toc-number">2.2.</span> <span class="toc-text">n-torsion</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#division-polynomials"><span class="toc-number">2.2.1.</span> <span class="toc-text">division polynomials</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#n"><span class="toc-number"></span> <span class="toc-text">$$n</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#n-isogenies"><span class="toc-number">0.1.</span> <span class="toc-text">n-isogenies</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#velu%E2%80%99s-formula"><span class="toc-number">0.1.1.</span> <span class="toc-text">velu’s formula</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#l-e-isogeny"><span class="toc-number">0.1.2.</span> <span class="toc-text">$l^e$ - isogeny</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#dual-isogeny"><span class="toc-number">0.1.3.</span> <span class="toc-text">dual isogeny</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SIDH-%E5%AF%A6%E8%B8%90"><span class="toc-number">0.2.</span> <span class="toc-text">SIDH 實踐</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Castryck-Decru-Attack"><span class="toc-number">1.</span> <span class="toc-text">Castryck-Decru Attack</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Known-Endomorphism-What"><span class="toc-number">1.1.</span> <span class="toc-text">Known Endomorphism What</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Kani%E2%80%99s-Diamond-and-Theorem"><span class="toc-number">1.2.</span> <span class="toc-text">Kani’s Diamond and Theorem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Oracle"><span class="toc-number">1.3.</span> <span class="toc-text">The Oracle</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">2.</span> <span class="toc-text">After all</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Appendix"><span class="toc-number">2.1.</span> <span class="toc-text">Appendix</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#References"><span class="toc-number">2.2.</span> <span class="toc-text">References</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2026/05/12/sidh-note/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2026/05/12/sidh-note/&text=正經密碼學：聊聊 SIDH"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2026/05/12/sidh-note/&title=正經密碼學：聊聊 SIDH"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2026/05/12/sidh-note/&is_video=false&description=正經密碼學：聊聊 SIDH"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=正經密碼學：聊聊 SIDH&body=Check out this article: http://wha13.github.io/2026/05/12/sidh-note/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2026/05/12/sidh-note/&title=正經密碼學：聊聊 SIDH"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2026/05/12/sidh-note/&title=正經密碼學：聊聊 SIDH"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2026/05/12/sidh-note/&title=正經密碼學：聊聊 SIDH"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2026/05/12/sidh-note/&title=正經密碼學：聊聊 SIDH"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2026/05/12/sidh-note/&name=正經密碼學：聊聊 SIDH&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2026/05/12/sidh-note/&t=正經密碼學：聊聊 SIDH"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2026
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

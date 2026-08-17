@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before all老樣子 先上個人權https:&#x2F;&#x2F;academy.hackthebox.com&#x2F;achievement&#x2F;badge&#x2F;03e8b835-91c3-11f1-82d1-bea50ffe6cb4      前一張 CWES 的心得 (LINK)，重複的會員購買規則和一些比較就不再贅述   因應最近看到得鬼故事給讀者一個訊息所有 HTB 證照持有者都該拿得出一個 HTB Academy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web 鯨的 HTB COAE 通關紀">
+<meta property="og:url" content="http://wha13.github.io/2026/08/13/htb-coae/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before all老樣子 先上個人權https:&#x2F;&#x2F;academy.hackthebox.com&#x2F;achievement&#x2F;badge&#x2F;03e8b835-91c3-11f1-82d1-bea50ffe6cb4      前一張 CWES 的心得 (LINK)，重複的會員購買規則和一些比較就不再贅述   因應最近看到得鬼故事給讀者一個訊息所有 HTB 證照持有者都該拿得出一個 HTB Academy">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/H1bS6yoIMg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/Hk7Q79RLze.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/Byo3wL6UGl.png">
+<meta property="article:published_time" content="2026-08-13T15:10:04.000Z">
+<meta property="article:modified_time" content="2026-08-17T06:11:35.511Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="life">
+<meta property="article:tag" content="HackTheBox">
+<meta property="article:tag" content="AI Security">
+<meta property="article:tag" content="COAE">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/H1bS6yoIMg.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Web 鯨的 HTB COAE 通關紀</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2026/08/02/cve-2025-57257/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2026/08/13/htb-coae/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2026/08/13/htb-coae/&text=Web 鯨的 HTB COAE 通關紀"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2026/08/13/htb-coae/&title=Web 鯨的 HTB COAE 通關紀"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2026/08/13/htb-coae/&is_video=false&description=Web 鯨的 HTB COAE 通關紀"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Web 鯨的 HTB COAE 通關紀&body=Check out this article: http://wha13.github.io/2026/08/13/htb-coae/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2026/08/13/htb-coae/&title=Web 鯨的 HTB COAE 通關紀"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2026/08/13/htb-coae/&title=Web 鯨的 HTB COAE 通關紀"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2026/08/13/htb-coae/&title=Web 鯨的 HTB COAE 通關紀"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2026/08/13/htb-coae/&title=Web 鯨的 HTB COAE 通關紀"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2026/08/13/htb-coae/&name=Web 鯨的 HTB COAE 通關紀&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2026/08/13/htb-coae/&t=Web 鯨的 HTB COAE 通關紀"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%80%83%E8%AD%89%E7%85%A7%E5%89%8D%E7%9A%84%E6%BA%96%E5%82%99"><span class="toc-number">2.</span> <span class="toc-text">考證照前的準備</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E5%BC%8F%E8%80%83%E8%A9%A6"><span class="toc-number">2.1.</span> <span class="toc-text">正式考試</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">3.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Web 鯨的 HTB COAE 通關紀
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2026-08-13T15:10:04.000Z" class="dt-published" itemprop="datePublished">2026-08-13</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/AI-Security/" rel="tag">AI Security</a>, <a class="p-category" href="/tags/COAE/" rel="tag">COAE</a>, <a class="p-category" href="/tags/HackTheBox/" rel="tag">HackTheBox</a>, <a class="p-category" href="/tags/life/" rel="tag">life</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>老樣子 先上個人權<br><a target="_blank" rel="noopener" href="https://academy.hackthebox.com/achievement/badge/03e8b835-91c3-11f1-82d1-bea50ffe6cb4">https://academy.hackthebox.com/achievement/badge/03e8b835-91c3-11f1-82d1-bea50ffe6cb4</a>  </p>
+<p><img src="https://hackmd.io/_uploads/H1bS6yoIMg.png" alt="image">  </p>
+<p>前一張 CWES 的<a target="_blank" rel="noopener" href="https://blog.whale-tw.com/2026/02/05/CWES-STORY/">心得 (LINK)</a>，重複的會員購買規則和一些比較就不再贅述  </p>
+<p><strong>因應最近看到得鬼故事給讀者一個訊息</strong><br><em>所有 HTB 證照持有者都該拿得出一個 HTB Academy Badge 連結以及一個 Credly 連結</em>  </p>
+<p>今年年初看到 HTB 推出 COAE 的證照，是聚焦於 AI Security 的，同時間我也注意到了 Offsec 推出 OSAI 證照，感覺兩張證照有點對標效果（？）<br>根據網路上的說法，這兩張證照的差異感覺上是 HTB 的 COAE 除了一些 LLM 應用層（Agentic Apps&#x2F;MCP） 上的攻擊或被講到爛掉的 Prompt Injections，更多是聚焦於 Model Attacks 像是最基本的 Label Flipping&#x2F;Backdoor&#x2F;Dataset Privacy 一路走向 Adverseral Models 的各種討論（基本的反向傳播、L0~L2 怎麼放不同權重迭代的訓練…） 和一些防守的討論（Guardrail, 師生模型…）；而 OSAE 則更聚焦於模型應用層以及打向內部環境的 Red Team 技巧  </p>
+<p>同樣是基於成本的考量 + 自己蠻喜歡摸跟數學相關的東西就決定去走完 COAE 的課程並考去證照  </p>
+<h2 id="考證照前的準備"><a href="#考證照前的準備" class="headerlink" title="考證照前的準備"></a>考證照前的準備</h2><p>在上課前我就對常用的 ML Models 有基本的了解和掌握，也有手動做過一些 CNN&#x2F;RAG 的實踐和專題，也大概知道會有哪些攻擊，所以整體而言看教材的時候和做 Lab 的時候還蠻舒服的（<del>除了專有名詞不舒服</del> 肯定是 Paper 讀少了X）<br>不過其實有基本的線性代數和微積分知識，看前面的教材（有個 Fundamentals of AI）以後能解釋出模型的原理是什麼的話我想應該是不會有什麼問題？  </p>
+<p>再續了一年 Silver Annual 會員，想到的時候就去打 HTB AI Red Teamer Path 的 Lab，如果總和在一塊算我總共做了多久大概是一到兩周吧？<br>其中 Sparsity Attacks 我覺得特別有趣，也是開始課程前沒看過的東西，是用來討論最少量（例如說像素）擾動來完成模型欺騙的對抗攻擊。像是 ElasticNet 就是利用 L1 + L2 距離來演化出一個擾動量較少的對抗模型。  </p>
+<p>而 Lab 則是會挑這類模型的攻擊案例&#x2F;Papers（像是經典的 <a target="_blank" rel="noopener" href="https://machine-learning-and-security.github.io/papers/mlsec17_paper_27.pdf">Adverseral Patch (LINK)</a>，在教會你用必要的 pytorch&#x2F;numpy 等套件語法和引入模型的方法以後，要自己寫腳本完成攻擊&#x2F;Train。  </p>
+<p>對我自己沒什麼問題的一部分是 MCP&#x2F;Agentic Tools 的攻擊，去多瞭解個 API 或把 Prompt Injection 結合 Web Recon 和常見攻擊和通靈防護等等的對一個主業 Web 狗（好吧…鯨）而言肯定小問題，不過如果有人衝著 AI 安全在只會 AI 的情況下來考這張證照可能反而會敗在這邊 QQ，考前大概就能預言 HTB 會在這邊稍微搞點事<br>然後要記得 LLM 是不穩定的，確認一個 Payload 正不正確建議送個五次以上（  </p>
+<p>最後完成課程的時候大力推薦要整理不同模型在課程中有提到的對應攻擊流程的大腳本，考試的時候可以很快在看到模型後上手修一下腳本就完成解題。  </p>
+<h3 id="正式考試"><a href="#正式考試" class="headerlink" title="正式考試"></a>正式考試</h3><p>正式考試是一個七天多個 lab 的環境，你要拿到九十分以上才能通過（等於只有某一把特定的 flag 可以沒拿到）<br>然後一樣，考前強烈推薦去看一下 Sysreptor 這個報告模板以及生成工具怎麼使用 + 去讀一下 <a target="_blank" rel="noopener" href="https://academy.hackthebox.com/course/preview/documentation--reporting">HTB Academy: Document and Report(LINK)</a>，好好照這個寫比較不容易被退件<br>戳下去開始考試 拿到 Lab 環境，由於我覺得 AI Model (尤其傳統 ML) 蠻 deterministic 大概就是模型 &lt;&#x3D;&gt; 攻擊 對應 + 不擔心 Web 攻擊的部分，所以沒特別計時 但最後大概是九小時就破台ㄌ  </p>
+<p><img src="https://hackmd.io/_uploads/Hk7Q79RLze.png" alt="螢幕擷取畫面 2026-07-22 170613">  </p>
+<p>我只能說只要是 HTB 證照都有超綱的地方，不過這張證照超綱倒是呒超在 AI 模型本身，因為他的情境是在打一家公司的 PT，所以一定有些地方是需要做一些傳統 Web Recon&#x2F;Exploit 和各種情資蒐集和通靈的成分在（再強調一遍，課程教材沒有）。一個心法就是看到的模型都可以打，然後如果有缺什麼那大概率就是要找什麼？  </p>
+<p>最後就是大概在三周後收到通過通知（好欸，就是比上次 CWES 四小時候通知慢了億點點），但也合理這張的評審數量應該是少很多的。  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>總結一下，我覺得這張證照對有做過 ML 想要接觸這方面攻擊；或者對於數學底子不錯的一般資安人，想看一下這種未來新興攻擊面的人都是很棒的學習選擇，整體而言只要有好好看過課程和 LABS 我相信要 pass 應該也不會太難？  </p>
+<p>其他就是：  </p>
+<p><del>物色下一張證照(x</del><br>成為第 170 個考過的人，有種在見證歷史的感覺 xD<br><img src="https://hackmd.io/_uploads/Byo3wL6UGl.png" alt="image"></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%80%83%E8%AD%89%E7%85%A7%E5%89%8D%E7%9A%84%E6%BA%96%E5%82%99"><span class="toc-number">2.</span> <span class="toc-text">考證照前的準備</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E5%BC%8F%E8%80%83%E8%A9%A6"><span class="toc-number">2.1.</span> <span class="toc-text">正式考試</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">3.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2026/08/13/htb-coae/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2026/08/13/htb-coae/&text=Web 鯨的 HTB COAE 通關紀"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2026/08/13/htb-coae/&title=Web 鯨的 HTB COAE 通關紀"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2026/08/13/htb-coae/&is_video=false&description=Web 鯨的 HTB COAE 通關紀"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Web 鯨的 HTB COAE 通關紀&body=Check out this article: http://wha13.github.io/2026/08/13/htb-coae/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2026/08/13/htb-coae/&title=Web 鯨的 HTB COAE 通關紀"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2026/08/13/htb-coae/&title=Web 鯨的 HTB COAE 通關紀"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2026/08/13/htb-coae/&title=Web 鯨的 HTB COAE 通關紀"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2026/08/13/htb-coae/&title=Web 鯨的 HTB COAE 通關紀"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2026/08/13/htb-coae/&name=Web 鯨的 HTB COAE 通關紀&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2026/08/13/htb-coae/&t=Web 鯨的 HTB COAE 通關紀"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2026
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

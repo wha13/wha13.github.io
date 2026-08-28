@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before all老規矩 人權https:&#x2F;&#x2F;academy.hackthebox.com&#x2F;achievement&#x2F;badge&#x2F;efb8413a-a248-11f1-82d1-bea50ffe6cb4 總算是回來考 CPTS 了 xD，在各種因緣際會的巧合下突然有了考試的動力。   Before Works:    HTB COAE 心得 (link)   HTB CWES 心得 (link)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web 鯨的 HTB CPTS 通關紀">
+<meta property="og:url" content="http://wha13.github.io/2026/08/28/htb-cpts/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before all老規矩 人權https:&#x2F;&#x2F;academy.hackthebox.com&#x2F;achievement&#x2F;badge&#x2F;efb8413a-a248-11f1-82d1-bea50ffe6cb4 總算是回來考 CPTS 了 xD，在各種因緣際會的巧合下突然有了考試的動力。   Before Works:    HTB COAE 心得 (link)   HTB CWES 心得 (link)">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/HkGAR9AwMg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HJREJnAPGx.png">
+<meta property="article:published_time" content="2026-08-28T15:10:04.000Z">
+<meta property="article:modified_time" content="2026-08-28T07:03:14.370Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="life">
+<meta property="article:tag" content="Pentesting">
+<meta property="article:tag" content="HackTheBox">
+<meta property="article:tag" content="CPTS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/HkGAR9AwMg.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Web 鯨的 HTB CPTS 通關紀</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2026/08/13/htb-coae/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2026/08/28/htb-cpts/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2026/08/28/htb-cpts/&text=Web 鯨的 HTB CPTS 通關紀"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2026/08/28/htb-cpts/&title=Web 鯨的 HTB CPTS 通關紀"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2026/08/28/htb-cpts/&is_video=false&description=Web 鯨的 HTB CPTS 通關紀"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Web 鯨的 HTB CPTS 通關紀&body=Check out this article: http://wha13.github.io/2026/08/28/htb-cpts/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2026/08/28/htb-cpts/&title=Web 鯨的 HTB CPTS 通關紀"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2026/08/28/htb-cpts/&title=Web 鯨的 HTB CPTS 通關紀"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2026/08/28/htb-cpts/&title=Web 鯨的 HTB CPTS 通關紀"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2026/08/28/htb-cpts/&title=Web 鯨的 HTB CPTS 通關紀"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2026/08/28/htb-cpts/&name=Web 鯨的 HTB CPTS 通關紀&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2026/08/28/htb-cpts/&t=Web 鯨的 HTB CPTS 通關紀"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%80%83%E8%AD%89%E7%85%A7%E5%89%8D%E7%9A%84%E6%BA%96%E5%82%99"><span class="toc-number">2.</span> <span class="toc-text">考證照前的準備</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E5%BC%8F%E8%80%83%E8%A9%A6"><span class="toc-number">3.</span> <span class="toc-text">正式考試</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">4.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        Web 鯨的 HTB CPTS 通關紀
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2026-08-28T15:10:04.000Z" class="dt-published" itemprop="datePublished">2026-08-28</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/CPTS/" rel="tag">CPTS</a>, <a class="p-category" href="/tags/HackTheBox/" rel="tag">HackTheBox</a>, <a class="p-category" href="/tags/Pentesting/" rel="tag">Pentesting</a>, <a class="p-category" href="/tags/life/" rel="tag">life</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>老規矩 人權<br><a target="_blank" rel="noopener" href="https://academy.hackthebox.com/achievement/badge/efb8413a-a248-11f1-82d1-bea50ffe6cb4">https://academy.hackthebox.com/achievement/badge/efb8413a-a248-11f1-82d1-bea50ffe6cb4</a><br><img src="https://hackmd.io/_uploads/HkGAR9AwMg.png" alt="螢幕擷取畫面 2026-08-28 093818"></p>
+<p>總算是回來考 CPTS 了 xD，在各種因緣際會的巧合下突然有了考試的動力。  </p>
+<p>Before Works:  </p>
+<ul>
+<li><a href="/2026/08/13/htb-coae">HTB COAE 心得 (link)</a>  </li>
+<li><a href="/2026/02/05/CWES-STORY">HTB CWES 心得 (link)</a></li>
+</ul>
+<h2 id="考證照前的準備"><a href="#考證照前的準備" class="headerlink" title="考證照前的準備"></a>考證照前的準備</h2><p>當然，一樣先完成了 HTB Academy Penetration Tester Job Role Path，沒記錯的話我在高中畢業那段時間花了兩個多月把它推完，中間可能有斷斷續續做一些其他事？<br>我覺得它每個教材提供的 Cheat Sheet 挺好用的，也自己做了億些筆記。<br>可以看我的 <a target="_blank" rel="noopener" href="https://blog.whale-tw.com/about/">About Page</a>，過去在 CTF（出題和解題）&#x2F;攻防演練&#x2F;Bug Bounty 的磨練讓我在打 Web 這關不太需要擔心。  </p>
+<p>另外，我在 HTB 上曾經打靶機到 Pro Hacker 的 Level 並寫了不少 Writeups  </p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://app.hackthebox.com/public/users/1519847">https://app.hackthebox.com/public/users/1519847</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.whale-tw.com/tags/HackTheBox/">https://blog.whale-tw.com/tags/HackTheBox/</a></li>
+</ul>
+<p>這些經驗讓我對於 Linux&#x2F;Windows 提權以及不同姿勢下的 Windows AD 掃描&#x2F;提權 抑或是 <del>通靈</del> 技巧有一定程度的掌握。<br>聽說 <a target="_blank" rel="noopener" href="https://www.youtube.com/playlist?list=PLidcsTyj9JXItWpbRtTg6aDEj10_F17x5">Unofficial CPTS Prep List</a> 影片不錯但我沒看完？<br>但我覺得多打靶機和看 Writeup 總是有幫助的，事實上近期看過的一個技巧在考試時也幫了我不少，然後考前確認好自己的工具&#x2F;環境都是跑得動的 + 做 Checklist 在考試沒想法的時候一條一條嘗試不錯  </p>
+<h2 id="正式考試"><a href="#正式考試" class="headerlink" title="正式考試"></a>正式考試</h2><p>考試滿分一百分，八十五分以上才可通過。<br>有很多台機器分多層網段，有些網段是 Windows AD 所以域滲透絕對是十分重要的，裡面機器和帳號數量很多，很真實？<br>基本上就是 14 把 Flag 前 12 把要全拿 + 寫出一份品質不錯的報告。<br>我在去年曾經考過，但最後因為忘記交第一次考試報告導致我無法使用第二次嘗試機會，在這邊呼籲廣大群眾：  </p>
+<ul>
+<li><strong>不論這次是否通過，一定要記得交報告</strong></li>
+<li><strong>不論這次是否通過，一定要記得交報告</strong></li>
+<li><strong>不論這次是否通過，一定要記得交報告</strong></li>
+</ul>
+<p>因為 Policy 以及考試公平性我無法談及過多細節，不過考試時卡關的解法就是</p>
+<ul>
+<li>嘗試不同的工具或 Payload（必要時其實自己手寫是好辦法？）</li>
+<li>找更多垃圾&#x2F;做更多枚舉（例如換個 wordlist）</li>
+</ul>
+<p>看 Reddit 討論很多人說有條大魔王關，只能說體感上那條打過之後後面的攻擊鍊加起來都沒有它複雜 xD<br>其他就是有些<del>很假的</del> Rabbit Hole，但我認為不論是不是兔子洞都應該好好打完寫報告，畢竟在真實的滲透測試&#x2F;紅隊演練中本來就是無所不用其極的拿下所有能拿下的機器&#x2F;帳號和能進行的攻擊，也不會知道哪個會用到哪個不會。  </p>
+<p>紀錄不記錄時間我覺得很看個人，蠻多人會推薦要記錄時間，告訴自己一天一把 Flag 這樣推之類的。<br>但由於每把 Flag 間難度不一 + 每天的手感不同，我是傾向有靈感就多打一點，也不給自己壓力。<br>我在一天結束時還卡在上次卡關的地方，第二天一個靈光乍現打完魔王關就：  </p>
+<p><img src="https://hackmd.io/_uploads/HJREJnAPGx.png" alt="螢幕擷取畫面 2026-08-25 161845"></p>
+<p>其實本來到 85 分的時候想先寫報告，但看了下環境覺得自己十分鐘內能提權完拿到 90 分就打了。<br><del>最後報告剛開始寫了十五分鐘心癢癢就再花了點時間推完最後一把</del>，因為那邊是熟悉的東西其實也打很快 xD  </p>
+<p>最後就是報告，在打的時候我自己寫了七十幾頁的 Walk Through，最後寫成了兩百多頁的報告（包含漏洞分開講的細節&#x2F;Compromised Hosts 以及 Clean up 等等地），其中有讓 LLM 幫我把 Walk Through 中所有能列進 CWE 的漏洞都抓出來大概五十幾個，再一個一個自己寫過去。  </p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><p>最後寫了兩天報告在第四天的時候交出去，過兩天後(28) 就收到批改通知了，感謝 HTB 的神速回復 XD  </p>
+<p>關於 OSCP 以及 CPTS 的比較因為沒去試過 OSCP 我不曉得，但幫大家整理一些文章和討論：<br>就不贅述了，感覺每篇 CPTS 心得文都在說這件事？  </p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://manesec.github.io/2024/10/31/2024/1031-hackthebox-academy-cpts-review/">https://manesec.github.io/2024/10/31/2024/1031-hackthebox-academy-cpts-review/</a>  </li>
+<li><a target="_blank" rel="noopener" href="https://www.reddit.com/r/oscp/comments/1ghs95y/oscp_or_cpts/?tl=zh-hant">https://www.reddit.com/r/oscp/comments/1ghs95y/oscp_or_cpts/?tl=zh-hant</a></li>
+</ul>
+<p>快速統整 &amp; 給些 Internal 的想法</p>
+<ul>
+<li>大家都會說 CPTS 難度比 OSCP 高，教材也更適合全方位的學習，這點我很相信畢竟 HTB 本身就是靶機 &amp; 資安學習的 TOP 1 好品牌</li>
+<li>基本上就是識別度問題，CPTS 現階段識別度肯定沒有 OSCP 好，我想跟它剛推出，以及持有者基數還沒那麼高有關吧</li>
+<li>成本差異，OSCP 的考試和學習價格是 CPTS 的三四倍起跳</li>
+</ul>
+<p>對於以上觀點提供一些可能不一樣的東西做參考？</p>
+<ul>
+<li>在台灣的 <a target="_blank" rel="noopener" href="https://www-api.moda.gov.tw/File/Get/acs/zh-tw/fnAKsSnPVqBRzfe">資通安全證照清單</a> 上現在開始有 HTB CPTS 以及 CDSA 了</li>
+<li>CPTS 真的不是 Intermediate Level，那種滲透新手友善的證照，並且考試要求也超出教材不少，光是基於實際考試時只有單一一個順序能完成整個靶場的滲透這點就已經是一大限制與挑戰了。  </li>
+<li><del>對不起我真的找不到 OSCP 難度和學習深度比 CPTS 高的評論</del></li>
+</ul>
+<p>以上 :&gt;  </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%80%83%E8%AD%89%E7%85%A7%E5%89%8D%E7%9A%84%E6%BA%96%E5%82%99"><span class="toc-number">2.</span> <span class="toc-text">考證照前的準備</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E5%BC%8F%E8%80%83%E8%A9%A6"><span class="toc-number">3.</span> <span class="toc-text">正式考試</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">4.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2026/08/28/htb-cpts/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2026/08/28/htb-cpts/&text=Web 鯨的 HTB CPTS 通關紀"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2026/08/28/htb-cpts/&title=Web 鯨的 HTB CPTS 通關紀"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2026/08/28/htb-cpts/&is_video=false&description=Web 鯨的 HTB CPTS 通關紀"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Web 鯨的 HTB CPTS 通關紀&body=Check out this article: http://wha13.github.io/2026/08/28/htb-cpts/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2026/08/28/htb-cpts/&title=Web 鯨的 HTB CPTS 通關紀"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2026/08/28/htb-cpts/&title=Web 鯨的 HTB CPTS 通關紀"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2026/08/28/htb-cpts/&title=Web 鯨的 HTB CPTS 通關紀"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2026/08/28/htb-cpts/&title=Web 鯨的 HTB CPTS 通關紀"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2026/08/28/htb-cpts/&name=Web 鯨的 HTB CPTS 通關紀&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2026/08/28/htb-cpts/&t=Web 鯨的 HTB CPTS 通關紀"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2026
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

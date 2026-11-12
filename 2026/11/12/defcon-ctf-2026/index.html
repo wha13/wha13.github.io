@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Before allQual: rk.2 &#x2F; Final: rk.6   今年跟 Orange Fan Club 一起打了 DEFCON CTF！一開始先感謝所有隊員一同努力&#x2F;教授及助理們的各種支援以及教育部的全額補助 🥺作為一個 CTF 選手打到 DEFCON 肯定會在夢想清單上的，而這次比賽也確實帶給了我豐富體驗，也感受到了大團隊不一樣的運作模式和上古神獸前輩們到底有多厲">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DEFCON CTF 34 FINAL 隨筆">
+<meta property="og:url" content="http://wha13.github.io/2026/11/12/defcon-ctf-2026/index.html">
+<meta property="og:site_name" content="Whale120&#39;s Blog">
+<meta property="og:description" content="Before allQual: rk.2 &#x2F; Final: rk.6   今年跟 Orange Fan Club 一起打了 DEFCON CTF！一開始先感謝所有隊員一同努力&#x2F;教授及助理們的各種支援以及教育部的全額補助 🥺作為一個 CTF 選手打到 DEFCON 肯定會在夢想清單上的，而這次比賽也確實帶給了我豐富體驗，也感受到了大團隊不一樣的運作模式和上古神獸前輩們到底有多厲">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://hackmd.io/_uploads/SJW6yEXRzx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/rk8VuNQRzg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/S1ZF9VXCGg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/H1kp5EQCfe.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/SyMboVQCfg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/B1f1ANm0zl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HknUCV7Cfx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BJpMRNXCMg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/B1oVR4mRzg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BkURJSmAfx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/r1fFSHQCzx.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HkuUp4mCzl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/BkBP64XRzg.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HJ4FTNmAMe.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/B1lp2EQRzl.png">
+<meta property="og:image" content="https://hackmd.io/_uploads/HyvqhNQRMx.png">
+<meta property="article:published_time" content="2026-11-12T17:01:08.000Z">
+<meta property="article:modified_time" content="2026-11-12T14:19:52.534Z">
+<meta property="article:author" content="William Lin">
+<meta property="article:tag" content="life">
+<meta property="article:tag" content="CTF">
+<meta property="article:tag" content="DEFCON">
+<meta property="article:tag" content="Orange Fan Club">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hackmd.io/_uploads/SJW6yEXRzx.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>DEFCON CTF 34 FINAL 隨筆</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2026/08/28/htb-cpts/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2026/11/12/defcon-ctf-2026/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2026/11/12/defcon-ctf-2026/&text=DEFCON CTF 34 FINAL 隨筆"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2026/11/12/defcon-ctf-2026/&title=DEFCON CTF 34 FINAL 隨筆"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2026/11/12/defcon-ctf-2026/&is_video=false&description=DEFCON CTF 34 FINAL 隨筆"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=DEFCON CTF 34 FINAL 隨筆&body=Check out this article: http://wha13.github.io/2026/11/12/defcon-ctf-2026/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2026/11/12/defcon-ctf-2026/&title=DEFCON CTF 34 FINAL 隨筆"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2026/11/12/defcon-ctf-2026/&title=DEFCON CTF 34 FINAL 隨筆"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2026/11/12/defcon-ctf-2026/&title=DEFCON CTF 34 FINAL 隨筆"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2026/11/12/defcon-ctf-2026/&title=DEFCON CTF 34 FINAL 隨筆"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2026/11/12/defcon-ctf-2026/&name=DEFCON CTF 34 FINAL 隨筆&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2026/11/12/defcon-ctf-2026/&t=DEFCON CTF 34 FINAL 隨筆"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Quals"><span class="toc-number">2.</span> <span class="toc-text">Quals</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#rfc1149b"><span class="toc-number">2.1.</span> <span class="toc-text">rfc1149b</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Black-Talon"><span class="toc-number">2.2.</span> <span class="toc-text">The Black Talon</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Final"><span class="toc-number">3.</span> <span class="toc-text">Final</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Before-CTF"><span class="toc-number">3.1.</span> <span class="toc-text">Before CTF</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CTF"><span class="toc-number">3.2.</span> <span class="toc-text">CTF</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#golduck"><span class="toc-number">3.2.1.</span> <span class="toc-text">golduck</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bee"><span class="toc-number">3.2.2.</span> <span class="toc-text">bee</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#After-CTF"><span class="toc-number">3.3.</span> <span class="toc-text">After CTF</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">4.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        DEFCON CTF 34 FINAL 隨筆
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">William Lin</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2026-11-12T17:01:08.000Z" class="dt-published" itemprop="datePublished">2026-11-12</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/CTF/" rel="tag">CTF</a>, <a class="p-category" href="/tags/DEFCON/" rel="tag">DEFCON</a>, <a class="p-category" href="/tags/Orange-Fan-Club/" rel="tag">Orange Fan Club</a>, <a class="p-category" href="/tags/life/" rel="tag">life</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="Before-all"><a href="#Before-all" class="headerlink" title="Before all"></a>Before all</h2><p>Qual: rk.2 &#x2F; Final: rk.6  </p>
+<p>今年跟 Orange Fan Club 一起打了 DEFCON CTF！<br>一開始先感謝所有隊員一同努力&#x2F;教授及助理們的各種支援以及教育部的全額補助 🥺<br>作為一個 CTF 選手打到 DEFCON 肯定會在夢想清單上的，而這次比賽也確實帶給了我豐富體驗，也感受到了大團隊不一樣的運作模式和<del>上古神獸</del>前輩們到底有多厲害 T^T  </p>
+<p><del>我絕對沒有拖延三個月才寫文章</del>，簡單 log 一下簡短 writeup 和遊紀吧 xD  </p>
+<h2 id="Quals"><a href="#Quals" class="headerlink" title="Quals"></a>Quals</h2><p>一群人在青旅解題目，今年線上是 Jeopardy + KoH + LiveCTF(但似乎依然是 KoH，只是沒有每 round 計分而是分六 rounds 時間比較長而已)<br>開賽後我到場先和 @bronson113 看了 KoH 題目（因為是密碼題）<br>今年的 KoH 一樣是比誰對一個問題有最優解  </p>
+<h3 id="rfc1149b"><a href="#rfc1149b" class="headerlink" title="rfc1149b"></a>rfc1149b</h3><p>架構如下，我們能做的是 Full MitM<br>他的加密算法是某種 $\mathbb{F}_2[x]\big&#x2F; \langle P(x) \rangle$ 下的東西<br><img src="https://hackmd.io/_uploads/SJW6yEXRzx.png" alt="image">  </p>
+<p>然後我們要想辦法找出 Secret 是多少，在更動越少 Bits 資料的情況下。<br>這題的優化策略大致上是  </p>
+<ul>
+<li>Trivial 點的在封包指令上注意重複內容能改的盡量少（e.g. <code>SIGNED</code> 和 <code>SIGN</code> 的編輯距離明顯少很多&#x2F;Bob 被發現只檢查前 32 Bytes 的內容等等地…）  </li>
+<li>P 可以被分解成多個 Degree 4~10 的小多項式，等於我們只需要用 oracle 解完小群 CRT 起來就好</li>
+<li>內部的結構我們可以 BSGS，改動次數、改動量值連動減半</li>
+<li>預先建立好一些計算結果像是 Inverse&#x2F;子群下的 Collision Table&#x2F;和一些本來要爆破才能拿到的條件</li>
+</ul>
+<p>不過彼時的 LLM 就很厲害 + 後半段其實沒什麼好用的大優化了就完全交由 <code>shik</code> 大大當值檢員詠唱了 T^T（他的 agent 不知道為什麼特別聰明，跟使用者有關吧？），不過這題我們最後分數第二高！<br>第一名的策略很酷，他們優先去猜前幾位，所以在一些特定的 Key 下他們總有很高的機率可以比別人少改幾位，但如果沒有的話那就是要額外花 cost 補齊剛剛浪費的次數。不過因為 KoH 每一回合第一名的分數很高所以這是個好策略！  </p>
+<p>btw 再講一個，這題其實有個 rfc1149a，他們說是用鴿子送 TCP 封包？？ <a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-tw/%E4%BB%A5%E9%B8%9F%E7%B1%BB%E4%B8%BA%E8%BD%BD%E4%BD%93%E7%9A%84%E7%BD%91%E9%99%85%E5%8D%8F%E8%AE%AE">rfc1149</a>  </p>
+<p>666，Jeopardy 工人智慧大賽<br><img src="https://hackmd.io/_uploads/rk8VuNQRzg.png" alt="image"><br>給了一堆圖片最後要拼拼圖回去這樣，<del>CTF 陌路了嗎還是這是 n… 系列延伸</del>  </p>
+<h3 id="The-Black-Talon"><a href="#The-Black-Talon" class="headerlink" title="The Black Talon"></a>The Black Talon</h3><p>這題我成功開賽一小時後 first blood xD<br>簡單說就是一個聊天 app，然後有個核心 comittee 用 Verifiable Secret Sharing 做多簽，我們要多拿幾個核心用戶權限來還原 Secret。<br>那當然也就有 COMMITMENTS 機制事先承諾 User，另外 app 端有個很酷的機制是如果有個 user 發生錯誤的時候他會被 kill 掉接著由現在排序某個位置的 user 當新的核心成員，而最後解法是透過 COMMITMENT 訊息利用 Rust <code>modpow</code> 函數 mod 位不可為 0 的 error 發訊息把核心成員幹掉並通過註冊新帳號來讓我們控制的 user 移動到對應編號位置就好（  </p>
+<h2 id="Final"><a href="#Final" class="headerlink" title="Final"></a>Final</h2><h3 id="Before-CTF"><a href="#Before-CTF" class="headerlink" title="Before CTF"></a>Before CTF</h3><p>好耶進決賽了，第一次去 Las Vegas<br>前幾天是先去準備比賽以及<del>觀光</del>的<br>幾件很明顯要注意的事情：  </p>
+<ul>
+<li>空氣中充滿大麻味</li>
+<li>外面很熱站出去沒幾分鐘就覺得皮膚要裂ㄌㄏㄏ</li>
+</ul>
+<p>另外就是四處都有拉霸機包含 Seven(不知道是不是所有?) 偏神奇 xDD<br>提前一天去桃機 A8 住，順便去見了有點久沒見的朋友  </p>
+<p><img src="https://hackmd.io/_uploads/S1ZF9VXCGg.png" alt="image"></p>
+<p>一下機映入眼簾的是 …<br><img src="https://hackmd.io/_uploads/H1kp5EQCfe.png" alt="image"></p>
+<p>那幾天剛好 BlackHat USA 接著 DEFCON，機場柱子上都是各資安廠商的廣告  </p>
+<p><img src="https://hackmd.io/_uploads/SyMboVQCfg.png" alt="image"></p>
+<p>Day2 就是在附近逛逛和走走那邊的商店街和飯店？  </p>
+<p>Day 3 的時候被 @shallowfeather 帶著我們一夥另幾個人去 F1 Las Vegas，神奇開車車和展覽體驗，不過我似乎是危險駕駛 &#x3D; &#x3D;  </p>
+<p><img src="https://hackmd.io/_uploads/B1f1ANm0zl.png" alt="image"></p>
+<p><img src="https://hackmd.io/_uploads/HknUCV7Cfx.png" alt="image"></p>
+<p>後來又拖著某幾人去搭摩天輪，世界第二高的摩天輪！  </p>
+<p><img src="https://hackmd.io/_uploads/BJpMRNXCMg.png" alt="image"></p>
+<p>有一天跟 Naup 在房間點外賣，結果餐廳很努力寫出他的姓氏 “楊”<br><img src="https://hackmd.io/_uploads/B1oVR4mRzg.png" alt="image"></p>
+<p>另外就是東西都好大，物價則是台灣三到五倍  </p>
+<h3 id="CTF"><a href="#CTF" class="headerlink" title="CTF"></a>CTF</h3><p><del>回來講今年 Final</del>，說說我比較有印象的兩題就好（雖然中間有抓著 Agent 緊急支援別題但我忘得差不多了?）  </p>
+<h4 id="golduck"><a href="#golduck" class="headerlink" title="golduck"></a>golduck</h4><p>首先是一個數學的 KoH <del>他真的不是密碼學</del><br>是一個 Conway’s Game 棋盤遊戲<br><img src="https://hackmd.io/_uploads/BkURJSmAfx.png" alt="image"></p>
+<p>每個框起來的是一個範圍，會有觀測 box 可以指定要觀測幾 round 後的結果它會回傳，目標是透過在可初始化點的範圍放一些點讓它經過數回合後跟 secret 有交互作用，並通過多次觀察觀測區 side channel secret 出來，洩漏出越多分數越高。  </p>
+<p>有好幾個 level，到越後面擺放越奇怪，具體解法其實很大部分就是從各種已知會有特殊規則 e.g. 保持某個方向移動&#x2F;撞到什麼形狀會反彈之類的構造去設計我們初始化的點。<br>從這邊可以看得蠻懂？  </p>
+<p><a target="_blank" rel="noopener" href="https://playgameoflife.com/lexicon">https://playgameoflife.com/lexicon</a></p>
+<p>不過這我真想不到什麼很好用的代數結構切入 qq，暴力做到最後了  </p>
+<h4 id="bee"><a href="#bee" class="headerlink" title="bee"></a>bee</h4><p>Attack &amp; Defense，一個不少見的VM題目格式<br><img src="https://hackmd.io/_uploads/r1fFSHQCzx.png" alt="image"></p>
+<p>ㄟ～原則上就是不斷找新的洞，標號難度，然後精準客製化不同隊伍用最少 exploit 做最多事。<br>不過有個 Trouble 是寬 UTF-8 字元會讓沒寫好的 entrypoint.py crash，但按照規則又不能 patch、、、  </p>
+<p>導致題目出來第一天大家都有萬用 exploit，本來有嘗試過在自己的 patch 裡面透過 bee 漏洞塞 RCE 改 entrypoint 但還沒搓完題目就下線了  </p>
+<p>開始吐槽今年第一年當主辦的主辦 bbb<br>第一天本來結賽是第二名，結果隔天開盤因為記分板多拿最後一 ROUND 乾燒了二十幾回合導致掉去第四，記分板每天都在出各種狀況隔天又有點黑箱的調整分數（（（（  </p>
+<p>反正就這樣轟轟烈烈打完兩天比賽了，印象中還有要從古老 NetScape 瀏覽器找 0day 的 A&amp;D 也頗酷（  </p>
+<h3 id="After-CTF"><a href="#After-CTF" class="headerlink" title="After CTF"></a>After CTF</h3><p>現場逛！不過攤位到中午過後就快收光了就是 T^T 不過去的時候現場還有 OpenAI、Physical Village (各種物理限制)、賣駭客工具的 Hak5 等攤位，還有看到飛機模擬和機器人在走<br><del>還有個荒謬老哥瘋狂在空中潑灑塑膠小黃鴨然後喊 “Free Ducks” 並穿著鴨子裝</del>  </p>
+<p><img src="https://hackmd.io/_uploads/HkuUp4mCzl.png" alt="image"></p>
+<p>大鳳梨<br><img src="https://hackmd.io/_uploads/BkBP64XRzg.png" alt="image"></p>
+<p>在開鎖 Village 拿自己的變色龍打卡片<br><img src="https://hackmd.io/_uploads/HJ4FTNmAMe.png" alt="image"></p>
+<p>跟 @naup @aukro @jackoha 幾人一起去吃道地?排餐  </p>
+<p><img src="https://hackmd.io/_uploads/B1lp2EQRzl.png" alt="image"></p>
+<p>CTF 結束後有個辦在某個小屋的 After Party  </p>
+<p>附上神秘 Zellic 吉祥物？？？</p>
+<p><img src="https://hackmd.io/_uploads/HyvqhNQRMx.png" alt="image"></p>
+<h2 id="After-all"><a href="#After-all" class="headerlink" title="After all"></a>After all</h2><ul>
+<li>再次感謝所有成員、教授、助理以及贊助方</li>
+<li>好玩的體驗！<del>搭飛機不好玩</del></li>
+<li>大團隊極限協作模式的體驗？！</li>
+</ul>
+<p>ㄅㄅ</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/about/">About</a></li>
+        
+          <li><a href="/archives/">Writing</a></li>
+        
+          <li><a href="/search/">Search</a></li>
+        
+          <li><a href="/tags/">tags</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Before-all"><span class="toc-number">1.</span> <span class="toc-text">Before all</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Quals"><span class="toc-number">2.</span> <span class="toc-text">Quals</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#rfc1149b"><span class="toc-number">2.1.</span> <span class="toc-text">rfc1149b</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Black-Talon"><span class="toc-number">2.2.</span> <span class="toc-text">The Black Talon</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Final"><span class="toc-number">3.</span> <span class="toc-text">Final</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Before-CTF"><span class="toc-number">3.1.</span> <span class="toc-text">Before CTF</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CTF"><span class="toc-number">3.2.</span> <span class="toc-text">CTF</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#golduck"><span class="toc-number">3.2.1.</span> <span class="toc-text">golduck</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bee"><span class="toc-number">3.2.2.</span> <span class="toc-text">bee</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#After-CTF"><span class="toc-number">3.3.</span> <span class="toc-text">After CTF</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#After-all"><span class="toc-number">4.</span> <span class="toc-text">After all</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://wha13.github.io/2026/11/12/defcon-ctf-2026/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://wha13.github.io/2026/11/12/defcon-ctf-2026/&text=DEFCON CTF 34 FINAL 隨筆"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://wha13.github.io/2026/11/12/defcon-ctf-2026/&title=DEFCON CTF 34 FINAL 隨筆"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://wha13.github.io/2026/11/12/defcon-ctf-2026/&is_video=false&description=DEFCON CTF 34 FINAL 隨筆"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=DEFCON CTF 34 FINAL 隨筆&body=Check out this article: http://wha13.github.io/2026/11/12/defcon-ctf-2026/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://wha13.github.io/2026/11/12/defcon-ctf-2026/&title=DEFCON CTF 34 FINAL 隨筆"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://wha13.github.io/2026/11/12/defcon-ctf-2026/&title=DEFCON CTF 34 FINAL 隨筆"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://wha13.github.io/2026/11/12/defcon-ctf-2026/&title=DEFCON CTF 34 FINAL 隨筆"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://wha13.github.io/2026/11/12/defcon-ctf-2026/&title=DEFCON CTF 34 FINAL 隨筆"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://wha13.github.io/2026/11/12/defcon-ctf-2026/&name=DEFCON CTF 34 FINAL 隨筆&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://wha13.github.io/2026/11/12/defcon-ctf-2026/&t=DEFCON CTF 34 FINAL 隨筆"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2026
+    William Lin
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a href="/search/">Search</a></li><!--
+     --><!--
+       --><li><a href="/tags/">tags</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
